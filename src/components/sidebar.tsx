@@ -13,6 +13,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { cn } from "@/lib/utils"
 import { Calendar, Gauge, Home, Inbox, Search, Settings } from "lucide-react"
 import Link from "next/link"
 
@@ -25,20 +26,34 @@ import Link from "next/link"
 // ]
 
 export function AppSidebar() {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, state } = useSidebar()
+  const isExpaned = state === "expanded"
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" className="bg-red-200 w-[200px]">
       <div onClick={toggleSidebar}>sss</div>
       <SidebarHeader />
-      <SidebarContent>
+      <SidebarContent className="bg-background px-2">
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+              {items.map((item, index) => (
+                <SidebarMenuItem
+                  key={item.title}
+                  className={cn(
+                    "p-1 rounded-lg hover:bg-[#E5E7EB]",
+                    index === 0 && "bg-[#E5E7EB] shadow-sm"
+                  )}
+                >
+                  <SidebarMenuButton
+                    asChild
+                    className={cn(
+                      "hover:bg-[#E5E7EB]",
+                      index === 0 ? "text-[#111827]" : "text-[#374151] "
+                    )}
+
+                  >
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
@@ -62,23 +77,23 @@ const items = [
     icon: Gauge,
   },
   {
-    title: "Inbox",
-    url: "#",
+    title: "Contracte",
+    url: "/contracts",
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#",
+    title: "Sabloane",
+    url: "/templates",
     icon: Calendar,
   },
   {
-    title: "Search",
-    url: "#",
+    title: "Billing",
+    url: "/billing",
     icon: Search,
   },
   {
     title: "Settings",
-    url: "#",
+    url: "/settings",
     icon: Settings,
   },
 ]
