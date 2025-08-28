@@ -3,8 +3,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* =========================================================
+   THEME MAPPINGS (Tailwind tokens -> CSS variables)
+   ========================================================= */
 @theme inline {
-  --color-background: var(--background);
+  /* App vs. surfaces */
+  --color-app: var(--app);                      /* fundal general aplicație */
+  --color-background: var(--background);        /* carduri/suprafețe */
+  --color-background-secondary: var(--secondary);
+
   --color-foreground: var(--foreground);
 
   --color-card: var(--card);
@@ -31,6 +38,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  /* Sidebar */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -40,28 +48,27 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  /* Charts */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  /* 🟢 Status colors */
+  /* Status */
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
-
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
-
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
 
-  /* Contract statuses */
+  /* Contract status */
   --color-draft: var(--draft);
   --color-pending: var(--pending);
   --color-signed: var(--signed);
 
-  /* AI assistant */
+  /* AI */
   --color-ai-highlight: var(--ai-highlight);
 
   /* Gradients */
@@ -85,17 +92,25 @@
   --z-popover: 1500;
   --z-tooltip: 1600;
 
-  /* Radius */
+  /* Radii */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* =========================================================
+   LIGHT THEME (root tokens)
+   ========================================================= */
 :root {
   --radius: 0.625rem;
 
-  --background: oklch(1 0 0);
+  /* Secondary ca app */
+  --secondary: oklch(0.985 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --app: var(--secondary);
+
+  --background: oklch(1 0 0);         /* carduri/suprafețe */
   --foreground: oklch(0.145 0 0);
 
   --card: oklch(1 0 0);
@@ -106,9 +121,6 @@
 
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
-
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
 
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
@@ -122,12 +134,14 @@
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
 
+  /* Charts */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
 
+  /* Sidebar */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -151,6 +165,7 @@
   --pending: oklch(0.9 0.15 80);
   --signed: oklch(0.7 0.2 140);
 
+  /* AI */
   --ai-highlight: oklch(0.9 0.2 250);
 
   /* Gradients */
@@ -158,8 +173,15 @@
   --gradient-accent: linear-gradient(135deg, oklch(0.6 0.118 184.704), oklch(0.828 0.189 84.429));
 }
 
+/* =========================================================
+   DARK THEME (overrides under .dark)
+   ========================================================= */
 .dark {
-  --background: oklch(0.145 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --app: var(--secondary);
+
+  --background: oklch(0.205 0 0);   /* carduri/suprafețe */
   --foreground: oklch(0.985 0 0);
 
   --card: oklch(0.205 0 0);
@@ -170,9 +192,6 @@
 
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
-
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
 
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
@@ -186,12 +205,14 @@
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
 
+  /* Charts */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
 
+  /* Sidebar */
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -201,7 +222,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
-  /* Statuses dark */
+  /* Statuses */
   --success: oklch(0.6 0.2 140);
   --success-foreground: oklch(0.95 0 0);
 
@@ -215,17 +236,22 @@
   --pending: oklch(0.5 0.2 80);
   --signed: oklch(0.5 0.2 140);
 
+  /* AI */
   --ai-highlight: oklch(0.65 0.2 250);
 
+  /* Gradients */
   --gradient-primary: linear-gradient(135deg, oklch(0.922 0 0), oklch(0.488 0.243 264.376));
   --gradient-accent: linear-gradient(135deg, oklch(0.696 0.17 162.48), oklch(0.645 0.246 16.439));
 }
 
+/* =========================================================
+   BASE STYLES
+   ========================================================= */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-app text-foreground;
   }
 }
