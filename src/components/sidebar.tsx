@@ -26,12 +26,8 @@ import Link from "next/link"
 // ]
 
 export function AppSidebar() {
-  const { toggleSidebar, state } = useSidebar()
-  const isExpaned = state === "expanded"
-
   return (
     <Sidebar collapsible="icon" className="bg-red-200 w-[200px]">
-      <div onClick={toggleSidebar}>sss</div>
       <SidebarHeader />
       <SidebarContent className="bg-background px-2">
         <SidebarGroup>
@@ -42,15 +38,15 @@ export function AppSidebar() {
                 <SidebarMenuItem
                   key={item.title}
                   className={cn(
-                    "p-1 rounded-lg hover:bg-[#E5E7EB]",
-                    index === 0 && "bg-[#E5E7EB] shadow-sm"
+                    "p-1 rounded-lg hover:bg-sidebar-primary",
+                    index === 0 && "bg-sidebar-primary"
                   )}
                 >
                   <SidebarMenuButton
                     asChild
                     className={cn(
-                      "hover:bg-[#E5E7EB]",
-                      index === 0 ? "text-[#111827]" : "text-[#374151] "
+                      "hover:bg-sidebar-primary",
+                      index === 0 ? "text-sidebar-primary-foreground" : "text-sidebar-foreground"
                     )}
 
                   >

@@ -1,17 +1,23 @@
+/* ====================================================================== */
+/* Global styles & design tokens for ContractTransparent                  */
+/* ====================================================================== */
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Tailwind dark variant that respects a .dark class on <html> or <body> */
 @custom-variant dark (&:is(.dark *));
 
-/* =========================================================
-   THEME MAPPINGS (Tailwind tokens -> CSS variables)
-   ========================================================= */
+/* ---------------------------------------------------------------------- */
+/* Tailwind "inline theme" mapping: expose CSS custom properties as       */
+/* Tailwind color/radius tokens (e.g. bg-background, text-foreground).    */
+/* ---------------------------------------------------------------------- */
 @theme inline {
-  /* App vs. surfaces */
-  --color-app: var(--app);                      /* fundal general aplicație */
-  --color-background: var(--background);        /* carduri/suprafețe */
-  --color-background-secondary: var(--secondary);
+  /* app/page background */
+  --color-app: var(--app);
 
+  /* core surfaces & text */
+  --color-background: var(--background);
   --color-foreground: var(--foreground);
 
   --color-card: var(--card);
@@ -20,9 +26,11 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
 
+  /* brand */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
 
+  /* supportive surfaces */
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
 
@@ -32,57 +40,42 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
 
-  --color-destructive: var(--destructive);
+  /* feedback */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
 
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  /* controls */
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Sidebar */
+  /* sidebar */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Charts */
+  /* charts (optional) */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  /* Status */
-  --color-success: var(--success);
-  --color-success-foreground: var(--success-foreground);
-  --color-warning: var(--warning);
-  --color-warning-foreground: var(--warning-foreground);
-  --color-info: var(--info);
-  --color-info-foreground: var(--info-foreground);
-
-  /* Contract status */
-  --color-draft: var(--draft);
-  --color-pending: var(--pending);
-  --color-signed: var(--signed);
-
-  /* AI */
-  --color-ai-highlight: var(--ai-highlight);
-
-  /* Gradients */
-  --gradient-primary: var(--gradient-primary);
-  --gradient-accent: var(--gradient-accent);
-
-  /* Shadows */
+  /* box shadows */
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.10);
   --shadow-lg: 0 10px 15px rgba(0,0,0,0.15);
-  --shadow-xl: 0 20px 25px rgba(0,0,0,0.2);
+  --shadow-xl: 0 20px 25px rgba(0,0,0,0.20);
   --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.06);
 
-  /* Z-index scale */
+  /* z-index scale */
   --z-base: 0;
   --z-dropdown: 1000;
   --z-sticky: 1100;
@@ -92,166 +85,162 @@
   --z-popover: 1500;
   --z-tooltip: 1600;
 
-  /* Radii */
+  /* radii */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* =========================================================
-   LIGHT THEME (root tokens)
-   ========================================================= */
+/* ====================================================================== */
+/* LIGHT THEME (exact palette you provided)                                */
+/* ====================================================================== */
 :root {
   --radius: 0.625rem;
 
-  /* Secondary ca app */
-  --secondary: oklch(0.985 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --app: var(--secondary);
+  /* app/page background (requested = secondary) */
+  --app: #F9FAFB;
 
-  --background: oklch(1 0 0);         /* carduri/suprafețe */
-  --foreground: oklch(0.145 0 0);
+  /* core surfaces & text */
+  --background: #ffffff;
+  --foreground: #0f172a;
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card: #ffffff;
+  --card-foreground: #0f172a;
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
 
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  /* brand */
+  --primary: #0ea5e9;
+  --primary-foreground: #ffffff;
 
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  /* supportive surfaces */
+  --secondary: #eff8ff;
+  --secondary-foreground: #0369a1;
 
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --muted: #e6eef4;
+  --muted-foreground: #475569;
 
-  --destructive: oklch(0.577 0.245 27.325);
+  --accent: #0ea5e9; /* same as primary for now */
+  --accent-foreground: #ffffff;
 
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  /* feedback */
+  --success: #10b981;
+  --success-foreground: #ffffff;
 
-  /* Charts */
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
 
-  /* Sidebar */
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
 
-  /* Statuses */
-  --success: oklch(0.7 0.2 140);
-  --success-foreground: oklch(0.15 0 0);
+  /* controls */
+  --border: #e6e9ee;
+  --input: #f7f8fa;
+  --ring: #0ea5e9;
 
-  --warning: oklch(0.9 0.2 80);
-  --warning-foreground: oklch(0.2 0 0);
+  /* sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #374151;
+  --sidebar-primary: #e5e7eb;
+  --sidebar-primary-foreground: #0f172a;
 
-  --info: oklch(0.8 0.1 240);
-  --info-foreground: oklch(0.15 0 0);
-
-  --draft: oklch(0.95 0 0);
-  --pending: oklch(0.9 0.15 80);
-  --signed: oklch(0.7 0.2 140);
-
-  /* AI */
-  --ai-highlight: oklch(0.9 0.2 250);
-
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, oklch(0.205 0 0), oklch(0.488 0.243 264.376));
-  --gradient-accent: linear-gradient(135deg, oklch(0.6 0.118 184.704), oklch(0.828 0.189 84.429));
+  /* charts (can tweak later) */
+  --chart-1: var(--primary);
+  --chart-2: #10b981;
+  --chart-3: #f59e0b;
+  --chart-4: #ef4444;
+  --chart-5: #6b7280;
 }
 
-/* =========================================================
-   DARK THEME (overrides under .dark)
-   ========================================================= */
+/* ====================================================================== */
+/* DARK THEME (derived, keeps brand hue; app background = dark-neutral)    */
+/* ====================================================================== */
 .dark {
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --app: var(--secondary);
+  --app: #0b1220;                  /* page bg in dark */
 
-  --background: oklch(0.205 0 0);   /* carduri/suprafețe */
-  --foreground: oklch(0.985 0 0);
+  --background: #0f172a;           /* surfaces */
+  --foreground: #e5e7eb;
 
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
+  --card: #111827;
+  --card-foreground: #f1f5f9;
 
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
+  --popover: #0f172a;
+  --popover-foreground: #e5e7eb;
 
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
+  --primary: #0ea5e9;              /* keep brand */
+  --primary-foreground: #06141a;
 
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
+  --secondary: #0b1220;            /* same as app */
+  --secondary-foreground: #cbefff;
 
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --muted: #1f2937;
+  --muted-foreground: #94a3b8;
 
-  --destructive: oklch(0.704 0.191 22.216);
+  --accent: #0ea5e9;
+  --accent-foreground: #06141a;
 
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --success: #10b981;
+  --success-foreground: #052e28;
 
-  /* Charts */
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
+  --warning: #f59e0b;
+  --warning-foreground: #2a1a04;
 
-  /* Sidebar */
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --destructive: #ef4444;
+  --destructive-foreground: #2a0a0a;
 
-  /* Statuses */
-  --success: oklch(0.6 0.2 140);
-  --success-foreground: oklch(0.95 0 0);
+  --border: #1f2733;
+  --input: #111827;
+  --ring: #38bdf8;
 
-  --warning: oklch(0.7 0.2 80);
-  --warning-foreground: oklch(0.95 0 0);
+  --sidebar: #0f172a;
+  --sidebar-foreground: #e5e7eb;
+  --sidebar-primary: #1f2937;
+  --sidebar-primary-foreground: #e5e7eb;
 
-  --info: oklch(0.7 0.15 240);
-  --info-foreground: oklch(0.95 0 0);
-
-  --draft: oklch(0.25 0 0);
-  --pending: oklch(0.5 0.2 80);
-  --signed: oklch(0.5 0.2 140);
-
-  /* AI */
-  --ai-highlight: oklch(0.65 0.2 250);
-
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, oklch(0.922 0 0), oklch(0.488 0.243 264.376));
-  --gradient-accent: linear-gradient(135deg, oklch(0.696 0.17 162.48), oklch(0.645 0.246 16.439));
+  --chart-1: #38bdf8;
+  --chart-2: #22c55e;
+  --chart-3: #f59e0b;
+  --chart-4: #ef4444;
+  --chart-5: #94a3b8;
 }
 
-/* =========================================================
-   BASE STYLES
-   ========================================================= */
+/* ====================================================================== */
+/* Base layer                                                              */
+/* ====================================================================== */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-app text-foreground;
+  }
+
+  /* Smooth focus-visible ring for interactive elements */
+  :is(button, [role="button"], a, input, select, textarea):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* Selection color tuned to brand */
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 25%, transparent);
+    color: var(--foreground);
+  }
+
+  /* Optional: subtle scrollbars (WebKit) */
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklab, var(--border) 70%, var(--foreground) 10%);
+    border-radius: 8px;
+    border: 2px solid var(--app);
+  }
+  *::-webkit-scrollbar-track {
+    background: var(--app);
   }
 }

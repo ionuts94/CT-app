@@ -10,7 +10,7 @@ const sampleContracts = [
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6 bg-secondary">
+    <div className="space-y-6">
       <div>
         <H1 className="mb-1">Dashboard</H1>
         <Text variant="secondary">Overview of your contracts and activity</Text>

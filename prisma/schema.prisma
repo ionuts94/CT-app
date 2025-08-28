@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -15,76 +9,113 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  firstName String
-  lastName  String
-  phone     String?
-  age       Int?
+  id         String   @id @default(cuid())
+  email      String   @unique
+  firstName  String
+  lastName   String
+  phone      String?
+  age        Int?
 
-  roleId    String?
-  role      Role?    @relation(fields: [roleId], references: [id])
+  // ↴ contextul curent (opțional), cu relație numită
+  currentCompanyId String?
+  currentCompany   Company? @relation("CurrentCompany", fields: [currentCompanyId], references: [id])
 
-  companyId String?
-  company   Company? @relation(fields: [companyId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  // relații
+  memberships Membership[]
+  roles       Role[]        @relation("RoleUsers")
+  contracts   Contract[]    @relation("ContractOwner")
+  signatures  Signature[]
+  invoices    Invoice[]
+  comments    Comment[]
+  activities  Activity[]
+  templates   Template[]    @relation("TemplateCreator")
 
-  contracts  Contract[] @relation("ContractOwner")
-  signatures Signature[]
-  invoices   Invoice[]
-  comments   Comment[]
-  activities Activity[]
-  templates  Template[] @relation("TemplateCreator")
-}
-
-model Role {
-  id          String    @id @default(cuid())
-  name        String    // ex: Founder, Admin, Legal
-  description String?
-  permissions Json?
-
-  companyId   String?
-  company     Company?  @relation(fields: [companyId], references: [id])
-
-  users       User[]
+  @@index([currentCompanyId])
 }
 
 model Company {
-  id        String   @id @default(cuid())
-  name      String
-  cui       String   @unique
-  regNumber String?
-  emailDomain String?
+  id            String     @id @default(cuid())
+  name          String
+  cui           String     @unique
+  regNumber     String?
+  emailDomain   String?
 
-  logoUrl   String?
+  logoUrl       String?
   colorPrimary   String?
   colorSecondary String?
   colorAccent    String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
-  users     User[]
-  contracts Contract[]
-  templates Template[]
-  invoices  Invoice[]
+  // 🔁 back-relation pentru User.currentCompany
+  currentUsers User[] @relation("CurrentCompany")
 
-  Role Role[]
+  // restul relațiilor reale (nu mai avem users generic)
+  memberships Membership[]
+  contracts   Contract[]
+  templates   Template[]
+  invoices    Invoice[]
+  roles       Role[]
+
+  @@index([name])
+}
+
+model Membership {
+  id         String  @id @default(cuid())
+  userId     String
+  companyId  String
+  roleKey    RoleKey @default(MEMBER) // high-level role (not the Role entity)
+  createdAt  DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, companyId])
+  @@index([companyId])
+  @@index([userId])
+}
+
+enum RoleKey {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  permissions Json?    // @db.Json
+  companyId   String
+
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  // optional many-to-many users<->roles inside a company
+  users       User[]   @relation("RoleUsers")
+
+  @@unique([companyId, name])
+  @@index([companyId])
 }
 
 model Contract {
   id        String   @id @default(cuid())
   title     String
-  content   String   // rich text / json
+  content   Json     // was String; use JSON for structured content/variables
   status    ContractStatus @default(DRAFT)
 
   ownerId   String
-  owner     User     @relation("ContractOwner", fields: [ownerId], references: [id])
+  owner     User     @relation("ContractOwner", fields: [ownerId], references: [id], onDelete: Cascade)
 
   companyId String?
   company   Company? @relation(fields: [companyId], references: [id])
+
+  // optional: original/signed file urls
+  draftPdfUrl  String?
+  signedPdfUrl String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -92,81 +123,186 @@ model Contract {
   signatures Signature[]
   comments   Comment[]
   activities Activity[]
-}
+  parties    Party[]
+  placements SignaturePlacement[]
+  invites    Invite[]
 
-model Signature {
-  id        String   @id @default(cuid())
-  type      String   // draw, type, upload
-  fullName  String
-  title     String?
-  imageUrl  String?  // pt upload / imagine generată
-  createdAt DateTime @default(now())
-
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-
-  contractId String
-  contract   Contract @relation(fields: [contractId], references: [id])
-}
-
-model Template {
-  id        String   @id @default(cuid())
-  name      String
-  category  String?
-  tags      String[]
-  content   String   // contract text
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
-
-  companyId String?
-  company   Company? @relation(fields: [companyId], references: [id])
-
-  creatorId String
-  creator   User     @relation("TemplateCreator", fields: [creatorId], references: [id])
-}
-
-model Invoice {
-  id        String   @id @default(cuid())
-  number    String   @unique
-  date      DateTime
-  amount    Float
-  status    String   // Paid, Unpaid
-  pdfUrl    String?
-
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-
-  companyId String?
-  company   Company? @relation(fields: [companyId], references: [id])
-}
-
-model Comment {
-  id        String   @id @default(cuid())
-  content   String
-  createdAt DateTime @default(now())
-
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-
-  contractId String
-  contract   Contract @relation(fields: [contractId], references: [id])
-}
-
-model Activity {
-  id        String   @id @default(cuid())
-  action    String   // ex: "viewed contract", "signed"
-  createdAt DateTime @default(now())
-
-  userId    String?
-  user      User?    @relation(fields: [userId], references: [id])
-
-  contractId String?
-  contract   Contract? @relation(fields: [contractId], references: [id])
+  @@index([companyId, status, createdAt])
+  @@index([ownerId])
 }
 
 enum ContractStatus {
   DRAFT
-  PENDING
-  SIGNED
+  OUT_FOR_SIGNATURE
+  FULLY_SIGNED
+  DECLINED
   EXPIRED
+}
+
+model Party {
+  id          String   @id @default(cuid())
+  contractId  String
+  email       String
+  name        String?
+  role        PartyRole @default(SIGNER)
+  signingOrder Int      @default(1)
+  hasSigned   Boolean   @default(false)
+  signedAt    DateTime?
+
+  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  signatures Signature[]
+  placements SignaturePlacement[]
+  invites    Invite[]
+
+  @@unique([contractId, email])
+  @@index([contractId, signingOrder])
+}
+
+enum PartyRole {
+  SIGNER
+  VIEWER
+}
+
+model Invite {
+  id         String   @id @default(cuid())
+  contractId String
+  partyId    String
+  token      String   @unique
+  expiresAt  DateTime?
+
+  contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  party    Party    @relation(fields: [partyId], references: [id], onDelete: Cascade)
+
+  @@index([contractId])
+  @@index([partyId])
+}
+
+model SignaturePlacement {
+  id          String   @id @default(cuid())
+  contractId  String
+  partyId     String
+  page        Int
+  x           Float
+  y           Float
+  width       Float
+  height      Float
+  createdAt   DateTime @default(now())
+
+  contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  party    Party    @relation(fields: [partyId], references: [id], onDelete: Cascade)
+
+  @@index([contractId])
+  @@index([partyId])
+}
+
+model Signature {
+  id         String   @id @default(cuid())
+  type       SignatureType  // draw, typed, upload
+  fullName   String
+  title      String?
+  imageUrl   String?  // PNG in storage (for draw/upload) sau rasterizat pt typed
+  createdAt  DateTime @default(now())
+
+  // one of partyId OR userId (pentru externi vs interni)
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  partyId    String?
+  party      Party?   @relation(fields: [partyId], references: [id], onDelete: SetNull)
+
+  contractId String
+  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@index([contractId])
+  @@index([userId])
+  @@index([partyId])
+}
+
+enum SignatureType {
+  DRAW
+  TYPED
+  UPLOAD
+}
+
+model Template {
+  id         String   @id @default(cuid())
+  name       String
+  category   String?
+  tags       String[]
+  content    Json      // was String; store JSON template with variables
+  updatedAt  DateTime  @updatedAt
+  createdAt  DateTime  @default(now())
+
+  companyId  String?
+  company    Company?  @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  creatorId  String
+  creator    User      @relation("TemplateCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, name])
+  @@index([companyId])
+  @@index([creatorId])
+}
+
+model Invoice {
+  id         String   @id @default(cuid())
+  number     String   @unique
+  date       DateTime
+  amount     Float
+  status     InvoiceStatus
+  pdfUrl     String?
+
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyId  String?
+  company    Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, date])
+}
+
+enum InvoiceStatus {
+  PAID
+  UNPAID
+  OVERDUE
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  content    String
+  createdAt  DateTime @default(now())
+
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  contractId String
+  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@index([contractId, createdAt])
+}
+
+model Activity {
+  id         String        @id @default(cuid())
+  action     ActivityAction
+  createdAt  DateTime      @default(now())
+
+  userId     String?
+  user       User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  contractId String?
+  contract   Contract?     @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  meta       Json?
+
+  @@index([contractId, createdAt])
+}
+
+enum ActivityAction {
+  CREATED
+  INVITED
+  VIEWED
+  SIGNED
+  DECLINED
+  COMMENTED
+  EXPORTED
 }

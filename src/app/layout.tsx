@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-app`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F9FAFB]`}
       >
         <SidebarProvider>
           <AppSidebar />
@@ -36,4 +36,32 @@ export default function RootLayout({
       </body>
     </html>
   );
+}
+
+
+const colors = {
+  "background": "#fff",
+  "foreground": "#0f172a",
+  "border": "#e6e9ee",
+  "input": "#f7f8fa",
+  "primary": "#0ea5e9",
+  "primary-foreground": "#ffffff",
+  "secondary": "#eff8ff",
+  "secondary-foreground": "#0369a1",
+  "muted": "#e6eef4",
+  "muted-foreground": "#475569",
+  "success": "#10b981",
+  "success-foreground": "#ffffff",
+  "accent": "#0ea5e9",
+  "accent-foreground": "#ffffff",
+  "destructive": "#ef4444",
+  "destructive-foreground": "#ffffff",
+  "warning": "#f59e0b",
+  "warning-foreground": "#ffffff",
+  "card": "#ffffff",
+  "card-foreground": "#0f172a",
+  "sidebar": "#ffffff",
+  "sidebar-foreground": "#374151",
+  "sidebar-primary": "#e5e7eb",
+  "sidebar-primary-foreground": "#0f172a"
 }
