@@ -1,0 +1,172 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  firstName String
+  lastName  String
+  phone     String?
+  age       Int?
+
+  roleId    String?
+  role      Role?    @relation(fields: [roleId], references: [id])
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  contracts  Contract[] @relation("ContractOwner")
+  signatures Signature[]
+  invoices   Invoice[]
+  comments   Comment[]
+  activities Activity[]
+  templates  Template[] @relation("TemplateCreator")
+}
+
+model Role {
+  id          String    @id @default(cuid())
+  name        String    // ex: Founder, Admin, Legal
+  description String?
+  permissions Json?
+
+  companyId   String?
+  company     Company?  @relation(fields: [companyId], references: [id])
+
+  users       User[]
+}
+
+model Company {
+  id        String   @id @default(cuid())
+  name      String
+  cui       String   @unique
+  regNumber String?
+  emailDomain String?
+
+  logoUrl   String?
+  colorPrimary   String?
+  colorSecondary String?
+  colorAccent    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users     User[]
+  contracts Contract[]
+  templates Template[]
+  invoices  Invoice[]
+
+  Role Role[]
+}
+
+model Contract {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   // rich text / json
+  status    ContractStatus @default(DRAFT)
+
+  ownerId   String
+  owner     User     @relation("ContractOwner", fields: [ownerId], references: [id])
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  signatures Signature[]
+  comments   Comment[]
+  activities Activity[]
+}
+
+model Signature {
+  id        String   @id @default(cuid())
+  type      String   // draw, type, upload
+  fullName  String
+  title     String?
+  imageUrl  String?  // pt upload / imagine generată
+  createdAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  contractId String
+  contract   Contract @relation(fields: [contractId], references: [id])
+}
+
+model Template {
+  id        String   @id @default(cuid())
+  name      String
+  category  String?
+  tags      String[]
+  content   String   // contract text
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  creatorId String
+  creator   User     @relation("TemplateCreator", fields: [creatorId], references: [id])
+}
+
+model Invoice {
+  id        String   @id @default(cuid())
+  number    String   @unique
+  date      DateTime
+  amount    Float
+  status    String   // Paid, Unpaid
+  pdfUrl    String?
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  contractId String
+  contract   Contract @relation(fields: [contractId], references: [id])
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  action    String   // ex: "viewed contract", "signed"
+  createdAt DateTime @default(now())
+
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+
+  contractId String?
+  contract   Contract? @relation(fields: [contractId], references: [id])
+}
+
+enum ContractStatus {
+  DRAFT
+  PENDING
+  SIGNED
+  EXPIRED
+}
