@@ -1,17 +1,10 @@
-import { H1, Text } from "@/components/topography"
-import { StatsCard } from "./components/stats-card"
-import { ContractsTable } from "./components/contracts-table"
-import { Header } from "@/components/header"
 import { PageContainer } from "@/components/layout"
 import { DashboardHeader } from "./components/dashboard-header"
 import { userMockData } from "@/mock-data/user"
 import { KPIStats } from "./components/kpi-stats"
-
-const sampleContracts = [
-  { id: "1", title: "Contract Servicii Foto", client: "Studio Lumi", status: "PENDING", updatedAt: "2h ago" },
-  { id: "2", title: "Contract Mentenantă", client: "ACME SRL", status: "SIGNED", updatedAt: "Yesterday" },
-  { id: "3", title: "Contract Consultanță", client: "BlueLine", status: "DRAFT", updatedAt: "2 days ago" },
-] as const
+import { UpcomingNext } from "./components/upcoming-next"
+import { RecentContracts } from "./components/recent-contracts"
+import { RecentActivity } from "./components/recent-activity"
 
 export default function DashboardPage() {
   return (
@@ -19,9 +12,11 @@ export default function DashboardPage() {
       <PageContainer className="flex flex-col gap-4">
         <DashboardHeader user={userMockData} />
         <KPIStats />
-
-        {/* Recent contracts table */}
-        <ContractsTable data={sampleContracts as any} />
+        <UpcomingNext />
+        <div className="flex gap-4">
+          <RecentContracts />
+          <RecentActivity />
+        </div>
       </PageContainer>
     </div>
   )

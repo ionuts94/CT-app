@@ -11,7 +11,7 @@ type Props = {
 
 export const DashboardHeader: React.FC<Props> = ({ user }) => {
   return (
-    <Card className="p-[20px]">
+    <Card className="p-4">
       <CardContent className="p-0 flex items-center justify-between">
         <div className="flex flex-col gap-1.5">
           <Text size="2xl" weight="semibold">
