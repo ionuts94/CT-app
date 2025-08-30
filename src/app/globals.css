@@ -61,6 +61,9 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
 
+  /* text */
+  --color-color-secondary: var(--color-secondary);
+
   /* charts (optional) */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -145,6 +148,9 @@
   --sidebar-foreground: #374151;
   --sidebar-primary: #e5e7eb;
   --sidebar-primary-foreground: #0f172a;
+
+  /* text */
+  --color-secondary: #6b7280;
 
   /* charts (can tweak later) */
   --chart-1: var(--primary);

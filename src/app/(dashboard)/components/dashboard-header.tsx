@@ -17,7 +17,7 @@ export const DashboardHeader: React.FC<Props> = ({ user }) => {
           <Text size="2xl" weight="semibold">
             Salut, {user.firstName} {user.lastName}
           </Text>
-          <Body className="text-chart-5">
+          <Body className="text-color-secondary">
             Gestioneaza si semneaza contracte cu claritate!
           </Body>
         </div>
