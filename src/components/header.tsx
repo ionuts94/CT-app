@@ -1,35 +1,86 @@
 "use client"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { PageWidth } from "./layout"
+import { ChevronDown, ReceiptText } from "lucide-react"
+import { Searchbar } from "./searchbar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { Button } from "./ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { userMockData } from "@/mock-data/user"
+import { Text } from "./topography"
 
 export function Header() {
+  const user = userMockData
   return (
-    <header className="h-16 border-b border-border flex items-center justify-between px-4 md:px-6 bg-background">
-      <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm" className="md:hidden">Menu</Button>
-        <div className="hidden md:block text-sm text-muted-foreground">Welcome back 👋</div>
-      </div>
-      <div className="flex items-center gap-3">
-        <Button variant="default" size="sm">New Contract</Button>
+    <header className="h-18 border-b border-border">
+      <PageWidth className="flex items-center justify-between h-full">
+        <div className="flex items-center gap-2">
+          <div className="text-primary font-bold">
+            <ReceiptText size={30} />
+          </div>
+          <Searchbar />
+        </div>
+
         <DropdownMenu>
-          <DropdownMenuTrigger className="rounded-full focus:outline-none">
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="/user.png" />
-              <AvatarFallback>IN</AvatarFallback>
+          <DropdownMenuTrigger className="px-3 py-2 border-[2px] rounded-lg border-sidebar-primary flex gap-3 items-center cursor-pointer">
+            <Avatar>
+              <AvatarImage src="https://images.pexels.com/photos/686094/pexels-photo-686094.jpeg" />
+              <AvatarFallback>IS</AvatarFallback>
             </Avatar>
+            <Text size="lg">{user.firstName} {user.lastName}</Text>
+            <ChevronDown />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuContent className="w-80" align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                Profile
+                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                Billing
+                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                Settings
+                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                Keyboard shortcuts
+                <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild><a href="/settings">Settings</a></DropdownMenuItem>
-            <DropdownMenuItem asChild><a href="/billing">Billing</a></DropdownMenuItem>
+            <DropdownMenuGroup>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+              <DropdownMenuItem>
+                New Team
+                <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Sign out</DropdownMenuItem>
+            <DropdownMenuItem>GitHub</DropdownMenuItem>
+            <DropdownMenuItem>Support</DropdownMenuItem>
+            <DropdownMenuItem disabled>API</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              Log out
+              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
+      </PageWidth>
     </header>
   )
 }
