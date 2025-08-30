@@ -50,7 +50,7 @@ export function Text({
       className={cn(
         sizeMap[size],
         weightMap[weight],
-        variantMap[variant],
+        // variantMap[variant],
         className
       )}
     >
