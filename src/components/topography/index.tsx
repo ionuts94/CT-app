@@ -66,6 +66,18 @@ export const H1 = ({ children, className }: { children: React.ReactNode; classNa
   </Text>
 )
 
+export const H2 = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+  <Text as="h2" size="3xl" weight="extrabold" className={cn("tracking-tight", className)}>
+    {children}
+  </Text>
+)
+
+export const H3 = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+  <Text as="h2" size="xl" weight="bold" className={cn("tracking-tight", className)}>
+    {children}
+  </Text>
+)
+
 export const Body = ({ children, className }: { children: React.ReactNode; className?: string }) => (
   <Text as="p" size="md" weight="normal" className={className}>
     {children}

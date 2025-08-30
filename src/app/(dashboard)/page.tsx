@@ -3,6 +3,8 @@ import { StatsCard } from "./components/stats-card"
 import { ContractsTable } from "./components/contracts-table"
 import { Header } from "@/components/header"
 import { PageContainer } from "@/components/layout"
+import { DashboardHeader } from "./components/dashboard-header"
+import { userMockData } from "@/mock-data/user"
 
 const sampleContracts = [
   { id: "1", title: "Contract Servicii Foto", client: "Studio Lumi", status: "PENDING", updatedAt: "2h ago" },
@@ -14,6 +16,8 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6 w-full">
       <PageContainer>
+        <DashboardHeader user={userMockData} />
+
         <div>
           <H1 className="mb-1">Dashboard</H1>
           <Text variant="secondary">Overview of your contracts and activity</Text>

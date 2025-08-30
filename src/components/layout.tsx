@@ -21,7 +21,7 @@ type PageContainerProps = Props & {
 export const PageContainer: React.FC<PageContainerProps> = ({ children, className, ...rest }) => {
   return (
     <PageWidth
-      className={cn("", className)}
+      className={cn("py-[20px]", className)}
       {...rest}
     >
       {children}
