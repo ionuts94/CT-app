@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar";
+import { Header } from "@/components/header";
+import { userMockData } from "@/mock-data/user";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +33,10 @@ export default function RootLayout({
       >
         <SidebarProvider>
           <AppSidebar />
-          {children}
+          <div className="w-full">
+            <Header user={userMockData} />
+            {children}
+          </div>
         </SidebarProvider>
       </body>
     </html>

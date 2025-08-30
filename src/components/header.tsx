@@ -8,9 +8,14 @@ import { Button } from "./ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { userMockData } from "@/mock-data/user"
 import { Text } from "./topography"
+import { User } from "@prisma/client"
 
-export function Header() {
-  const user = userMockData
+type Props = {
+  user: User
+}
+
+export const Header: React.FC<Props> = ({ user }) => {
+
   return (
     <header className="h-18 border-b border-border">
       <PageWidth className="flex items-center justify-between h-full">

@@ -13,7 +13,6 @@ const sampleContracts = [
 export default function DashboardPage() {
   return (
     <div className="space-y-6 w-full">
-      <Header />
       <PageContainer>
         <div>
           <H1 className="mb-1">Dashboard</H1>
