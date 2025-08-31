@@ -17,8 +17,10 @@ import { cn } from "@/lib/utils"
 import { Calendar, ChevronLeft, Gauge, Home, Inbox, ReceiptText, Search, Settings } from "lucide-react"
 import Link from "next/link"
 import { Text } from "./topography"
+import { usePath } from "@/hooks/use-path"
 
 export function AppSidebar() {
+  const { isSelectedPath } = usePath()
   const { toggleSidebar, state } = useSidebar()
   const isExpanded = state === "expanded"
 
@@ -46,29 +48,33 @@ export function AppSidebar() {
           {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu className="gap-1">
-              {items.map((item, index) => (
-                <SidebarMenuItem
-                  key={item.title}
-                  className={cn(
-                    "p-1 rounded-lg hover:bg-sidebar-primary cursor-pointer",
-                    index === 0 && "bg-sidebar-primary"
-                  )}
-                >
-                  <SidebarMenuButton
-                    asChild
-                    tooltip={item.title}
+              {items.map((item, index) => {
+                const isSelected = isSelectedPath(item.url);
+
+                return (
+                  <SidebarMenuItem
+                    key={item.title}
                     className={cn(
-                      "hover:bg-sidebar-primary",
-                      index === 0 ? "text-sidebar-primary-foreground" : "text-sidebar-foreground"
+                      "p-1 rounded-lg hover:bg-sidebar-primary cursor-pointer",
+                      isSelected && "bg-sidebar-primary"
                     )}
                   >
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+                    <SidebarMenuButton
+                      asChild
+                      tooltip={item.title}
+                      className={cn(
+                        "hover:bg-sidebar-primary",
+                        isSelected ? "text-sidebar-primary-foreground" : "text-sidebar-foreground"
+                      )}
+                    >
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
