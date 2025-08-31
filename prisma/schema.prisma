@@ -225,7 +225,7 @@ enum SignatureType {
 
 model Template {
   id         String   @id @default(cuid())
-  name       String
+  title       String
   category   String?
   tags       String[]
   content    Json      // was String; store JSON template with variables
@@ -238,7 +238,7 @@ model Template {
   creatorId  String
   creator    User      @relation("TemplateCreator", fields: [creatorId], references: [id], onDelete: Cascade)
 
-  @@unique([companyId, name])
+  @@unique([companyId, title])
   @@index([companyId])
   @@index([creatorId])
 }

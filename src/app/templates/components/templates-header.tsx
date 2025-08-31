@@ -7,17 +7,17 @@ type Props = {
 
 }
 
-export const ContractsHeader: React.FC<Props> = ({ }) => {
+export const TemplatesHeader: React.FC<Props> = ({ }) => {
   return (
     <div className="flex items-center justify-between">
       <PageHeader>
-        <PageHeading>Contracte</PageHeading>
-        <PageSubHeading>Aici iti poti gestiona si organiza toate contractele</PageSubHeading>
+        <PageHeading>Saboloane</PageHeading>
+        <PageSubHeading>Aici iti poti gestiona si organiza toate sabloanele</PageSubHeading>
       </PageHeader>
       <Button className="cursor-pointer p-3" variant={"outline"}>
         <Plus strokeWidth={3} />
         <TextCTA weight="extrabold">
-          CREEAZA CONTRACT
+          CREEAZA SABLON
         </TextCTA>
       </Button>
     </div>

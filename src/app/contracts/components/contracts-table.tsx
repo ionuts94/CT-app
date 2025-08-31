@@ -31,7 +31,7 @@ export const ContractsTable: React.FC<Props> = ({ }) => {
               <TableRow key={index} className="hover:bg-muted/50">
                 <TableCell className="py-5 text-[15px]"><Input type="checkbox" className="size-4" /></TableCell>
                 <TableCell className="py-5 text-[15px]">{contract.firstName} {contract.lastName}</TableCell>
-                <TableCell className="py-5 text-[15px]">{contract.contractTitle}</TableCell>
+                <TableCell className="py-5 text-[15px]">{contract.title}</TableCell>
                 <TableCell>
                   <StatusBadge status={contract.status} />
                 </TableCell>
