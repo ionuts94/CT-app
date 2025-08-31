@@ -7,7 +7,7 @@ type Props = {
 
 export const Searchbar: React.FC<Props> = ({ }) => {
   return (
-    <div className="px-4 py-1 rounded-lg border border-sidebar-primary shadow-sm bg-[#F3F4F6] flex items-center justify-center w-[400px] text-color-secondary">
+    <div className="px-4 py-1 rounded-lg border border-sidebar-primary shadow-sm bg-card-secondary flex items-center justify-center w-[400px] text-color-secondary">
       <Search />
       <Input className="outline-none border-none shadow-none" placeholder="Cauta contracte, clienti, sabloane" />
     </div>
