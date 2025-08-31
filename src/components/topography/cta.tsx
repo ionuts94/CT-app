@@ -49,7 +49,6 @@ export function TextCTA({
         "uppercase transition-colors duration-150 select-none",
         sizeMap[size],
         weightMap[weight],
-        variantMap[variant],
         className
       )}
     >

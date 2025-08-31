@@ -50,7 +50,7 @@ export function AppSidebar() {
                 <SidebarMenuItem
                   key={item.title}
                   className={cn(
-                    "p-1 py-2 rounded-lg hover:bg-sidebar-primary cursor-pointer",
+                    "p-1 rounded-lg hover:bg-sidebar-primary cursor-pointer",
                     index === 0 && "bg-sidebar-primary"
                   )}
                 >

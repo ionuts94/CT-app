@@ -1,3 +1,4 @@
+import { PageHeader, PageHeading, PageSubHeading } from "@/components/page-header"
 import { Body, Text } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
 import { Button } from "@/components/ui/button"
@@ -13,14 +14,11 @@ export const DashboardHeader: React.FC<Props> = ({ user }) => {
   return (
     <Card className="p-4">
       <CardContent className="p-0 flex items-center justify-between">
-        <div className="flex flex-col gap-1.5">
-          <Text size="2xl" weight="semibold">
-            Salut, {user.firstName} {user.lastName}
-          </Text>
-          <Body className="text-color-secondary">
-            Gestioneaza si semneaza contracte cu claritate!
-          </Body>
-        </div>
+        <PageHeader>
+          <PageHeading>Salut, {user.firstName} {user.lastName}</PageHeading>
+          <PageSubHeading>Gestioneaza si semneaza contracte cu claritate!</PageSubHeading>
+        </PageHeader>
+
         <Button className="cursor-pointer p-3">
           <Plus strokeWidth={3} />
           <TextCTA weight="extrabold" variant="secondary">

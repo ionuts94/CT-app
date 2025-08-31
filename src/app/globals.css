@@ -26,6 +26,8 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
 
+  --color-card-secondary: var(--card-secondary);
+
   /* brand */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
@@ -113,6 +115,8 @@
 
   --popover: #ffffff;
   --popover-foreground: #0f172a;
+
+  --card-secondary: #F3F4F6;
 
   /* brand */
   --primary: #0ea5e9;
