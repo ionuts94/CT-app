@@ -5,7 +5,7 @@ import { Input as ShadInput } from "@/components/ui/input"
 import { HTMLAttributes } from "react"
 import { cn } from "@/lib/utils"
 import { Form } from "@/components/ui/form"
-import { RichTextEditor } from "@/components/rich-text-editor_c"
+import { RichTextEditor } from "@/components/rich-text-editor"
 
 type Props = {
 
