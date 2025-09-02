@@ -1,0 +1,1 @@
+export type T_SVGGradientColor = 'yellow' | 'green' | 'skyblue' | 'orange' | undefined

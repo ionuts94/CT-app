@@ -1,23 +1,47 @@
 "use client"
 
-import { FontSize, TextStyle } from '@tiptap/extension-text-style'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from './ui/select'
+import { Bold, Italic, List, ListOrdered, Minus, Quote, Redo, Strikethrough, Undo } from 'lucide-react'
 import { Editor, EditorContent, useEditor, useEditorState } from '@tiptap/react'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
+import { FontSize, TextStyle } from '@tiptap/extension-text-style'
 import StarterKit from '@tiptap/starter-kit'
 import { Toggle } from './ui/toggle'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from './ui/select'
+import { Text } from './topography'
+import { cn } from '@/lib/utils'
+import { AiTemplateWriteDialog } from '@/app/templates/[templateId]/components/ai-template-write-dialog'
 
-export const RichTextEditor: React.FC = () => {
+type EditorProps = {
+  disabled?: boolean,
+  className?: string,
+  content?: string,
+  onChange?: (htmlString: string) => any,
+}
+
+export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, content, onChange = () => null }) => {
   const editor = useEditor({
     immediatelyRender: false,
     shouldRerenderOnTransaction: true,
+    editable: !disabled,
     extensions: [StarterKit, TextStyle, FontSize],
-    content: `
-        <p>Adjusting font sizes can greatly affect the readability of your text, making it easier for users to engage with your content.</p>
-        <p>When designing a website, it's crucial to balance large headings and smaller body text for a clean, organized layout.</p>
-        <p>When setting font sizes, it's important to consider accessibility, ensuring that text is readable for users with different visual impairments.</p>
-        <p><span style="font-size: 10px">Too small</span> a font size can strain the eyes, while <span style="font-size: 40px">too large</span> can disrupt the flow of the design.</p>
-        <p>When designing for mobile, font sizes should be adjusted to maintain readability on smaller screens.</p>
-      `,
+    content: content,
+    editorProps: {
+      attributes: {
+        class: cn(
+          "rounded-md border min-h-[400px] max-h-[800px] overflow-y-auto overflow-x-hidden p-2 max-w-full",
+          "prose prose-sm dark:prose-invert max-w-none",
+          "[&_p]:my-2 [&_ul]:my-2 [&_ol]:my-2",
+          "[&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-6 [&_ol]:pl-6",
+          "[&_blockquote]:border-l [&_blockquote]:border-muted-foreground/40 [&_blockquote]:pl-4 [&_blockquote]:italic",
+          "focus:outline-none focus:ring-0",
+          "border-sidebar-primary bg-muted/40",
+          className
+        ),
+      },
+    },
+    onUpdate: ({ editor }) => {
+      onChange(editor.getHTML())
+    },
   })
 
   if (!editor) {
@@ -33,7 +57,6 @@ export const RichTextEditor: React.FC = () => {
 }
 
 function MenuBar({ editor }: { editor: Editor }) {
-  // Read the current editor's state, and re-render the component when it changes
   const editorState = useEditorState({
     editor,
     selector: ctx => {
@@ -66,128 +89,150 @@ function MenuBar({ editor }: { editor: Editor }) {
   })
 
   return (
-    <div className="flex flex-wrap items-center gap-1 p-2 border rounded-md bg-muted/40">
-      <div className="">
-        <Toggle
-          onClick={() => editor.chain().focus().toggleBold().run()}
+    <div className="flex flex-wrap items-center gap-1 p-2 border rounded-md bg-muted/40 justify-between">
+      <div className="flex items-center gap-1">
+        <MenuBarItem
+          label="Bold"
+          active={editorState.isBold}
           disabled={!editorState.canBold}
-          className={editorState.isBold ? 'is-active' : ''}
+          onClick={() => editor.chain().focus().toggleBold().run()}
         >
-          Bold
-        </Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().toggleItalic().run()}
+          <Bold />
+        </MenuBarItem>
+
+        <MenuBarItem
+          label="Italic"
+          active={editorState.isItalic}
           disabled={!editorState.canItalic}
-          className={editorState.isItalic ? 'is-active' : ''}
+          onClick={() => editor.chain().focus().toggleItalic().run()}
         >
-          Italic
-        </Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().toggleStrike().run()}
+          <Italic />
+        </MenuBarItem>
+
+        <MenuBarItem
+          label="Strike Through"
+          active={editorState.isStrike}
           disabled={!editorState.canStrike}
-          className={editorState.isStrike ? 'is-active' : ''}
+          onClick={() => editor.chain().focus().toggleStrike().run()}
         >
-          Strike
-        </Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().toggleCode().run()}
-          disabled={!editorState.canCode}
-          className={editorState.isCode ? 'is-active' : ''}
-        >
-          Code
-        </Toggle>
-        <Toggle onClick={() => editor.chain().focus().unsetAllMarks().run()}>Clear marks</Toggle>
-        <Toggle onClick={() => editor.chain().focus().clearNodes().run()}>Clear nodes</Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().setParagraph().run()}
-          className={editorState.isParagraph ? 'is-active' : ''}
-        >
-          Paragraph
-        </Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-          className={editorState.isHeading1 ? 'is-active' : ''}
-        >
-          H1
-        </Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          className={editorState.isHeading2 ? 'is-active' : ''}
-        >
-          H2
-        </Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-          className={editorState.isHeading3 ? 'is-active' : ''}
-        >
-          H3
-        </Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-          className={editorState.isHeading4 ? 'is-active' : ''}
-        >
-          H4
-        </Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-          className={editorState.isHeading5 ? 'is-active' : ''}
-        >
-          H5
-        </Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-          className={editorState.isHeading6 ? 'is-active' : ''}
-        >
-          H6
-        </Toggle>
-        <Toggle
+          <Strikethrough />
+        </MenuBarItem>
+
+        <Sep />
+
+        <div className='flex items-center gap-2 px-2'>
+          <Text size='sm'>Font size:</Text>
+          <FontSizeSelect
+            onValueChange={(newValue) => editor.chain().focus().setFontSize(newValue).run()}
+            value={editorState.fontSize}
+          />
+        </div>
+
+        <Sep />
+
+        <MenuBarItem
+          label="Unordered List"
+          active={editorState.isBulletList}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editorState.isBulletList ? 'is-active' : ''}
         >
-          Bullet list
-        </Toggle>
-        <Toggle
+          <List />
+        </MenuBarItem>
+
+        <MenuBarItem
+          label="Ordered List"
+          active={editorState.isOrderedList}
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={editorState.isOrderedList ? 'is-active' : ''}
         >
-          Ordered list
-        </Toggle>
-        <Toggle
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={editorState.isCodeBlock ? 'is-active' : ''}
-        >
-          Code block
-        </Toggle>
-        <Toggle
+          <ListOrdered />
+        </MenuBarItem>
+
+        <MenuBarItem
+          label="Block Quote"
+          active={editorState.isBlockquote}
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editorState.isBlockquote ? 'is-active' : ''}
         >
-          Blockquote
-        </Toggle>
-        <Toggle onClick={() => editor.chain().focus().setHorizontalRule().run()}>Horizontal rule</Toggle>
-        <Toggle onClick={() => editor.chain().focus().setHardBreak().run()}>Hard break</Toggle>
-        <Toggle onClick={() => editor.chain().focus().undo().run()} disabled={!editorState.canUndo}>
-          Undo
-        </Toggle>
-        <Toggle onClick={() => editor.chain().focus().redo().run()} disabled={!editorState.canRedo}>
-          Redo
-        </Toggle>
-        <FontSizeSelect
-          onValueChange={(newValue) => editor.chain().focus().setFontSize(newValue).run()}
-          value={editorState.fontSize}
-        />
+          <Quote />
+        </MenuBarItem>
+
+        <MenuBarItem
+          label="Horizontal Line"
+          onClick={() => editor.chain().focus().setHorizontalRule().run()}
+        >
+          <Minus />
+        </MenuBarItem>
+
+        <Sep />
+
+        <MenuBarItem
+          label="Undo"
+          onClick={() => editor.chain().focus().undo().run()}
+        >
+          <Undo />
+        </MenuBarItem>
+
+        <MenuBarItem
+          label="Redo"
+          onClick={() => editor.chain().focus().redo().run()}
+        >
+          <Redo />
+        </MenuBarItem>
       </div>
+      <AiTemplateWriteDialog />
     </div>
   )
 }
 
-
 type Props = {
+  onClick?: () => any,
+  children?: React.ReactNode,
+  label: string,
+  className?: string,
+  active?: boolean,
+  disabled?: boolean
+}
+
+export const MenuBarItem: React.FC<Props> = ({ onClick = () => null, children, label, className, active, disabled }) => {
+  const activeItemClass = "bg-primary text-secondary hover:bg-primary/60 hover:text-secondary"
+
+  return (
+    <Tooltip>
+      <TooltipTrigger
+        asChild
+        type='button'
+        className={cn("hover:cursor-pointer", className)}
+      >
+        <Toggle
+          type='button'
+          disabled={disabled}
+          onClick={onClick}
+          onMouseDown={(e) => e.preventDefault()}
+          className={cn(active && activeItemClass)}
+        >
+          {children}
+        </Toggle>
+      </TooltipTrigger>
+      <TooltipContent className="bg-primary text-white rounded-md text-[14px] py-1 px-2">
+        <p>{label}</p>
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+
+type FontSizeSelectProps = {
   onValueChange: (newValue: string) => any,
   value: string,
 }
 
-export const FontSizeSelect: React.FC<Props> = ({ onValueChange = () => null, value }) => {
+export const FontSizeSelect: React.FC<FontSizeSelectProps> = ({ onValueChange = () => null, value }) => {
+  const STARTING_FONT_SIZE = 8
+  const ENDING_FONT_SIZE = 48
+
+  const selectItems = []
+  for (let i = STARTING_FONT_SIZE; i <= ENDING_FONT_SIZE; i++) {
+    selectItems.push(`${i}px`)
+  }
+
   return (
     <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger className="w-[180px] bg-white">
@@ -195,13 +240,15 @@ export const FontSizeSelect: React.FC<Props> = ({ onValueChange = () => null, va
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="10px">10px</SelectItem>
-          <SelectItem value="12px">12px</SelectItem>
-          <SelectItem value="14px">14px</SelectItem>
-          <SelectItem value="16px">16px</SelectItem>
-          <SelectItem value="18px">18px</SelectItem>
+          {selectItems.map(selectItem => (
+            <SelectItem key={selectItem} value={selectItem}>{selectItem}</SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
   )
+}
+
+function Sep() {
+  return <div className="mx-1 h-8 w-[2px] bg-border" />
 }

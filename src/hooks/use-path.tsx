@@ -8,11 +8,8 @@ export const usePath = () => {
     : pathname.split('/')
   )
 
-  console.log(pathItems)
-
   const isSelectedPath = (path: string) => {
     const justPath = path.slice(1).toLocaleLowerCase()
-    console.log("called is selected path: ", justPath)
 
     if (justPath === "" && pathItems[0] === "") return true;
 
