@@ -3,6 +3,7 @@ import { HTMLAttributes } from "react"
 import { Label as ShadLabel } from "./ui/label"
 import { Input as ShadInput } from "./ui/input"
 import { Textarea as ShadTextarea } from "./ui/textarea"
+import { Text, TextProps } from "./topography"
 
 export const FormRow: React.FC<HTMLAttributes<HTMLDivElement>> = ({ className, ...rest }) => {
   return (
@@ -26,4 +27,13 @@ export const Textarea: React.FC<React.ComponentProps<"textarea">> = ({ className
   return (
     <ShadTextarea className={cn("w-full min-h-[200px] max-h-[400px] h-auto px-4 py-2 rounded-md shadow-sm bg-muted/40 flex items-center border border-sidebar-primary justify-center", className)} {...rest} />
   )
-} 
+}
+
+export const InvalidInputError: React.FC<TextProps> = ({ children, ...rest }) => {
+  if (!children) return;
+  return (<Text size="sm" className="text-destructive font-semibold pl-" {...rest}>{children}</Text>)
+}
+
+export const RequiredFieldMark: React.FC = () => {
+  return (<span className="text-red-400">*</span>)
+}

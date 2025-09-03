@@ -2,8 +2,8 @@
 import { cn } from "@/lib/utils"
 import { JSX } from "react"
 
-type TextProps = {
-  children: React.ReactNode
+export type TextProps = {
+  children?: React.ReactNode
   className?: string
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl"
   weight?: "light" | "normal" | "medium" | "semibold" | "bold" | "extrabold"

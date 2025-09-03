@@ -10,6 +10,7 @@ import { Toggle } from './ui/toggle'
 import { Text } from './topography'
 import { cn } from '@/lib/utils'
 import { AiTemplateWriteDialog } from '@/app/templates/[templateId]/components/ai-template-write-dialog'
+import { useState } from 'react'
 
 type EditorProps = {
   disabled?: boolean,
@@ -177,7 +178,12 @@ function MenuBar({ editor }: { editor: Editor }) {
           <Redo />
         </MenuBarItem>
       </div>
-      <AiTemplateWriteDialog />
+      <AiTemplateWriteDialog
+        onGenerateTemplate={(html: string) => {
+          editor?.commands.setContent(html, { emitUpdate: true })
+          editor?.commands.focus('end')
+        }}
+      />
     </div>
   )
 }
