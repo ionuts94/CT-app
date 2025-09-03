@@ -4,6 +4,8 @@ import { FormRow, Input, Label, Textarea } from "@/components/form-emelemts"
 import { AiSvg } from "@/components/svgs/ai-svg"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { IndustrySelect } from "./industry-select"
+import { ToneSelect } from "./tone-select"
 
 
 type Props = {
@@ -53,13 +55,13 @@ const AiTemplateWriterForm: React.FC = () => {
         </FormRow>
         <FormRow>
           <Label>Industrie</Label>
-          <Input placeholder="ex. Educație, Juridic, Transport, Turism" />
+          <IndustrySelect placeholder="Selecreaza industria" />
         </FormRow>
       </FormRow>
       <FormRow className="flex-row gap-2">
         <FormRow>
           <Label>Ton</Label>
-          <Input placeholder="ex. Profesional & clar" />
+          <ToneSelect placeholder="Selecteaza tonul contractului" />
         </FormRow>
         <FormRow>
           <Label>Durata contractului</Label>

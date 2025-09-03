@@ -19,3 +19,13 @@ export type T_SvgProps = {
   strokeWidth?: keyof typeof STROKE_WIDTH,
   onClick?: () => any
 }
+
+export type T_SelectOption = { value: string; label: string }
+
+export type T_SelectProps = {
+  value?: string
+  onChange?: (value: string) => void
+  placeholder?: string
+  disabled?: boolean
+  className?: string
+}
