@@ -4,7 +4,7 @@ import { CustomApiResponse, Status } from "@/types/api-call";
 import { T_AiTemplateWriteSchema } from "@/validators/template.validator";
 import OpenAI from "openai";
 
-export async function AIGenerateTemplate(data: T_AiTemplateWriteSchema): Promise<CustomApiResponse> {
+export async function AIGenerateTemplate(data: T_AiTemplateWriteSchema): Promise<CustomApiResponse<string>> {
   console.log("Generate template for values")
   console.log(data)
 

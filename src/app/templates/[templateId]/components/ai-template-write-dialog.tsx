@@ -10,8 +10,10 @@ import { useForm } from "react-hook-form"
 import { Text } from "@/components/topography"
 import { AiTemplateWriteSchema, T_AiTemplateWriteSchema } from "@/validators/template.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { AIGenerateTemplate } from "@/actions/post/template/ai"
+import { AIGenerateTemplate } from "@/actions/post/template/ai-generate-template"
 import { useState } from "react"
+import { useAITemplate } from "@/hooks/use-ai-template"
+import { ButtonWithLoading } from "@/components/button-with-loading"
 
 
 type Props = {
@@ -46,7 +48,8 @@ export const AiTemplateWriteDialog: React.FC<Props> = ({ onGenerateTemplate = ()
 }
 
 const AiTemplateWriterForm: React.FC<Props> = ({ onGenerateTemplate }) => {
-  const [templateString, setTemplateString] = useState("")
+  const { aiGenerateLoading, aiGenerateTemplate, runAITemplateReview } = useAITemplate()
+
   const form = useForm<T_AiTemplateWriteSchema>({
     resolver: zodResolver(AiTemplateWriteSchema),
     defaultValues: {
@@ -59,7 +62,6 @@ const AiTemplateWriterForm: React.FC<Props> = ({ onGenerateTemplate }) => {
   })
 
   const { register, watch, handleSubmit, formState } = form
-  const values = watch()
   const { errors } = formState
 
   const handleIndustryChange = (value: string) => {
@@ -73,10 +75,21 @@ const AiTemplateWriterForm: React.FC<Props> = ({ onGenerateTemplate }) => {
   }
 
   const handleFormSubmit = async (values: T_AiTemplateWriteSchema) => {
-    console.log(values)
-    const { data, error } = await AIGenerateTemplate(values)
-    if (data) {
-      onGenerateTemplate(data)
+    const { templateRichTextString, error } = await aiGenerateTemplate(values)
+    if (error) {
+      return alert(error)
+    }
+
+    console.log("running template review")
+    const { reviewData } = await runAITemplateReview({
+      initialInput: values,
+      templateRichTextString: templateRichTextString || ""
+    })
+
+    console.log(reviewData)
+
+    if (templateRichTextString) {
+      onGenerateTemplate(templateRichTextString)
     }
   }
 
@@ -115,8 +128,27 @@ const AiTemplateWriterForm: React.FC<Props> = ({ onGenerateTemplate }) => {
         <DialogClose asChild>
           <Button type="button" variant="outline">Anuleaza</Button>
         </DialogClose>
-        <Button type="submit">Genereaza Draftul</Button>
+        <ButtonWithLoading
+          type="submit"
+          loading={aiGenerateLoading}
+        >
+          {aiGenerateLoading
+            ? "Se proceseaza"
+            : "Genereaza Draftul"
+          }
+        </ButtonWithLoading>
       </DialogFooter>
     </form>
   )
 }
+
+// test case:
+
+// Sunt un freelancer si urmeaza sa preiau un proiect. proiectul consta intr-o platforma de loialitate intre distribuitori, magazine si consumatori
+
+// Platforma consta in:
+
+// O aplicatie web: distirubitorii creaza oferte pentru magazine, magazinele isi gestioneaza ofertele
+// O aplicatie mobil: pentru consumatori
+
+// Plata este de 20 de $ pe ora
