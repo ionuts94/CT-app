@@ -3,9 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
+
+/* ====================
+   MODELS
+   ==================== */
 
 model User {
   id         String   @id @default(cuid())
@@ -33,6 +38,9 @@ model User {
   templates   Template[]    @relation("TemplateCreator")
 
   @@index([currentCompanyId])
+
+  // table mapping
+  @@map("users")
 }
 
 model Company {
@@ -61,6 +69,9 @@ model Company {
   roles       Role[]
 
   @@index([name])
+
+  // table mapping
+  @@map("companies")
 }
 
 model Membership {
@@ -76,12 +87,9 @@ model Membership {
   @@unique([userId, companyId])
   @@index([companyId])
   @@index([userId])
-}
 
-enum RoleKey {
-  OWNER
-  ADMIN
-  MEMBER
+  // table mapping
+  @@map("memberships")
 }
 
 model Role {
@@ -98,6 +106,9 @@ model Role {
 
   @@unique([companyId, name])
   @@index([companyId])
+
+  // table mapping
+  @@map("roles")
 }
 
 model Contract {
@@ -128,14 +139,9 @@ model Contract {
 
   @@index([companyId, status, createdAt])
   @@index([ownerId])
-}
 
-enum ContractStatus {
-  DRAFT
-  OUT_FOR_SIGNATURE
-  FULLY_SIGNED
-  DECLINED
-  EXPIRED
+  // table mapping
+  @@map("contracts")
 }
 
 model Party {
@@ -155,11 +161,9 @@ model Party {
 
   @@unique([contractId, email])
   @@index([contractId, signingOrder])
-}
 
-enum PartyRole {
-  SIGNER
-  VIEWER
+  // table mapping
+  @@map("parties")
 }
 
 model Invite {
@@ -174,6 +178,9 @@ model Invite {
 
   @@index([contractId])
   @@index([partyId])
+
+  // table mapping
+  @@map("invites")
 }
 
 model SignaturePlacement {
@@ -192,6 +199,9 @@ model SignaturePlacement {
 
   @@index([contractId])
   @@index([partyId])
+
+  // table mapping
+  @@map("signature_placements")
 }
 
 model Signature {
@@ -215,12 +225,9 @@ model Signature {
   @@index([contractId])
   @@index([userId])
   @@index([partyId])
-}
 
-enum SignatureType {
-  DRAW
-  TYPED
-  UPLOAD
+  // table mapping
+  @@map("signatures")
 }
 
 model Template {
@@ -241,6 +248,9 @@ model Template {
   @@unique([companyId, title])
   @@index([companyId])
   @@index([creatorId])
+
+  // table mapping
+  @@map("templates")
 }
 
 model Invoice {
@@ -258,12 +268,9 @@ model Invoice {
   company    Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
 
   @@index([companyId, date])
-}
 
-enum InvoiceStatus {
-  PAID
-  UNPAID
-  OVERDUE
+  // table mapping
+  @@map("invoices")
 }
 
 model Comment {
@@ -278,6 +285,9 @@ model Comment {
   contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
 
   @@index([contractId, createdAt])
+
+  // table mapping
+  @@map("comments")
 }
 
 model Activity {
@@ -294,6 +304,45 @@ model Activity {
   meta       Json?
 
   @@index([contractId, createdAt])
+
+  // table mapping
+  @@map("activities")
+}
+
+
+/* ====================
+   ENUMS
+   ==================== */
+
+enum RoleKey {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum ContractStatus {
+  DRAFT
+  OUT_FOR_SIGNATURE
+  FULLY_SIGNED
+  DECLINED
+  EXPIRED
+}
+
+enum PartyRole {
+  SIGNER
+  VIEWER
+}
+
+enum SignatureType {
+  DRAW
+  TYPED
+  UPLOAD
+}
+
+enum InvoiceStatus {
+  PAID
+  UNPAID
+  OVERDUE
 }
 
 enum ActivityAction {
