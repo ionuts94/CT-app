@@ -2,67 +2,66 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { CustomApiResponse, Status } from "@/types/api-call";
-import { ContractReviewOutput } from "@/types/template/ai-review-template";
+import { TemplateReviewOutput } from "@/types/template/ai-review-template";
 import { T_AiTemplateWriteSchema } from "@/validators/template.validator";
 import OpenAI from "openai";
 
 const openai = new OpenAI()
 
 export type T_AITemplateReviewInputs = {
-    initialInput: T_AiTemplateWriteSchema,
-    templateRichTextString: string
+  initialInput: T_AiTemplateWriteSchema,
+  templateRichTextString: string
 }
 
 export async function AIReviewTemplate({
-    initialInput,
-    templateRichTextString
-}: T_AITemplateReviewInputs): Promise<CustomApiResponse<ContractReviewOutput>> {
-    try {
-        const prompt = getPromptForAI({
-            initialInput,
-            templateRichTextString
-        })
+  initialInput,
+  templateRichTextString
+}: T_AITemplateReviewInputs): Promise<CustomApiResponse<TemplateReviewOutput>> {
+  try {
+    const prompt = getPromptForAI({
+      initialInput,
+      templateRichTextString
+    })
 
-        const res = await openai.responses.create({
-            model: "gpt-4o-mini",
-            input: prompt,
-            temperature: 0.2,
-        });
+    const res = await openai.responses.create({
+      model: "gpt-4o-mini",
+      input: prompt,
+      temperature: 0.2,
+    });
 
+    console.log("Reviewd: ")
+    console.log(res)
 
-        console.log("Reviewd: ")
-        console.log(res)
+    const raw = res.output_text;
+    if (!raw) throw new Error("Missing output_text in response");
+    const parsed = JSON.parse(raw);
 
-        const raw = res.output_text;
-        if (!raw) throw new Error("Missing output_text in response");
-        const parsed = JSON.parse(raw);
-
-        return {
-            status: Status.SUCCESS,
-            data: parsed
-        };
-    } catch (err: any) {
-        const errMessage = `${err.message}`;
-        console.log(errMessage);
-        return {
-            status: Status.FAILED,
-            error: errMessage
-        };
-    }
+    return {
+      status: Status.SUCCESS,
+      data: parsed
+    };
+  } catch (err: any) {
+    const errMessage = `${err.message}`;
+    console.log(errMessage);
+    return {
+      status: Status.FAILED,
+      error: errMessage
+    };
+  }
 }
 
 const getPromptForAI = ({
-    initialInput,
-    templateRichTextString
+  initialInput,
+  templateRichTextString
 }: T_AITemplateReviewInputs) => {
-    return `
+  return `
 TU EȘTI: „Contract Template Reviewer” — un validator și normalizator de șabloane de contracte în limba română. NU oferi consultanță juridică, NU inventezi date, NU introduci obligații materiale noi fără indicii explicite în intrări. Lucrezi exclusiv în română, cu diacritice.
 
 SCOP:
 1) Analizezi contractul generat (draftHtml) raportat la intrările inițiale (inputJson).
 2) Raportezi ce lipsește, ce este neclar, ce se contrazice și ce e în neregulă la format.
 3) Normalizezi stilul/formatul fără a schimba sensul juridic: corectezi tipografia, diacriticele, terminologia, placeholders-urile, inseri secțiuni standard lipsă cu text neutru + placeholders.
-4) Returnezi STRICT un singur obiect JSON valid, conform SCHEMEI „ContractReviewOutput” (camelCase). Fără markdown, fără text suplimentar.
+4) Returnezi STRICT un singur obiect JSON valid, conform SCHEMEI „TemplateReviewOutput” (camelCase). Fără markdown, fără text suplimentar.
 
 INTRĂRI:
 - inputJson:

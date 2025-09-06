@@ -22,33 +22,57 @@ export interface ReviewScores {
     formatting: number;
 }
 
-// ---------- Checklist ----------
+// ---------- Checklist (UPDATED) ----------
 export interface ReviewChecklist {
+    /** Titlu document (28–32px) */
     title: boolean;
+    /** Preambul + părți contractante */
     preambleAndParties: boolean;
-    definitions: boolean;
-    objectAndDestination: boolean;
-    priceAndPayments: boolean;
-    utilitiesAndExpenses: boolean;
-    termAndSchedule: boolean;
-    obligationsOfParties: boolean;
-    initialStateInventoryInspections: boolean;
-    confidentiality: boolean;
-    gdpr: boolean;
-    intellectualProperty: boolean;
-    warrantiesAndLiability: boolean;
-    forceMajeure: boolean;
+    /** Definiții + scope clar: obiect, livrabile, acceptance */
+    definitionsAndScope: boolean;
+    /** Durată & guvernanță: perioadă, milestone-uri, comunicare, roluri */
+    durationAndGovernance: boolean;
+    /** Financiar: tarif, TVA/monedă, facturare, penalități, suspendare pentru neplată */
+    financial: boolean;
+    /** IP & Licențe: background/foreground, transfer drepturi, OSS/terți */
+    ipAndLicenses: boolean;
+    /** Mediu & conturi: cloud, App Store, repo; cine publică/deține */
+    environmentAndAccounts: boolean;
+    /** Confidențialitate & GDPR (NDA + DPA dacă e cazul) */
+    confidentialityAndGdpr: boolean;
+    /** Suport & SLA: garanție bugfix, suport post-lansare, timpi de răspuns */
+    supportAndSla: boolean;
+    /** Răspundere & limitări: plafonare, excluderi pierderi indirecte */
+    liabilityAndLimitations: boolean;
+    /** Reziliere: pentru cauză & pentru conveniență, efecte/hand-over */
     termination: boolean;
-    governingLawAndDisputes: boolean;
-    notices: boolean;
-    assignmentAmendmentsEntireAgreement: boolean;
+    /** Alte clauze: forță majoră, lege aplicabilă, jurisdicție, notificări, cesiune/modificări/integralitate */
+    otherClauses: boolean;
+    /** Semnături: tabel 2 coloane */
     signatures: boolean;
 }
+
+// (opțional) ordinea recomandată pentru UI
+export const REVIEW_CHECKLIST_ORDER: Array<keyof ReviewChecklist> = [
+    'title',
+    'preambleAndParties',
+    'definitionsAndScope',
+    'durationAndGovernance',
+    'financial',
+    'ipAndLicenses',
+    'environmentAndAccounts',
+    'confidentialityAndGdpr',
+    'supportAndSla',
+    'liabilityAndLimitations',
+    'termination',
+    'otherClauses',
+    'signatures',
+];
 
 // ---------- Issues, contradictions, diffs ----------
 export interface ReviewIssue {
     id: string;
-    section: string;
+    section: string; // ex.: "financial", "supportAndSla" etc.
     type: IssueType;
     severity: Severity;
     finding: string;
@@ -73,8 +97,8 @@ export interface DiffEntry {
     description?: string;
 }
 
-// ---------- Main output ----------
-export interface ContractReviewOutput {
+// ---------- Main output (RENAMED) ----------
+export interface TemplateReviewOutput {
     status: ReviewStatus;
     summary: string;
     scores: ReviewScores;

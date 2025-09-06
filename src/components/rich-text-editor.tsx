@@ -10,7 +10,7 @@ import { Toggle } from './ui/toggle'
 import { Text } from './topography'
 import { cn } from '@/lib/utils'
 import { AiTemplateWriteDialog } from '@/app/templates/[templateId]/components/ai-template-write-dialog'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type EditorProps = {
   disabled?: boolean,
@@ -25,7 +25,96 @@ export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, con
     shouldRerenderOnTransaction: true,
     editable: !disabled,
     extensions: [StarterKit, TextStyle, FontSize],
-    content: content,
+    content: `<p><strong><span style="font-size: 28px">Contract de Prestări Servicii – Dezvoltare Aplicație Web și Mobilă</span></strong></p>
+<p><strong><span style="font-size: 18px">Între:</span></strong></p>
+<p>Încheiat astăzi, {{DATA_INCHEIERII}}, în {{LOCUL_INCHEIERII}}, între:</p>
+<ul>
+<li>Prestatorul de servicii, având sediul în {{PRESTATOR_SEDIU_ADRESA}}, reprezentat prin {{PRESTATOR_REPREZENTANT}}, în calitate de {{PRESTATOR_FUNCTIE}}, intern și internațional cunoscut sub numărul {{PRESTATOR_CUI_CNP}}, pe de o parte; și </li>
+<li>Beneficiarul de servicii (denumit în continuare Beneficiar), având sediul în {{BENEFICIAR_SEDIU_ADRESA}}, reprezentat prin {{BENEFICIAR_REPREZENTANT}}, în calitate de {{BENEFICIAR_FUNCTIE}}, intern și internațional cunoscut sub numărul {{BENEFICIAR_CUI_CNP}}, pe de altă parte.</li>
+</ul>
+<p><strong><span style="font-size: 18px">1. DEFINIȚII</span></strong></p>
+<p>În cadrul acestui contract, următorii termeni vor avea următoarele semnificații:</p>
+<ul>
+<li><strong>Platformă:</strong> se referă la aplicația web și aplicația mobilă dezvoltate pentru gestionarea ofertelor între distribuitori, magazine și consumatori.</li>
+<li><strong>Prestator:</strong> persoana sau entitatea care oferă serviciile de dezvoltare a Platformei.</li>
+<li><strong>Beneficiar:</strong> persoana sau entitatea care beneficiază de serviciile oferite de Prestator.</li>
+</ul>
+<p><strong><span style="font-size: 18px">2. OBIECTUL CONTRACTULUI</span></strong></p>
+<p>Contractul are ca obiect prestarea de servicii de dezvoltare a unei platforme web și mobile pentru Beneficiar, denumită în continuare "Platforma". Platforma va consta în două componente esențiale:</p>
+<ul>
+<li>O aplicație web: care să permită distribuitorilor să creeze oferte pentru magazine și să permită magazinelor să gestioneze aceste oferte;</li>
+<li>O aplicație mobilă: destinată consumatorilor, pentru vizualizarea și accesarea ofertelor.</li>
+</ul>
+<p><strong><span style="font-size: 18px">3. DURATA</span></strong></p>
+<p>Contractul acesta este încheiat pentru o perioadă de 3 luni, cu posibilitatea de prelungire prin acordul ambelor părți. Dată de începere a contractului este {{DATA_START}}, iar data de terminare este {{DATA_END}}.</p>
+<p><strong><span style="font-size: 18px">4. GUVERNANȚĂ DE PROIECT</span></strong></p>
+<p>Detalii despre guvernanța proiectului vor fi stabilite de comun acord între părți.</p>
+<p><strong><span style="font-size: 18px">5. SPECIFICAȚII, LIVRABILE, ACCEPTANȚĂ</span></strong></p>
+<p>Specificațiile și livrabilele vor fi stabilite în detaliu în Anexa 1 – Caiet de Sarcini (SOW).</p>
+<p><strong><span style="font-size: 18px">6. MODIFICĂRI (CHANGE REQUEST)</span></strong></p>
+<p>Orice modificare a specificațiilor inițiale va fi gestionată printr-un proces formal de solicitare de modificare.</p>
+<p><strong><span style="font-size: 18px">7. ONORARII, TAXE, PLATĂ</span></strong></p>
+<p>Plata pentru serviciile prestate de către Prestator se va face la tariful de 20 de dolari SUA pe oră. Facturarea se va efectua lunar, iar factura emisă de Prestator trebuie achitată în termen de 10 zile de la data emiterii.</p>
+<p><strong><span style="font-size: 18px">8. TIMP DE LUCRU ȘI RAPORTARE</span></strong></p>
+<p>Detalii despre timpul de lucru și raportare vor fi stabilite de comun acord între părți.</p>
+<p><strong><span style="font-size: 18px">9. MEDII, CONTURI ȘI PUBLICARE</span></strong></p>
+<p>Detalii despre medii, conturi și publicare vor fi stabilite de comun acord între părți.</p>
+<p><strong><span style="font-size: 18px">10. PROPRIETATE INTELECTUALĂ</span></strong></p>
+<p>Proprietatea intelectuală asupra Platformei va fi reglementată conform legislației în vigoare.</p>
+<p><strong><span style="font-size: 18px">11. CONFIDENȚIALITATE ȘI PROTECȚIA DATELOR</span></strong></p>
+<p>Ambele părți se angajează să mențină confidențialitatea informațiilor la care au acces în cadrul executării acestui contract. Niciuna dintre părți nu va folosi, dezvălui, divulga, distribui sau face publice informațiile confidențiale decât cu acordul prealabil, exprimat în scris, al celeilalte părți sau dacă acest lucru este impus de lege. De asemenea, părțile se angajează să respecte reglementările legale privind protecția datelor personale.</p>
+<p><strong><span style="font-size: 18px">12. SUBCONTRACTARE</span></strong></p>
+<p>Prestatorul poate subcontracta anumite servicii, cu condiția să informeze Beneficiarul și să obțină acordul acestuia.</p>
+<p><strong><span style="font-size: 18px">13. GARANȚIE, MENTENANȚĂ ȘI SUPORT</span></strong></p>
+<p>Detalii despre garanție, mentenanță și suport vor fi stabilite în Anexa 2 – SLA Suport și Mentenanță.</p>
+<p><strong><span style="font-size: 18px">14. DECLARAȚII ȘI GARANȚII</span></strong></p>
+<p>Ambele părți declară că au capacitatea legală de a încheia acest contract.</p>
+<p><strong><span style="font-size: 18px">15. RĂSPUNDERE. LIMITARE</span></strong></p>
+<p>Răspunderea părților va fi limitată conform legislației în vigoare.</p>
+<p><strong><span style="font-size: 18px">16. DESPĂGUBIRI (INDEMNIZAȚII)</span></strong></p>
+<p>Fiecare parte se angajează să despăgubească cealaltă parte pentru orice daune cauzate de neîndeplinirea obligațiilor contractuale.</p>
+<p><strong><span style="font-size: 18px">17. FORȚĂ MAJORĂ</span></strong></p>
+<p>Ambele părți sunt exonerate de răspundere în cazul unor evenimente de forță majoră, conform legislației în vigoare.</p>
+<p><strong><span style="font-size: 18px">18. REZILIERE</span></strong></p>
+<p>Contractul poate fi reziliat de oricare dintre părți, cu notificare prealabilă de 30 de zile.</p>
+<p><strong><span style="font-size: 18px">19. ANTI-CORUPȚIE ȘI CONFORMITATE</span></strong></p>
+<p>Ambele părți se angajează să respecte legislația aplicabilă în domeniul anti-corupției.</p>
+<p><strong><span style="font-size: 18px">20. LEGEA APLICABILĂ ȘI JURISDICȚIA</span></strong></p>
+<p>Contractul este reglementat de legea română. Orice litigiu apărut între părți se va soluționa pe cale amiabilă sau, în cazul în care aceasta nu este posibilă, litigiul va fi soluționat de instanța competentă din {{JUDECATORIA_TRIBUNAL}}.</p>
+<p><strong><span style="font-size: 18px">21. NOTIFICĂRI</span></strong></p>
+<p>Orice notificare, cerere, cerere sau alte comunicări ce trebuie făcute sau permise de către părți conform prezentului contract, vor fi în scris și vor fi considerate a fi fost valabil date sau făcute atunci când vor fi înmânate personal sau trimise prin e-mail la adresa de e-mail a Beneficiarului, {{BENEFICIAR_EMAIL}}, sau a Prestatorului, {{PRESTATOR_EMAIL}}.</p>
+<p><strong><span style="font-size: 18px">22. CESIONARE</span></strong></p>
+<p>Ambele părți convin asupra faptului că niciunul dintre ele nu poate ceda sau transfera oricare dintre drepturile și obligațiile sale prevăzute de prezentul contract fără acordul prealabil scris al celeilalte părți.</p>
+<p><strong><span style="font-size: 18px">23. ÎNTREGUL ACORD. MODIFICĂRI</span></strong></p>
+<p>Acest contract constituie înțelegerea completă și exclusivă între părți cu privire la subiectul său și înlocuiește toate discuțiile, negocierile, acordurile și înțelegerile anterioare între părți cu privire la subiectul său.</p>
+<p><strong><span style="font-size: 18px">24. SEMNĂTURI</span></strong></p>
+<table class="signature" role="presentation">
+  <colgroup><col style="width:50%"/><col style="width:50%"/></colgroup>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Prestator</strong><br/>
+        Denumire/Nume: {{PRESTATOR_DENUMIRE}}<br/>
+        {{PRESTATOR_SOCIETATE_TIP}} | {{PRESTATOR_CUI_CNP}}<br/>
+        Sediu/Domiciliu: {{PRESTATOR_SEDIU_ADRESA}}<br/>
+        Reprezentant: {{PRESTATOR_REPREZENTANT}} — {{PRESTATOR_FUNCTIE}}<br/>
+        E-mail: {{PRESTATOR_EMAIL}}<br/><br/>
+        Semnătură: ____________________<br/>
+        Ștampilă (dacă este cazul)
+      </td>
+      <td>
+        <strong>Beneficiar</strong><br/>
+        Denumire/Nume: {{BENEFICIAR_DENUMIRE}}<br/>
+        {{BENEFICIAR_SOCIETATE_TIP}} | {{BENEFICIAR_CUI_CNP}}<br/>
+        Sediu/Domiciliu: {{BENEFICIAR_SEDIU_ADRESA}}<br/>
+        Reprezentant: {{BENEFICIAR_REPREZENTANT}} — {{BENEFICIAR_FUNCTIE}}<br/>
+        E-mail: {{BENEFICIAR_EMAIL}}<br/><br/>
+        Semnătură: ____________________<br/>
+        Ștampilă (dacă este cazul)
+      </td>
+    </tr>
+  </tbody>
+</table>`,
     editorProps: {
       attributes: {
         class: cn(
@@ -44,6 +133,11 @@ export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, con
       onChange(editor.getHTML())
     },
   })
+
+  useEffect(() => {
+    if (!content) return;
+    editor?.commands.setContent(content, { emitUpdate: true })
+  }, [content])
 
   if (!editor) {
     return null
@@ -181,7 +275,6 @@ function MenuBar({ editor }: { editor: Editor }) {
       <AiTemplateWriteDialog
         onGenerateTemplate={(html: string) => {
           editor?.commands.setContent(html, { emitUpdate: true })
-          editor?.commands.focus('end')
         }}
       />
     </div>

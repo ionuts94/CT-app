@@ -14,6 +14,8 @@ import { AIGenerateTemplate } from "@/actions/post/template/ai-generate-template
 import { useState } from "react"
 import { useAITemplate } from "@/hooks/use-ai-template"
 import { ButtonWithLoading } from "@/components/button-with-loading"
+import { useAITemplateContext } from "@/contexts/template-assistant-context"
+import { useDialog } from "@/hooks/use-dialog"
 
 
 type Props = {
@@ -21,10 +23,12 @@ type Props = {
 }
 
 export const AiTemplateWriteDialog: React.FC<Props> = ({ onGenerateTemplate = () => null }) => {
+  const { isOpen, openDialog, closeDialog, toggleModal } = useDialog()
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={() => toggleModal()}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="bg-white group">
+        <Button onClick={openDialog} variant="outline" className="bg-white group">
           <AiSvg className="size-5 group-hover:text-white" />
           Ajuta-ma sa scriu<span className="font-bold">(AI)</span>
         </Button>
@@ -40,15 +44,19 @@ export const AiTemplateWriteDialog: React.FC<Props> = ({ onGenerateTemplate = ()
           </DialogDescription>
         </DialogHeader>
         <div className="">
-          <AiTemplateWriterForm onGenerateTemplate={onGenerateTemplate} />
+          <AiTemplateWriterForm closeDialog={closeDialog} onGenerateTemplate={onGenerateTemplate} />
         </div>
       </DialogContent>
     </Dialog>
   )
 }
 
-const AiTemplateWriterForm: React.FC<Props> = ({ onGenerateTemplate }) => {
-  const { aiGenerateLoading, aiGenerateTemplate, runAITemplateReview } = useAITemplate()
+type AiTemplateWriterFormProps = Props & {
+  closeDialog?: () => any
+}
+
+const AiTemplateWriterForm: React.FC<AiTemplateWriterFormProps> = ({ onGenerateTemplate, closeDialog = () => null }) => {
+  const { aiGenerateLoading, aiGenerateTemplate } = useAITemplateContext()
 
   const form = useForm<T_AiTemplateWriteSchema>({
     resolver: zodResolver(AiTemplateWriteSchema),
@@ -61,7 +69,7 @@ const AiTemplateWriterForm: React.FC<Props> = ({ onGenerateTemplate }) => {
     }
   })
 
-  const { register, watch, handleSubmit, formState } = form
+  const { register, handleSubmit, formState } = form
   const { errors } = formState
 
   const handleIndustryChange = (value: string) => {
@@ -80,16 +88,9 @@ const AiTemplateWriterForm: React.FC<Props> = ({ onGenerateTemplate }) => {
       return alert(error)
     }
 
-    console.log("running template review")
-    const { reviewData } = await runAITemplateReview({
-      initialInput: values,
-      templateRichTextString: templateRichTextString || ""
-    })
-
-    console.log(reviewData)
-
     if (templateRichTextString) {
       onGenerateTemplate(templateRichTextString)
+      closeDialog()
     }
   }
 
@@ -98,24 +99,24 @@ const AiTemplateWriterForm: React.FC<Props> = ({ onGenerateTemplate }) => {
       <FormRow className="flex-row gap-2">
         <FormRow>
           <Label><RequiredFieldMark />Tip contract</Label>
-          <Input {...register("contractType")} placeholder="ex. Acord servicii / MSA / NDA" />
+          <Input disabled={aiGenerateLoading} {...register("contractType")} placeholder="ex. Acord servicii / MSA / NDA" />
           <InvalidInputError>{errors.contractType?.message}</InvalidInputError>
         </FormRow>
         <FormRow>
           <Label><RequiredFieldMark />Industrie</Label>
-          <IndustrySelect onChange={handleIndustryChange} placeholder="Selecreaza industria" />
+          <IndustrySelect disabled={aiGenerateLoading} onChange={handleIndustryChange} placeholder="Selecreaza industria" />
           <InvalidInputError>{errors.industry?.message}</InvalidInputError>
         </FormRow>
       </FormRow>
       <FormRow className="flex-row gap-2">
         <FormRow>
           <Label>Ton</Label>
-          <ToneSelect onChange={handleToneChange} placeholder="Selecteaza tonul contractului" />
+          <ToneSelect disabled={aiGenerateLoading} onChange={handleToneChange} placeholder="Selecteaza tonul contractului" />
           <InvalidInputError>{errors.tone?.message}</InvalidInputError>
         </FormRow>
         <FormRow>
           <Label>Durata contractului</Label>
-          <Input {...register("termPeriod")} placeholder="ex. 12 luni" />
+          <Input disabled={aiGenerateLoading} {...register("termPeriod")} placeholder="ex. 12 luni" />
           <InvalidInputError>{errors.termPeriod?.message}</InvalidInputError>
         </FormRow>
       </FormRow>
