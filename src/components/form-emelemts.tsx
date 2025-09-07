@@ -13,7 +13,7 @@ export const FormRow: React.FC<HTMLAttributes<HTMLDivElement>> = ({ className, .
 
 export const Label: React.FC<HTMLAttributes<HTMLLabelElement> & { htmlFor?: string }> = ({ className, htmlFor, ...rest }) => {
   return (
-    <ShadLabel className="w-full font-medium text-md text-black/90" htmlFor={htmlFor} {...rest} />
+    <ShadLabel className={cn("w-full font-medium text-md text-black/90", className)} htmlFor={htmlFor} {...rest} />
   )
 }
 
