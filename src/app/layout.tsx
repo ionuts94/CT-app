@@ -31,13 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-app`}
       >
-        <SidebarProvider>
-          <AppSidebar />
-          <div className="w-full">
-            <Header user={userMockData} />
-            {children}
-          </div>
-        </SidebarProvider>
+        {children}
       </body>
     </html>
   );
