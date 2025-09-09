@@ -13,7 +13,11 @@ export default async function CompleteSignUpPage({ searchParams }: Props) {
 
     const supabase = await createClient()
     const { data, error } = await supabase.auth.exchangeCodeForSession(code || "")
-    if (data) {
+
+    console.log("error: ")
+    console.log(error)
+
+    if (data.user) {
         redirect("/onboarding")
     }
 
