@@ -1,54 +1,65 @@
-import { BrandingStep } from "@/app/(onboarding)/onboarding/components/branding-step"
-import { CompanyStep } from "@/app/(onboarding)/onboarding/components/company-step"
-import { SignatureStep } from "@/app/(onboarding)/onboarding/components/signature-step"
-import { createContext, useContext, useState } from "react"
+// contexts/onboarding-context.tsx
+"use client"
+import { ONBOARDING_STEPS, T_StepName } from "@/app/(onboarding)/onboarding/components/stepts"
+import React, { createContext, useContext, useMemo, useState } from "react"
 
-const OnboardingCtx = createContext<{
-  currentStep: undefined | T_SteptItem,
-  stepsCompleted: T_StepCompleted[]
-}>({
-  currentStep: undefined,
-  stepsCompleted: [],
-})
 
-type Props = {
-  children: React.ReactNode
+type Ctx = {
+  current: T_StepName
+  steps: typeof ONBOARDING_STEPS
+  index: number
+  progress: number // 0..1
+  goTo: (s: T_StepName) => void
+  next: () => Promise<void> | void
+  back: () => void,
+  CurrentStepElement: React.FC
+}
+const OnboardingCtx = createContext<Ctx>({} as any)
+
+async function validateBeforeNext(name: T_StepName) {
+  // switch(name){ case "company": await form.trigger(); ... }
+  return true
 }
 
-export const OnboardingContext: React.FC<Props> = ({ children }) => {
-  const [currentStep, setCurrentStep] = useState<undefined | T_SteptItem>(STEPS[0])
-  const [stepsCompleted, setStepsCompleted] = useState<T_StepCompleted[]>([])
+type Props = { initialStep: T_StepName; children?: React.ReactNode }
+
+export function OnboardingProvider({ initialStep, children }: Props) {
+  const [current, setCurrent] = useState<T_StepName>(initialStep)
+
+  const index = ONBOARDING_STEPS.findIndex(s => s.name === current)
+  const Current = ONBOARDING_STEPS[index]?.Component ?? (() => null)
+
+  const progress = (index + 1) / ONBOARDING_STEPS.length
+
+  const goTo = (s: T_StepName) => {
+    if (ONBOARDING_STEPS.some(st => st.name === s)) setCurrent(s)
+  }
+
+  const next = async () => {
+    const ok = await validateBeforeNext(current)
+    if (!ok) return
+    if (index < ONBOARDING_STEPS.length - 1) setCurrent(ONBOARDING_STEPS[index + 1].name)
+  }
+
+  const back = () => {
+    if (index > 0) setCurrent(ONBOARDING_STEPS[index - 1].name)
+  }
 
   return (
-    <OnboardingCtx.Provider value={{ currentStep, stepsCompleted }}>
+    <OnboardingCtx.Provider
+      value={{
+        current,
+        CurrentStepElement: Current,
+        steps: ONBOARDING_STEPS,
+        index,
+        progress,
+        goTo,
+        next,
+        back
+      }}>
       {children}
     </OnboardingCtx.Provider>
   )
 }
 
-export const useOnboardingContext = () => {
-  const ctx = useContext(OnboardingCtx)
-  return ctx
-}
-
-const STEPS = [
-  {
-    name: "company",
-    component: CompanyStep,
-  },
-  {
-    name: "branding",
-    component: BrandingStep
-  },
-  {
-    name: "signature",
-    component: SignatureStep
-  },
-  {
-    name: "done",
-    component: SignatureStep
-  }
-] as const
-
-type T_SteptItem = typeof STEPS[number]
-type T_StepCompleted = typeof STEPS[number]["name"]
+export const useOnboardingContext = () => useContext(OnboardingCtx)

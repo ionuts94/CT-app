@@ -4,6 +4,8 @@ type Props = {
 
 export const BrandingStep: React.FC<Props> = ({ }) => {
   return (
-    <div></div>
+    <div>
+      Branding step
+    </div>
   )
 }

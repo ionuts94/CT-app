@@ -1,14 +1,13 @@
 import { GetAuthUser } from "@/actions/get/auth"
-import { createClient } from "@/lib/supabase/server"
+import { OnboardingProvider } from "@/contexts/onboarding-context"
+import { Onboarding } from "./components/onboarding"
 
 export default async function OnboardingPage() {
     const r = await GetAuthUser()
-    console.log("gere")
-    console.log(r)
 
     return (
-        <main>
-            This is onboarding page
-        </main>
+        <OnboardingProvider initialStep="company">
+            <Onboarding />
+        </OnboardingProvider>
     )
 }
