@@ -10,8 +10,7 @@ type Ctx = {
   completedSteps: T_StepName[],
   steps: typeof ONBOARDING_STEPS
   index: number
-  progress: number // 0..1
-  CurrentStepElement: React.FC,
+  progress: number
   goTo: (s: T_StepName) => void
   next: () => Promise<void> | void
   back: () => void,
@@ -33,28 +32,29 @@ export function OnboardingProvider({ initialStep, children }: Props) {
   const [completedSteps, setCompletedSteps] = useState<T_StepName[]>([])
 
   const index = ONBOARDING_STEPS.findIndex(s => s.name === current)
-  const Current = ONBOARDING_STEPS[index]?.Component ?? (() => null)
 
   const progress = (index + 1) / ONBOARDING_STEPS.length
 
   const goTo = (s: T_StepName) => {
-    if (ONBOARDING_STEPS.some(st => st.name === s)) setCurrent(s)
+    if (!ONBOARDING_STEPS.some(st => st.name === s)) return
+    setCurrent(s)
+    router.push(`/onboarding/${s}`)
   }
 
   const next = async () => {
     const ok = await validateBeforeNext(current)
     if (!ok) return
-    setCompletedSteps([...completedSteps, current])
-    if (index < ONBOARDING_STEPS.length - 1) {
-      const nextStep = ONBOARDING_STEPS[index + 1]
-      setCurrent(nextStep.name)
-      router.push(process.env.NEXT_PUBLIC_URL + "/onboarding/" + nextStep.name)
-    }
 
+    setCompletedSteps(prev => Array.from(new Set([...prev, current])))
+
+    if (index < ONBOARDING_STEPS.length - 1) {
+      const nextStep = ONBOARDING_STEPS[index + 1].name
+      goTo(nextStep)
+    }
   }
 
   const back = () => {
-    if (index > 0) setCurrent(ONBOARDING_STEPS[index - 1].name)
+    if (index > 0) goTo(ONBOARDING_STEPS[index - 1].name)
   }
 
   const isCurrentStep = (step: T_StepItem) => step.name === current
@@ -65,7 +65,6 @@ export function OnboardingProvider({ initialStep, children }: Props) {
       value={{
         current,
         completedSteps,
-        CurrentStepElement: Current,
         steps: ONBOARDING_STEPS,
         index,
         progress,
