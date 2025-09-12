@@ -1,6 +1,7 @@
 // contexts/onboarding-context.tsx
 "use client"
-import { ONBOARDING_STEPS, T_StepItem, T_StepName } from "@/app/(onboarding)/onboarding/components/stepts"
+import { ONBOARDING_STEPS, T_StepItem, T_StepName } from "@/app/onboarding/components/stepts"
+import { useRouter } from "next/navigation"
 import React, { createContext, useContext, useMemo, useState } from "react"
 
 
@@ -27,6 +28,7 @@ async function validateBeforeNext(name: T_StepName) {
 type Props = { initialStep: T_StepName; children?: React.ReactNode }
 
 export function OnboardingProvider({ initialStep, children }: Props) {
+  const router = useRouter()
   const [current, setCurrent] = useState<T_StepName>(initialStep)
   const [completedSteps, setCompletedSteps] = useState<T_StepName[]>([])
 
@@ -43,7 +45,12 @@ export function OnboardingProvider({ initialStep, children }: Props) {
     const ok = await validateBeforeNext(current)
     if (!ok) return
     setCompletedSteps([...completedSteps, current])
-    if (index < ONBOARDING_STEPS.length - 1) setCurrent(ONBOARDING_STEPS[index + 1].name)
+    if (index < ONBOARDING_STEPS.length - 1) {
+      const nextStep = ONBOARDING_STEPS[index + 1]
+      setCurrent(nextStep.name)
+      router.push(process.env.NEXT_PUBLIC_URL + "/onboarding/" + nextStep.name)
+    }
+
   }
 
   const back = () => {
