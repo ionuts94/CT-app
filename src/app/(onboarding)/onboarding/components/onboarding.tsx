@@ -1,19 +1,21 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { useOnboardingContext } from "@/contexts/onboarding-context"
+import { OnboardingHeader } from "./onboarding-header"
 
 type Props = {
 
 }
 
 export const Onboarding: React.FC<Props> = ({ }) => {
-  const { CurrentStepElement, next } = useOnboardingContext()
+  const { CurrentStepElement } = useOnboardingContext()
 
   return (
-    <div>
+    <Card className="w-[94vw] max-w-[960px] mx-auto py-0">
+      <OnboardingHeader />
       <CurrentStepElement />
-      <Button onClick={next}>Urmatorul</Button>
-    </div>
+    </Card >
   )
 }
