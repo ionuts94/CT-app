@@ -16,3 +16,22 @@ export const CompanyOnboarding = z.object({
 })
 
 export type T_CompanyOnboardingSchema = z.infer<typeof CompanyOnboarding>
+
+
+
+export const BrandingOnboarding = z.object({
+    primaryColor: z
+        .string()
+        .optional(),
+    secondaryColor: z
+        .string()
+        .optional(),
+    accentColor: z
+        .string()
+        .optional(),
+    logoUrl: z
+        .string()
+        .optional(),
+})
+
+export type T_BrandingOnboardingSchema = z.infer<typeof BrandingOnboarding>

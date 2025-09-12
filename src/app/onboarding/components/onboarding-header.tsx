@@ -15,7 +15,7 @@ export const OnboardingHeader: React.FC<Props> = ({ }) => {
     const { steps, isCurrentStep, isStepCompleted } = useOnboardingContext()
 
     return (
-        <div className="h-18 border-b border-border flex items-center p-4 justify-between">
+        <div className="h-18 border-b border-border flex items-center p-4 justify-between sticky top-0 left-0 bg-app">
             <div className="text-primary font-bold flex flex-row gap-2">
                 <ReceiptText size={30} />
             </div>
