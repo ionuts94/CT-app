@@ -11,8 +11,7 @@ import { useForm } from "react-hook-form"
 import { Text } from "@/components/topography"
 import { ArrowRight, UploadCloudIcon } from "lucide-react"
 import { ColorPicker } from "@/components/color-picker"
-import { Card } from "@/components/ui/card"
-import { BrandContractPreview } from "./brand-contract-preview"
+import { OnboardingContractPreview } from "../../components/onboarding-contract-preview"
 
 type Props = {
 
@@ -114,7 +113,7 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
       </FormRow>
 
       <FormRow>
-        <BrandContractPreview
+        <OnboardingContractPreview
           companyName={companyName}
           primaryColor={values.primaryColor || "#000"}
         />

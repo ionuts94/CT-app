@@ -9,11 +9,8 @@ import { BrandingOnboarding, T_BrandingOnboardingSchema } from "@/validators/onb
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Text } from "@/components/topography"
-import { ArrowRight, UploadCloudIcon } from "lucide-react"
-import { ColorPicker } from "@/components/color-picker"
-import { Card, CardHeader } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { ArrowRight } from "lucide-react"
+import { Card } from "@/components/ui/card"
 import SignaturePad from "./signature-pad"
 
 type Props = {
@@ -21,7 +18,6 @@ type Props = {
 }
 
 export const SignatureStep: React.FC<Props> = ({ }) => {
-  const companyName = "Software Solutions"
   const { next } = useOnboardingContext()
 
   const form = useForm<T_BrandingOnboardingSchema>({
@@ -68,12 +64,6 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
             onChangeMode="trimmed"
             onChangeDebounceMs={150} />
         </Card>
-      </FormRow>
-
-
-
-      <FormRow>
-
       </FormRow>
 
       <div className="flex justify-end">
