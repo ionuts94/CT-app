@@ -14,6 +14,7 @@ import { ColorPicker } from "@/components/color-picker"
 import { Card, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import SignaturePad from "./signature-pad"
 
 type Props = {
 
@@ -63,10 +64,9 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
       <FormRow>
         <Label>Semnătura</Label>
         <Card className="p-4">
-          <div className="p-0 flex gap-4">
-            <Button type="button" className="py-3 px-3 rounded-lg">Semnatura manuala</Button>
-            <Button type="button" className={cn("py-3 px-3 rounded-lg", "bg-white border text-black/90")}>Incarca semnătura</Button>
-          </div>
+          <SignaturePad onChange={(s) => console.log(s)}
+            onChangeMode="trimmed"
+            onChangeDebounceMs={150} />
         </Card>
       </FormRow>
 
