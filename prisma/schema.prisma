@@ -8,55 +8,58 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-/* ====================
-   MODELS
-   ==================== */
+/**
+ * ====================
+ * MODELS
+ * ====================
+ */
 
 model User {
-  id         String   @id @default(cuid())
-  email      String   @unique
-  firstName  String
-  lastName   String
-  phone      String?
-  age        Int?
+  id        String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email     String  @unique
+  firstName String
+  lastName  String
+  phone     String?
+  age       Int?
 
-  // ↴ contextul curent (opțional), cu relație numită
-  currentCompanyId String?
+  currentCompanyId String?  @db.Uuid
   currentCompany   Company? @relation("CurrentCompany", fields: [currentCompanyId], references: [id])
 
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  createdAt DateTime @default(dbgenerated("now()"))
+  updatedAt DateTime @default(dbgenerated("now()")) @updatedAt
 
   // relații
   memberships Membership[]
-  roles       Role[]        @relation("RoleUsers")
-  contracts   Contract[]    @relation("ContractOwner")
+  roles       Role[]       @relation("RoleUsers")
+  contracts   Contract[]   @relation("ContractOwner")
   signatures  Signature[]
   invoices    Invoice[]
   comments    Comment[]
   activities  Activity[]
-  templates   Template[]    @relation("TemplateCreator")
+  templates   Template[]   @relation("TemplateCreator")
+
+  onboarding          Onboarding?
+  onboardingCompleted Boolean     @default(false)
 
   @@index([currentCompanyId])
-
   // table mapping
   @@map("users")
 }
 
 model Company {
-  id            String     @id @default(cuid())
-  name          String
-  cui           String     @unique
-  regNumber     String?
-  emailDomain   String?
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  cui         String  @unique
+  regNumber   String?
+  emailDomain String?
 
-  logoUrl       String?
+  logoUrl        String?
   colorPrimary   String?
   colorSecondary String?
   colorAccent    String?
 
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  createdAt DateTime @default(dbgenerated("now()"))
+  updatedAt DateTime @default(dbgenerated("now()")) @updatedAt
 
   // 🔁 back-relation pentru User.currentCompany
   currentUsers User[] @relation("CurrentCompany")
@@ -69,17 +72,16 @@ model Company {
   roles       Role[]
 
   @@index([name])
-
   // table mapping
   @@map("companies")
 }
 
 model Membership {
-  id         String  @id @default(cuid())
-  userId     String
-  companyId  String
-  roleKey    RoleKey @default(MEMBER) // high-level role (not the Role entity)
-  createdAt  DateTime @default(now())
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @db.Uuid
+  companyId String   @db.Uuid
+  roleKey   RoleKey  @default(MEMBER) // high-level role (not the Role entity)
+  createdAt DateTime @default(dbgenerated("now()"))
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -87,48 +89,46 @@ model Membership {
   @@unique([userId, companyId])
   @@index([companyId])
   @@index([userId])
-
   // table mapping
   @@map("memberships")
 }
 
 model Role {
-  id          String   @id @default(cuid())
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String
   description String?
-  permissions Json?    // @db.Json
-  companyId   String
+  permissions Json? // @db.Json
+  companyId   String  @db.Uuid
 
-  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   // optional many-to-many users<->roles inside a company
-  users       User[]   @relation("RoleUsers")
+  users User[] @relation("RoleUsers")
 
   @@unique([companyId, name])
   @@index([companyId])
-
   // table mapping
   @@map("roles")
 }
 
 model Contract {
-  id        String   @id @default(cuid())
-  title     String
-  content   Json     // was String; use JSON for structured content/variables
-  status    ContractStatus @default(DRAFT)
+  id      String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title   String
+  content Json // was String; use JSON for structured content/variables
+  status  ContractStatus @default(DRAFT)
 
-  ownerId   String
-  owner     User     @relation("ContractOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId String @db.Uuid
+  owner   User   @relation("ContractOwner", fields: [ownerId], references: [id], onDelete: Cascade)
 
-  companyId String?
+  companyId String?  @db.Uuid
   company   Company? @relation(fields: [companyId], references: [id])
 
   // optional: original/signed file urls
   draftPdfUrl  String?
   signedPdfUrl String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(dbgenerated("now()"))
+  updatedAt DateTime @default(dbgenerated("now()")) @updatedAt
 
   signatures Signature[]
   comments   Comment[]
@@ -139,38 +139,36 @@ model Contract {
 
   @@index([companyId, status, createdAt])
   @@index([ownerId])
-
   // table mapping
   @@map("contracts")
 }
 
 model Party {
-  id          String   @id @default(cuid())
-  contractId  String
-  email       String
-  name        String?
-  role        PartyRole @default(SIGNER)
-  signingOrder Int      @default(1)
-  hasSigned   Boolean   @default(false)
-  signedAt    DateTime?
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  contractId   String    @db.Uuid
+  email        String
+  name         String?
+  role         PartyRole @default(SIGNER)
+  signingOrder Int       @default(1)
+  hasSigned    Boolean   @default(false)
+  signedAt     DateTime?
 
-  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  contract   Contract             @relation(fields: [contractId], references: [id], onDelete: Cascade)
   signatures Signature[]
   placements SignaturePlacement[]
   invites    Invite[]
 
   @@unique([contractId, email])
   @@index([contractId, signingOrder])
-
   // table mapping
   @@map("parties")
 }
 
 model Invite {
-  id         String   @id @default(cuid())
-  contractId String
-  partyId    String
-  token      String   @unique
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  contractId String    @db.Uuid
+  partyId    String    @db.Uuid
+  token      String    @unique
   expiresAt  DateTime?
 
   contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
@@ -178,141 +176,149 @@ model Invite {
 
   @@index([contractId])
   @@index([partyId])
-
   // table mapping
   @@map("invites")
 }
 
 model SignaturePlacement {
-  id          String   @id @default(cuid())
-  contractId  String
-  partyId     String
-  page        Int
-  x           Float
-  y           Float
-  width       Float
-  height      Float
-  createdAt   DateTime @default(now())
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  contractId String   @db.Uuid
+  partyId    String   @db.Uuid
+  page       Int
+  x          Float
+  y          Float
+  width      Float
+  height     Float
+  createdAt  DateTime @default(dbgenerated("now()"))
 
   contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
   party    Party    @relation(fields: [partyId], references: [id], onDelete: Cascade)
 
   @@index([contractId])
   @@index([partyId])
-
   // table mapping
   @@map("signature_placements")
 }
 
 model Signature {
-  id         String   @id @default(cuid())
-  type       SignatureType  // draw, typed, upload
-  fullName   String
-  title      String?
-  imageUrl   String?  // PNG in storage (for draw/upload) sau rasterizat pt typed
-  createdAt  DateTime @default(now())
+  id        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type      SignatureType // draw, typed, upload
+  fullName  String
+  title     String?
+  imageUrl  String? // PNG in storage (for draw/upload) sau rasterizat pt typed
+  createdAt DateTime      @default(dbgenerated("now()"))
 
   // one of partyId OR userId (pentru externi vs interni)
-  userId     String?
-  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId String? @db.Uuid
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
-  partyId    String?
-  party      Party?   @relation(fields: [partyId], references: [id], onDelete: SetNull)
+  partyId String? @db.Uuid
+  party   Party?  @relation(fields: [partyId], references: [id], onDelete: SetNull)
 
-  contractId String
+  contractId String   @db.Uuid
   contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
 
   @@index([contractId])
   @@index([userId])
   @@index([partyId])
-
   // table mapping
   @@map("signatures")
 }
 
 model Template {
-  id         String   @id @default(cuid())
-  title       String
-  category   String?
-  tags       String[]
-  content    Json      // was String; store JSON template with variables
-  updatedAt  DateTime  @updatedAt
-  createdAt  DateTime  @default(now())
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title     String
+  category  String?
+  tags      String[]
+  content   Json // was String; store JSON template with variables
+  updatedAt DateTime @default(dbgenerated("now()")) @updatedAt
+  createdAt DateTime @default(dbgenerated("now()"))
 
-  companyId  String?
-  company    Company?  @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  companyId String?  @db.Uuid
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
 
-  creatorId  String
-  creator    User      @relation("TemplateCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String @db.Uuid
+  creator   User   @relation("TemplateCreator", fields: [creatorId], references: [id], onDelete: Cascade)
 
   @@unique([companyId, title])
   @@index([companyId])
   @@index([creatorId])
-
   // table mapping
   @@map("templates")
 }
 
 model Invoice {
-  id         String   @id @default(cuid())
-  number     String   @unique
-  date       DateTime
-  amount     Float
-  status     InvoiceStatus
-  pdfUrl     String?
+  id     String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  number String        @unique
+  date   DateTime
+  amount Float
+  status InvoiceStatus
+  pdfUrl String?
 
-  userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  companyId  String?
-  company    Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  companyId String?  @db.Uuid
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
 
   @@index([companyId, date])
-
   // table mapping
   @@map("invoices")
 }
 
 model Comment {
-  id         String   @id @default(cuid())
-  content    String
-  createdAt  DateTime @default(now())
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  content   String
+  createdAt DateTime @default(dbgenerated("now()"))
 
-  userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  contractId String
+  contractId String   @db.Uuid
   contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
 
   @@index([contractId, createdAt])
-
   // table mapping
   @@map("comments")
 }
 
 model Activity {
-  id         String        @id @default(cuid())
-  action     ActivityAction
-  createdAt  DateTime      @default(now())
+  id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  action    ActivityAction
+  createdAt DateTime       @default(dbgenerated("now()"))
 
-  userId     String?
-  user       User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId String? @db.Uuid
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
-  contractId String?
-  contract   Contract?     @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  contractId String?   @db.Uuid
+  contract   Contract? @relation(fields: [contractId], references: [id], onDelete: Cascade)
 
-  meta       Json?
+  meta Json?
 
   @@index([contractId, createdAt])
-
   // table mapping
   @@map("activities")
 }
 
+model Onboarding {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @unique @db.Uuid
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(dbgenerated("now()"))
+  data        Json?
+  stepsDone   String[] @default([])
+  currentStep String?
 
-/* ====================
-   ENUMS
-   ==================== */
+  status OnboardingStatusSimple @default(IN_PROGRESS)
+
+  @@map("onboarding")
+}
+
+/**
+ * ====================
+ * ENUMS
+ * ====================
+ */
 
 enum RoleKey {
   OWNER
@@ -353,4 +359,9 @@ enum ActivityAction {
   DECLINED
   COMMENTED
   EXPORTED
+}
+
+enum OnboardingStatusSimple {
+  IN_PROGRESS
+  COMPLETED
 }

@@ -8,7 +8,6 @@ export async function SignUp({
     email,
     firstName,
     lastName,
-    company,
     password,
     cPassword
 }: T_SignUpSchema): Promise<CustomApiResponse> {
@@ -19,7 +18,6 @@ export async function SignUp({
             email,
             firstName,
             lastName,
-            company,
             password,
             cPassword
         })
@@ -31,6 +29,10 @@ export async function SignUp({
             password: password,
             options: {
                 emailRedirectTo: process.env.NEXT_PUBLIC_URL + "/api/auth/callback",
+                data: {
+                    firstName,
+                    lastName,
+                }
             },
         })
 

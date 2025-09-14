@@ -1,5 +1,6 @@
 "use client"
 
+import { CreateCompany } from "@/actions/post/company"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-emelemts"
 import { H1, H2 } from "@/components/topography"
@@ -8,6 +9,7 @@ import { useOnboardingContext } from "@/contexts/onboarding-context"
 
 import { CompanyOnboarding, T_CompanyOnboardingSchema } from "@/validators/onboarding.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 type Props = {
@@ -16,6 +18,7 @@ type Props = {
 
 export const CompanyStep: React.FC<Props> = ({ }) => {
   const { next } = useOnboardingContext()
+  const [loading, setLoading] = useState(false)
 
   const form = useForm<T_CompanyOnboardingSchema>({
     resolver: zodResolver(CompanyOnboarding),
@@ -29,8 +32,11 @@ export const CompanyStep: React.FC<Props> = ({ }) => {
 
   const { register, watch, handleSubmit, formState } = form
   const { isLoading, errors } = formState
+  const values = watch()
 
   const handleFormSubmit = async (values: T_CompanyOnboardingSchema) => {
+    setLoading(true)
+    const { error } = await CreateCompany({ ...values, isCallingFromOnboarding: true })
     next()
   }
 

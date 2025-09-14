@@ -1,150 +1,43 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "public"."RoleKey" AS ENUM ('OWNER', 'ADMIN', 'MEMBER');
 
-  - You are about to drop the `Activity` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Comment` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Company` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Contract` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Invite` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Invoice` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Membership` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Party` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Role` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Signature` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `SignaturePlacement` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Template` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
+-- CreateEnum
+CREATE TYPE "public"."ContractStatus" AS ENUM ('DRAFT', 'OUT_FOR_SIGNATURE', 'FULLY_SIGNED', 'DECLINED', 'EXPIRED');
 
-*/
--- DropForeignKey
-ALTER TABLE "public"."Activity" DROP CONSTRAINT "Activity_contractId_fkey";
+-- CreateEnum
+CREATE TYPE "public"."PartyRole" AS ENUM ('SIGNER', 'VIEWER');
 
--- DropForeignKey
-ALTER TABLE "public"."Activity" DROP CONSTRAINT "Activity_userId_fkey";
+-- CreateEnum
+CREATE TYPE "public"."SignatureType" AS ENUM ('DRAW', 'TYPED', 'UPLOAD');
 
--- DropForeignKey
-ALTER TABLE "public"."Comment" DROP CONSTRAINT "Comment_contractId_fkey";
+-- CreateEnum
+CREATE TYPE "public"."InvoiceStatus" AS ENUM ('PAID', 'UNPAID', 'OVERDUE');
 
--- DropForeignKey
-ALTER TABLE "public"."Comment" DROP CONSTRAINT "Comment_userId_fkey";
+-- CreateEnum
+CREATE TYPE "public"."ActivityAction" AS ENUM ('CREATED', 'INVITED', 'VIEWED', 'SIGNED', 'DECLINED', 'COMMENTED', 'EXPORTED');
 
--- DropForeignKey
-ALTER TABLE "public"."Contract" DROP CONSTRAINT "Contract_companyId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Contract" DROP CONSTRAINT "Contract_ownerId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Invite" DROP CONSTRAINT "Invite_contractId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Invite" DROP CONSTRAINT "Invite_partyId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Invoice" DROP CONSTRAINT "Invoice_companyId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Invoice" DROP CONSTRAINT "Invoice_userId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Membership" DROP CONSTRAINT "Membership_companyId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Membership" DROP CONSTRAINT "Membership_userId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Party" DROP CONSTRAINT "Party_contractId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Role" DROP CONSTRAINT "Role_companyId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Signature" DROP CONSTRAINT "Signature_contractId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Signature" DROP CONSTRAINT "Signature_partyId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Signature" DROP CONSTRAINT "Signature_userId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."SignaturePlacement" DROP CONSTRAINT "SignaturePlacement_contractId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."SignaturePlacement" DROP CONSTRAINT "SignaturePlacement_partyId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Template" DROP CONSTRAINT "Template_companyId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Template" DROP CONSTRAINT "Template_creatorId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."User" DROP CONSTRAINT "User_currentCompanyId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."_RoleUsers" DROP CONSTRAINT "_RoleUsers_A_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."_RoleUsers" DROP CONSTRAINT "_RoleUsers_B_fkey";
-
--- DropTable
-DROP TABLE "public"."Activity";
-
--- DropTable
-DROP TABLE "public"."Comment";
-
--- DropTable
-DROP TABLE "public"."Company";
-
--- DropTable
-DROP TABLE "public"."Contract";
-
--- DropTable
-DROP TABLE "public"."Invite";
-
--- DropTable
-DROP TABLE "public"."Invoice";
-
--- DropTable
-DROP TABLE "public"."Membership";
-
--- DropTable
-DROP TABLE "public"."Party";
-
--- DropTable
-DROP TABLE "public"."Role";
-
--- DropTable
-DROP TABLE "public"."Signature";
-
--- DropTable
-DROP TABLE "public"."SignaturePlacement";
-
--- DropTable
-DROP TABLE "public"."Template";
-
--- DropTable
-DROP TABLE "public"."User";
+-- CreateEnum
+CREATE TYPE "public"."OnboardingStatusSimple" AS ENUM ('IN_PROGRESS', 'COMPLETED');
 
 -- CreateTable
 CREATE TABLE "public"."users" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "email" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
     "phone" TEXT,
     "age" INTEGER,
-    "currentCompanyId" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "currentCompanyId" UUID,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
+    "onboardingCompleted" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "public"."companies" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" TEXT NOT NULL,
     "cui" TEXT NOT NULL,
     "regNumber" TEXT,
@@ -153,54 +46,54 @@ CREATE TABLE "public"."companies" (
     "colorPrimary" TEXT,
     "colorSecondary" TEXT,
     "colorAccent" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
 
     CONSTRAINT "companies_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "public"."memberships" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "companyId" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "userId" UUID NOT NULL,
+    "companyId" UUID NOT NULL,
     "roleKey" "public"."RoleKey" NOT NULL DEFAULT 'MEMBER',
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
 
     CONSTRAINT "memberships_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "public"."roles" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" TEXT NOT NULL,
     "description" TEXT,
     "permissions" JSONB,
-    "companyId" TEXT NOT NULL,
+    "companyId" UUID NOT NULL,
 
     CONSTRAINT "roles_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "public"."contracts" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "title" TEXT NOT NULL,
     "content" JSONB NOT NULL,
     "status" "public"."ContractStatus" NOT NULL DEFAULT 'DRAFT',
-    "ownerId" TEXT NOT NULL,
-    "companyId" TEXT,
+    "ownerId" UUID NOT NULL,
+    "companyId" UUID,
     "draftPdfUrl" TEXT,
     "signedPdfUrl" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
 
     CONSTRAINT "contracts_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "public"."parties" (
-    "id" TEXT NOT NULL,
-    "contractId" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "contractId" UUID NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT,
     "role" "public"."PartyRole" NOT NULL DEFAULT 'SIGNER',
@@ -213,9 +106,9 @@ CREATE TABLE "public"."parties" (
 
 -- CreateTable
 CREATE TABLE "public"."invites" (
-    "id" TEXT NOT NULL,
-    "contractId" TEXT NOT NULL,
-    "partyId" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "contractId" UUID NOT NULL,
+    "partyId" UUID NOT NULL,
     "token" TEXT NOT NULL,
     "expiresAt" TIMESTAMP(3),
 
@@ -224,84 +117,105 @@ CREATE TABLE "public"."invites" (
 
 -- CreateTable
 CREATE TABLE "public"."signature_placements" (
-    "id" TEXT NOT NULL,
-    "contractId" TEXT NOT NULL,
-    "partyId" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "contractId" UUID NOT NULL,
+    "partyId" UUID NOT NULL,
     "page" INTEGER NOT NULL,
     "x" DOUBLE PRECISION NOT NULL,
     "y" DOUBLE PRECISION NOT NULL,
     "width" DOUBLE PRECISION NOT NULL,
     "height" DOUBLE PRECISION NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
 
     CONSTRAINT "signature_placements_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "public"."signatures" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "type" "public"."SignatureType" NOT NULL,
     "fullName" TEXT NOT NULL,
     "title" TEXT,
     "imageUrl" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "userId" TEXT,
-    "partyId" TEXT,
-    "contractId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
+    "userId" UUID,
+    "partyId" UUID,
+    "contractId" UUID NOT NULL,
 
     CONSTRAINT "signatures_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "public"."templates" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "title" TEXT NOT NULL,
     "category" TEXT,
     "tags" TEXT[],
     "content" JSONB NOT NULL,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "companyId" TEXT,
-    "creatorId" TEXT NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
+    "companyId" UUID,
+    "creatorId" UUID NOT NULL,
 
     CONSTRAINT "templates_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "public"."invoices" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "number" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
     "status" "public"."InvoiceStatus" NOT NULL,
     "pdfUrl" TEXT,
-    "userId" TEXT NOT NULL,
-    "companyId" TEXT,
+    "userId" UUID NOT NULL,
+    "companyId" UUID,
 
     CONSTRAINT "invoices_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "public"."comments" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "content" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "userId" TEXT NOT NULL,
-    "contractId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
+    "userId" UUID NOT NULL,
+    "contractId" UUID NOT NULL,
 
     CONSTRAINT "comments_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "public"."activities" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "action" "public"."ActivityAction" NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "userId" TEXT,
-    "contractId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
+    "userId" UUID,
+    "contractId" UUID,
     "meta" JSONB,
 
     CONSTRAINT "activities_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."onboarding" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "userId" UUID NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT now(),
+    "data" JSONB,
+    "stepsDone" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "currentStep" TEXT,
+    "status" "public"."OnboardingStatusSimple" NOT NULL DEFAULT 'IN_PROGRESS',
+
+    CONSTRAINT "onboarding_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."_RoleUsers" (
+    "A" UUID NOT NULL,
+    "B" UUID NOT NULL,
+
+    CONSTRAINT "_RoleUsers_AB_pkey" PRIMARY KEY ("A","B")
 );
 
 -- CreateIndex
@@ -388,6 +302,12 @@ CREATE INDEX "comments_contractId_createdAt_idx" ON "public"."comments"("contrac
 -- CreateIndex
 CREATE INDEX "activities_contractId_createdAt_idx" ON "public"."activities"("contractId", "createdAt");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "onboarding_userId_key" ON "public"."onboarding"("userId");
+
+-- CreateIndex
+CREATE INDEX "_RoleUsers_B_index" ON "public"."_RoleUsers"("B");
+
 -- AddForeignKey
 ALTER TABLE "public"."users" ADD CONSTRAINT "users_currentCompanyId_fkey" FOREIGN KEY ("currentCompanyId") REFERENCES "public"."companies"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
@@ -453,6 +373,9 @@ ALTER TABLE "public"."activities" ADD CONSTRAINT "activities_userId_fkey" FOREIG
 
 -- AddForeignKey
 ALTER TABLE "public"."activities" ADD CONSTRAINT "activities_contractId_fkey" FOREIGN KEY ("contractId") REFERENCES "public"."contracts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."onboarding" ADD CONSTRAINT "onboarding_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."_RoleUsers" ADD CONSTRAINT "_RoleUsers_A_fkey" FOREIGN KEY ("A") REFERENCES "public"."roles"("id") ON DELETE CASCADE ON UPDATE CASCADE;

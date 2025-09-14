@@ -11,9 +11,6 @@ export const SignUpSchema = z.object({
     lastName: z
         .string()
         .min(1, "Prenumele este obligatoriu"),
-    company: z
-        .string()
-        .min(1, "Numele companiei este obligatoriu"),
     password: z
         .string()
         .min(6, "Parola trebuie să aibă minim 6 caractere"),

@@ -1,21 +1,20 @@
 import { createClient } from "@/lib/supabase/server"
 import { CustomApiResponse, Status } from "@/types/api-call"
+import { User } from "@supabase/supabase-js"
 import { jwtDecode } from "jwt-decode"
 import { cache } from "react"
 
-export async function GetAuthUserFunc(): Promise<CustomApiResponse<{ id: string }>> {
+export async function GetAuthUserFunc(): Promise<CustomApiResponse<User>> {
     console.log('checking signed user')
     const supabase = await createClient()
 
     try {
-        // const auth = await supabase.auth.getUser()
         const { data, error } = await supabase.auth.getUser()
 
         if (error) {
             throw Error(error.message)
         }
 
-        // if (auth.error) throw Error(auth.error.message)
         return {
             status: Status.SUCCESS,
             data: data.user

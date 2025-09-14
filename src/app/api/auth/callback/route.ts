@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+import { CreateUserRecord } from "@/actions/post/user";
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
@@ -9,10 +10,19 @@ export async function GET(req: NextRequest) {
     const supabase = await createClient()
 
     if (code) {
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+        console.log("Data in authcallback")
+        console.log(data)
+
         if (error) {
             return NextResponse.redirect(new URL("/sign-in?error=exchange_failed", req.url));
         }
+        await CreateUserRecord({
+            id: data.user.id,
+            email: data.user.email,
+            firstName: data.user.user_metadata.firstName,
+            lastName: data.user.user_metadata.lastName,
+        })
     }
-    return NextResponse.redirect(new URL("/onboarding", req.url));
+    return NextResponse.redirect(new URL("/onboarding/company", req.url));
 }

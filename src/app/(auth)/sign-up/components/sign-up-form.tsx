@@ -22,7 +22,6 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
             email: "",
             firstName: "",
             lastName: "",
-            company: "",
             password: "",
             cPassword: ""
         }
@@ -67,11 +66,6 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
                 onSubmit={handleSubmit(handleSignUp)}
                 className="flex flex-col gap-4"
             >
-                <FormRow>
-                    <Label className="text-black/70"><RequiredFieldMark />Email</Label>
-                    <Input {...register("email")} />
-                    <InvalidInputError>{errors.email?.message}</InvalidInputError>
-                </FormRow>
                 <FormRow className="flex-row justify-between items-center gap-2">
                     <FormRow >
                         <Label className="text-black/70"><RequiredFieldMark />Nume</Label>
@@ -85,9 +79,9 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
                     </FormRow>
                 </FormRow>
                 <FormRow>
-                    <Label className="text-black/70"><RequiredFieldMark />Companie</Label>
-                    <Input {...register("company")} />
-                    <InvalidInputError>{errors.company?.message}</InvalidInputError>
+                    <Label className="text-black/70"><RequiredFieldMark />Email</Label>
+                    <Input {...register("email")} />
+                    <InvalidInputError>{errors.email?.message}</InvalidInputError>
                 </FormRow>
                 <FormRow>
                     <Label className="text-black/70"><RequiredFieldMark />Parola</Label>
