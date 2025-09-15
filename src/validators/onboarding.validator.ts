@@ -35,3 +35,15 @@ export const BrandingOnboarding = z.object({
 })
 
 export type T_BrandingOnboardingSchema = z.infer<typeof BrandingOnboarding>
+
+
+export const SignatureOnboarding = z.object({
+    svg: z
+        .string()
+        .optional(),
+    png: z
+        .string()
+        .optional(),
+})
+
+export type T_SignatureOnboardingSchema = z.infer<typeof SignatureOnboarding>

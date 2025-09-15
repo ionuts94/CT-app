@@ -18,7 +18,7 @@ type Props = {
 }
 
 export const SignatureStep: React.FC<Props> = ({ }) => {
-  const { next } = useOnboardingContext()
+  const { next, } = useOnboardingContext()
 
   const form = useForm<T_BrandingOnboardingSchema>({
     resolver: zodResolver(BrandingOnboarding),

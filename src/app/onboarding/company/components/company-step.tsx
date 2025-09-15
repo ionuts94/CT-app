@@ -17,16 +17,16 @@ type Props = {
 }
 
 export const CompanyStep: React.FC<Props> = ({ }) => {
-  const { next } = useOnboardingContext()
+  const { onboardingData, next, setOnboardingCompany, } = useOnboardingContext()
   const [loading, setLoading] = useState(false)
 
   const form = useForm<T_CompanyOnboardingSchema>({
     resolver: zodResolver(CompanyOnboarding),
     defaultValues: {
-      companyName: "",
-      companyCui: "",
-      companyRegNumber: "",
-      compnayEmailDomain: ""
+      companyName: onboardingData?.company?.companyName || "",
+      companyCui: onboardingData?.company?.companyCui || "",
+      companyRegNumber: onboardingData?.company?.companyRegNumber || "",
+      compnayEmailDomain: onboardingData?.company?.compnayEmailDomain || ""
     }
   })
 
@@ -35,8 +35,9 @@ export const CompanyStep: React.FC<Props> = ({ }) => {
   const values = watch()
 
   const handleFormSubmit = async (values: T_CompanyOnboardingSchema) => {
-    setLoading(true)
-    const { error } = await CreateCompany({ ...values, isCallingFromOnboarding: true })
+    // setLoading(true)
+    // const { error } = await CreateCompany({ ...values, isCallingFromOnboarding: true })
+    setOnboardingCompany(values)
     next()
   }
 

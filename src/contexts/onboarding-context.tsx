@@ -1,6 +1,7 @@
 // contexts/onboarding-context.tsx
 "use client"
 import { ONBOARDING_STEPS, T_StepItem, T_StepName } from "@/app/onboarding/components/stepts"
+import { T_BrandingOnboardingSchema, T_CompanyOnboardingSchema, T_SignatureOnboardingSchema } from "@/validators/onboarding.validator"
 import { useRouter } from "next/navigation"
 import React, { createContext, useContext, useMemo, useState } from "react"
 
@@ -15,7 +16,12 @@ type Ctx = {
   next: () => Promise<void> | void
   back: () => void,
   isCurrentStep: (step: T_StepItem) => boolean,
-  isStepCompleted: (step: T_StepItem) => boolean
+  isStepCompleted: (step: T_StepItem) => boolean,
+  onboardingData: T_OnboardingData,
+  setOnboardingData: React.Dispatch<React.SetStateAction<T_OnboardingData>>,
+  setOnboardingCompany: (companyData: T_CompanyOnboardingSchema) => void,
+  setOnboardingBranding: (brandingData: T_BrandingOnboardingSchema) => void,
+  setOnboardingSignature: (signatureData: T_SignatureOnboardingSchema) => void
 }
 const OnboardingCtx = createContext<Ctx>({} as any)
 
@@ -24,12 +30,23 @@ async function validateBeforeNext(name: T_StepName) {
   return true
 }
 
-type Props = { initialStep: T_StepName; children?: React.ReactNode }
+type T_OnboardingData = {
+  company: T_CompanyOnboardingSchema,
+  branding: T_BrandingOnboardingSchema,
+  signature: T_SignatureOnboardingSchema
+}
 
-export function OnboardingProvider({ initialStep, children }: Props) {
+type Props = {
+  initialStep: T_StepName;
+  children?: React.ReactNode,
+  state: T_OnboardingData
+}
+
+export function OnboardingProvider({ initialStep, children, state }: Props) {
   const router = useRouter()
   const [current, setCurrent] = useState<T_StepName>(initialStep)
   const [completedSteps, setCompletedSteps] = useState<T_StepName[]>([])
+  const [onboardingData, setOnboardingData] = useState<T_OnboardingData>({} as T_OnboardingData)
 
   const index = ONBOARDING_STEPS.findIndex(s => s.name === current)
 
@@ -60,6 +77,18 @@ export function OnboardingProvider({ initialStep, children }: Props) {
   const isCurrentStep = (step: T_StepItem) => step.name === current
   const isStepCompleted = (step: T_StepItem) => completedSteps.includes(step.name)
 
+  const setOnboardingCompany = (companyData: T_CompanyOnboardingSchema) => {
+    setOnboardingData(prev => ({ ...prev, company: companyData }))
+  }
+
+  const setOnboardingBranding = (brandingData: T_BrandingOnboardingSchema) => {
+    setOnboardingData(prev => ({ ...prev, branding: brandingData }))
+  }
+
+  const setOnboardingSignature = (signatureData: T_SignatureOnboardingSchema) => {
+    setOnboardingData(prev => ({ ...prev, signature: signatureData }))
+  }
+
   return (
     <OnboardingCtx.Provider
       value={{
@@ -68,11 +97,16 @@ export function OnboardingProvider({ initialStep, children }: Props) {
         steps: ONBOARDING_STEPS,
         index,
         progress,
+        onboardingData,
         goTo,
         next,
         back,
         isCurrentStep,
         isStepCompleted,
+        setOnboardingData,
+        setOnboardingCompany,
+        setOnboardingBranding,
+        setOnboardingSignature
       }}>
       {children}
     </OnboardingCtx.Provider>
