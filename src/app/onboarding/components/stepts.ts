@@ -6,5 +6,7 @@ export const ONBOARDING_STEPS = [
   { name: "done", title: "Done", canSkip: false },
 ] as const
 
+export const LAST_ONBOARDING_STEP = ONBOARDING_STEPS[ONBOARDING_STEPS.length - 1]
+
 export type T_StepItem = typeof ONBOARDING_STEPS[number]
 export type T_StepName = typeof ONBOARDING_STEPS[number]["name"]

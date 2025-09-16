@@ -1,6 +1,7 @@
 "use client"
 
 import { CreateCompany } from "@/actions/post/company"
+import { UpdateOnboardingState } from "@/actions/post/onboarding"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-emelemts"
 import { H1, H2 } from "@/components/topography"
@@ -11,32 +12,46 @@ import { CompanyOnboarding, T_CompanyOnboardingSchema } from "@/validators/onboa
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { LAST_ONBOARDING_STEP, ONBOARDING_STEPS } from "../../components/stepts"
 
 type Props = {
-
 }
 
 export const CompanyStep: React.FC<Props> = ({ }) => {
-  const { onboardingData, next, setOnboardingCompany, } = useOnboardingContext()
+  const { onboardingData, currentStep, completedSteps, onboarding, next, findNextStep, setOnboardingCompany, } = useOnboardingContext()
   const [loading, setLoading] = useState(false)
+
+  const companyData = onboardingData?.company
 
   const form = useForm<T_CompanyOnboardingSchema>({
     resolver: zodResolver(CompanyOnboarding),
     defaultValues: {
-      companyName: onboardingData?.company?.companyName || "",
-      companyCui: onboardingData?.company?.companyCui || "",
-      companyRegNumber: onboardingData?.company?.companyRegNumber || "",
-      compnayEmailDomain: onboardingData?.company?.compnayEmailDomain || ""
+      companyName: companyData?.companyName || "",
+      companyCui: companyData?.companyCui || "",
+      companyRegNumber: companyData?.companyRegNumber || "",
+      compnayEmailDomain: companyData?.compnayEmailDomain || ""
     }
   })
+
+  console.log(onboardingData)
 
   const { register, watch, handleSubmit, formState } = form
   const { isLoading, errors } = formState
   const values = watch()
 
   const handleFormSubmit = async (values: T_CompanyOnboardingSchema) => {
-    // setLoading(true)
-    // const { error } = await CreateCompany({ ...values, isCallingFromOnboarding: true })
+    setLoading(true)
+    const { error } = await UpdateOnboardingState({
+      onboardingId: onboarding.id,
+      currentStep: findNextStep() || LAST_ONBOARDING_STEP.name,
+      stepsDone: [...completedSteps, currentStep],
+      data: {
+        ...onboardingData,
+        company: values
+      }
+    })
+    // TODO: Handle error case
+    setLoading(false)
     setOnboardingCompany(values)
     next()
   }
@@ -78,7 +93,7 @@ export const CompanyStep: React.FC<Props> = ({ }) => {
         </FormRow>
       </div>
       <div className="flex justify-end">
-        <ButtonWithLoading className="py-4 px-10">
+        <ButtonWithLoading loading={loading} className="py-4 px-10">
           <TextCTA>
             Urmatorul
           </TextCTA>

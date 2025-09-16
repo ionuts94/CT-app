@@ -1,7 +1,8 @@
+import { GetUserOnboarding } from "@/actions/post/onboarding"
 import { createClient } from "@/lib/supabase/server"
 import { CustomApiResponse, Status } from "@/types/api-call"
 import { User } from "@supabase/supabase-js"
-import { jwtDecode } from "jwt-decode"
+import { redirect } from "next/navigation"
 import { cache } from "react"
 
 export async function GetAuthUserFunc(): Promise<CustomApiResponse<User>> {
@@ -31,3 +32,9 @@ export async function GetAuthUserFunc(): Promise<CustomApiResponse<User>> {
 
 export const CheckIsSignedUser = GetAuthUserFunc // Just for readability
 export const GetAuthUser = cache(GetAuthUserFunc)
+
+export async function CheckForOnboarding(user: User) {
+    if (user?.user_metadata?.onboardingCompleted) return;
+    const { data } = await GetUserOnboarding({ userId: user.id })
+    return redirect(process.env.NEXT_PUBLIC_URL + "/onboarding/" + data?.currentStep)
+}

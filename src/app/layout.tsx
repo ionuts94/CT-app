@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { UserProvider } from "@/contexts/user-context";
-import { GetAuthUser } from "@/actions/get/auth";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,7 +22,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
       <body

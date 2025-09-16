@@ -32,6 +32,7 @@ export async function SignUp({
                 data: {
                     firstName,
                     lastName,
+                    onboardingCompleted: false
                 }
             },
         })

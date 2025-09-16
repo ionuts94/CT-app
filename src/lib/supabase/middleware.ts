@@ -1,3 +1,4 @@
+import { CheckForOnboarding, GetAuthUser } from "@/actions/get/auth";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -39,8 +40,17 @@ export async function updateSession(request: NextRequest) {
 
   // IMPORTANT: If you remove getClaims() and you use server-side rendering
   // with the Supabase client, your users may be randomly logged out.
-  const { data } = await supabase.auth.getClaims();
+
+  const [
+    { data },
+    { data: authUser },
+  ] = await Promise.all([
+    supabase.auth.getClaims(),
+    GetAuthUser(),
+  ])
+
   const user = data?.claims;
+  await CheckForOnboarding(authUser!)
 
   if (
     request.nextUrl.pathname !== "/" &&

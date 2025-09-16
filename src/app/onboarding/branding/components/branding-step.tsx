@@ -19,7 +19,10 @@ type Props = {
 
 export const BrandingStep: React.FC<Props> = ({ }) => {
   const companyName = "Software Solutions"
-  const { next } = useOnboardingContext()
+  const { onboardingData, next } = useOnboardingContext()
+
+  console.log("Onboarding data in branding")
+  console.log(onboardingData)
 
   const form = useForm<T_BrandingOnboardingSchema>({
     resolver: zodResolver(BrandingOnboarding),

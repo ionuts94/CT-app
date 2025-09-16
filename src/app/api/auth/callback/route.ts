@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-
-import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { CreateUserRecord } from "@/actions/post/user";
+import { CreateOnboardingForUser } from "@/actions/post/onboarding";
 
 export async function GET(req: NextRequest) {
+    console.time("Whole GET")
     const { searchParams } = new URL(req.url);
     const code = searchParams.get("code");
     const supabase = await createClient()
@@ -23,6 +23,8 @@ export async function GET(req: NextRequest) {
             firstName: data.user.user_metadata.firstName,
             lastName: data.user.user_metadata.lastName,
         })
+        await CreateOnboardingForUser({ userId: data.user.id })
     }
+    console.timeEnd("Whole GET")
     return NextResponse.redirect(new URL("/onboarding/company", req.url));
 }
