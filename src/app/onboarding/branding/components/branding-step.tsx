@@ -12,6 +12,9 @@ import { Text } from "@/components/topography"
 import { ArrowRight, UploadCloudIcon } from "lucide-react"
 import { ColorPicker } from "@/components/color-picker"
 import { OnboardingContractPreview } from "../../components/onboarding-contract-preview"
+import { UpdateOnboardingState } from "@/actions/post/onboarding"
+import { LAST_ONBOARDING_STEP } from "../../components/stepts"
+import { useState } from "react"
 
 type Props = {
 
@@ -19,26 +22,34 @@ type Props = {
 
 export const BrandingStep: React.FC<Props> = ({ }) => {
   const companyName = "Software Solutions"
-  const { onboardingData, next } = useOnboardingContext()
-
-  console.log("Onboarding data in branding")
-  console.log(onboardingData)
+  const { onboarding, currentStep, completedSteps, onboardingData, next, findNextStep } = useOnboardingContext()
+  const [loading, setLoading] = useState(false)
 
   const form = useForm<T_BrandingOnboardingSchema>({
     resolver: zodResolver(BrandingOnboarding),
     defaultValues: {
       logoUrl: "",
-      primaryColor: "",
-      secondaryColor: "",
-      accentColor: "",
+      primaryColor: onboardingData?.branding?.primaryColor || "#000",
+      secondaryColor: onboardingData?.branding?.secondaryColor || "#000",
+      accentColor: onboardingData?.branding?.accentColor || "#000",
     }
   })
 
-  const { register, watch, handleSubmit, formState } = form
-  const { isLoading, errors } = formState
+  const { watch, handleSubmit } = form
   const values = watch()
 
   const handleFormSubmit = async (values: T_BrandingOnboardingSchema) => {
+    setLoading(true)
+    await UpdateOnboardingState({
+      onboardingId: onboarding.id,
+      currentStep: findNextStep() || LAST_ONBOARDING_STEP.name,
+      stepsDone: [...completedSteps, currentStep],
+      data: {
+        ...onboardingData,
+        branding: values
+      }
+    })
+    setLoading(false)
     next()
   }
 
@@ -82,7 +93,7 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
             </Label>
             <ColorPicker
               className="bg-muted/40"
-              value={values.primaryColor || "#000"}
+              value={values.primaryColor}
               onChange={(val) => onColorChange("primaryColor", val)}
             />
           </FormRow>
@@ -93,7 +104,7 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
             </Label>
             <ColorPicker
               className="bg-muted/40"
-              value={values.secondaryColor || "#000"}
+              value={values.secondaryColor}
               onChange={(val) => onColorChange("secondaryColor", val)}
             />
           </FormRow>
@@ -104,7 +115,7 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
             </Label>
             <ColorPicker
               className="bg-muted/40"
-              value={values.accentColor || "#000"}
+              value={values.accentColor}
               onChange={(val) => onColorChange("accentColor", val)}
             />
           </FormRow>
@@ -123,7 +134,7 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
       </FormRow>
 
       <div className="flex justify-end">
-        <ButtonWithLoading className="py-4 px-10">
+        <ButtonWithLoading loading={loading} className="py-4 px-10">
           <TextCTA>
             Urmatorul
           </TextCTA>
