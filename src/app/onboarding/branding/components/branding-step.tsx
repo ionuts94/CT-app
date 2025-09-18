@@ -1,7 +1,7 @@
 "use client"
 
 import { ButtonWithLoading } from "@/components/button-with-loading"
-import { FormRow, Label } from "@/components/form-emelemts"
+import { FormRow, Input, Label } from "@/components/form-emelemts"
 import { H2 } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
 import { useOnboardingContext } from "@/contexts/onboarding-context"
@@ -14,7 +14,8 @@ import { ColorPicker } from "@/components/color-picker"
 import { OnboardingContractPreview } from "../../components/onboarding-contract-preview"
 import { UpdateOnboardingState } from "@/actions/post/onboarding"
 import { LAST_ONBOARDING_STEP } from "../../components/stepts"
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
+import { cn } from "@/lib/utils"
 
 type Props = {
 
@@ -23,7 +24,9 @@ type Props = {
 export const BrandingStep: React.FC<Props> = ({ }) => {
   const companyName = "Software Solutions"
   const { onboarding, currentStep, completedSteps, onboardingData, next, findNextStep } = useOnboardingContext()
+  const [hoverInput, setHoverInput] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [imageData, setImageData] = useState()
 
   const form = useForm<T_BrandingOnboardingSchema>({
     resolver: zodResolver(BrandingOnboarding),
@@ -57,6 +60,13 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
     form.setValue(name, value)
   }
 
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] as File
+    if (!file) return;
+    const imageD = URL.createObjectURL(file)
+    console.log(imageD)
+  }
+
   return (
     <form
       onSubmit={handleSubmit(handleFormSubmit)}
@@ -75,7 +85,19 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
       <FormRow className="lg:flex-row gap-6">
         <FormRow className="lg:w-fit">
           <Label>Logo</Label>
-          <div className="w-full size-[210px] lg:aspect-square bg-muted/60 rounded-xl text-color-secondary flex items-center justify-center gap-2 flex-col">
+          <div
+            className={cn(
+              "w-full size-[210px] lg:aspect-square bg-muted/60 rounded-xl text-color-secondary flex items-center justify-center gap-2 flex-col relative",
+              hoverInput && "opacity-70 border-[2px] border-dashed border-black/80"
+            )}
+          >
+            <Input
+              type="file"
+              className="absolute top-0 left-0 right-0 bottom-0 z-10 opacity-0 cursor-pointer"
+              onMouseEnter={() => setHoverInput(true)}
+              onMouseLeave={() => setHoverInput(false)}
+              onChange={handleImageChange}
+            />
             <UploadCloudIcon strokeWidth={3} />
             <Text weight="semibold">Încărcați Logo</Text>
           </div>
