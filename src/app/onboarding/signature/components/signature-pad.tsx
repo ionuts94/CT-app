@@ -19,7 +19,7 @@ export type SignaturePadProps = {
   onSavePNG?: (dataUrl: string) => void;
 
   // 🔥 onChange trimite obiect {svg, png?, points}
-  onChange?: (payload: { svg: string; png?: string; points: PointsPayload }) => void;
+  onChange?: (payload: { svg: string; png: string; points: PointsPayload }) => void;
   onChangeMode?: "trimmed" | "raw";            // ce SVG/PNG trimitem în onChange (default: trimmed)
   onChangeDebounceMs?: number;                 // pauză după stop desen (default: 120ms)
   onChangeIncludePngLive?: boolean;            // dacă vrei PNG și în timpul desenului (default: false)
@@ -326,7 +326,7 @@ export default function SignaturePad({
     strokesRef.current = [];
     lastEmittedSvgRef.current = "";
     bump();
-    onChange?.({ svg: "", points: [] });
+    onChange?.({ svg: "", png: "", points: [] });
   }
 
   // --- payload + emit (folosește util-urile exportate) ---
@@ -338,14 +338,14 @@ export default function SignaturePad({
       width: canvasRef.current?.clientWidth,
       height: canvasRef.current?.clientHeight,
     });
-    const png = includePng ? exportSignaturePNGFromStrokes(strokesRef.current, {
+    const png = exportSignaturePNGFromStrokes(strokesRef.current, {
       mode: onChangeMode,
       strokeSize, strokeColor, padding,
       smoothingResolution: 10,
       background,
       width: canvasRef.current?.clientWidth,
       height: canvasRef.current?.clientHeight,
-    }) : undefined;
+    })
     const points: PointsPayload = strokesRef.current.map(s => s.map(p => [p[0], p[1], p[2]]));
     return { svg, png, points };
   }

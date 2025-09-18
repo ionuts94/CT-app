@@ -16,33 +16,30 @@ import { UpdateOnboardingState } from "@/actions/post/onboarding"
 import { LAST_ONBOARDING_STEP } from "../../components/stepts"
 import { ChangeEvent, useState } from "react"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
+import { SupabaseStoreFile } from "@/actions/post/storage"
+import { BUCKETS } from "@/constants/buckets"
+import { v4 as uuid } from "uuid"
 
-type Props = {
-
-}
-
-export const BrandingStep: React.FC<Props> = ({ }) => {
-  const companyName = "Software Solutions"
-  const { onboarding, currentStep, completedSteps, onboardingData, next, findNextStep } = useOnboardingContext()
+export const BrandingStep: React.FC = ({ }) => {
+  const { onboarding, currentStep, completedSteps, onboardingData, next, findNextStep, setOnboardingBranding } = useOnboardingContext()
   const [hoverInput, setHoverInput] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [imageData, setImageData] = useState()
+  const [imagePreviewUrl, setImagePreviewUrl] = useState("")
 
   const form = useForm<T_BrandingOnboardingSchema>({
     resolver: zodResolver(BrandingOnboarding),
     defaultValues: {
-      logoUrl: "",
+      logoUrl: onboardingData?.branding?.logoUrl || "",
       primaryColor: onboardingData?.branding?.primaryColor || "#000",
       secondaryColor: onboardingData?.branding?.secondaryColor || "#000",
       accentColor: onboardingData?.branding?.accentColor || "#000",
     }
   })
 
-  const { watch, handleSubmit } = form
+  const { watch, handleSubmit, formState } = form
   const values = watch()
 
   const handleFormSubmit = async (values: T_BrandingOnboardingSchema) => {
-    setLoading(true)
     await UpdateOnboardingState({
       onboardingId: onboarding.id,
       currentStep: findNextStep() || LAST_ONBOARDING_STEP.name,
@@ -52,7 +49,7 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
         branding: values
       }
     })
-    setLoading(false)
+    setOnboardingBranding(values)
     next()
   }
 
@@ -60,11 +57,17 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
     form.setValue(name, value)
   }
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] as File
     if (!file) return;
     const imageD = URL.createObjectURL(file)
-    console.log(imageD)
+    setImagePreviewUrl(imageD)
+    const { data } = await SupabaseStoreFile({
+      file,
+      bucket: BUCKETS.logos,
+      filePath: file.name + uuid()
+    })
+    form.setValue("logoUrl", data?.fileUrl || "")
   }
 
   return (
@@ -98,8 +101,15 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
               onMouseLeave={() => setHoverInput(false)}
               onChange={handleImageChange}
             />
-            <UploadCloudIcon strokeWidth={3} />
-            <Text weight="semibold">Încărcați Logo</Text>
+            {(imagePreviewUrl || values.logoUrl) ? (
+              <Image src={imagePreviewUrl || values.logoUrl} alt="logo preview" fill objectFit="contain" />
+            ) : (
+              <>
+                <UploadCloudIcon strokeWidth={3} />
+                <Text weight="semibold">Încărcați Logo</Text>
+              </>
+            )
+            }
           </div>
           <Text size="sm" className="text-color-secondary">
             PNG sau SVG, max 8MB.
@@ -150,13 +160,14 @@ export const BrandingStep: React.FC<Props> = ({ }) => {
 
       <FormRow>
         <OnboardingContractPreview
-          companyName={companyName}
+          logoUrl={imagePreviewUrl || values.logoUrl}
+          companyName={onboardingData.company.companyName}
           primaryColor={values.primaryColor || "#000"}
         />
       </FormRow>
 
       <div className="flex justify-end">
-        <ButtonWithLoading loading={loading} className="py-4 px-10">
+        <ButtonWithLoading loading={formState.isSubmitting} className="py-4 px-10">
           <TextCTA>
             Urmatorul
           </TextCTA>

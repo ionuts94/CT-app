@@ -5,41 +5,69 @@ import { FormRow, Label } from "@/components/form-emelemts"
 import { H2 } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
 import { useOnboardingContext } from "@/contexts/onboarding-context"
-import { BrandingOnboarding, T_BrandingOnboardingSchema } from "@/validators/onboarding.validator"
+import { SignatureOnboarding, T_SignatureOnboardingSchema } from "@/validators/onboarding.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Text } from "@/components/topography"
 import { ArrowRight } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import SignaturePad from "./signature-pad"
+import { UpdateOnboardingState } from "@/actions/post/onboarding"
+import { LAST_ONBOARDING_STEP } from "../../components/stepts"
+import { SupabaseStoreFile } from "@/actions/post/storage"
+import { base64ToFile } from "@/lib/utils"
+import { v4 as uuid } from "uuid"
+import { BUCKETS } from "@/constants/buckets"
+import { useRouter } from "next/navigation"
 
 type Props = {
 
 }
 
 export const SignatureStep: React.FC<Props> = ({ }) => {
-  const { next, } = useOnboardingContext()
+  const router = useRouter()
+  const { next, onboardingData, onboarding, currentStep, completedSteps, findNextStep, setOnboardingSignature } = useOnboardingContext()
 
-  const form = useForm<T_BrandingOnboardingSchema>({
-    resolver: zodResolver(BrandingOnboarding),
+  const form = useForm<T_SignatureOnboardingSchema>({
+    resolver: zodResolver(SignatureOnboarding),
     defaultValues: {
-      logoUrl: "",
-      primaryColor: "",
-      secondaryColor: "",
-      accentColor: "",
+      svg: "",
+      png: "",
+      url: ""
     }
   })
 
-  const { register, watch, handleSubmit, formState } = form
-  const { isLoading, errors } = formState
-  const values = watch()
+  const { handleSubmit, formState } = form
 
-  const handleFormSubmit = async (values: T_BrandingOnboardingSchema) => {
+  const handleFormSubmit = async (values: T_SignatureOnboardingSchema) => {
+    const file = await base64ToFile(values.png, "signature" + uuid())
+    const { data } = await SupabaseStoreFile({
+      bucket: BUCKETS.signatures,
+      file,
+      filePath: file.name,
+    })
+
+    form.setValue("url", data?.fileUrl!)
+
+    const { error } = await UpdateOnboardingState({
+      currentStep: findNextStep() || LAST_ONBOARDING_STEP.name,
+      data: {
+        ...onboardingData,
+        signature: {
+          ...values,
+          url: data?.fileUrl!
+        }
+      },
+      onboardingId: onboarding.id,
+      stepsDone: [...completedSteps, currentStep]
+    })
+    setOnboardingSignature(values)
     next()
   }
 
-  const onColorChange = (name: "primaryColor" | "secondaryColor" | "accentColor", value: string) => {
-    form.setValue(name, value)
+  const onSigatureChange = ({ svg, png }: { svg: string, png: string }) => {
+    form.setValue("svg", svg)
+    form.setValue("png", png)
   }
 
   return (
@@ -60,14 +88,14 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
       <FormRow>
         <Label>Semnătura</Label>
         <Card className="p-4">
-          <SignaturePad onChange={(s) => console.log(s)}
+          <SignaturePad onChange={onSigatureChange}
             onChangeMode="trimmed"
             onChangeDebounceMs={150} />
         </Card>
       </FormRow>
 
       <div className="flex justify-end">
-        <ButtonWithLoading className="py-4 px-10">
+        <ButtonWithLoading loading={formState.isSubmitting} className="py-4 px-10">
           <TextCTA>
             Urmatorul
           </TextCTA>

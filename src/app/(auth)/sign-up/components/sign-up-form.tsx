@@ -28,7 +28,7 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
     })
 
     const { register, handleSubmit, formState } = form
-    const { isLoading, errors } = formState
+    const { errors, isSubmitting } = formState
 
     const handleSignUp = async (values: T_SignUpSchema) => {
         const { error } = await SignUp(values)
@@ -94,7 +94,7 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
                     <InvalidInputError>{errors.cPassword?.message}</InvalidInputError>
                 </FormRow>
                 <FormRow className="w-full flex-row justify-end">
-                    <ButtonWithLoading loading={isLoading}>
+                    <ButtonWithLoading loading={isSubmitting}>
                         Continua
                     </ButtonWithLoading>
                 </FormRow>

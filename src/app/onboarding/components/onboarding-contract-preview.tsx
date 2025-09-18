@@ -1,12 +1,14 @@
 import { Card } from "@/components/ui/card"
 import { Text } from "@/components/topography"
+import Image from "next/image"
 
 type Props = {
     companyName?: string,
     primaryColor?: string,
     userName?: string,
     signature?: string,
-    instructions?: string
+    instructions?: string,
+    logoUrl?: string
 }
 
 const DEFAULTS = {
@@ -22,13 +24,18 @@ export const OnboardingContractPreview: React.FC<Props> = ({
     primaryColor = DEFAULTS.primaryColor,
     userName,
     signature,
-    instructions = DEFAULTS.instructions
+    instructions = DEFAULTS.instructions,
+    logoUrl
 }) => {
     return (
         <Card className="p-4">
             <div className="flex justify-between">
                 <div className="flex items-center gap-2">
-                    <div className="size-8 bg-red-200 rounded-sm"></div>
+                    {logoUrl &&
+                        <div className="h-8 bg-red-200 rounded-sm relative">
+                            <img src={logoUrl} alt="logo-preview" className="h-full" />
+                        </div>
+                    }
                     <p className="text-xl font-semibold" style={{ color: primaryColor }}>{companyName}</p>
                 </div>
                 <div className="bg-muted/40 w-fit py-2 px-4 rounded-full text-sm font-bold text-secondary-foreground">
@@ -40,8 +47,9 @@ export const OnboardingContractPreview: React.FC<Props> = ({
             </span>
             <div className="grid grid-cols-2">
                 <Text size="sm" weight="semibold">{companyName} - {userName}</Text>
-                <div className="flex justify-end">
+                <div className="flex items-end flex-col gap-2">
                     <Text size="sm" weight="semibold">Semnatura</Text>
+                    {signature && <img className="h-14 w-fit object-contain" src={signature} alt="signature" />}
                 </div>
             </div>
         </Card>

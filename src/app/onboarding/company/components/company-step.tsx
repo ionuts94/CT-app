@@ -19,28 +19,21 @@ type Props = {
 
 export const CompanyStep: React.FC<Props> = ({ }) => {
   const { onboardingData, currentStep, completedSteps, onboarding, next, findNextStep, setOnboardingCompany, } = useOnboardingContext()
-  const [loading, setLoading] = useState(false)
-
-  const companyData = onboardingData?.company
 
   const form = useForm<T_CompanyOnboardingSchema>({
     resolver: zodResolver(CompanyOnboarding),
     defaultValues: {
-      companyName: companyData?.companyName || "",
-      companyCui: companyData?.companyCui || "",
-      companyRegNumber: companyData?.companyRegNumber || "",
-      compnayEmailDomain: companyData?.compnayEmailDomain || ""
+      companyName: onboardingData?.company?.companyName || "",
+      companyCui: onboardingData?.company?.companyCui || "",
+      companyRegNumber: onboardingData?.company?.companyRegNumber || "",
+      compnayEmailDomain: onboardingData?.company?.compnayEmailDomain || ""
     }
   })
 
-  console.log(onboardingData)
-
   const { register, watch, handleSubmit, formState } = form
-  const { isLoading, errors } = formState
-  const values = watch()
+  const { isSubmitting, errors } = formState
 
   const handleFormSubmit = async (values: T_CompanyOnboardingSchema) => {
-    setLoading(true)
     const { error } = await UpdateOnboardingState({
       onboardingId: onboarding.id,
       currentStep: findNextStep() || LAST_ONBOARDING_STEP.name,
@@ -51,7 +44,7 @@ export const CompanyStep: React.FC<Props> = ({ }) => {
       }
     })
     // TODO: Handle error case
-    setLoading(false)
+
     setOnboardingCompany(values)
     next()
   }
@@ -93,7 +86,7 @@ export const CompanyStep: React.FC<Props> = ({ }) => {
         </FormRow>
       </div>
       <div className="flex justify-end">
-        <ButtonWithLoading loading={loading} className="py-4 px-10">
+        <ButtonWithLoading loading={isSubmitting} className="py-4 px-10">
           <TextCTA>
             Urmatorul
           </TextCTA>

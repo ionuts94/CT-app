@@ -27,7 +27,7 @@ const TEST_DATA = {
 }
 
 export const DoneStep: React.FC<Props> = ({ }) => {
-  const { next } = useOnboardingContext()
+  const { next, onboarding, onboardingData } = useOnboardingContext()
 
   return (
     <div className="w-full max-w-[800px] mx-auto py-[20px] space-y-[30px] px-4" >
@@ -68,9 +68,10 @@ export const DoneStep: React.FC<Props> = ({ }) => {
       </div>
 
       <OnboardingContractPreview
-        companyName={TEST_DATA.companyName}
-        primaryColor={TEST_DATA.branding.primaryColor}
-        signature=""
+        companyName={onboardingData?.company?.companyName}
+        logoUrl={onboardingData?.branding?.logoUrl}
+        primaryColor={onboardingData?.branding?.primaryColor}
+        signature={onboardingData?.signature?.url}
         userName={TEST_DATA.userName}
       />
 
