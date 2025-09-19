@@ -307,7 +307,7 @@ model Onboarding {
   createdAt   DateTime @default(dbgenerated("now()"))
   data        Json?
   stepsDone   String[] @default([])
-  currentStep String?
+  nextUncompleteStep String?
 
   status OnboardingStatusSimple @default(IN_PROGRESS)
 

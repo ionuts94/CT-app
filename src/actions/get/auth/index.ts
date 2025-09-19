@@ -1,4 +1,5 @@
 import { GetUserOnboarding } from "@/actions/post/onboarding"
+import { FIRST_ONBOARDING_STEP } from "@/app/onboarding/components/stepts"
 import { createClient } from "@/lib/supabase/server"
 import { CustomApiResponse, Status } from "@/types/api-call"
 import { User } from "@supabase/supabase-js"
@@ -36,5 +37,5 @@ export const GetAuthUser = cache(GetAuthUserFunc)
 export async function CheckForOnboarding(user: User) {
     if (user?.user_metadata?.onboardingCompleted) return;
     const { data } = await GetUserOnboarding({ userId: user.id })
-    return redirect(process.env.NEXT_PUBLIC_URL + "/onboarding/" + data?.currentStep)
+    return redirect(process.env.NEXT_PUBLIC_URL + "/onboarding/" + (data?.nextUncompleteStep || FIRST_ONBOARDING_STEP.name))
 }

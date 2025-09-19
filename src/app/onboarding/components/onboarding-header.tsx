@@ -6,6 +6,7 @@ import { ReceiptText } from "lucide-react"
 import { T_StepItem } from "./stepts"
 import { Separator } from "@/components/ui/separator"
 import { Fragment } from "react"
+import Link from "next/link"
 
 type Props = {
 
@@ -49,24 +50,26 @@ type HeaderStepProps = {
 
 const HeaderStep: React.FC<HeaderStepProps> = ({ stepIndex, step, isCurrentStep, isStepCompleted }) => {
     return (
-        <div className="flex items-center gap-2">
-            <div
-                className={cn(
-                    "rounded-full size-7 text-color-secondary/70 border-3 border-color-secondary/70 flex items-center justify-center text-[16px] font-bold lg:size-8",
-                    isCurrentStep && "text-primary border-primary",
-                    isStepCompleted && "border-primary bg-primary text-white",
-                )}
-            >
-                {stepIndex}
+        <Link href={`/onboarding/${step.name}`} className="hover:opacity-80 cursor-pointer">
+            <div className="flex items-center gap-2">
+                <div
+                    className={cn(
+                        "rounded-full size-7 text-color-secondary/70 border-3 border-color-secondary/70 flex items-center justify-center text-[16px] font-bold lg:size-8",
+                        isCurrentStep && "text-primary border-primary",
+                        isStepCompleted && "border-primary bg-primary text-white",
+                    )}
+                >
+                    {stepIndex}
+                </div>
+                <p
+                    className={cn(
+                        "hidden font-semibold text-color-secondary lg:block",
+                        isCurrentStep && "font-bold text-black"
+                    )}
+                >
+                    {step.name.toUpperCase()}
+                </p>
             </div>
-            <p
-                className={cn(
-                    "hidden font-semibold text-color-secondary lg:block",
-                    isCurrentStep && "font-bold text-black"
-                )}
-            >
-                {step.name.toUpperCase()}
-            </p>
-        </div>
+        </Link>
     )
 }

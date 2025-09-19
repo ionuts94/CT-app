@@ -7,6 +7,7 @@ export const ONBOARDING_STEPS = [
 ] as const
 
 export const LAST_ONBOARDING_STEP = ONBOARDING_STEPS[ONBOARDING_STEPS.length - 1]
+export const FIRST_ONBOARDING_STEP = ONBOARDING_STEPS[0]
 
 export type T_StepItem = typeof ONBOARDING_STEPS[number]
 export type T_StepName = typeof ONBOARDING_STEPS[number]["name"]

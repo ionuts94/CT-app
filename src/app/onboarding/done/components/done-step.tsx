@@ -38,29 +38,33 @@ export const DoneStep: React.FC<Props> = ({ }) => {
       <div className="grid lg:grid-cols-2 lg:grid-rows-2 gap-2">
         <Card className="p-4 gap-1">
           <Text className="text-color-secondary">Companie</Text>
-          <Text weight="semibold" size="lg">{TEST_DATA.companyName}</Text>
+          <Text weight="semibold" size="lg">{onboardingData.company?.companyName}</Text>
         </Card>
         <Card className="p-4 gap-1">
           <Text className="text-color-secondary">Siglă Brand</Text>
-          <Text weight="semibold" size="lg">{TEST_DATA.brandLogo}</Text>
+          <Text weight="semibold" size="lg">{onboardingData.branding?.logoUrl ? "Incarcat" : "Nesetat"}</Text>
         </Card>
-        <Card className="p-4 gap-1">
+        <Card className="p-4 gap-1 items-start">
           <Text className="text-color-secondary">Semnătură</Text>
-          <Text weight="semibold" size="lg">{TEST_DATA.signature}</Text>
+          {onboardingData?.signature?.url
+            ? <img className="h-10 object-contain" src={onboardingData?.signature?.url} />
+            : <Text weight="semibold" size="lg">Nesetat</Text>
+          }
+
         </Card>
         <Card className="p-4 gap-1">
           <Text className="text-color-secondary">Culori</Text>
           <div className="flex flex-col lg:flex-row gap-1 lg:justify-between">
             <Text className="flex flex-row items-center gap-1" size="lg" weight="semibold">
-              <span className="size-5 rounded-sm gap-1" style={{ background: TEST_DATA.branding.primaryColor }}></span>
+              <span className="size-5 rounded-sm gap-1" style={{ background: onboardingData?.branding?.primaryColor }}></span>
               Primar
             </Text>
             <Text className="flex flex-row items-center gap-1" size="lg" weight="semibold">
-              <span className="size-5 rounded-sm gap-1" style={{ background: TEST_DATA.branding.secondaryColor }}></span>
+              <span className="size-5 rounded-sm gap-1" style={{ background: onboardingData?.branding?.secondaryColor }}></span>
               Secundar
             </Text>
             <Text className="flex flex-row items-center gap-1" size="lg" weight="semibold">
-              <span className="size-5 rounded-sm gap-1" style={{ background: TEST_DATA.branding.accentColor }}></span>
+              <span className="size-5 rounded-sm gap-1" style={{ background: onboardingData?.branding?.accentColor }}></span>
               Accent
             </Text>
           </div>

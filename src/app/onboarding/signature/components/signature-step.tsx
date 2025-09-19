@@ -25,8 +25,15 @@ type Props = {
 }
 
 export const SignatureStep: React.FC<Props> = ({ }) => {
-  const router = useRouter()
-  const { next, onboardingData, onboarding, currentStep, completedSteps, findNextStep, setOnboardingSignature } = useOnboardingContext()
+  const {
+    onboardingData,
+    onboarding,
+    currentStepView,
+    completedSteps,
+    next,
+    findNextStep,
+    setOnboardingSignature
+  } = useOnboardingContext()
 
   const form = useForm<T_SignatureOnboardingSchema>({
     resolver: zodResolver(SignatureOnboarding),
@@ -48,9 +55,10 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
     })
 
     form.setValue("url", data?.fileUrl!)
+    setOnboardingSignature({ ...values, url: data?.fileUrl! })
 
     const { error } = await UpdateOnboardingState({
-      currentStep: findNextStep() || LAST_ONBOARDING_STEP.name,
+      nextUncompleteStep: findNextStep() || LAST_ONBOARDING_STEP.name,
       data: {
         ...onboardingData,
         signature: {
@@ -59,9 +67,9 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
         }
       },
       onboardingId: onboarding.id,
-      stepsDone: [...completedSteps, currentStep]
+      stepsDone: [...completedSteps, currentStepView]
     })
-    setOnboardingSignature(values)
+
     next()
   }
 
@@ -88,9 +96,11 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
       <FormRow>
         <Label>Semnătura</Label>
         <Card className="p-4">
-          <SignaturePad onChange={onSigatureChange}
+          <SignaturePad
+            onChange={onSigatureChange}
             onChangeMode="trimmed"
-            onChangeDebounceMs={150} />
+            onChangeDebounceMs={150}
+          />
         </Card>
       </FormRow>
 

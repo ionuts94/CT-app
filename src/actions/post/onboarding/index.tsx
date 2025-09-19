@@ -84,12 +84,12 @@ export async function GetUserOnboarding({
 export async function UpdateOnboardingState({
   onboardingId,
   stepsDone,
-  currentStep,
+  nextUncompleteStep,
   data
 }: {
   onboardingId: string,
   stepsDone: T_StepName[],
-  currentStep: T_StepName,
+  nextUncompleteStep: T_StepName,
   data: T_OnboardingData
 }): Promise<CustomApiResponse> {
   const supabase = await createClient();
@@ -98,7 +98,7 @@ export async function UpdateOnboardingState({
     const { error } = await supabase.from("onboarding")
       .update({
         stepsDone,
-        currentStep,
+        nextUncompleteStep,
         data,
       })
       .eq("id", onboardingId)
@@ -122,6 +122,6 @@ const DEFAULT_ONBOARDING_RECORD = {
   createdAt: new Date(),
   data: {},
   stepsDone: [],
-  currentStep: ONBOARDING_STEPS[0].name,
+  nextUncompleteStep: ONBOARDING_STEPS[0].name,
   status: "IN_PROGRESS",
 }

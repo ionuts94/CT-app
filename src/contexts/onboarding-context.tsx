@@ -1,14 +1,14 @@
 "use client"
 
-import { ONBOARDING_STEPS, T_StepItem, T_StepName } from "@/app/onboarding/components/stepts"
+import { LAST_ONBOARDING_STEP, ONBOARDING_STEPS, T_StepItem, T_StepName } from "@/app/onboarding/components/stepts"
 import { T_BrandingOnboardingSchema, T_CompanyOnboardingSchema, T_SignatureOnboardingSchema } from "@/validators/onboarding.validator"
 import { Onboarding } from "@prisma/client"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import React, { createContext, useContext, useState } from "react"
 
 
 type Ctx = {
-  currentStep: T_StepName,
+  currentStepView: T_StepName,
   completedSteps: T_StepName[],
   steps: typeof ONBOARDING_STEPS,
   index: number,
@@ -21,6 +21,7 @@ type Ctx = {
   isCurrentStep: (step: T_StepItem) => boolean,
   isStepCompleted: (step: T_StepItem) => boolean,
   findNextStep: () => T_StepName | undefined,
+  findNextUncompletedStep: () => T_StepName,
   setOnboardingData: React.Dispatch<React.SetStateAction<T_OnboardingData>>,
   setOnboardingCompany: (companyData: T_CompanyOnboardingSchema) => void,
   setOnboardingBranding: (brandingData: T_BrandingOnboardingSchema) => void,
@@ -45,19 +46,24 @@ type Props = {
 }
 
 export function OnboardingProvider({ children, data }: Props) {
-  console.log(data)
   const router = useRouter()
+  const pathname = usePathname()
+  const currentStepView = pathname.split("/").pop() as T_StepName
+
   const [onboarding, setOnboarding] = useState(data || {})
-  const [currentStep, setCurrentStep] = useState<T_StepName>((data?.currentStep as T_StepName) || ONBOARDING_STEPS[0].name)
+  // const [currentStep, setCurrentStep] = useState<T_StepName>((data?.currentStep as T_StepName) || ONBOARDING_STEPS[0].name)
   const [completedSteps, setCompletedSteps] = useState<T_StepName[]>((data?.stepsDone as T_StepName[]) || [])
   const [onboardingData, setOnboardingData] = useState<T_OnboardingData>((data.data || {}) as T_OnboardingData)
 
-  const index = ONBOARDING_STEPS.findIndex(s => s.name === currentStep)
+  console.log(onboardingData)
+
+  const index = ONBOARDING_STEPS.findIndex(s => s.name === currentStepView)
   const progress = (index + 1) / ONBOARDING_STEPS.length
 
-  const isCurrentStep = (step: T_StepItem) => step.name === currentStep
+  const isCurrentStep = (step: T_StepItem) => step.name === currentStepView
   const isStepCompleted = (step: T_StepItem) => completedSteps.includes(step.name)
   const findNextStep = () => index < ONBOARDING_STEPS.length - 1 ? ONBOARDING_STEPS[index + 1].name : undefined
+  const findNextUncompletedStep = () => ONBOARDING_STEPS.find(step => !completedSteps.some(completedStep => step.name === completedStep))?.name || LAST_ONBOARDING_STEP.name
 
   const setOnboardingCompany = (companyData: T_CompanyOnboardingSchema) => {
     setOnboardingData(prev => ({ ...prev, company: companyData }))
@@ -73,7 +79,7 @@ export function OnboardingProvider({ children, data }: Props) {
 
   const goTo = (s: T_StepName) => {
     if (!ONBOARDING_STEPS.some(st => st.name === s)) return
-    setCurrentStep(s)
+    // setCurrentStep(s)
     router.push(`/onboarding/${s}`)
   }
 
@@ -82,10 +88,10 @@ export function OnboardingProvider({ children, data }: Props) {
   }
 
   const next = async () => {
-    const ok = await validateBeforeNext(currentStep)
+    const ok = await validateBeforeNext(currentStepView)
     if (!ok) return
 
-    setCompletedSteps(prev => Array.from(new Set([...prev, currentStep])))
+    setCompletedSteps(prev => Array.from(new Set([...prev, currentStepView])))
     const nextStep = findNextStep()
     if (nextStep) goTo(nextStep)
   }
@@ -93,7 +99,7 @@ export function OnboardingProvider({ children, data }: Props) {
   return (
     <OnboardingCtx.Provider
       value={{
-        currentStep,
+        currentStepView,
         completedSteps,
         steps: ONBOARDING_STEPS,
         index,
@@ -106,6 +112,7 @@ export function OnboardingProvider({ children, data }: Props) {
         isCurrentStep,
         isStepCompleted,
         findNextStep,
+        findNextUncompletedStep,
         setOnboardingData,
         setOnboardingCompany,
         setOnboardingBranding,

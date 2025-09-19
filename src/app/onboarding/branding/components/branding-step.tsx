@@ -22,7 +22,7 @@ import { BUCKETS } from "@/constants/buckets"
 import { v4 as uuid } from "uuid"
 
 export const BrandingStep: React.FC = ({ }) => {
-  const { onboarding, currentStep, completedSteps, onboardingData, next, findNextStep, setOnboardingBranding } = useOnboardingContext()
+  const { onboarding, currentStepView, completedSteps, onboardingData, next, findNextStep, setOnboardingBranding } = useOnboardingContext()
   const [hoverInput, setHoverInput] = useState(false)
   const [imagePreviewUrl, setImagePreviewUrl] = useState("")
 
@@ -42,8 +42,8 @@ export const BrandingStep: React.FC = ({ }) => {
   const handleFormSubmit = async (values: T_BrandingOnboardingSchema) => {
     await UpdateOnboardingState({
       onboardingId: onboarding.id,
-      currentStep: findNextStep() || LAST_ONBOARDING_STEP.name,
-      stepsDone: [...completedSteps, currentStep],
+      nextUncompleteStep: findNextStep() || LAST_ONBOARDING_STEP.name,
+      stepsDone: [...completedSteps, currentStepView],
       data: {
         ...onboardingData,
         branding: values
