@@ -4,7 +4,6 @@ import { CreateUserRecord } from "@/actions/post/user";
 import { CreateOnboardingForUser } from "@/actions/post/onboarding";
 
 export async function GET(req: NextRequest) {
-    console.time("Whole GET")
     const { searchParams } = new URL(req.url);
     const code = searchParams.get("code");
     const supabase = await createClient()
@@ -25,6 +24,6 @@ export async function GET(req: NextRequest) {
         })
         await CreateOnboardingForUser({ userId: data.user.id })
     }
-    console.timeEnd("Whole GET")
+
     return NextResponse.redirect(new URL("/onboarding/company", req.url));
 }

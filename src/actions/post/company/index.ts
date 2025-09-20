@@ -2,39 +2,38 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { CustomApiResponse, Status } from "@/types/api-call";
-import { T_CompanyOnboardingSchema } from "@/validators/onboarding.validator";
+import { T_BrandingOnboardingSchema, T_CompanyOnboardingSchema } from "@/validators/onboarding.validator";
 import { UpdateCompanyIdForAuthUser } from "../user";
 
-type T_CreateCompanyArgs = T_CompanyOnboardingSchema & { isCallingFromOnboarding?: boolean }
+type T_CreateCompanyArgs = T_CompanyOnboardingSchema & T_BrandingOnboardingSchema
 
 export async function CreateCompany({
   companyName,
   companyCui,
   companyRegNumber,
   compnayEmailDomain,
-  isCallingFromOnboarding
+  logoUrl,
+  primaryColor,
+  secondaryColor,
+  accentColor,
 }: T_CreateCompanyArgs): Promise<CustomApiResponse> {
-  const supabase = await createClient();
+  const supabase = await createClient()
 
   try {
     const { data, error } = await supabase.from("companies").insert({
       name: companyName,
       cui: companyCui,
       regNumber: companyRegNumber,
-      emailDomain: compnayEmailDomain
+      emailDomain: compnayEmailDomain,
+      logoUrl,
+      colorPrimary: primaryColor,
+      colorSecondary: secondaryColor,
+      colorAccent: accentColor
     })
       .select("*")
       .maybeSingle()
 
     if (error) throw Error(error.message)
-
-    if (isCallingFromOnboarding) {
-      const { error } = await UpdateCompanyIdForAuthUser({ companyId: data.id })
-      if (error) {
-        await supabase.from("companies").delete().eq("id", data.id).maybeSingle()
-        throw Error(error)
-      }
-    }
 
     return {
       status: Status.SUCCESS,

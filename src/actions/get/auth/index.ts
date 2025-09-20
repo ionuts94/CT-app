@@ -7,7 +7,6 @@ import { redirect } from "next/navigation"
 import { cache } from "react"
 
 export async function GetAuthUserFunc(): Promise<CustomApiResponse<User>> {
-    console.log('checking signed user')
     const supabase = await createClient()
 
     try {

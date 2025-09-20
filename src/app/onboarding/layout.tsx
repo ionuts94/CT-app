@@ -19,7 +19,7 @@ export default async function OnboardingLayout({ children }: PropsWithChildren) 
     const { data, error } = await GetUserOnboarding({ userId: authUser.id })
 
     return (
-        <OnboardingProvider data={data!}>
+        <OnboardingProvider data={data!} authUser={authUser}>
             <main className="min-h-screen flex flex-col">
                 <OnboardingHeader />
                 {children}

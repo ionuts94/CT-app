@@ -45,9 +45,9 @@ export const OnboardingContractPreview: React.FC<Props> = ({
             <span className="border text-md text-color-secondary p-4 rounded-sm border-dashed">
                 {instructions}
             </span>
-            <div className="grid grid-cols-2">
+            <div className="flex flex-col gap-6">
                 <Text size="sm" weight="semibold">{companyName} - {userName}</Text>
-                <div className="flex items-end flex-col gap-2">
+                <div className="flex items-start flex-col gap-2">
                     <Text size="sm" weight="semibold">Semnatura</Text>
                     {signature && <img className="h-14 w-fit object-contain" src={signature} alt="signature" />}
                 </div>

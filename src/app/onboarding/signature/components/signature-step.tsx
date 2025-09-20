@@ -47,28 +47,30 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
   const { handleSubmit, formState } = form
 
   const handleFormSubmit = async (values: T_SignatureOnboardingSchema) => {
-    const file = await base64ToFile(values.png, "signature" + uuid())
-    const { data } = await SupabaseStoreFile({
-      bucket: BUCKETS.signatures,
-      file,
-      filePath: file.name,
-    })
+    if (values.png) {
+      const file = await base64ToFile(values.png, "signature" + uuid())
+      const { data } = await SupabaseStoreFile({
+        bucket: BUCKETS.signatures,
+        file,
+        filePath: file.name,
+      })
 
-    form.setValue("url", data?.fileUrl!)
-    setOnboardingSignature({ ...values, url: data?.fileUrl! })
+      form.setValue("url", data?.fileUrl!)
+      setOnboardingSignature({ ...values, url: data?.fileUrl! })
 
-    const { error } = await UpdateOnboardingState({
-      nextUncompleteStep: findNextStep() || LAST_ONBOARDING_STEP.name,
-      data: {
-        ...onboardingData,
-        signature: {
-          ...values,
-          url: data?.fileUrl!
-        }
-      },
-      onboardingId: onboarding.id,
-      stepsDone: [...completedSteps, currentStepView]
-    })
+      const { error } = await UpdateOnboardingState({
+        nextUncompleteStep: findNextStep() || LAST_ONBOARDING_STEP.name,
+        data: {
+          ...onboardingData,
+          signature: {
+            ...values,
+            url: data?.fileUrl!
+          }
+        },
+        onboardingId: onboarding.id,
+        stepsDone: [...completedSteps, currentStepView]
+      })
+    }
 
     next()
   }

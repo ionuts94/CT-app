@@ -1,10 +1,9 @@
 "use client"
 
-import { CreateCompany } from "@/actions/post/company"
 import { UpdateOnboardingState } from "@/actions/post/onboarding"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-emelemts"
-import { H1, H2 } from "@/components/topography"
+import { H2 } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
 import { useOnboardingContext } from "@/contexts/onboarding-context"
 
@@ -29,7 +28,7 @@ export const CompanyStep: React.FC<Props> = ({ }) => {
     }
   })
 
-  const { register, watch, handleSubmit, formState } = form
+  const { register, handleSubmit, formState } = form
   const { isSubmitting, errors } = formState
 
   const handleFormSubmit = async (values: T_CompanyOnboardingSchema) => {

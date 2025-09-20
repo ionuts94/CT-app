@@ -4,6 +4,7 @@ import { SignUp } from "@/actions/post/auth"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-emelemts"
 import { Body, H1, H2, Text } from "@/components/topography"
+import { TextCTA } from "@/components/topography/cta"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { SignUpSchema, T_SignUpSchema } from "@/validators/auth.validator"
@@ -85,17 +86,19 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
                 </FormRow>
                 <FormRow>
                     <Label className="text-black/70"><RequiredFieldMark />Parola</Label>
-                    <Input {...register("password")} />
+                    <Input {...register("password")} type="password" />
                     <InvalidInputError>{errors.password?.message}</InvalidInputError>
                 </FormRow>
                 <FormRow>
                     <Label className="text-black/70"><RequiredFieldMark />Comfirmare Parola</Label>
-                    <Input {...register("cPassword")} />
+                    <Input {...register("cPassword")} type="password" />
                     <InvalidInputError>{errors.cPassword?.message}</InvalidInputError>
                 </FormRow>
                 <FormRow className="w-full flex-row justify-end">
-                    <ButtonWithLoading loading={isSubmitting}>
-                        Continua
+                    <ButtonWithLoading className="py-4 px-12" loading={isSubmitting}>
+                        <TextCTA>
+                            Continua
+                        </TextCTA>
                     </ButtonWithLoading>
                 </FormRow>
                 <Separator />

@@ -47,14 +47,12 @@ export const AiTemplateReview: React.FC<Props> = ({ }) => {
       return;
     }
 
-    console.log("Running fix")
+
     const { fixedData } = await runAIFixTemplate({
       baseInput: templateInputs,
       baseHtml: currentTemplateRichText,
       issues: reviewOutcome?.issues
     })
-
-    console.log(fixedData)
   }
 
 

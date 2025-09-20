@@ -158,14 +158,6 @@ export const BrandingStep: React.FC = ({ }) => {
         </FormRow>
       </FormRow>
 
-      <FormRow>
-        <OnboardingContractPreview
-          logoUrl={imagePreviewUrl || values.logoUrl}
-          companyName={onboardingData.company.companyName}
-          primaryColor={values.primaryColor || "#000"}
-        />
-      </FormRow>
-
       <div className="flex justify-end">
         <ButtonWithLoading loading={formState.isSubmitting} className="py-4 px-10">
           <TextCTA>

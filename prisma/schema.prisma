@@ -39,7 +39,6 @@ model User {
   templates   Template[]   @relation("TemplateCreator")
 
   onboarding          Onboarding?
-  onboardingCompleted Boolean     @default(false)
 
   @@index([currentCompanyId])
   // table mapping
@@ -130,12 +129,14 @@ model Contract {
   createdAt DateTime @default(dbgenerated("now()"))
   updatedAt DateTime @default(dbgenerated("now()")) @updatedAt
 
-  signatures Signature[]
+  signatureId String @db.Uuid
+
   comments   Comment[]
   activities Activity[]
   parties    Party[]
   placements SignaturePlacement[]
   invites    Invite[]
+  signature  Signature @relation(fields: [signatureId], references: [id])
 
   @@index([companyId, status, createdAt])
   @@index([ownerId])
@@ -154,7 +155,7 @@ model Party {
   signedAt     DateTime?
 
   contract   Contract             @relation(fields: [contractId], references: [id], onDelete: Cascade)
-  signatures Signature[]
+  // signatures Signature[]
   placements SignaturePlacement[]
   invites    Invite[]
 
@@ -203,25 +204,16 @@ model SignaturePlacement {
 model Signature {
   id        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   type      SignatureType // draw, typed, upload
-  fullName  String
   title     String?
-  imageUrl  String? // PNG in storage (for draw/upload) sau rasterizat pt typed
+  imageUrl  String? 
   createdAt DateTime      @default(dbgenerated("now()"))
 
-  // one of partyId OR userId (pentru externi vs interni)
   userId String? @db.Uuid
   user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
-  partyId String? @db.Uuid
-  party   Party?  @relation(fields: [partyId], references: [id], onDelete: SetNull)
-
-  contractId String   @db.Uuid
-  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
-
-  @@index([contractId])
+  contracts Contract[]
+ 
   @@index([userId])
-  @@index([partyId])
-  // table mapping
   @@map("signatures")
 }
 

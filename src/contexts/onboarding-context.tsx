@@ -3,9 +3,11 @@
 import { LAST_ONBOARDING_STEP, ONBOARDING_STEPS, T_StepItem, T_StepName } from "@/app/onboarding/components/stepts"
 import { T_BrandingOnboardingSchema, T_CompanyOnboardingSchema, T_SignatureOnboardingSchema } from "@/validators/onboarding.validator"
 import { Onboarding } from "@prisma/client"
+import { User } from "@supabase/supabase-js"
 import { usePathname, useRouter } from "next/navigation"
 import React, { createContext, useContext, useState } from "react"
 
+type T_AuthUser = User
 
 type Ctx = {
   currentStepView: T_StepName,
@@ -25,7 +27,8 @@ type Ctx = {
   setOnboardingData: React.Dispatch<React.SetStateAction<T_OnboardingData>>,
   setOnboardingCompany: (companyData: T_CompanyOnboardingSchema) => void,
   setOnboardingBranding: (brandingData: T_BrandingOnboardingSchema) => void,
-  setOnboardingSignature: (signatureData: T_SignatureOnboardingSchema) => void
+  setOnboardingSignature: (signatureData: T_SignatureOnboardingSchema) => void,
+  authUser: T_AuthUser
 }
 const OnboardingCtx = createContext<Ctx>({} as any)
 
@@ -42,20 +45,18 @@ export type T_OnboardingData = {
 
 type Props = {
   children?: React.ReactNode,
-  data: Onboarding
+  data: Onboarding,
+  authUser: T_AuthUser
 }
 
-export function OnboardingProvider({ children, data }: Props) {
+export function OnboardingProvider({ children, data, authUser }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const currentStepView = pathname.split("/").pop() as T_StepName
 
   const [onboarding, setOnboarding] = useState(data || {})
-  // const [currentStep, setCurrentStep] = useState<T_StepName>((data?.currentStep as T_StepName) || ONBOARDING_STEPS[0].name)
   const [completedSteps, setCompletedSteps] = useState<T_StepName[]>((data?.stepsDone as T_StepName[]) || [])
-  const [onboardingData, setOnboardingData] = useState<T_OnboardingData>((data.data || {}) as T_OnboardingData)
-
-  console.log(onboardingData)
+  const [onboardingData, setOnboardingData] = useState<T_OnboardingData>((data?.data || {}) as T_OnboardingData)
 
   const index = ONBOARDING_STEPS.findIndex(s => s.name === currentStepView)
   const progress = (index + 1) / ONBOARDING_STEPS.length
@@ -79,7 +80,6 @@ export function OnboardingProvider({ children, data }: Props) {
 
   const goTo = (s: T_StepName) => {
     if (!ONBOARDING_STEPS.some(st => st.name === s)) return
-    // setCurrentStep(s)
     router.push(`/onboarding/${s}`)
   }
 
@@ -116,7 +116,8 @@ export function OnboardingProvider({ children, data }: Props) {
         setOnboardingData,
         setOnboardingCompany,
         setOnboardingBranding,
-        setOnboardingSignature
+        setOnboardingSignature,
+        authUser
       }}>
       {children}
     </OnboardingCtx.Provider>

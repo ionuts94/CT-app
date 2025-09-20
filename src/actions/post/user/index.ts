@@ -20,7 +20,6 @@ export async function CreateUserRecord({
       lastName,
       createdAt: new Date(),
       updatedAt: new Date(),
-      onboardingCompleted: false
     })
 
     if (error) throw (error.message)

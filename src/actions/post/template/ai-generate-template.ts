@@ -5,9 +5,6 @@ import { T_AiTemplateWriteSchema } from "@/validators/template.validator";
 import OpenAI from "openai";
 
 export async function AIGenerateTemplate(data: T_AiTemplateWriteSchema): Promise<CustomApiResponse<string>> {
-  console.log("Generate template for values")
-  console.log(data)
-
   try {
     const openai = new OpenAI()
     const prompt = getPromptForAI(data)
@@ -16,8 +13,6 @@ export async function AIGenerateTemplate(data: T_AiTemplateWriteSchema): Promise
       model: "gpt-4",
       input: prompt
     })
-
-    console.log(response)
 
     return {
       status: Status.SUCCESS,

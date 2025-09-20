@@ -29,9 +29,6 @@ export async function AIReviewTemplate({
       temperature: 0.2,
     });
 
-    console.log("Reviewd: ")
-    console.log(res)
-
     const raw = res.output_text;
     if (!raw) throw new Error("Missing output_text in response");
     const parsed = JSON.parse(raw);
