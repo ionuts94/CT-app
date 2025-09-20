@@ -3,16 +3,13 @@
 import { Card } from "@/components/ui/card"
 import { RichTextEditor } from "@/components/rich-text-editor"
 import { AiTemplateReview } from "./ai-template-review"
-import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-emelemts"
+import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-elements"
 import { useTemplateContext } from "@/contexts/template-assistant-context"
-import { useForm } from "react-hook-form"
 import { useEffect } from "react"
+import { useDebouncedCallback } from "use-debounce"
 
-type Props = {
 
-}
-
-export const TemplateForm: React.FC<Props> = ({ }) => {
+export const TemplateForm: React.FC = ({ }) => {
   const { currentTemplateRichText, form } = useTemplateContext()
 
   const { register, watch, formState } = form
@@ -23,6 +20,13 @@ export const TemplateForm: React.FC<Props> = ({ }) => {
     if (currentTemplateRichText)
       form.setValue("content", currentTemplateRichText)
   }, [currentTemplateRichText])
+
+  const debouncedSetContent = useDebouncedCallback(
+    (html: string) => {
+      form.setValue("content", html, { shouldDirty: true, shouldValidate: true })
+    },
+    500
+  )
 
   return (
     <form className="w-full flex gap-4">
@@ -52,7 +56,7 @@ export const TemplateForm: React.FC<Props> = ({ }) => {
             <InvalidInputError>{errors.content?.message}</InvalidInputError>
             <RichTextEditor
               content={values.content}
-              onChange={(htmlString) => form.setValue("content", htmlString)}
+              onChange={(htmlString) => debouncedSetContent(htmlString)}
             />
           </FormRow>
         </Card>

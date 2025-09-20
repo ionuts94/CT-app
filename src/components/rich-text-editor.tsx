@@ -47,7 +47,7 @@ export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, con
 
   useEffect(() => {
     if (!content) return;
-    editor?.commands.setContent(content, { emitUpdate: true })
+    // editor?.commands.setContent(content, { emitUpdate: true })
   }, [content])
 
   if (!editor) {

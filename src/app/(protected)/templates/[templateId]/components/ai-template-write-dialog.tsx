@@ -1,6 +1,6 @@
 "use client"
 
-import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark, Textarea } from "@/components/form-emelemts"
+import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark, Textarea } from "@/components/form-elements"
 import { AiSvg } from "@/components/svgs/ai-svg"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"

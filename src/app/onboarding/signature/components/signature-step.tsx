@@ -1,7 +1,7 @@
 "use client"
 
 import { ButtonWithLoading } from "@/components/button-with-loading"
-import { FormRow, Label } from "@/components/form-emelemts"
+import { FormRow, Label } from "@/components/form-elements"
 import { H2 } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
 import { useOnboardingContext } from "@/contexts/onboarding-context"

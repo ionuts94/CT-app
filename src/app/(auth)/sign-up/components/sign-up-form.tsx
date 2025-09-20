@@ -2,7 +2,7 @@
 
 import { SignUp } from "@/actions/post/auth"
 import { ButtonWithLoading } from "@/components/button-with-loading"
-import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-emelemts"
+import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-elements"
 import { Body, H1, H2, Text } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
 import { Card } from "@/components/ui/card"

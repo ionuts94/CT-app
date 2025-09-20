@@ -2,7 +2,7 @@
 
 import { UpdateOnboardingState } from "@/actions/post/onboarding"
 import { ButtonWithLoading } from "@/components/button-with-loading"
-import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-emelemts"
+import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-elements"
 import { H2 } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
 import { useOnboardingContext } from "@/contexts/onboarding-context"

@@ -33,6 +33,7 @@ export const TemplateHeader: React.FC<Props> = ({ }) => {
           className="cursor-pointer p-3"
           onClick={handleSaveTemplate}
           loading={formState.isSubmitting}
+          disabled={!formState.isDirty}
         >
           <Save strokeWidth={3} />
           <TextCTA weight="extrabold">
