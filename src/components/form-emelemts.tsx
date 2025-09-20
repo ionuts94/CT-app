@@ -19,7 +19,7 @@ export const Label: React.FC<HTMLAttributes<HTMLLabelElement> & { htmlFor?: stri
 
 export const Input: React.FC<React.ComponentProps<"input">> = ({ className, ...rest }) => {
   return (
-    <ShadInput className={cn("w-full h-auto !text-[20px] font-se px-4 py-2 rounded-md shadow-sm bg-muted/40 flex items-center border border-sidebar-primary justify-center", className)} {...rest} />
+    <ShadInput className={cn("w-full h-auto font-se px-4 py-2 rounded-md shadow-sm bg-muted/40 flex items-center border border-sidebar-primary justify-center", className)} {...rest} />
   )
 }
 

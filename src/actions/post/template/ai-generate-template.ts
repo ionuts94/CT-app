@@ -50,7 +50,7 @@ FORMAT IEȘIRE (OBLIGATORIU, compatibil Tiptap):
   <p><strong><span style="font-size: 28px">TITLU DOCUMENT</span></strong></p>    // titlu principal
   <p><strong><span style="font-size: 18px">Titlu secțiune</span></strong></p>    // secțiune
 - Tag-uri permise: p, strong, em, ul, ol, li, blockquote, hr, br, span(style="font-size:…px"), table, thead, tbody, tr, th, td, colgroup, col, a(href).
-- NU folosi alte stiluri inline în afară de font-size pe <span>. NU folosi class/id (EXCEPȚIE: <table class="signature"> pentru semnături).
+- NU folosi alte stiluri inline în afară de font-size pe <span>. NU folosi class/id.
 - Text body 14–16px; titlu principal 28–32px; titluri secțiuni 18–20px.
 
 VALORI DIN DESCRIERE (OBLIGATORIU):
@@ -86,39 +86,12 @@ STRUCTURĂ MINIMĂ OBLIGATORIE (fără <h#>):
 16) Legea aplicabilă și dispute — {{JURISDICTIE}}; {{INSTANTA_COMPETENTA_ORAS}} sau arbitraj.
 17) Notificări — canale, ore, efecte, adrese: {{PRESTATOR_EMAIL}}, {{BENEFICIAR_EMAIL}}.
 18) Cesionare. Modificări. Integralitatea acordului — reguli standard.
-19) Semnături — TABEL 2 COLOANE (Prestator/Beneficiar), fără borduri; folosește exact structura de mai jos.
-
-FORMAT OBLIGATORIU SEMNĂTURI:
-<table class="signature" role="presentation">
-  <colgroup><col style="width:50%"/><col style="width:50%"/></colgroup>
-  <tbody>
-    <tr>
-      <td>
-        <strong>{{LABEL_LOCATOR}}</strong><br/>
-        Denumire/Nume: {{PRESTATOR_DENUMIRE}}<br/>
-        {{PRESTATOR_SOCIETATE_TIP}} | {{PRESTATOR_CUI_CNP}}<br/>
-        Sediu/Domiciliu: {{PRESTATOR_SEDIU_ADRESA}}<br/>
-        Reprezentant: {{PRESTATOR_REPREZENTANT}} — {{PRESTATOR_FUNCTIE}}<br/>
-        E-mail: {{PRESTATOR_EMAIL}}<br/><br/>
-        Semnătură: ____________________<br/>
-        Ștampilă (dacă este cazul)
-      </td>
-      <td>
-        <strong>{{LABEL_LOCATAR}}</strong><br/>
-        Denumire/Nume: {{BENEFICIAR_DENUMIRE}}<br/>
-        {{BENEFICIAR_SOCIETATE_TIP}} | {{BENEFICIAR_CUI_CNP}}<br/>
-        Sediu/Domiciliu: {{BENEFICIAR_SEDIU_ADRESA}}<br/>
-        Reprezentant: {{BENEFICIAR_REPREZENTANT}} — {{BENEFICIAR_FUNCTIE}}<br/>
-        E-mail: {{BENEFICIAR_EMAIL}}<br/><br/>
-        Semnătură: ____________________<br/>
-        Ștampilă (dacă este cazul)
-      </td>
-    </tr>
-  </tbody>
-</table>
 
 OUTPUT FINAL: DOAR HTML conform regulilor de mai sus.
 
 `
   return TEMPLATE_WRITER_BASE_PROMPT
 }
+
+// ceva
+// Am o firma care se ocupa cu dezvoltarea software. Acest contract o sa fie pentru o companie pentru care o sa dezvoltam o aplicatie web in mod gratuit dar beneficiarul se comite sa plateasca gazduirea pentru minim 12 luni. Daca acestea nu mai plateste in aceasta perioada de 12 luni, avem dreptul sa mergem in instanta si sa incercam o executare silita a beneficiarului. Codul sursa apartine exclusiv prestatorului dar beneficiarul are dreptul sa il cumpere in orice moment la un pret stabilit de comun acrod.

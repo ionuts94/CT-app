@@ -1,19 +1,19 @@
 "use client"
 
-import { PageHeader, PageHeading, PageSubHeading } from "@/components/page-header"
+import { ButtonWithLoading } from "@/components/button-with-loading"
+import { PageHeader, PageHeading } from "@/components/page-header"
 import { TextCTA } from "@/components/topography/cta"
 import { Button } from "@/components/ui/button"
-import { Eye, Plus, Save } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useTemplateContext } from "@/contexts/template-assistant-context"
+import { Eye, Save } from "lucide-react"
 
 type Props = {
 
 }
 
 export const TemplateHeader: React.FC<Props> = ({ }) => {
-  const router = useRouter()
-
-  const goToNewTemplate = () => router.push("/templates/new")
+  const { form, handleSaveTemplate } = useTemplateContext()
+  const { formState } = form
 
   return (
     <div className="flex items-center justify-between">
@@ -28,12 +28,17 @@ export const TemplateHeader: React.FC<Props> = ({ }) => {
             Previzualizeaza
           </TextCTA>
         </Button>
-        <Button className="cursor-pointer p-3" variant="default" onClick={goToNewTemplate}>
+        <ButtonWithLoading
+          variant="default"
+          className="cursor-pointer p-3"
+          onClick={handleSaveTemplate}
+          loading={formState.isSubmitting}
+        >
           <Save strokeWidth={3} />
           <TextCTA weight="extrabold">
             SALVEAZA SABLON
           </TextCTA>
-        </Button>
+        </ButtonWithLoading>
       </div>
     </div>
   )

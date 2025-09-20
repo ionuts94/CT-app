@@ -2,7 +2,7 @@
 
 import { Card } from "@/components/ui/card"
 import { Text } from "@/components/topography"
-import { useAITemplateContext } from "@/contexts/template-assistant-context"
+import { useTemplateContext } from "@/contexts/template-assistant-context"
 import { useEffect, useState } from "react"
 import { TemplateReviewOutput } from "@/types/template/ai-review-template"
 import { StatusBadge } from "@/components/status-badge"
@@ -25,7 +25,7 @@ export const AiTemplateReview: React.FC<Props> = ({ }) => {
     runAITemplateReview,
     aiFixLoading,
     runAIFixTemplate,
-  } = useAITemplateContext()
+  } = useTemplateContext()
 
   useEffect(() => {
     (async () => {

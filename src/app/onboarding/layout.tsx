@@ -16,6 +16,11 @@ export default async function OnboardingLayout({ children }: PropsWithChildren) 
         // TODO: Handle not authenticated
         redirect(process.env.NEXT_PUBLIC_URL + "/sign-up")
     }
+
+    if (authUser.user_metadata.onboardingCompleted) {
+        return redirect("/")
+    }
+
     const { data, error } = await GetUserOnboarding({ userId: authUser.id })
 
     return (

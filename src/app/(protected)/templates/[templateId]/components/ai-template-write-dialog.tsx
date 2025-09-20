@@ -14,8 +14,8 @@ import { AIGenerateTemplate } from "@/actions/post/template/ai-generate-template
 import { useState } from "react"
 import { useAITemplate } from "@/hooks/use-ai-template"
 import { ButtonWithLoading } from "@/components/button-with-loading"
-import { useAITemplateContext } from "@/contexts/template-assistant-context"
 import { useDialog } from "@/hooks/use-dialog"
+import { useTemplateContext } from "@/contexts/template-assistant-context"
 
 
 type Props = {
@@ -56,7 +56,7 @@ type AiTemplateWriterFormProps = Props & {
 }
 
 const AiTemplateWriterForm: React.FC<AiTemplateWriterFormProps> = ({ onGenerateTemplate, closeDialog = () => null }) => {
-  const { aiGenerateLoading, aiGenerateTemplate } = useAITemplateContext()
+  const { aiGenerateLoading, aiGenerateTemplate } = useTemplateContext()
 
   const form = useForm<T_AiTemplateWriteSchema>({
     resolver: zodResolver(AiTemplateWriteSchema),
