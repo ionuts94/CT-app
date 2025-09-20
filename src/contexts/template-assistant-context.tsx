@@ -6,6 +6,7 @@ import { useAITemplate } from "@/hooks/use-ai-template"
 import { T_AITemplateHookReturn } from "@/types/template/ai-template-context"
 import { CreateTemplateSchema, T_CreateTemplateSchema } from "@/validators/template.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Template } from "@prisma/client"
 import { BaseSyntheticEvent, createContext, useContext, useEffect } from "react"
 import { useForm, UseFormReturn } from "react-hook-form"
 
@@ -30,10 +31,11 @@ const TemplateContext = createContext<T_TemplateContext>({
 
 
 type Props = {
-    children: React.ReactNode
+    children: React.ReactNode,
+    templateData?: Template
 }
 
-export const TemplateProvider: React.FC<Props> = ({ children }) => {
+export const TemplateProvider: React.FC<Props> = ({ children, templateData }) => {
     const {
         templateInputs,
         currentTemplateRichText,
@@ -49,9 +51,9 @@ export const TemplateProvider: React.FC<Props> = ({ children }) => {
     const form = useForm<T_CreateTemplateSchema>({
         resolver: zodResolver(CreateTemplateSchema),
         defaultValues: {
-            title: "",
-            category: "",
-            content: ""
+            title: templateData?.title || "",
+            category: templateData?.category || "",
+            content: templateData?.content as string || ""
         }
     })
 
