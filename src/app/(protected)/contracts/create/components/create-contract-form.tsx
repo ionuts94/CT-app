@@ -1,43 +1,67 @@
-import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-elements"
+"use client"
+
+import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark, Textarea } from "@/components/form-elements"
 import { RichTextEditor } from "@/components/rich-text-editor"
-import { Card } from "@/components/ui/card"
-import { Template } from "@prisma/client"
+import { SignatureItem } from "@/components/signature-item"
+import { Text } from "@/components/topography"
+import { Card, CardTitle } from "@/components/ui/card"
+import { Signature, Template } from "@prisma/client"
 
 type Props = {
-  template?: Template
+  template?: Template,
+  signatures?: Signature[]
 }
 
-export const CreateContractForm: React.FC<Props> = ({ template }) => {
+export const CreateContractForm: React.FC<Props> = ({ template, signatures }) => {
   return (
     <form className="w-full flex gap-4">
       <div className="w-2/3 flex flex-col gap-4">
         <Card className="p-4">
-          <FormRow>
-            <Label htmlFor="template-title">
-              Titlu Sablon
-              <RequiredFieldMark />
-            </Label>
-            <Input id="template-title" />
-            <InvalidInputError>{ }</InvalidInputError>
-          </FormRow>
-
-          <FormRow>
-            <Label htmlFor="template-caterogry">
-              Categorie Sablon
-              <RequiredFieldMark />
-            </Label>
-            <Input id="template-caterogry" />
-            <InvalidInputError>{ }</InvalidInputError>
-          </FormRow>
-
+          <Label htmlFor="template-title">
+            Titlu Sablon:
+            <Text size="lg" weight="bold">{template?.title}</Text>
+          </Label>
         </Card>
+
         <Card className="p-4">
           <FormRow>
             <InvalidInputError>{ }</InvalidInputError>
             <RichTextEditor
               content={template?.content as string || ""}
-            // onChange={(htmlString) => debouncedSetContent(htmlString)}
+              // onChange={(htmlString) => debouncedSetContent(htmlString)}
+              showAiHelper={false}
             />
+          </FormRow>
+        </Card>
+
+        <Card className="p-4">
+          <CardTitle>Selecteaza Semnatura</CardTitle>
+          <FormRow>
+            {signatures?.map(signature => (
+              <SignatureItem
+                key={signature.id}
+                signature={signature}
+                isSelected
+              />
+            ))}
+          </FormRow>
+        </Card>
+
+        <Card className="p-4">
+          <CardTitle>Trimite Contractul</CardTitle>
+          <FormRow className="flex-row ">
+            <FormRow>
+              <Label>Nume Destinatar</Label>
+              <Input />
+            </FormRow>
+            <FormRow>
+              <Label>Email Destinatar</Label>
+              <Input />
+            </FormRow>
+          </FormRow>
+          <FormRow>
+            <Label>Mesaj optional</Label>
+            <Textarea />
           </FormRow>
         </Card>
       </div>
