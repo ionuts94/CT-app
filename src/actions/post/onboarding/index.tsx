@@ -1,6 +1,5 @@
 "use server"
 
-import { GetAuthUser } from "@/actions/get/auth";
 import { ONBOARDING_STEPS, T_StepName } from "@/app/onboarding/components/stepts";
 import { T_OnboardingData } from "@/contexts/onboarding-context";
 import { createClient } from "@/lib/supabase/server";
@@ -8,6 +7,7 @@ import { CustomApiResponse, Status } from "@/types/api-call";
 import { Onboarding } from "@prisma/client";
 import { CreateCompany } from "../company";
 import { CreateSignature } from "../signature";
+import { GetAuthUser } from "../auth";
 
 export async function CreateOnboardingForUser({
   userId

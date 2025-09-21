@@ -1,7 +1,8 @@
-import { GetAuthUser } from "@/actions/get/auth";
+
 import { createClient } from "@/lib/supabase/server";
 import { CustomApiResponse, Status } from "@/types/api-call";
 import { User } from "@prisma/client";
+import { GetAuthUser } from "../auth";
 
 
 export async function CreateUserRecord({

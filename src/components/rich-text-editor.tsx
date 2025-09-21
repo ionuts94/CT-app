@@ -17,9 +17,10 @@ type EditorProps = {
   className?: string,
   content?: string,
   onChange?: (htmlString: string) => any,
+  showAiHelper?: boolean
 }
 
-export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, content, onChange = () => null }) => {
+export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, content, onChange = () => null, showAiHelper = true }) => {
   const editor = useEditor({
     immediatelyRender: false,
     shouldRerenderOnTransaction: true,
@@ -56,13 +57,13 @@ export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, con
 
   return (
     <>
-      <MenuBar editor={editor} />
+      <MenuBar editor={editor} showAiHelper={showAiHelper} />
       <EditorContent editor={editor} />
     </>
   )
 }
 
-function MenuBar({ editor }: { editor: Editor }) {
+function MenuBar({ editor, showAiHelper }: { editor: Editor, showAiHelper: boolean }) {
   const editorState = useEditorState({
     editor,
     selector: ctx => {
@@ -183,11 +184,13 @@ function MenuBar({ editor }: { editor: Editor }) {
           <Redo />
         </MenuBarItem>
       </div>
-      <AiTemplateWriteDialog
-        onGenerateTemplate={(html: string) => {
-          editor?.commands.setContent(html, { emitUpdate: true })
-        }}
-      />
+      {showAiHelper &&
+        <AiTemplateWriteDialog
+          onGenerateTemplate={(html: string) => {
+            editor?.commands.setContent(html, { emitUpdate: true })
+          }}
+        />
+      }
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { CheckForOnboarding, GetAuthUser } from "@/actions/get/auth";
+import { CheckForOnboarding, GetAuthUser } from "@/actions/post/auth";
 import { Header } from "@/components/header";
 import { AppSidebar } from "@/components/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";

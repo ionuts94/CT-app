@@ -2,8 +2,8 @@ import { PageContainer } from "@/components/layout";
 import { TemplateHeader } from "./components/template-header";
 import { TemplateForm } from "./components/template-form";
 import { TemplateProvider } from "@/contexts/template-assistant-context";
-import { GetTemplateById } from "@/actions/get/templates";
 import { Template } from "@prisma/client";
+import { GetTemplateById } from "@/actions/post/template";
 
 type Props = {
   params: Promise<{ templateId: string }>

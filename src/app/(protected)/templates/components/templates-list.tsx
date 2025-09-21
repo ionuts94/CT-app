@@ -1,7 +1,6 @@
-import { MOCK_TEMPLATES } from "@/mock-data/templates"
 import { TemplateCard } from "./template-card"
-import { GetTemplates } from "@/actions/get/templates"
 import Link from "next/link"
+import { GetTemplates } from "@/actions/post/template"
 
 type Props = {
 

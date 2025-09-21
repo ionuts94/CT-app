@@ -1,4 +1,4 @@
-import { CheckForOnboarding, GetAuthUser } from "@/actions/get/auth";
+import { CheckForOnboarding, GetAuthUser } from "@/actions/post/auth";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
 

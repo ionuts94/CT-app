@@ -1,4 +1,4 @@
-import { CheckForOnboarding, GetAuthUser } from "@/actions/get/auth";
+import { CheckForOnboarding, GetAuthUser } from "@/actions/post/auth";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
