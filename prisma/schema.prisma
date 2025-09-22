@@ -128,15 +128,19 @@ model Contract {
 
   createdAt DateTime @default(dbgenerated("now()"))
   updatedAt DateTime @default(dbgenerated("now()")) @updatedAt
+  expiresAt DateTime?
 
-  signatureId String @db.Uuid
+  accessPassword Int
+
+  ownerSignatureId String @db.Uuid
+  reciverSignatureId String @db.Uuid
 
   comments   Comment[]
   activities Activity[]
   parties    Party[]
   placements SignaturePlacement[]
   invites    Invite[]
-  signature  Signature @relation(fields: [signatureId], references: [id])
+  signature  Signature @relation(fields: [ownerSignatureId], references: [id])
 
   @@index([companyId, status, createdAt])
   @@index([ownerId])
