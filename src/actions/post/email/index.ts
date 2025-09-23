@@ -33,7 +33,7 @@ export async function SendContractEmail({
         contractTitle: contractData?.title,
         expiryDate: contractData?.expiresAt,
         viewContractUrl: process.env.NEXT_PUBLIC_URL + `/view-contract/${contractData?.id}`,
-        viewContractPassowrd: contractData?.accessPassword,
+        viewContractPassword: contractData?.accessPassword,
         reciverEmail,
         optionalMessage,
       },
@@ -44,7 +44,11 @@ export async function SendContractEmail({
       }
     };
 
-    await brevo.sendTransacEmail(message)
+    console.log("Sending brevo email")
+
+    const response = await brevo.sendTransacEmail(message)
+    console.log(response)
+
 
     return {
       status: Status.SUCCESS,

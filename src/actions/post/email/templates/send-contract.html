@@ -30,11 +30,19 @@ optionalMessage
               <td style="padding:20px 24px; border-bottom:1px solid #f1f5f9;">
                 <table width="100%">
                   <tr>
-                    <td style="display:flex; align-items: center; font-size:18px; font-weight:700; color:{{ params.colorPrimary }};">
-                      {% if params.companyLogoUrl %}
-                        <img style="height: 60px; width: fit-content;" src="{{ params.companyLogoUrl }}"/>
-                      {% endif %}
-                      {{ params.companyName }}
+                    <td>
+                      <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          {% if params.companyLogoUrl %}
+                          <td valign="middle" style="padding-right:6px;">
+                            <img src="{{ params.companyLogoUrl }}" alt="{{ params.companyName }}" style="height:30px; display:block;">
+                          </td>
+                          {% endif %}
+                          <td valign="middle" style="font-size:20px; font-weight:700; color:{{ params.colorPrimary }}; font-family:Arial, Helvetica, sans-serif;">
+                            {{ params.companyName }}
+                          </td>
+                        </tr>
+                      </table>
                     </td>
                     <td align="right" style="font-size:13px; color:#64748b;">
                       Notificare contract
@@ -43,6 +51,7 @@ optionalMessage
                 </table>
               </td>
             </tr>
+
 
             <!-- body -->
             <tr>

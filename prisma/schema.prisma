@@ -135,6 +135,10 @@ model Contract {
   ownerSignatureId String @db.Uuid
   reciverSignatureId String @db.Uuid
 
+  reciverName String
+  reciverEmail String
+  optionalMessage String
+
   comments   Comment[]
   activities Activity[]
   parties    Party[]

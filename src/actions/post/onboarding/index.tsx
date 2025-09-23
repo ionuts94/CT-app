@@ -142,7 +142,7 @@ export async function CompleteOnboarding(): Promise<CustomApiResponse> {
 
     const onboardingData = onboardingRecord?.data as T_OnboardingData
 
-    const { error } = await CreateCompany({
+    const { data: companyData, error } = await CreateCompany({
       companyCui: onboardingData.company.companyCui,
       companyName: onboardingData.company.companyName,
       companyRegNumber: onboardingData.company.companyRegNumber,
@@ -162,6 +162,7 @@ export async function CompleteOnboarding(): Promise<CustomApiResponse> {
     }
 
     await supabase.from("onboarding").update({ status: "COMPLETED" }).eq("id", onboardingRecord?.id)
+    await supabase.from("users").update({ currentCompanyId: companyData?.id! }).eq("id", authUser.id)
 
     return {
       status: Status.SUCCESS,
