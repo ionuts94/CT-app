@@ -8,10 +8,15 @@ import { RichTextEditor } from "@/components/rich-text-editor"
 import { SignatureItem } from "@/components/signature-item"
 import { Text } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
+import { Button } from "@/components/ui/button"
 import { Card, CardTitle } from "@/components/ui/card"
 import { Signature, Template } from "@prisma/client"
+import { Check, FileText, Layers } from "lucide-react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDebouncedCallback } from "use-debounce"
+import { ContractSentSuccessfully } from "./contract-sent-successfully"
+import { Status } from "@/types/api-call"
 
 type Props = {
   template?: Template,
@@ -19,6 +24,11 @@ type Props = {
 }
 
 export const CreateContractForm: React.FC<Props> = ({ template, signatures }) => {
+  const [contractSent, setContractSent] = useState({
+    status: "",
+    newContractId: ""
+  })
+
   const { formState, register, setValue, watch, handleSubmit } = useForm({
     defaultValues: {
       title: "",
@@ -29,6 +39,8 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
       optionalMessage: "",
     }
   })
+
+  const reciverEmail = watch("reciverEmail")
 
   const debouncedSetContent = useDebouncedCallback(
     (html: string) => {
@@ -53,6 +65,20 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
       reciverEmail: values.reciverEmail,
       optionalMessage: values.optionalMessage
     })
+
+    setContractSent({
+      status: Status.SUCCESS,
+      newContractId: data?.id!
+    })
+  }
+
+  if (contractSent.status === Status.SUCCESS) {
+    return (
+      <ContractSentSuccessfully
+        reciverEmail={reciverEmail}
+        newContractId={contractSent.newContractId}
+      />
+    )
   }
 
   return (
