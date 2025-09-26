@@ -112,4 +112,39 @@ export async function GetContractWithCompany({
       error: errMessage
     };
   }
+}
+
+
+export async function FreeGetContractWithCompany({
+  contractId
+}: {
+  contractId: string
+}): Promise<CustomApiResponse<T_ContractWithCompany>> {
+  const supabase = await createClient();
+
+  try {
+    const { data, error } = await supabase.from("contracts")
+      .select(`
+        *,
+        company: companies(*)
+      `)
+      .eq("id", contractId)
+      .maybeSingle()
+
+    if (error) throw Error(error.message)
+    if (!data) throw Error("Contract not found")
+    if (data && !data.company) throw Error("Company not found")
+
+    return {
+      status: Status.SUCCESS,
+      data: data
+    };
+  } catch (err: any) {
+    const errMessage = `${err.message}`;
+    console.log(errMessage);
+    return {
+      status: Status.FAILED,
+      error: errMessage
+    };
+  }
 } 

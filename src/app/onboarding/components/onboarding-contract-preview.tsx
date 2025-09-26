@@ -32,7 +32,7 @@ export const OnboardingContractPreview: React.FC<Props> = ({
             <div className="flex justify-between">
                 <div className="flex items-center gap-2">
                     {logoUrl &&
-                        <div className="h-8 bg-red-200 rounded-sm relative">
+                        <div className="h-8 rounded-sm relative">
                             <img src={logoUrl} alt="logo-preview" className="h-full" />
                         </div>
                     }
