@@ -3,7 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { CustomApiResponse, Status } from "@/types/api-call";
 import { GetAuthUser } from "../auth";
-import { Company, Contract, ContractStatus } from "@prisma/client";
+import { Company, Contract, ContractStatus, Signature, User } from "@prisma/client";
 import { GetCurrentUserWithCompany } from "../company";
 
 export async function CreateContractRecord({
@@ -115,18 +115,26 @@ export async function GetContractWithCompany({
 }
 
 
-export async function FreeGetContractWithCompany({
+export type T_ViewContract = T_ContractWithCompany & {
+  signature: Signature,
+  owner: User
+}
+
+
+export async function FreeGetViewContract({
   contractId
 }: {
   contractId: string
-}): Promise<CustomApiResponse<T_ContractWithCompany>> {
+}): Promise<CustomApiResponse<T_ViewContract>> {
   const supabase = await createClient();
 
   try {
     const { data, error } = await supabase.from("contracts")
       .select(`
         *,
-        company: companies(*)
+        company: companies(*),
+        signature: contracts_ownerSignatureId_fkey(*),
+        owner: users(*)
       `)
       .eq("id", contractId)
       .maybeSingle()
@@ -147,4 +155,5 @@ export async function FreeGetContractWithCompany({
       error: errMessage
     };
   }
-} 
+}
+

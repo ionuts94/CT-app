@@ -4,6 +4,7 @@ import { OnboardingHeader } from "./components/onboarding-header";
 import { redirect } from "next/navigation";
 import { GetUserOnboarding } from "@/actions/post/onboarding";
 import { GetAuthUser } from "@/actions/post/auth";
+import { envs } from "@/constants/envs";
 
 export default async function OnboardingLayout({ children }: PropsWithChildren) {
     const { data: authUser, error: authError } = await GetAuthUser()
@@ -14,7 +15,7 @@ export default async function OnboardingLayout({ children }: PropsWithChildren) 
 
     if (!authUser) {
         // TODO: Handle not authenticated
-        redirect(process.env.NEXT_PUBLIC_URL + "/sign-up")
+        redirect(envs.NEXT_PUBLIC_URL + "/sign-up")
     }
 
     if (authUser.user_metadata.onboardingCompleted) {

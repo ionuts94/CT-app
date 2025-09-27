@@ -1,10 +1,11 @@
 "use server"
 
+import { envs } from "@/constants/envs"
 import { createClient } from "@supabase/supabase-js"
 
 const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY! // ai nevoie de cheia cu acces full
+    envs.NEXT_PUBLIC_SUPABASE_URL!,
+    envs.SUPABASE_SERVICE_ROLE_KEY! // ai nevoie de cheia cu acces full
 )
 
 async function main() {

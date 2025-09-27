@@ -2,6 +2,7 @@ import { Text } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { envs } from "@/constants/envs"
 import { Check, FileText, Layers } from "lucide-react"
 import Link from "next/link"
 
@@ -11,7 +12,7 @@ type Props = {
 }
 
 export const ContractSentSuccessfully: React.FC<Props> = ({ reciverEmail, newContractId }) => {
-  const baseUrl = process.env.NEXT_PUBLIC_URL
+  const baseUrl = envs.NEXT_PUBLIC_URL
 
   return (
     <Card className="mx-auto w-full max-w-[800px] px-2 lg:p-[30px] flex flex-col items-center text-center">

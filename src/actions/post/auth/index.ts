@@ -8,6 +8,7 @@ import { CustomApiResponse, Status } from "@/types/api-call"
 import { User } from "@supabase/supabase-js"
 import { redirect } from "next/navigation"
 import { cache } from "react"
+import { envs } from "@/constants/envs";
 
 export async function GetAuthUserFunc(): Promise<CustomApiResponse<User>> {
     const supabase = await createClient()
@@ -39,7 +40,7 @@ export const GetAuthUser = cache(GetAuthUserFunc)
 export async function CheckForOnboarding(user: User) {
     if (user?.user_metadata?.onboardingCompleted) return;
     const { data } = await GetUserOnboarding({ userId: user.id })
-    return redirect(process.env.NEXT_PUBLIC_URL + "/onboarding/" + (data?.nextUncompleteStep || FIRST_ONBOARDING_STEP.name))
+    return redirect(envs.NEXT_PUBLIC_URL + "/onboarding/" + (data?.nextUncompleteStep || FIRST_ONBOARDING_STEP.name))
 }
 
 export async function SignUp({
@@ -66,7 +67,7 @@ export async function SignUp({
             email: email,
             password: password,
             options: {
-                emailRedirectTo: process.env.NEXT_PUBLIC_URL + "/api/auth/callback",
+                emailRedirectTo: envs.NEXT_PUBLIC_URL + "/api/auth/callback",
                 data: {
                     firstName,
                     lastName,

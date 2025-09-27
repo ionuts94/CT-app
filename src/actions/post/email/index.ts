@@ -4,6 +4,7 @@ import { brevo } from "@/lib/brevo";
 import { CustomApiResponse, Status } from "@/types/api-call";
 import { EMAIL_TEMPLATE_IDS } from "./constants";
 import { GetContractWithCompany } from "../contracts";
+import { envs } from "@/constants/envs";
 
 export type T_SendContractArgs = {
   contractId: string,
@@ -32,7 +33,7 @@ export async function SendContractEmail({
         colorAccent: contractData?.company.colorAccent,
         contractTitle: contractData?.title,
         expiryDate: contractData?.expiresAt,
-        viewContractUrl: process.env.NEXT_PUBLIC_URL + `/view-contract/${contractData?.id}`,
+        viewContractUrl: envs.NEXT_PUBLIC_URL + `/view-contract/${contractData?.id}`,
         viewContractPassword: contractData?.accessPassword,
         reciverEmail,
         optionalMessage,
