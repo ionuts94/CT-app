@@ -19,8 +19,8 @@ export const ContractViewSignatures: React.FC<Props> = ({ contract }) => {
             {contract.owner.firstName + " " + contract.owner.lastName} -{" "}
             <span className="opacity-60 font-semibold">Director</span>
           </Text>
-          {contract?.signature?.imageUrl && (
-            <img src={contract.signature.imageUrl} className="h-14 w-fit" />
+          {contract?.ownerSignature?.imageUrl && (
+            <img src={contract.ownerSignature.imageUrl} className="h-14 w-fit" />
           )}
         </div>
       </div>
@@ -34,7 +34,11 @@ export const ContractViewSignatures: React.FC<Props> = ({ contract }) => {
           </Text>
         </div>
         <div className="flex-1 flex items-end">
-          <div className="w-full text-center border-b border-black border-dashed"></div>
+          {contract?.receiverSignature?.imageUrl ? (
+            <img src={contract.receiverSignature?.imageUrl} className="h-14 w-fit" />
+          ) : (
+            <div className="w-full text-center border-b border-black border-dashed"></div>
+          )}
         </div>
       </div>
     </div>

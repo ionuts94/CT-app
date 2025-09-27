@@ -2,6 +2,7 @@
 
 import { T_ViewContract } from "@/actions/post/contracts"
 import { SupabaseStoreFile } from "@/actions/post/storage"
+import { api } from "@/app/api/endpoints"
 import SignaturePad from "@/app/onboarding/signature/components/signature-pad"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, Label } from "@/components/form-elements"
@@ -19,7 +20,7 @@ type Props = {
 }
 
 export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
-  const { isOpen, toggleModal } = useDialog()
+  const { isOpen, toggleModal, openDialog } = useDialog()
 
   const { formState, setValue, register, handleSubmit, watch } = useForm({
     defaultValues: {
@@ -54,7 +55,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
 
       setValue("signature.url", data?.fileUrl!)
 
-      const response = await fetch(envs.NEXT_PUBLIC_URL + "/api/contract/user-sign", {
+      const response = await fetch(api.contract.userSign, {
         method: "POST",
         body: JSON.stringify({
           contractId: contract.id,
@@ -63,15 +64,20 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
         })
       })
 
+      const result = await response.json()
+
+      if (result.error) {
+        return alert(result.error)
+      }
     }
   })
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button className="p-4 px-10">Semneaza si trimite</Button>
+        <Button onClick={openDialog} className="p-4 px-10">Semneaza si trimite</Button>
       </DialogTrigger>
-      <DialogContent className="!w-full !max-w-[960px]">
+      <DialogContent className="!w-full !max-w-[960px] bg-app">
         <DialogHeader>
           <DialogTitle>Revizuieste si confirma semnatura</DialogTitle>
           <DialogDescription>IP-ul si data vor fi inregistrate. O copie va fi trimisa prin email tuturor partilor.</DialogDescription>
@@ -93,7 +99,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
           </FormRow>
         </form>
         <DialogFooter>
-          <Button disabled={isLoading} variant="secondary" className="p-4 px-10">Inapoi</Button>
+          <Button disabled={isLoading} variant="secondary" className="p-4 px-10" onClick={onOpenChange}>Inapoi</Button>
           <ButtonWithLoading loading={isLoading} onClick={handleFormSubmit}>
             Semneaza si trimite
           </ButtonWithLoading>

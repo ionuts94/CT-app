@@ -116,8 +116,9 @@ export async function GetContractWithCompany({
 
 
 export type T_ViewContract = T_ContractWithCompany & {
-  signature: Signature,
-  owner: User
+  owner: User,
+  ownerSignature: Signature,
+  receiverSignature?: Signature
 }
 
 
@@ -133,7 +134,8 @@ export async function FreeGetViewContract({
       .select(`
         *,
         company: companies(*),
-        signature: contracts_ownerSignatureId_fkey(*),
+        ownerSignature: contracts_ownerSignatureId_fkey(*),
+        receiverSignature: contracts_reciverSignatureId_fkey(*),
         owner: users(*)
       `)
       .eq("id", contractId)

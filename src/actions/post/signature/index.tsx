@@ -8,23 +8,25 @@ export async function CreateSignature({
   type = "DRAW",
   title,
   imageUrl,
-}: Partial<Signature>): Promise<CustomApiResponse> {
+}: Partial<Signature>): Promise<CustomApiResponse<Signature>> {
   const supabase = await createClient();
 
   try {
-    const { error } = await supabase.from("signatures").insert({
+    const { data, error } = await supabase.from("signatures").insert({
       type,
       title,
       imageUrl,
       userId,
       createdAt: new Date()
     })
+      .select("*")
+      .maybeSingle()
 
     if (error) throw error
 
     return {
       status: Status.SUCCESS,
-      data: ""
+      data: data
     };
   } catch (err: any) {
     const errMessage = `${err.message}`;

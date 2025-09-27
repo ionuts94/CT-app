@@ -16,10 +16,15 @@ export async function ReceiverSignContract({
   const supabase = await createClient();
 
   try {
+    console.log("signing contract")
+    console.log(contractId)
+    console.log(receiverName)
+    console.log(receiverSignatureId)
+
     const { error } = await supabase.from("contracts")
       .update({
-        receiverName,
-        receiverSignatureId,
+        reciverName: receiverName,
+        reciverSignatureId: receiverSignatureId,
         status: ContractStatus.FULLY_SIGNED,
       })
       .eq("id", contractId)
