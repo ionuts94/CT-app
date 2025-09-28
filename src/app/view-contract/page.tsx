@@ -2,7 +2,7 @@ import { PageWidth } from "@/components/layout"
 import { PageHeader } from "./components/page-header"
 import { FreeGetViewContract, GetContractWithCompany } from "@/actions/post/contracts"
 import { ContractContentView } from "./components/contract-content-view"
-import { UserContractAssistant } from "./components/user-contract-assistant"
+import { ReceiverContractAssistant } from "./components/assistant/receiver-contract-assistant"
 
 type Props = {
     searchParams: Promise<{ c: string }>
@@ -32,7 +32,9 @@ export default async function ViewContractPage({ searchParams }: Props) {
                 <div className="w-full lg:w-3/5">
                     <ContractContentView contract={data} />
                 </div>
-                <UserContractAssistant />
+                <div className="lg:w-2/5">
+                    <ReceiverContractAssistant />
+                </div>
             </PageWidth>
         </main>
     )
