@@ -28,7 +28,7 @@ export default async function ViewContractPage({ searchParams }: Props) {
     return (
         <main className="bg-app flex flex-col min-h-screen">
             <PageHeader contract={data} />
-            <PageWidth className="px-[70px] flex flex-1 gap-4 items-center justify-between py-6 shadow-sm">
+            <PageWidth className="px-[70px] flex flex-1 gap-4 justify-between py-4 shadow-sm">
                 <div className="w-full lg:w-3/5">
                     <ContractContentView contract={data} />
                 </div>
