@@ -32,7 +32,7 @@ export default async function ViewContractPage({ searchParams }: Props) {
                 <div className="w-full lg:w-3/5">
                     <ContractContentView contract={data} />
                 </div>
-                <div className="lg:w-2/5">
+                <div className="lg:w-2/5 flex-1">
                     <ReceiverContractAssistant />
                 </div>
             </PageWidth>
