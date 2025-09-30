@@ -1,33 +1,43 @@
 import { Card } from "@/components/ui/card"
 import { Text } from "@/components/topography"
 import { Input } from "@/components/form-elements"
+import { UserInput } from "./user-input"
+import { useRef, useState } from "react"
+import { ConversationContainer } from "./conversation-container"
+import { DefaultChatTransport, UIDataTypes, UIMessage, UITools } from "ai"
 
 type Props = {
 
 }
 
 export const ChatAssistantSection: React.FC<Props> = ({ }) => {
-  const messages = []
+  const { messages, sendMessage, status, stop } = useChat({
+    transport: new DefaultChatTransport({
+      api: '/api/chat',
+    }),
+  });
+  const [input, setInput] = useState("")
+
+  const conversationContainerRef = useRef<HTMLDivElement>(null)
+  const scrollContainerToBottom = () => {
+    if (!conversationContainerRef.current) return;
+    conversationContainerRef.current.scrollTo({
+      top: conversationContainerRef.current.scrollHeight,
+      behavior: "smooth"
+    })
+  }
 
   return (
-    <div className="flex flex-col h-full justify-between ">
-      <div className="flex-1 flex flex-col items-center justify-center">
-        <div className="p-4 flex flex-col gap-4 w-full">
-          <div className="flex flex-col gap-1">
-            {PREDEFINED_QUESTIONS.map((q, index) => (
-              <Card key={index} className="p-2 px-4 rounded-full cursor-pointer hover:bg-primary/5">
-                <Text size="sm">{q}</Text>
-              </Card>
-            ))}
-          </div>
-          <Text size="sm" className="text-center">Sau</Text>
-
-          <Card className="p-4 bg-input">
-            <Text>Adreseaza o intrebare despre acest contract...</Text>
-            <Input />
-          </Card>
-        </div>
-      </div>
+    <div className="flex flex-col h-full justify-between p-4">
+      <ConversationContainer messages={messages} />
+      <UserInput
+        handleSubmit={() => { }}
+        status="ready"
+        inputValue={input}
+        setInput={setInput}
+        scrollContainerToBottom={scrollContainerToBottom}
+        user={{}}
+      />
     </div>
   )
 }
@@ -37,3 +47,7 @@ const PREDEFINED_QUESTIONS = [
   "Ce se intampla daca reziliez mai devreme?",
   "Rezumatul obligatiilor mele"
 ]
+
+function useChat(arg0: { transport: DefaultChatTransport<UIMessage<unknown, UIDataTypes, UITools>> }): { messages: any; sendMessage: any; status: any; stop: any } {
+  throw new Error("Function not implemented.")
+}
