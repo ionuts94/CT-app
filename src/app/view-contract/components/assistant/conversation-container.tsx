@@ -5,6 +5,7 @@ type Props = {
 }
 
 export const ConversationContainer: React.FC<Props> = ({ messages }) => {
+  console.log(messages)
   return (
     <div className="flex-1 overflow-auto flex flex-col gap-2">
       {messages.map(message => (

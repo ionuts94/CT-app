@@ -5,6 +5,8 @@ import { UserInput } from "./user-input"
 import { useRef, useState } from "react"
 import { ConversationContainer } from "./conversation-container"
 import { DefaultChatTransport, UIDataTypes, UIMessage, UITools } from "ai"
+import { useChat } from "@ai-sdk/react"
+import { envs } from "@/constants/envs"
 
 type Props = {
 
@@ -27,11 +29,19 @@ export const ChatAssistantSection: React.FC<Props> = ({ }) => {
     })
   }
 
+  const handleSubmit = () => {
+    console.log("input")
+    console.log(input)
+
+    sendMessage({ text: input })
+    setInput("")
+  }
+
   return (
     <div className="flex flex-col h-full justify-between p-4">
       <ConversationContainer messages={messages} />
       <UserInput
-        handleSubmit={() => { }}
+        handleSubmit={handleSubmit}
         status="ready"
         inputValue={input}
         setInput={setInput}
@@ -47,7 +57,3 @@ const PREDEFINED_QUESTIONS = [
   "Ce se intampla daca reziliez mai devreme?",
   "Rezumatul obligatiilor mele"
 ]
-
-function useChat(arg0: { transport: DefaultChatTransport<UIMessage<unknown, UIDataTypes, UITools>> }): { messages: any; sendMessage: any; status: any; stop: any } {
-  throw new Error("Function not implemented.")
-}

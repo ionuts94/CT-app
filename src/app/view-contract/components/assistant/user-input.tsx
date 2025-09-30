@@ -34,10 +34,8 @@ export const UserInput: React.FC<Props> = ({
 
   const handleSendMessage = async () => {
     if (isDisabled) return;
-
+    handleSubmit()
     setInput("")
-
-
     scrollContainerToBottom()
   }
 
