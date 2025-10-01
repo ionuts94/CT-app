@@ -3,6 +3,7 @@ import { PageHeader } from "./components/page-header"
 import { FreeGetViewContract, GetContractWithCompany } from "@/actions/post/contracts"
 import { ContractContentView } from "./components/contract-content-view"
 import { ReceiverContractAssistant } from "./components/assistant/receiver-contract-assistant"
+import { CommentsSection } from "./components/comments-section"
 
 type Props = {
     searchParams: Promise<{ c: string }>
@@ -35,6 +36,9 @@ export default async function ViewContractPage({ searchParams }: Props) {
                 <div className="lg:w-2/5 flex-1">
                     <ReceiverContractAssistant contractContent={data.content as string} />
                 </div>
+            </PageWidth>
+            <PageWidth className="px-[70px] py-4 w-full">
+                <CommentsSection />
             </PageWidth>
         </main>
     )
