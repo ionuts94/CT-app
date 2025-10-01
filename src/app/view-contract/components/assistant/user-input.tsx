@@ -1,6 +1,7 @@
 "use client"
 
 import { ResizableTextInput } from "@/components/resizable-text-input"
+import { cn } from "@/lib/utils"
 import { ChatRequestOptions } from "ai"
 
 import { Dispatch, SetStateAction, useEffect } from "react"
@@ -17,6 +18,7 @@ type Props = {
     chatRequestOptions?: ChatRequestOptions
   ) => void,
   scrollContainerToBottom: () => any,
+  containerClassName?: string,
 }
 
 export const UserInput: React.FC<Props> = ({
@@ -26,6 +28,7 @@ export const UserInput: React.FC<Props> = ({
   setInput,
   handleSubmit,
   scrollContainerToBottom = () => null,
+  containerClassName
 }) => {
   const userId = user.id
   const isStreaming = status === "streaming"
@@ -46,7 +49,7 @@ export const UserInput: React.FC<Props> = ({
   }, [isReady])
 
   return (
-    <div className="w-full pb-4 px-[10px] lg:px-0">
+    <div className={cn("w-full pb-4 px-[10px] lg:px-0", containerClassName)}>
       <ResizableTextInput
         value={inputValue}
         disabled={isDisabled}

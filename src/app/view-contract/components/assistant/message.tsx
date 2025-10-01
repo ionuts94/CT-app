@@ -15,7 +15,7 @@ export const MessageComponent: React.FC<Props> = ({ message }) => {
 export const AssistantMessage: React.FC<Props> = ({ message }) => {
   return (
     <div className="flex items-start gap-2">
-      <Bot className="!size-10 whitespace-nowrap" />
+      <Bot className="!size-6 mt-2 whitespace-nowrap flex-shrink-0" />
       <Card className="p-2 rounded-lg">
         {message.parts.map((part, index) =>
           part.type === 'text' ? <span key={index}>{part.text}</span> : null,
@@ -34,7 +34,7 @@ export const UserMessage: React.FC<Props> = ({ message }) => {
           part.type === 'text' ? <span key={index}>{part.text}</span> : null,
         )}
       </Card>
-      <User className="!size-6 whitespace-nowrap mt-2" />
+      <User className="!size-6 whitespace-nowrap mt-2 flex-shrink-0" />
     </div>
   )
 }

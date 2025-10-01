@@ -12,19 +12,19 @@ import { PredefinedAssistantSection } from "./predefined-assistant-section"
 import { ChatAssistantSection } from "./chat-assistant-section"
 
 type Props = {
-
+  contractContent: string
 }
 
-export const ReceiverContractAssistant: React.FC<Props> = ({ }) => {
+export const ReceiverContractAssistant: React.FC<Props> = ({ contractContent }) => {
   const [viewTab, setViewTab] = useState("predefined")
 
   const renderTabContent = () => {
-    if (viewTab === "chat") return <ChatAssistantSection />
+    if (viewTab === "chat") return <ChatAssistantSection contractContent={contractContent} />
     return <PredefinedAssistantSection />
   }
 
   return (
-    <Card className="flex flex-col h-full p-0 gap-0 w-full overflow-auto">
+    <Card className="flex flex-col h-full p-0 gap-0 w-full overflow-auto max max-h-[85vh]">
       <div className="flex flex-row items-center h-[50px] px-4 gap-2 bg-input border-b border-black/10">
         <AiSvg className="size-5 group-hover:text-white" />
         <Text size="lg" weight="bold" className="text-g">Asistent AI</Text>

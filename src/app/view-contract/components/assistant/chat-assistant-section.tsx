@@ -1,24 +1,23 @@
-import { Card } from "@/components/ui/card"
-import { Text } from "@/components/topography"
-import { Input } from "@/components/form-elements"
 import { UserInput } from "./user-input"
 import { useRef, useState } from "react"
 import { ConversationContainer } from "./conversation-container"
-import { DefaultChatTransport, UIDataTypes, UIMessage, UITools } from "ai"
+import { DefaultChatTransport } from "ai"
 import { useChat } from "@ai-sdk/react"
-import { envs } from "@/constants/envs"
 
 type Props = {
-
+  contractContent: string
 }
 
-export const ChatAssistantSection: React.FC<Props> = ({ }) => {
+export const ChatAssistantSection: React.FC<Props> = ({ contractContent }) => {
+  const [input, setInput] = useState("")
   const { messages, sendMessage, status, stop } = useChat({
     transport: new DefaultChatTransport({
       api: '/api/chat',
-    }),
+      body: {
+        contractContent
+      }
+    })
   });
-  const [input, setInput] = useState("")
 
   const conversationContainerRef = useRef<HTMLDivElement>(null)
   const scrollContainerToBottom = () => {
@@ -30,15 +29,12 @@ export const ChatAssistantSection: React.FC<Props> = ({ }) => {
   }
 
   const handleSubmit = () => {
-    console.log("input")
-    console.log(input)
-
     sendMessage({ text: input })
     setInput("")
   }
 
   return (
-    <div className="flex flex-col h-full justify-between p-4">
+    <div className="flex flex-col h-full justify-between p-4 pb-0 gap-4 max-h-[8">
       <ConversationContainer messages={messages} />
       <UserInput
         handleSubmit={handleSubmit}
@@ -47,13 +43,8 @@ export const ChatAssistantSection: React.FC<Props> = ({ }) => {
         setInput={setInput}
         scrollContainerToBottom={scrollContainerToBottom}
         user={{}}
+        containerClassName="sticky bottom-0 left-0"
       />
     </div>
   )
 }
-
-const PREDEFINED_QUESTIONS = [
-  "Explica termenii de plata",
-  "Ce se intampla daca reziliez mai devreme?",
-  "Rezumatul obligatiilor mele"
-]

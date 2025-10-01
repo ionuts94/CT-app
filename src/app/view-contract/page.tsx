@@ -33,7 +33,7 @@ export default async function ViewContractPage({ searchParams }: Props) {
                     <ContractContentView contract={data} />
                 </div>
                 <div className="lg:w-2/5 flex-1">
-                    <ReceiverContractAssistant />
+                    <ReceiverContractAssistant contractContent={data.content as string} />
                 </div>
             </PageWidth>
         </main>
