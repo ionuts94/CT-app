@@ -14,12 +14,6 @@ export default async function ViewContractPage({ searchParams }: Props) {
 
     const { data, error } = await FreeGetViewContract({ contractId: c })
 
-    console.log("error")
-
-    console.log(error)
-
-    console.log(data)
-
     if (!data) {
         return (
             <p>Nu am putut incarca contractul</p>

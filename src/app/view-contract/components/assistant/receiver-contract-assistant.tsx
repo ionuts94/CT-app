@@ -31,7 +31,7 @@ export const ReceiverContractAssistant: React.FC<Props> = ({ contractContent }) 
       </div>
 
       <div className="bg-card-secondary flex gap-2 p-1 border border-sidebar-primary shadow-sm px-4">
-        <Button
+        {/* <Button
           variant="none"
           className={cn(
             "w-1/2 text-color-secondary rounded-lg hover:bg-sidebar-primary",
@@ -40,7 +40,7 @@ export const ReceiverContractAssistant: React.FC<Props> = ({ contractContent }) 
           onClick={() => setViewTab("predefined")}
         >
           Predefinit
-        </Button>
+        </Button> */}
         <Button
           variant="none"
           className={cn(
