@@ -1,5 +1,9 @@
+"use client"
+
 import { Comment } from "@/components/comment"
+import { ResizableTextInput } from "@/components/resizable-text-input"
 import { Text } from "@/components/topography"
+import { cn } from "@/lib/utils"
 
 type Props = {
 
@@ -8,9 +12,20 @@ type Props = {
 export const CommentsSection: React.FC<Props> = ({ }) => {
   return (
     <div>
-      <div className="flex items-center justify-between w-full py-4 border-b">
+      <div className="flex items-center justify-between w-full py-4 border-b mb-2">
         <Text weight="bold">Comentarii</Text>
         <Text weight="bold" size="sm" className="text-black/70">Vizibile ambelor parti</Text>
+      </div>
+      <div className={cn("w-full pb-4 px-[10px] lg:px-0 mt-4")}>
+        <ResizableTextInput
+          value={""}
+          disabled={false}
+          onChange={() => null}
+          onSubmit={() => null}
+          containerClassName="bg-input border mx-auto rounded-lg px-[4px] pr-[8px] py-[2px] items-center focus:outline-primary"
+          buttonClassName="size-8"
+          placeholder="Adauga un comentariu"
+        />
       </div>
       <div className="flex flex-col gap-4">
         {COMMENTS.map((comment, index) => (

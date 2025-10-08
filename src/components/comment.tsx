@@ -17,7 +17,7 @@ export const Comment: React.FC<Props> = ({ comment }) => {
                         <Text weight="semibold">{firstName} {lastName}</Text>
                         <Text size="sm" className="rounded-full border px-2 py-1">{label}</Text>
                     </div>
-                    <Text size="sm" className="text-muted-foreground">Trimis: {createdAt.toLocaleDateString()}</Text>
+                    <Text size="sm" className="text-muted-foreground">Trimis {createdAt.toLocaleDateString()}</Text>
                 </div>
             </div>
             <div
