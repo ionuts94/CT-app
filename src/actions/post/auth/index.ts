@@ -1,6 +1,6 @@
 "use server"
 
-import { SignUpSchema, T_SignUpSchema } from "@/validators/auth.validator";
+import { SignUpSchema, T_LoginSchema, T_SignUpSchema } from "@/validators/auth.validator";
 import { GetUserOnboarding } from "@/actions/post/onboarding"
 import { FIRST_ONBOARDING_STEP } from "@/app/onboarding/components/stepts"
 import { createClient } from "@/lib/supabase/server"
@@ -95,17 +95,20 @@ export async function SignUp({
 }
 
 
-export async function VerifySupabaseCode({
-    code
-}: {
-    code: string
-}): Promise<CustomApiResponse> {
-    const supabase = createClient();
+export async function SignIn({
+    email,
+    password
+}: T_LoginSchema): Promise<CustomApiResponse> {
+    const supabase = await createClient();
 
     try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+
+        if (error) throw Error("Am intampinat o eroare: " + error.message)
+
         return {
             status: Status.SUCCESS,
-            data: ""
+            data: data.user
         };
     } catch (err: any) {
         const errMessage = `${err.message}`;

@@ -10,7 +10,9 @@ import { Separator } from "@/components/ui/separator"
 import { SignUpSchema, T_SignUpSchema } from "@/validators/auth.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ReceiptText } from "lucide-react"
+import Link from "next/link"
 import { useForm } from "react-hook-form"
+import { AuthFormCard } from "../../components/auth-form-card"
 
 type Props = {
 
@@ -54,15 +56,10 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
     }
 
     return (
-        <Card className="w-full max-w-[800px] p-4">
-            <div className="text-primary font-bold flex gap-2 items-center">
-                <ReceiptText size={30} />
-                <Text className="text-black text-md font-semibold">CONTRACT TRANSPARENT</Text>
-            </div>
-            <div className="flex flex-col gap-2">
-                <H2>Creaza-ti contul</H2>
-                <Body className="text-color-secondary">Incepe gratuit. Fara card. Dureaza 2 minute</Body>
-            </div>
+        <AuthFormCard
+            heading="Creaza-ti contul"
+            subHeading="Incepe gratuit. Fara card. Dureaza 2 minute"
+        >
             <form
                 onSubmit={handleSubmit(handleSignUp)}
                 className="flex flex-col gap-4"
@@ -102,10 +99,16 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
                     </ButtonWithLoading>
                 </FormRow>
                 <Separator />
-                <Text size="sm" className="text-color-secondary py-2 text-center">
+                <FormRow className="flex-row items-center justify-center">
+                    <Text>Ai deja cont? </Text>
+                    <Link href="/sign-in" className="text-primary cursor-pointer transition hover:text-blue-900">
+                        <TextCTA>Autentifica-te</TextCTA>
+                    </Link>
+                </FormRow>
+                <Text size="sm" className="text-color-secondary pb-2 text-center">
                     Continuand, esti de acord cu Termenii si Politica de Confidentialitate.
                 </Text>
             </form>
-        </Card>
+        </AuthFormCard>
     )
 }

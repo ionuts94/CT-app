@@ -1,6 +1,7 @@
 "use client"
 
 import { T_ViewContract } from "@/actions/post/contracts"
+import { GeneratePDFForContract } from "@/actions/post/contracts/pdf"
 import { SupabaseStoreFile } from "@/actions/post/storage"
 import { api } from "@/app/api/endpoints"
 import SignaturePad from "@/app/onboarding/signature/components/signature-pad"
@@ -69,6 +70,8 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
       if (result.error) {
         return alert(result.error)
       }
+
+      await GeneratePDFForContract({ contractId: contract.id })
     }
   })
 

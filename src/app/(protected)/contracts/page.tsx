@@ -1,6 +1,6 @@
 import { PageContainer } from "@/components/layout";
 import { ContractsHeader } from "./components/contracts-header";
-import { KPIStats } from "../(dashboard)/components/kpi-stats";
+import { KPIStats } from "../dashboard/components/kpi-stats";
 import { ContractsFilter } from "./components/contracts-filter";
 import { ContractsTable } from "./components/contracts-table";
 
