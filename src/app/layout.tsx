@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { Toaster } from 'sonner'
 import { Geist, Geist_Mono } from "next/font/google";
 import { UserProvider } from "@/contexts/user-context";
-import "./globals.css";
 import { TanstackProvider } from "@/contexts/tanstack-context";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default async function RootLayout({
         <TanstackProvider>
           <UserProvider>
             {children}
+            <Toaster richColors position="top-center" />
           </UserProvider>
         </TanstackProvider>
       </body>

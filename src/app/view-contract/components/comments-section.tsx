@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { Comment as CommentType, Contract } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { toast } from "sonner"
 
 type Props = {
   comments: CommentType[],
@@ -31,6 +32,8 @@ export const CommentsSection: React.FC<Props> = ({ comments, contract, isSender 
       firstName: isSender ? contract.company.name.split(" ")[0] : contract.reciverName.split(" ")[0],
       lastName: isSender ? contract.company.name.split(" ")[1] : contract.reciverName.split(" ")[1],
     })
+    if (error) return toast.error(error)
+    toast.success("Comentariul a fost postat")
     router.refresh()
     setInput("")
   }
