@@ -336,7 +336,8 @@ enum ContractStatus {
 
 enum PartyRole {
   SIGNER
-  VIEWER
+  SENDER
+  SYSTEM
 }
 
 enum SignatureType {
