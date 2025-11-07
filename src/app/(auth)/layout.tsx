@@ -6,7 +6,7 @@ export default async function AuthLayout({ children }: PropsWithChildren) {
   const { data: authUser } = await GetAuthUser()
   if (authUser) {
     await CheckForOnboarding(authUser)
-    redirect("/")
+    redirect("/dashboard")
   }
   return (
     <>

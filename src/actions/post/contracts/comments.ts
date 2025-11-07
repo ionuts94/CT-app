@@ -1,7 +1,8 @@
 "use server"
 import { createClient } from "@/lib/supabase/server";
 import { CustomApiResponse, Status } from "@/types/api-call";
-import { PartyRole } from "@prisma/client";
+import { Comment, PartyRole } from "@prisma/client";
+import { SendContractNewCommentNotification } from "../email/contract-comment-notifications";
 
 export async function PostContractComment({
   content,
@@ -21,7 +22,7 @@ export async function PostContractComment({
   const supabase = await createClient();
 
   try {
-    const { error } = await supabase.from("comments").insert({
+    const { data, error } = await supabase.from("comments").insert({
       content,
       userId,
       contractId,
@@ -29,6 +30,10 @@ export async function PostContractComment({
       firstName,
       lastName
     })
+      .select("*")
+      .maybeSingle()
+
+    await SendContractNewCommentNotification({ partyRole, contractId, commentId: data.id })
 
     if (error) throw Error(error.message)
 
@@ -61,6 +66,36 @@ export async function GetContractComments({
       .order("createdAt", { ascending: false })
 
     if (error) throw Error("Failed to retrieve comments. Error: " + error.message)
+    return {
+      status: Status.SUCCESS,
+      data: data
+    };
+  } catch (err: any) {
+    const errMessage = `${err.message}`;
+    console.log(errMessage);
+    return {
+      status: Status.FAILED,
+      error: errMessage
+    };
+  }
+}
+
+
+export async function GetContractComment({
+  commentId
+}: {
+  commentId: string
+}): Promise<CustomApiResponse<Comment>> {
+  const supabase = await createClient();
+
+  try {
+    const { data, error } = await supabase.from("comments")
+      .select("*")
+      .eq("id", commentId)
+      .maybeSingle()
+
+    if (error) throw new Error("Failed to retrieve contract comment. Error: " + error.message)
+
     return {
       status: Status.SUCCESS,
       data: data

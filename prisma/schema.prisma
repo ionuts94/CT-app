@@ -38,7 +38,7 @@ model User {
   activities  Activity[]
   templates   Template[]   @relation("TemplateCreator")
 
-  onboarding          Onboarding?
+  onboarding Onboarding?
 
   @@index([currentCompanyId])
   // table mapping
@@ -126,17 +126,17 @@ model Contract {
   draftPdfUrl  String?
   signedPdfUrl String?
 
-  createdAt DateTime @default(dbgenerated("now()"))
-  updatedAt DateTime @default(dbgenerated("now()")) @updatedAt
+  createdAt DateTime  @default(dbgenerated("now()"))
+  updatedAt DateTime  @default(dbgenerated("now()")) @updatedAt
   expiresAt DateTime?
 
   accessPassword Int
 
-  ownerSignatureId String @db.Uuid
+  ownerSignatureId   String @db.Uuid
   reciverSignatureId String @db.Uuid
 
-  reciverName String
-  reciverEmail String
+  reciverName     String
+  reciverEmail    String
   optionalMessage String
 
   comments   Comment[]
@@ -144,7 +144,7 @@ model Contract {
   parties    Party[]
   placements SignaturePlacement[]
   invites    Invite[]
-  signature  Signature @relation(fields: [ownerSignatureId], references: [id])
+  signature  Signature            @relation(fields: [ownerSignatureId], references: [id])
 
   @@index([companyId, status, createdAt])
   @@index([ownerId])
@@ -213,14 +213,14 @@ model Signature {
   id        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   type      SignatureType // draw, typed, upload
   title     String?
-  imageUrl  String? 
+  imageUrl  String?
   createdAt DateTime      @default(dbgenerated("now()"))
 
   userId String? @db.Uuid
   user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   contracts Contract[]
- 
+
   @@index([userId])
   @@map("signatures")
 }
@@ -267,15 +267,18 @@ model Invoice {
 }
 
 model Comment {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  content   String
-  createdAt DateTime @default(dbgenerated("now()"))
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String    @db.Uuid
+  contractId String    @db.Uuid
+  partyRole  PartyRole
+  firstName  String
+  lastName   String
+  content    String
+  createdAt  DateTime  @default(dbgenerated("now()"))
 
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  contractId String   @db.Uuid
-  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
 
   @@index([contractId, createdAt])
   // table mapping
@@ -301,12 +304,12 @@ model Activity {
 }
 
 model Onboarding {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId      String   @unique @db.Uuid
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(dbgenerated("now()"))
-  data        Json?
-  stepsDone   String[] @default([])
+  id                 String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String   @unique @db.Uuid
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt          DateTime @default(dbgenerated("now()"))
+  data               Json?
+  stepsDone          String[] @default([])
   nextUncompleteStep String?
 
   status OnboardingStatusSimple @default(IN_PROGRESS)
