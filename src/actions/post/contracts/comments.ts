@@ -33,7 +33,7 @@ export async function PostContractComment({
       .select("*")
       .maybeSingle()
 
-    await SendContractNewCommentNotification({ partyRole, contractId, commentId: data.id })
+    await SendContractNewCommentNotification({ contractId, commentId: data.id })
 
     if (error) throw Error(error.message)
 

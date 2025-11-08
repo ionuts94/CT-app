@@ -18,9 +18,6 @@ type Props = {
 }
 
 export const CommentsSection: React.FC<Props> = ({ comments, contract, isSender }) => {
-  console.log("contract")
-  console.log(contract)
-  console.log(comments)
   const router = useRouter()
   const [input, setInput] = useState("")
 

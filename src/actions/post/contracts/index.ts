@@ -72,15 +72,16 @@ export async function CreateContractRecord({
 }
 
 
-export type T_ContractWithCompany = Contract & {
-  company: Company
+export type T_ContractWithCompanyAndOwner = Contract & {
+  company: Company,
+  owner: User
 }
 
-export async function GetContractWithCompany({
+export async function GetContractWithCompanyAndOwner({
   contractId
 }: {
   contractId: string
-}): Promise<CustomApiResponse<T_ContractWithCompany>> {
+}): Promise<CustomApiResponse<T_ContractWithCompanyAndOwner>> {
   const supabase = await createClient();
 
   try {
@@ -90,7 +91,8 @@ export async function GetContractWithCompany({
     const { data, error } = await supabase.from("contracts")
       .select(`
         *,
-        company: companies(*)
+        company: companies(*),
+        owner: users(*)
       `)
       .eq("id", contractId)
       .eq("ownerId", authUser.id)
@@ -115,7 +117,7 @@ export async function GetContractWithCompany({
 }
 
 
-export type T_ViewContract = T_ContractWithCompany & {
+export type T_ViewContract = T_ContractWithCompanyAndOwner & {
   owner: User,
   ownerSignature: Signature,
   receiverSignature?: Signature

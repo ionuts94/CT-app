@@ -3,7 +3,7 @@
 import { brevo } from "@/lib/brevo";
 import { CustomApiResponse, Status } from "@/types/api-call";
 import { EMAIL_TEMPLATE_IDS } from "./constants";
-import { GetContractWithCompany } from "../contracts";
+import { GetContractWithCompanyAndOwner } from "../contracts";
 import { envs } from "@/constants/envs";
 
 export type T_SendContractArgs = {
@@ -19,7 +19,7 @@ export async function SendContractEmail({
 }: T_SendContractArgs): Promise<CustomApiResponse<{ templateId: number }>> {
   const templateId = EMAIL_TEMPLATE_IDS.sendContract
   try {
-    const { data: contractData, error: contractError } = await GetContractWithCompany({ contractId })
+    const { data: contractData, error: contractError } = await GetContractWithCompanyAndOwner({ contractId })
 
     const message = {
       subject: `${contractData?.company.name} ți-a trimis un contract spre semnare`,

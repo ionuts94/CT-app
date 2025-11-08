@@ -1,10 +1,12 @@
 import { PageWidth } from "@/components/layout"
 import { PageHeader } from "./components/page-header"
-import { FreeGetViewContract, GetContractWithCompany } from "@/actions/post/contracts"
+import { FreeGetViewContract } from "@/actions/post/contracts"
 import { ContractContentView } from "./components/contract-content-view"
 import { ReceiverContractAssistant } from "./components/assistant/receiver-contract-assistant"
 import { CommentsSection } from "./components/comments-section"
 import { GetContractComments } from "@/actions/post/contracts/comments"
+import { GetAuthUser } from "@/actions/post/auth"
+import { redirect } from "next/navigation"
 
 type Props = {
     searchParams: Promise<{ c: string }>
@@ -15,16 +17,22 @@ export default async function ViewContractPage({ searchParams }: Props) {
 
     const [
         { data: contractData, error: contractError },
-        { data: commentsData, error: commentsError }
+        { data: commentsData, error: commentsError },
+        { data: authUser }
     ] = await Promise.all([
         FreeGetViewContract({ contractId: c }),
-        GetContractComments({ contractId: c })
+        GetContractComments({ contractId: c }),
+        GetAuthUser()
     ])
 
     if (!contractData) {
         return (
             <p>Nu am putut incarca contractul</p>
         )
+    }
+
+    if (authUser && authUser.email !== contractData.reciverEmail) {
+        return redirect("/dashboard")
     }
 
     return (
