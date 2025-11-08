@@ -72,6 +72,31 @@ export async function CreateContractRecord({
 }
 
 
+export async function GetAuthUserContracts(): Promise<CustomApiResponse<Contract[]>> {
+  const supabase = await createClient();
+
+  try {
+    const { data: authUser } = await GetAuthUser()
+    if (!authUser) throw new Error("You are not signed in")
+
+    const { data, error } = await supabase.from("contracts").select("*").eq("ownerId", authUser.id)
+    if (error) throw new Error("Failed to retrieve contracts. Error: " + error.message)
+
+    return {
+      status: Status.SUCCESS,
+      data: data
+    };
+  } catch (err: any) {
+    const errMessage = `${err.message}`;
+    console.log(errMessage);
+    return {
+      status: Status.FAILED,
+      error: errMessage
+    };
+  }
+}
+
+
 export type T_ContractWithCompanyAndOwner = Contract & {
   company: Company,
   owner: User
@@ -85,9 +110,6 @@ export async function GetContractWithCompanyAndOwner({
   const supabase = await createClient();
 
   try {
-    const { data: authUser, error: authUserError } = await GetAuthUser()
-    if (authUserError || !authUser) throw Error(authUserError || "You are not authorized to perform this action")
-
     const { data, error } = await supabase.from("contracts")
       .select(`
         *,
@@ -95,7 +117,6 @@ export async function GetContractWithCompanyAndOwner({
         owner: users(*)
       `)
       .eq("id", contractId)
-      .eq("ownerId", authUser.id)
       .maybeSingle()
 
     if (error) throw Error(error.message)

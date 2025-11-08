@@ -55,7 +55,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
       title: values.title,
       content: values.content,
       ownerSignatureId: values.signatureId,
-      reciverName: values.reciverEmail,
+      reciverName: values.reciverName,
       reciverEmail: values.reciverEmail,
       optionalMessage: values.optionalMessage
     })

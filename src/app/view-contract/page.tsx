@@ -7,6 +7,7 @@ import { CommentsSection } from "./components/comments-section"
 import { GetContractComments } from "@/actions/post/contracts/comments"
 import { GetAuthUser } from "@/actions/post/auth"
 import { redirect } from "next/navigation"
+import { ViewContractPageHeader } from "@/components/view-contract-page-header"
 
 type Props = {
     searchParams: Promise<{ c: string }>
@@ -37,7 +38,10 @@ export default async function ViewContractPage({ searchParams }: Props) {
 
     return (
         <main className="bg-app flex flex-col min-h-screen">
-            <PageHeader contract={contractData} />
+            {/* <PageHeader contract={contractData} /> */}
+            <ViewContractPageHeader contract={contractData}>
+
+            </ViewContractPageHeader>
             <PageWidth className="px-[70px] flex flex-1 gap-4 justify-between py-4 shadow-sm">
                 <div className="w-full lg:w-3/5">
                     <ContractContentView contract={contractData} />

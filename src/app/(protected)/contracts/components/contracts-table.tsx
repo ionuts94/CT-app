@@ -1,15 +1,21 @@
+"use client"
+
 import { StatusBadge } from "@/components/status-badge"
 import { Text } from "@/components/topography"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { MOCK_CONTRACTS } from "@/mock-data/contracts"
+import { Contract } from "@prisma/client"
+import { useRouter } from "next/navigation"
 
 type Props = {
-
+  contracts: Contract[]
 }
 
-export const ContractsTable: React.FC<Props> = ({ }) => {
+export const ContractsTable: React.FC<Props> = ({ contracts }) => {
+  const router = useRouter()
+  const viewContract = (contractId: string) => router.push("/contracts/" + contractId)
+
   return (
     <div className="w-full">
       <Card className="pt-0 w-full overflow-hidden">
@@ -27,16 +33,16 @@ export const ContractsTable: React.FC<Props> = ({ }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {MOCK_CONTRACTS.map((contract, index) => (
-              <TableRow key={index} className="hover:bg-muted/50">
+            {contracts.map((contract, index) => (
+              <TableRow key={index} className="hover:bg-muted/50" onClick={() => viewContract(contract.id)}>
                 <TableCell className="py-5 text-[15px]"><Input type="checkbox" className="size-4" /></TableCell>
-                <TableCell className="py-5 text-[15px]">{contract.firstName} {contract.lastName}</TableCell>
+                <TableCell className="py-5 text-[15px]">{contract.reciverName}</TableCell>
                 <TableCell className="py-5 text-[15px]">{contract.title}</TableCell>
                 <TableCell>
                   <StatusBadge status={contract.status} />
                 </TableCell>
                 <TableCell className="py-5 text-[15px]">
-                  {contract.date}
+                  {new Date(contract.createdAt).toLocaleDateString()}
                 </TableCell>
                 <TableCell className="py-5 text-[15px] text-right">TODO</TableCell>
               </TableRow>
