@@ -13,6 +13,7 @@ import { BUCKETS } from "@/constants/buckets"
 import { envs } from "@/constants/envs"
 import { useDialog } from "@/hooks/use-dialog"
 import { base64ToFile } from "@/lib/utils"
+import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { v4 as uuid } from "uuid"
 
@@ -21,7 +22,8 @@ type Props = {
 }
 
 export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
-  const { isOpen, toggleModal, openDialog } = useDialog()
+  const router = useRouter()
+  const { isOpen, toggleModal, openDialog, closeDialog } = useDialog()
 
   const { formState, setValue, register, handleSubmit, watch } = useForm({
     defaultValues: {
@@ -70,7 +72,8 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
       if (result.error) {
         return alert(result.error)
       }
-
+      router.refresh()
+      closeDialog()
       await GeneratePDFForContract({ contractId: contract.id })
     }
   })

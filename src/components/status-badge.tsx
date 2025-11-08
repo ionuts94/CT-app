@@ -13,16 +13,6 @@ type T_ContractStatusOptions = {
   label: string,
 }
 
-
-
-// const map: Record<Status, string> = {
-//   DRAFT: "bg-muted text-foreground/70",
-//   PENDING: "bg-amber-100 text-amber-800",
-//   SIGNED: "bg-emerald-100 text-emerald-800",
-//   DECLINED: "bg-rose-100 text-rose-800",
-//   EXPIRED: "bg-slate-200 text-slate-700",
-// }
-
 const ContractStatusOptions: Record<ContractStatus, T_ContractStatusOptions> = {
   DRAFT: {
     colors: "bg-muted text-foreground/70",
@@ -52,14 +42,16 @@ const ContractStatusOptions: Record<ContractStatus, T_ContractStatusOptions> = {
 }
 
 export const StatusBadge: React.FC<Props> = ({ status, className }) => {
-  const IconComponent = ContractStatusOptions[status].icon
+  const currentStatusOptions = ContractStatusOptions[status]
+  const IconComponent = currentStatusOptions?.icon
+
   return (
     <span className={cn(
       "w-full max-w-[100px] inline-flex items-center justify-center px-4 py-2 gap-2 text-xs font-semibold rounded-full",
-      ContractStatusOptions[status].colors, className
+      currentStatusOptions?.colors, className
     )}>
-      <IconComponent className="whitespace-nowrap shrink-0" size={14} />
-      {ContractStatusOptions[status].label}
+      {IconComponent && <IconComponent className="whitespace-nowrap shrink-0" size={14} />}
+      {currentStatusOptions?.label}
     </span>
   )
 }

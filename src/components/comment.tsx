@@ -21,7 +21,7 @@ export const Comment: React.FC<Props> = ({ comment }) => {
                 </div>
             </div>
             {content &&
-                <div className="break-words whitespace-pre-wrap"                >
+                <div className="break-words whitespace-pre-wrap">
                     {content}
                 </div>
             }

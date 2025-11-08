@@ -5,6 +5,7 @@ import { Text } from "@/components/topography"
 import { ContractViewSignatures } from "./contract-view-signatures"
 import { Button } from "@/components/ui/button"
 import { UserSignatureDialog } from "./user-signature-dialog"
+import { RichTextEditor } from "@/components/rich-text-editor"
 
 
 type Props = {
@@ -12,6 +13,7 @@ type Props = {
 }
 
 export const ContractContentView: React.FC<Props> = ({ contract }) => {
+  const contentHtml = contract?.content?.toString().replace(/<p>(<br\s*\/?>)?<\/p>/g, '<p>&nbsp;</p>');
 
   return (
     <Card className="p-0 gap-0 max-h-[85vh] overflow-auto">
@@ -32,7 +34,7 @@ export const ContractContentView: React.FC<Props> = ({ contract }) => {
       </div>
 
       <div className="py-3 px-10 overflow-y-auto border-b-[2px]">
-        <div dangerouslySetInnerHTML={{ __html: contract.content as any }} />
+        <div className="break-words whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: contentHtml as any }} />
         <ContractViewSignatures contract={contract} />
       </div>
       <div className="px-10 py-4 flex justify-end gap-2">
