@@ -6,6 +6,7 @@ import { ContractViewSignatures } from "./contract-view-signatures"
 import { Button } from "@/components/ui/button"
 import { UserSignatureDialog } from "./user-signature-dialog"
 import { RichTextEditor } from "@/components/rich-text-editor"
+import { SignerContractControls } from "./signer-contract-controls"
 
 
 type Props = {
@@ -38,8 +39,7 @@ export const ContractContentView: React.FC<Props> = ({ contract }) => {
         <ContractViewSignatures contract={contract} />
       </div>
       <div className="px-10 py-4 flex justify-end gap-2">
-        <Button variant="secondary" className="p-4 px-10">Refuza</Button>
-        <UserSignatureDialog contract={contract} />
+        <SignerContractControls contract={contract} />
       </div>
     </Card>
   )

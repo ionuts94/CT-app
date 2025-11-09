@@ -5,7 +5,7 @@ export const useDialog = () => {
 
     const openDialog = () => setOpen(true)
     const closeDialog = () => setOpen(false)
-    const toggleModal = () => {
+    const toggleDialog = () => {
         if (!open) return;
         setOpen(prev => !prev)
     }
@@ -14,6 +14,6 @@ export const useDialog = () => {
         isOpen: open,
         openDialog,
         closeDialog,
-        toggleModal
+        toggleDialog
     }
 }

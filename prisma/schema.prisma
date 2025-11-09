@@ -334,6 +334,7 @@ enum ContractStatus {
   OUT_FOR_SIGNATURE
   FULLY_SIGNED
   DECLINED
+  REVOKED
   EXPIRED
 }
 

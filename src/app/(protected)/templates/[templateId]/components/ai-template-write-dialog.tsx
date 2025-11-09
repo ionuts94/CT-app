@@ -23,10 +23,10 @@ type Props = {
 }
 
 export const AiTemplateWriteDialog: React.FC<Props> = ({ onGenerateTemplate = () => null }) => {
-  const { isOpen, openDialog, closeDialog, toggleModal } = useDialog()
+  const { isOpen, openDialog, closeDialog, toggleDialog } = useDialog()
 
   return (
-    <Dialog open={isOpen} onOpenChange={() => toggleModal()}>
+    <Dialog open={isOpen} onOpenChange={toggleDialog}>
       <DialogTrigger asChild>
         <Button onClick={openDialog} variant="outline" className="bg-white group">
           <AiSvg className="size-5 group-hover:text-white" />

@@ -23,7 +23,7 @@ type Props = {
 
 export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
   const router = useRouter()
-  const { isOpen, toggleModal, openDialog, closeDialog } = useDialog()
+  const { isOpen, toggleDialog, openDialog, closeDialog } = useDialog()
 
   const { formState, setValue, register, handleSubmit, watch } = useForm({
     defaultValues: {
@@ -40,7 +40,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
 
   const onOpenChange = () => {
     if (isLoading) return;
-    toggleModal()
+    toggleDialog()
   }
 
   const onSigatureChange = ({ svg, png }: { svg: string, png: string }) => {

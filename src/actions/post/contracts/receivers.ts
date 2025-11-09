@@ -16,11 +16,6 @@ export async function ReceiverSignContract({
   const supabase = await createClient();
 
   try {
-    console.log("signing contract")
-    console.log(contractId)
-    console.log(receiverName)
-    console.log(receiverSignatureId)
-
     const { error } = await supabase.from("contracts")
       .update({
         reciverName: receiverName,
@@ -44,3 +39,39 @@ export async function ReceiverSignContract({
     };
   }
 }
+
+
+export async function ReceiverDeclineContract({
+  contractId,
+  declineReason = ""
+}: {
+  contractId: string,
+  declineReason?: string
+}): Promise<CustomApiResponse> {
+  const supabase = await createClient();
+
+  try {
+    const { error } = await supabase.from("contracts")
+      .update({
+        status: ContractStatus.DECLINED,
+        declineReason,
+        declinedAt: new Date()
+      })
+      .eq("id", contractId)
+
+    if (error) throw error
+
+    return {
+      status: Status.SUCCESS,
+      data: ""
+    };
+  } catch (err: any) {
+    const errMessage = `${err.message}`;
+    console.log(errMessage);
+    return {
+      status: Status.FAILED,
+      error: errMessage
+    };
+  }
+}
+

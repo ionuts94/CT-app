@@ -34,6 +34,11 @@ const ContractStatusOptions: Record<ContractStatus, T_ContractStatusOptions> = {
     icon: CircleX,
     label: "DECLINED"
   },
+  REVOKED: {
+    colors: "bg-destructive text-white",
+    icon: CircleX,
+    label: "REVOKED"
+  },
   EXPIRED: {
     colors: "bg-slate-200 text-slate-700",
     icon: ShieldX,
@@ -41,8 +46,13 @@ const ContractStatusOptions: Record<ContractStatus, T_ContractStatusOptions> = {
   },
 }
 
-export const StatusBadge: React.FC<Props> = ({ status, className }) => {
+export const getContractStatusOptions = (status: ContractStatus) => {
   const currentStatusOptions = ContractStatusOptions[status]
+  return currentStatusOptions
+}
+
+export const StatusBadge: React.FC<Props> = ({ status, className }) => {
+  const currentStatusOptions = getContractStatusOptions(status)
   const IconComponent = currentStatusOptions?.icon
 
   return (
