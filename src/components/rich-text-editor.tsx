@@ -42,6 +42,7 @@ export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, con
       },
     },
     onUpdate: ({ editor }) => {
+      if (disabled) return;
       onChange(editor.getHTML())
     },
   })
@@ -57,7 +58,7 @@ export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, con
 
   return (
     <>
-      <MenuBar editor={editor} showAiHelper={showAiHelper} />
+      {!disabled && <MenuBar editor={editor} showAiHelper={showAiHelper} />}
       <EditorContent editor={editor} />
     </>
   )

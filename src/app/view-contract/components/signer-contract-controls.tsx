@@ -28,7 +28,7 @@ export const SignerContractControls: React.FC<Props> = ({ contract }) => {
 
   if (contract.status === "DECLINED") {
     const status = getContractStatusOptions(contract.status)
-    return <Text className={cn("p-2 rounded", status.colors)}>Ati respins acest contract. Contractul nu mai poate fi modificat.</Text>
+    return <Text className={cn("p-2 rounded", status.colors)}>Contractul a fost respins de catre beneficiar si nu mai poate fi folosit sau modificat.</Text>
   }
 
   if (contract.status === "REVOKED") {

@@ -14,7 +14,7 @@ type Props = {
 
 export const ContractsTable: React.FC<Props> = ({ contracts }) => {
   const router = useRouter()
-  const viewContract = (contractId: string) => router.push("/contracts/" + contractId)
+  const viewContract = (contractId: string) => router.push("/c/view-contract?c=" + contractId)
 
   return (
     <div className="w-full">
