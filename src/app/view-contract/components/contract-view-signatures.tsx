@@ -7,9 +7,9 @@ type Props = {
 
 export const ContractViewSignatures: React.FC<Props> = ({ contract }) => {
   return (
-    <div className="flex mt-10 justify-between pb-4">
+    <div className="flex mt-10 justify-between pb-4 break-inside-avoid">
       {/* Prestator */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 break-inside-avoid">
         <Text className="text-color-secondary">Semnătura Prestator</Text>
         <div className="rounded-lg gap-2 relative">
           <Text className="flex gap-2 items-center" size="lg" weight="semibold">
@@ -22,11 +22,12 @@ export const ContractViewSignatures: React.FC<Props> = ({ contract }) => {
           {contract?.ownerSignature?.imageUrl && (
             <img src={contract.ownerSignature.imageUrl} className="h-14 w-fit" />
           )}
+          <div className="w-full pt-4 text-center border-b border-black border-dashed"></div>
         </div>
       </div>
 
       {/* Beneficiar */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 break-inside-avoid">
         <Text className="text-color-secondary">Semnătura Beneficiar</Text>
         <div className="rounded-lg gap-2 relative">
           <Text className="flex gap-2 items-center" size="lg" weight="semibold">
@@ -35,7 +36,10 @@ export const ContractViewSignatures: React.FC<Props> = ({ contract }) => {
         </div>
         <div className="flex-1 flex items-end">
           {contract?.receiverSignature?.imageUrl ? (
-            <img src={contract.receiverSignature?.imageUrl} className="h-14 w-fit" />
+            <>
+              <img src={contract.receiverSignature?.imageUrl} className="h-14 w-fit" />
+              <div className="mt-4 w-full text-center border-b border-black border-dashed"></div>
+            </>
           ) : (
             <div className="w-full text-center border-b border-black border-dashed"></div>
           )}

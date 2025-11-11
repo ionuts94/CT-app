@@ -254,3 +254,9 @@
     background: var(--app);
   }
 }
+
+@media print {
+  body {
+    background: white !important;
+  }
+}
