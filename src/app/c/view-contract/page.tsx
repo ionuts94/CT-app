@@ -13,6 +13,10 @@ type Props = {
 export default async function CompnayViewContract({ searchParams }: Props) {
   const { c } = await searchParams
 
+  // TODO: Add authentication and permissions checks
+  // Check if user is authenticated
+  // Check if the contract belongs to the user
+
   const [
     { data: contractData, error: contractError },
     { data: commentsData, error: commentsError },

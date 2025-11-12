@@ -2,10 +2,10 @@ export type ChangeAction = "insert" | "replace" | "delete" | "rephrase" | "norma
 
 export type ContractFixOutputSelective = {
     status: "ok" | "needsInput" | "error";
-    updatedHtml: string;                 // HTML final Tiptap-safe
-    fixedIssueIds: string[];             // ce issue-uri (din selectedIssueIds) ai reușit să repari
-    skippedIssueIds: string[];           // din selectedIssueIds dar pe care nu le-ai putut repara (ex.: lipsă date)
-    failedIssueIds: Array<{              // eșecuri concrete pe selectedIssueIds, cu motiv
+    updatedHtml: string;
+    fixedIssueIds: string[];
+    skippedIssueIds: string[];
+    failedIssueIds: Array<{
         issueId: string;
         reason: string;
     }>;
@@ -15,10 +15,10 @@ export type ContractFixOutputSelective = {
         action: ChangeAction;
         summary: string;
     }>;
-    skippedIssueConflicts: Array<{       // conflicte cu issue-uri ne-selectate
-        issueId: string;                   // un issue ne-selectat care intră în conflict
-        affectedSelectedIssueId?: string;  // opțional: cu cine s-a bătut cap în cap
-        note: string;                      // explicație scurtă
+    skippedIssueConflicts: Array<{
+        issueId: string;
+        affectedSelectedIssueId?: string;
+        note: string;
     }>;
-    remainingQuestions: string[];        // ce mai trebuie de la user ca să finalizezi fixurile selectate
+    remainingQuestions: string[];
 };
