@@ -26,7 +26,7 @@ export const ContractSentSuccessfully: React.FC<Props> = ({ reciverEmail, newCon
         <Text weight="bold">{reciverEmail}</Text>
       </div>
       <div className="flex flex-col gap-2 w-full lg:w-fit lg:flex-row">
-        <Link href={baseUrl + "/view-contract/" + newContractId}>
+        <Link href={baseUrl + "/c/view-contract?c=" + newContractId}>
           <Button className="p-4 border border-primary">
             <FileText />
             <TextCTA>Vezi contractul</TextCTA>

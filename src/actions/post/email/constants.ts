@@ -10,6 +10,7 @@ export const GET_SEND_CONTRACT_DATA = {
 
 export const EMAIL_TEMPLATE_IDS = {
   "sendContract": 1,
+  "sendContractSignedNotification": 7,
   "newSenderCommentNotification": 5,
   "newSignerCommentNotification": 4,
   "newSystemCommentNotification": 6

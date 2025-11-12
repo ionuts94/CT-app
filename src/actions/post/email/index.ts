@@ -33,7 +33,7 @@ export async function SendContractEmail({
         colorAccent: contractData?.company.colorAccent,
         contractTitle: contractData?.title,
         expiryDate: contractData?.expiresAt,
-        viewContractUrl: envs.NEXT_PUBLIC_URL + `/view-contract/${contractData?.id}`,
+        viewContractUrl: envs.NEXT_PUBLIC_URL + `/view-contract?c=${contractData?.id}`,
         viewContractPassword: contractData?.accessPassword,
         reciverEmail,
         optionalMessage,
@@ -42,7 +42,7 @@ export async function SendContractEmail({
         'X-Mailin-custom': 'custom_header_1:custom_value_1|custom_header_2:custom_value_2',
         'content-type': 'application/json',
         'accept': 'application/json'
-      }
+      },
     };
 
     console.log("Sending brevo email")

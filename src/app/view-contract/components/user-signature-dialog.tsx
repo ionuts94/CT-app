@@ -67,6 +67,14 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
         })
       })
 
+
+      const notificationResponse = await fetch(api.contract.generateContractPdf, {
+        method: "POST",
+        body: JSON.stringify({
+          contractId: contract.id
+        })
+      })
+
       const result = await response.json()
 
       if (result.error) {

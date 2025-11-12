@@ -1,13 +1,13 @@
 import puppeteer from "puppeteer";
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { SendContractSignedNotification } from "@/actions/post/email/contract-state-change-notifications";
+import { envs } from "@/constants/envs";
 
 export async function POST(req: Request) {
   const { contractId } = await req.json();
+  const contractUrl = envs.NEXT_PUBLIC_URL + '/generate-contract?c=' + contractId
 
-  const contractUrl = `http://localhost:3000/generate-contract?c=7ebacfbc-92a4-48a8-9363-d5020dfdb56d&pdf=true`;
-
-  // 1️⃣ Lansează browser-ul headless
   const browser = await puppeteer.launch({
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -15,11 +15,9 @@ export async function POST(req: Request) {
 
   const page = await browser.newPage();
 
-  // 2️⃣ Deschide pagina de contract
   await page.goto(contractUrl, { waitUntil: "networkidle0" });
   await page.emulateMediaType('print');
 
-  // 3️⃣ Generează PDF-ul
   const pdfBuffer = await page.pdf({
     format: "A4",
     printBackground: true,
@@ -29,7 +27,6 @@ export async function POST(req: Request) {
 
   await browser.close();
 
-  // 4️⃣ Urcă PDF-ul în Supabase Storage
   const supabase = await createClient()
 
   const filePath = `contracts/${contractId}.pdf`;
@@ -38,10 +35,14 @@ export async function POST(req: Request) {
     upsert: true,
   });
 
-  // 5️⃣ Generează link public (sau semnat)
   const { data } = supabase.storage
     .from("contracts")
     .getPublicUrl(filePath);
+
+  await SendContractSignedNotification({
+    contractId: contractId,
+    contractUrl: data.publicUrl
+  })
 
   return NextResponse.json({ url: data.publicUrl });
 }

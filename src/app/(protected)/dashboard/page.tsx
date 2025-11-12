@@ -6,7 +6,7 @@ import { UpcomingNext } from "./components/upcoming-next"
 import { RecentContracts } from "./components/recent-contracts"
 import { RecentActivity } from "./components/recent-activity"
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
   return (
     <div className="space-y-6 w-full">
       <PageContainer className="flex flex-col gap-4">

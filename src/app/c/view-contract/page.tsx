@@ -44,7 +44,6 @@ export default async function CompnayViewContract({ searchParams }: Props) {
           isSender={true}
         />
       </PageWidth>
-
     </main>
   )
 }
