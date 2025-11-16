@@ -22,7 +22,6 @@ export const ContractViewSignatures: React.FC<Props> = ({ contract }) => {
           {contract?.ownerSignature?.imageUrl && (
             <img src={contract.ownerSignature.imageUrl} className="h-14 w-fit" />
           )}
-          <div className="w-full pt-4 text-center border-b border-black border-dashed"></div>
         </div>
       </div>
 
@@ -38,7 +37,6 @@ export const ContractViewSignatures: React.FC<Props> = ({ contract }) => {
           {contract?.receiverSignature?.imageUrl ? (
             <>
               <img src={contract.receiverSignature?.imageUrl} className="h-14 w-fit" />
-              <div className="mt-4 w-full text-center border-b border-black border-dashed"></div>
             </>
           ) : (
             <div className="w-full text-center border-b border-black border-dashed"></div>

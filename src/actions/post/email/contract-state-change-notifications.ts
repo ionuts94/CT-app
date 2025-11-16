@@ -1,9 +1,7 @@
 import { CustomApiResponse, Status } from "@/types/api-call"
-import { T_NewCommentNotificationArgs } from "./contract-comment-notifications"
 import { EMAIL_TEMPLATE_IDS } from "./constants"
-import { FreeGetViewContract, GetContractWithCompanyAndOwner } from "../contracts"
+import { FreeGetViewContract } from "../contracts"
 import { brevo } from "@/lib/brevo"
-import { envs } from "@/constants/envs"
 
 type T_ContractSignedNotificationArgs = {
   contractId: string,
@@ -36,10 +34,7 @@ export async function SendContractSignedNotification({
       },
     };
 
-    console.log("Sending brevo email")
-
-    const response = await brevo.sendTransacEmail(message)
-    console.log(response)
+    await brevo.sendTransacEmail(message)
 
     return {
       status: Status.SUCCESS,

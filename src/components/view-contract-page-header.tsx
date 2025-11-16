@@ -3,6 +3,7 @@ import { PageWidth } from "@/components/layout"
 import { Text } from "@/components/topography"
 import { Clock } from "lucide-react"
 import { StatusBadge } from "./status-badge"
+import { DownloadContractButton } from "./download-contract-button"
 
 type Props = {
   contract: T_ViewContract,
@@ -24,6 +25,7 @@ export const ViewContractPageHeader: React.FC<Props> = ({ contract, children }) 
         </Text>
         <div className="flex items-center gap-2">
           <StatusBadge status={contract.status} />
+          <DownloadContractButton contract={contract} />
           {children}
         </div>
       </PageWidth>

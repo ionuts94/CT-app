@@ -15,6 +15,7 @@ import { useDialog } from "@/hooks/use-dialog"
 import { base64ToFile } from "@/lib/utils"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { v4 as uuid } from "uuid"
 
 type Props = {
@@ -67,22 +68,17 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
         })
       })
 
-
-      const notificationResponse = await fetch(api.contract.generateContractPdf, {
-        method: "POST",
-        body: JSON.stringify({
-          contractId: contract.id
-        })
-      })
-
       const result = await response.json()
-
       if (result.error) {
-        return alert(result.error)
+        return toast.error(result.error)
       }
+      fetch(api.contract.onContractSigned, {
+        method: "POST",
+        body: JSON.stringify({ contractId: contract.id })
+      })
+      toast.success("Contractul a fost semnat. Vei primi un email de confirmare.")
       router.refresh()
       closeDialog()
-      await GeneratePDFForContract({ contractId: contract.id })
     }
   })
 

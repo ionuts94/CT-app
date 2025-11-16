@@ -182,3 +182,33 @@ export async function FreeGetViewContract({
   }
 }
 
+
+export async function UpdateContractSignedPdfUrl({
+  contractId,
+  contractUrl
+}: {
+  contractId: string,
+  contractUrl: string
+}): Promise<CustomApiResponse> {
+  const supabase = await createClient();
+
+  try {
+    const { error } = await supabase.from("contracts")
+      .update({ signedPdfUrl: contractUrl })
+      .eq("id", contractId)
+
+    if (error) throw new Error("Failed to update contract pdf url. Error: " + error.message)
+
+    return {
+      status: Status.SUCCESS,
+      data: ""
+    };
+  } catch (err: any) {
+    const errMessage = `${err.message}`;
+    console.log(errMessage);
+    return {
+      status: Status.FAILED,
+      error: errMessage
+    };
+  }
+}

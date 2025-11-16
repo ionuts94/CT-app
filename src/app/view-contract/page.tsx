@@ -25,8 +25,6 @@ export default async function ViewContractPage({ searchParams }: Props) {
         GetAuthUser()
     ])
 
-    await fetch("http://localhost:3000/api/contract/generate", { method: "POST", body: JSON.stringify({ contractId: "7ebacfbc-92a4-48a8-9363-d5020dfdb56d" }) })
-
     if (!contractData) {
         return (
             <p>Nu am putut incarca contractul</p>
