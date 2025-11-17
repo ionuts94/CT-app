@@ -1,6 +1,6 @@
-import { T_SvgProps } from "@/types/others"
+import { T_SvgProps } from "../../types/others"
 
-export const CogwheelSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold' }) => {
+export const CogwheelSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold', color }) => {
   return (
     <svg
       className={className}

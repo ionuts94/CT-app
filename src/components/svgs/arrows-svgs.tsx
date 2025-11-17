@@ -1,6 +1,6 @@
-import { T_SvgProps } from "@/types/others"
+import { T_SvgProps } from "../../types/others"
 
-export const BackArrowSvg: React.FC<T_SvgProps> = ({ className }) => {
+export const BackArrowSvg: React.FC<T_SvgProps> = ({ className, color }) => {
   return (
     <svg
       className={className}
@@ -34,7 +34,7 @@ export const BackArrowSvg: React.FC<T_SvgProps> = ({ className }) => {
   )
 }
 
-export const ArrowRightSvg: React.FC<T_SvgProps> = ({ className }) => {
+export const ArrowRightSvg: React.FC<T_SvgProps> = ({ className, color }) => {
   return (
     <svg
       className={className}

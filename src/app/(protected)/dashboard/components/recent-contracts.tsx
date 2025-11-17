@@ -54,7 +54,7 @@ export const RecentContracts: React.FC<Props> = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {
+            {/* {
               RECENTS.map(contract => (
                 <TableRow className="h-auto" key={contract.id}>
                   <TableCell className="py-4 font-medium">{contract.client}</TableCell>
@@ -64,7 +64,7 @@ export const RecentContracts: React.FC<Props> = () => {
                   <TableCell className="py-4 text-right">TODO</TableCell>
                 </TableRow>
               ))
-            }
+            } */}
           </TableBody>
         </Table>
       </div>

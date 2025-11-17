@@ -1,6 +1,6 @@
-import { T_SvgProps } from "@/types/others"
+import { T_SvgProps } from "../../types/others"
 
-export const PenSvg: React.FC<T_SvgProps> = ({ className, onClick = () => null }) => {
+export const PenSvg: React.FC<T_SvgProps> = ({ className, color, onClick = () => null }) => {
   return (
     <svg
       onClick={onClick}

@@ -1,6 +1,6 @@
-import { T_SvgProps } from "@/types/others"
+import { T_SvgProps } from "../../types/others"
 
-export const FileSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold' }) => {
+export const FileSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold', color }) => {
   return (
     <svg
       className={className}
@@ -21,7 +21,7 @@ export const FileSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold' 
   )
 }
 
-export const FileTextSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold' }) => {
+export const FileTextSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold', color }) => {
   return (
     <svg
       className={className}

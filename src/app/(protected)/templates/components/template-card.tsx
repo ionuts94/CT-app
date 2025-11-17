@@ -14,8 +14,8 @@ export const TemplateCard: React.FC<Props> = ({ template, className }) => {
       <Text weight="bold" className="text-ellipsis line-clamp-1">{template.title}</Text>
       <Text className="text-color-secondary">Actualizat la <span className="font-semibold">{new Date(template.updatedAt).toLocaleDateString()}</span></Text>
       <div className="w-ful h-[150px] bg-blue-50 shadow-sm my-2" />
-      <Text className="text-color-secondary">Folosit la <span className="font-semibold">{template.lastUsedAt || "niciodata"}</span></Text>
-      <Text className="text-color-secondary">Folosit de <span className="font-semibold">{template.usedCount || 0} ori</span></Text>
+      {/* <Text className="text-color-secondary">Folosit la <span className="font-semibold">{template.lastUsedAt || "niciodata"}</span></Text>
+      <Text className="text-color-secondary">Folosit de <span className="font-semibold">{template.usedCount || 0} ori</span></Text> */}
     </Card>
   )
 }

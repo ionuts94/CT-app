@@ -9,7 +9,7 @@ type Props = {
 
 export const LandingPageHero: React.FC<Props> = ({ }) => {
   return (
-    <div className="py-[40px] lg:py-[80px]">
+    <div className="py-[40px] lg:py-0 lg:h-[calc(100vh-96px)] flex items-center justify-center">
       <LandingPageWidth className="flex flex-col gap-6 items-center lg:flex-row">
         <div className="w-full flex flex-col gap-4 justify-center items-center lg:items-start">
           <Text className="text-[48px] leading-[60px] lg:text-[64px] lg:leading-[80px] font-bold -tracking-[2px] text-center lg:text-left">Semnează contracte mai rapid, mai sigur și mai transparent</Text>

@@ -1,7 +1,6 @@
-import { STROKE_WIDTH } from "@/constants/svgs"
-import { T_SvgProps } from "@/types/others"
+import { T_SvgProps } from "../../types/others"
 
-export const MessageIconSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold' }) => {
+export const MessageIconSvg: React.FC<T_SvgProps> = ({ className, color, strokeWidth = 'bold' }) => {
   return (
     <svg
       className={className}

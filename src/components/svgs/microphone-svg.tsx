@@ -1,6 +1,6 @@
-import { T_SvgProps } from "@/types/others"
+import { T_SvgProps } from "../../types/others"
 
-export const MicrophoneSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold' }) => {
+export const MicrophoneSvg: React.FC<T_SvgProps> = ({ className, color, strokeWidth = 'bold' }) => {
   return (
     <svg
       className={className}

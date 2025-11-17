@@ -1,7 +1,7 @@
-import { STROKE_WIDTH } from "@/constants/svgs"
-import { T_SvgProps } from "@/types/others"
 
-export const BulbSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold' }) => {
+import { STROKE_WIDTH, T_SvgProps } from "../../types/others"
+
+export const BulbSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold', color }) => {
   return (
     <svg
       className={className}

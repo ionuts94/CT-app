@@ -5,8 +5,7 @@ import { CustomApiResponse, Status } from "@/types/api-call";
 import { T_BrandingOnboardingSchema, T_CompanyOnboardingSchema } from "@/validators/onboarding.validator";
 import { UpdateCompanyIdForAuthUser } from "../user";
 import { GetAuthUser } from "../auth";
-import { T_UserWithCompany } from "@/types/users";
-import { Company } from "@prisma/client";
+import { Company, User } from "@prisma/client";
 
 type T_CreateCompanyArgs = T_CompanyOnboardingSchema & T_BrandingOnboardingSchema
 
@@ -80,6 +79,9 @@ export async function GetCompanyById({
   }
 }
 
+export type T_UserWithCompany = User & {
+  company: Company
+}
 
 export async function GetCurrentUserWithCompany(): Promise<CustomApiResponse<T_UserWithCompany>> {
   const supabase = await createClient();

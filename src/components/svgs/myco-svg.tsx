@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
-import { T_SvgProps } from "@/types/others"
+import { T_SvgProps } from "../../types/others"
 
 export const MyCoSvg: React.FC<T_SvgProps> = ({ className }) => {
   return (

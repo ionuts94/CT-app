@@ -1,10 +1,10 @@
-import { T_SvgProps } from "@/types/others"
+
 
 type Props = {
-
+  className?: string
 }
 
-export const AccountSvg: React.FC<T_SvgProps> = ({ className }) => {
+export const AccountSvg: React.FC<Props> = ({ className }) => {
   return (
     <svg
       className={className}

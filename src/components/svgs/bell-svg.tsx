@@ -1,6 +1,6 @@
-import { T_SvgProps } from "@/types/others"
+import { T_SvgProps } from "../../types/others"
 
-export const BellSvg: React.FC<T_SvgProps> = ({ className }) => {
+export const BellSvg: React.FC<T_SvgProps> = ({ className, color }) => {
   return (
     <svg
       className={className}

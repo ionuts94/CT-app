@@ -1,4 +1,4 @@
-import { T_SvgProps } from "@/types/others"
+import { T_SvgProps } from "../../types/others"
 
 export const RoundedCheckedSvg: React.FC<T_SvgProps> = ({ className, color = "hsla(var(--primary-blue))", ...rest }) => {
   return (

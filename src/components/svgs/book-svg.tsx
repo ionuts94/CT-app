@@ -1,7 +1,7 @@
-import { STROKE_WIDTH } from "@/constants/svgs"
-import { T_SvgProps } from "@/types/others"
 
-export const BookSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold' }) => {
+import { T_SvgProps } from "../../types/others"
+
+export const BookSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold', color }) => {
   return (
     <svg
       className={className}
@@ -43,7 +43,7 @@ export const BookSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold' 
   )
 }
 
-export const BookMarkSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold' }) => {
+export const BookMarkSvg: React.FC<T_SvgProps> = ({ className, strokeWidth = 'bold', color }) => {
   return (
     <svg
       className={className}
