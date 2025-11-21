@@ -11,10 +11,10 @@ export const Footer: React.FC<Props> = ({ }) => {
 
           {/* Brand */}
           <div className="col-span-1 sm:col-span-2">
-            <h3 className="text-xl font-semibold text-white">
+            <h3 className="text-2xl font-semibold text-white">
               Contract Transparent
             </h3>
-            <p className="text-white mt-3 text-sm max-w-sm">
+            <p className="text-white mt-3 text-md max-w-sm">
               Platformă modernă pentru trimiterea și semnarea contractelor
               într-un mod clar, sigur și complet transparent.
             </p>
@@ -22,8 +22,8 @@ export const Footer: React.FC<Props> = ({ }) => {
 
           {/* Links */}
           <div>
-            <h4 className="text-white font-semibold mb-3">Produs</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="text-white font-semibold text-xl mb-3">Produs</h4>
+            <ul className="space-y-2 text-md">
               <li><a href="/features" className="text-white hover:text-white">Funcționalități</a></li>
               <li><a href="/pricing" className="text-white hover:text-white">Prețuri</a></li>
               <li><a href="/faq" className="text-white hover:text-white">Întrebări frecvente</a></li>
@@ -33,8 +33,8 @@ export const Footer: React.FC<Props> = ({ }) => {
 
           {/* Support */}
           <div>
-            <h4 className="text-white font-semibold mb-3">Suport</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="text-white font-semibold mb-3 text-xl">Suport</h4>
+            <ul className="space-y-2 text-md">
               <li><a href="/contact" className="text-white hover:text-white">Contact</a></li>
               <li>
                 <a
@@ -52,7 +52,7 @@ export const Footer: React.FC<Props> = ({ }) => {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 pt-6 border-t border-white flex flex-col sm:flex-row justify-between items-center text-sm text-white">
+        <div className="mt-10 pt-6 border-t border-white flex flex-col sm:flex-row justify-between items-center text-md text-white">
           <p>© {new Date().getFullYear()} Contract Transparent. Toate drepturile rezervate.</p>
           <p className="mt-2 sm:mt-0">
             Made with ❤️ in România
