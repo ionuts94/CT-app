@@ -1,4 +1,3 @@
-import { Footer } from "react-day-picker";
 import { Benefits } from "./components/benefits";
 import { FaQ } from "./components/faq";
 import { FeatureHighlight } from "./components/feature-highlight";
@@ -8,7 +7,7 @@ import { LandingPageHeader } from "./components/landing-page-header";
 import { LandingPageHero } from "./components/landing-page-hero";
 import { PricingPlans } from "./components/pricing-plans";
 import { Testimonials } from "./components/testimonials";
-import { LandingPageWidth } from "./components/landing-page-width";
+import { Footer } from "./components/footer";
 
 export default async function LandingPage() {
   return (

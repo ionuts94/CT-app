@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button"
 export const PricingPlans: React.FC = ({ }) => {
   return (
     <div className="py-[110px]">
-      <LandingPageWidth className="flex flex-col gap-[80px]">
+      <LandingPageWidth className="flex flex-col gap-[40px]">
         <SectionHeaderContainer>
           <SectionLabel>Prețuri simple și transparente</SectionLabel>
           <SectionTitle>Plătești doar pentru numărul de contracte.</SectionTitle>
           <SectionSubtitle>Toate funcționalitățile sunt incluse în orice plan.</SectionSubtitle>
         </SectionHeaderContainer>
-        <div className="mx-auto w-full max-w-[680px] flex flex-col gap-6 items-center justify-center">
+        <div className="mx-auto w-full max-w-[680px] flex flex-col gap-4 items-center justify-center">
           <PricingCard
             pricingTitle="Trial"
             pricingDetails="3 contracte gratuite — fără obligații."

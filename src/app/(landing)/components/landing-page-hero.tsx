@@ -28,7 +28,7 @@ export const LandingPageHero: React.FC<Props> = ({ }) => {
             <img src="./assets/landing-images/small_3.png" className="h-[40%] max-h-[200px] absolute bottom-[-5%] right-0" />
             <img src="./assets/landing-images/arrow.png" className="absolute bottom-0 translate-y-[80%] translate-x-[-80%]" />
           </div>
-          <div className="size-[300px] bg-green-500 rounded-full blur-[400px] absolute z-[-1]" />
+          <div className="size-[300px] bg-green-500 rounded-full blur-[250px] absolute z-[-1]" />
         </div>
       </LandingPageWidth>
     </div>
