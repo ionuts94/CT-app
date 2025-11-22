@@ -25,7 +25,7 @@ export const DoneStep: React.FC = ({ }) => {
     router.replace(redirectAfterComplete)
   }
 
-  const completeAndGoDashboard = () => handleCompleteOnboarding("/")
+  const completeAndGoDashboard = () => handleCompleteOnboarding("/dashboard")
   const completeAndCreateTemplate = () => handleCompleteOnboarding("/templates/new")
 
   return (

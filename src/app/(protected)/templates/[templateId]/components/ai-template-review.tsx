@@ -27,20 +27,20 @@ export const AiTemplateReview: React.FC<Props> = ({ }) => {
     runAIFixTemplate,
   } = useTemplateContext()
 
-  useEffect(() => {
-    (async () => {
-      if (!templateInputs || !currentTemplateRichText) return;
-      const { reviewData, error } = await runAITemplateReview({
-        initialInput: templateInputs,
-        templateRichTextString: currentTemplateRichText
-      })
+  // useEffect(() => {
+  //   (async () => {
+  //     if (!templateInputs || !currentTemplateRichText) return;
+  //     const { reviewData, error } = await runAITemplateReview({
+  //       initialInput: templateInputs,
+  //       templateRichTextString: currentTemplateRichText
+  //     })
 
-      if (reviewData) {
-        setReviewOutcome(reviewData)
-        setCurrentTemplateRichText(reviewData.normalizedHtml)
-      }
-    })()
-  }, [templateInputs, currentTemplateRichText])
+  //     if (reviewData) {
+  //       setReviewOutcome(reviewData)
+  //       setCurrentTemplateRichText(reviewData.normalizedHtml)
+  //     }
+  //   })()
+  // }, [templateInputs, currentTemplateRichText])
 
   const handleApplyFixes = async () => {
     if (!reviewOutcome) {

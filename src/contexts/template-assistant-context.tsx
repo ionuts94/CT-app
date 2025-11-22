@@ -7,8 +7,10 @@ import { T_AITemplateHookReturn } from "@/types/template/ai-template-context"
 import { CreateTemplateSchema, T_CreateTemplateSchema } from "@/validators/template.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Template } from "@prisma/client"
+import { useRouter } from "next/navigation"
 import { BaseSyntheticEvent, createContext, useContext, useEffect } from "react"
 import { useForm, UseFormReturn } from "react-hook-form"
+import { toast } from "sonner"
 
 type T_TemplateContext = T_AITemplateHookReturn & {
     form: UseFormReturn<T_CreateTemplateSchema, any, T_CreateTemplateSchema>,
@@ -36,6 +38,7 @@ type Props = {
 }
 
 export const TemplateProvider: React.FC<Props> = ({ children, templateData }) => {
+    const router = useRouter()
     const {
         templateInputs,
         currentTemplateRichText,
@@ -60,7 +63,10 @@ export const TemplateProvider: React.FC<Props> = ({ children, templateData }) =>
     const { handleSubmit } = form
 
     const handleSaveTemplate = handleSubmit(async (values: T_CreateTemplateSchema) => {
-        const { } = await CreateTemplate(values)
+        const { error } = await CreateTemplate(values)
+        if (error) return toast.error(error)
+        toast.success("Sablonul a fost creeat")
+        router.replace("/templates")
     })
 
     useEffect(() => {
