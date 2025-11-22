@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { LandingPageWidth } from "./landing-page-width"
 import { SectionHeaderContainer, SectionLabel, SectionSubtitle, SectionTitle } from "./shared"
 import { Button } from "@/components/ui/button"
@@ -8,8 +9,8 @@ export const PricingPlans: React.FC = ({ }) => {
       <LandingPageWidth className="flex flex-col gap-[40px]">
         <SectionHeaderContainer>
           <SectionLabel>Prețuri simple și transparente</SectionLabel>
-          <SectionTitle>Plătești doar pentru numărul de contracte.</SectionTitle>
-          <SectionSubtitle>Toate funcționalitățile sunt incluse în orice plan.</SectionSubtitle>
+          <SectionTitle className="hidden md:block">Plătești doar pentru numărul de contracte.</SectionTitle>
+          <SectionSubtitle className="text-center">Toate funcționalitățile sunt incluse în orice plan.</SectionSubtitle>
         </SectionHeaderContainer>
         <div className="mx-auto w-full max-w-[680px] flex flex-col gap-4 items-center justify-center">
           <PricingCard
@@ -44,8 +45,10 @@ export const PricingPlans: React.FC = ({ }) => {
           />
 
           <div className="mt-12">
-            <Button className="px-8 py-4 font-medium shadow text-lg">
-              Creează-ți cont gratuit
+            <Button className="px-8 py-4 font-medium shadow text-lg" asChild>
+              <Link href="/sign-up">
+                Creează-ți cont gratuit
+              </Link>
             </Button>
           </div>
         </div>

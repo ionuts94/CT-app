@@ -28,7 +28,7 @@ export const LandingPageHeader: React.FC<Props> = ({ }) => {
             <li className="font-[600] cursor-pointer text-[18px] hover:opacity-80 ">Contact us</li> */}
           </ul>
         </nav>
-        <div className="flex gap-2">
+        <div className="hidden md:flex gap-2">
           <Link href="/sign-in">
             <Button className="px-6 py-3 bg-white border-1 border-black/10 text-black hover:bg-primary/70 hover:text-white">
               <TextCTA className="font-bold">

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { LandingPageWidth } from "./landing-page-width"
 import { Text } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
+import Link from "next/link"
 
 type Props = {
 
@@ -14,10 +15,12 @@ export const LandingPageHero: React.FC<Props> = ({ }) => {
         <div className="w-full flex flex-col gap-4 justify-center items-center lg:items-start">
           <Text className="text-[48px] leading-[60px] lg:text-[64px] lg:leading-[80px] font-bold -tracking-[2px] text-center lg:text-left">Semnează contracte mai rapid, mai sigur și mai transparent</Text>
           <Text className="text-[16px] leading-[26px] lg:text-[20px] lg:leading-[32px] text-center lg:text-left">Transformă modul în care gestionezi contractele – creează, trimite și semnează digital, cu suport AI și transparență completă.</Text>
-          <Button className="w-fit py-5 px-8 lg:mt-10">
-            <TextCTA>
-              Încearcă gratuit
-            </TextCTA>
+          <Button className="w-fit py-5 px-8 lg:mt-10" asChild>
+            <Link href="/sign-up">
+              <TextCTA>
+                Încearcă gratuit
+              </TextCTA>
+            </Link>
           </Button>
         </div>
         <div className="w-full flex justify-center pl-[40px] md:pl-0 md:items-center lg:pl-[80px]">

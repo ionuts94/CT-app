@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { SectionHeaderContainer, SectionSubtitle, SectionTitle } from "./shared"
 import { LandingPageWidth } from "./landing-page-width"
+import Link from "next/link"
 
 type Props = {
 
@@ -17,8 +18,10 @@ export const FinalCta: React.FC<Props> = ({ }) => {
             Fără card. Fără obligații. Doar transparență și încredere.
           </SectionSubtitle>
         </SectionHeaderContainer>
-        <Button className="px-8 py-4 font-medium shadow text-lg mt-12 mx-auto block">
-          Creează-ți cont gratuit
+        <Button className="px-8 py-4 font-medium shadow text-lg mt-12 mx-auto block" asChild>
+          <Link href="/sign-up" className="block w-fit">
+            Creează-ți cont gratuit
+          </Link>
         </Button>
       </LandingPageWidth>
     </div>

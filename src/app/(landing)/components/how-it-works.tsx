@@ -14,7 +14,7 @@ export const HowItWorks: React.FC<Props> = ({ }) => {
       <LandingPageWidth>
         <SectionHeaderContainer>
           <SectionTitle>Cum funcționează Contract Transparent?</SectionTitle>
-          <SectionSubtitle>3 pași simpli ca să trimiți și să semnezi contracte digitale</SectionSubtitle>
+          <SectionSubtitle className="text-center">3 pași simpli ca să trimiți și să semnezi contracte digitale</SectionSubtitle>
         </SectionHeaderContainer>
       </LandingPageWidth>
       <div className="flex flex-col items-center md:flex-row justify-center gap-[40px] mt-[80px] relative">
