@@ -13,19 +13,19 @@ export const LandingPageHeader: React.FC<Props> = ({ }) => {
   return (
     <header className="border-b">
       <LandingPageWidth className="flex flex-row items-center justify-between h-[94px]">
-        <div className="flex items-center">
+        <Link href="/" className="flex items-center cursor-pointer">
           <ReceiptText className="text-primary" size={40} />
           <Text size="lg" weight="extrabold" className="uppercase leading-4">
             Contract <br />Transparent
           </Text>
-        </div>
+        </Link>
         <nav>
           <ul className="flex gap-8">
-            {/* <li className="font-[600] cursor-pointer text-[18px] text-primary hover:opacity-80 ">Preturi</li>
-            <li className="font-[600] cursor-pointer text-[18px] hover:opacity-80 ">Contact</li>
-            <li className="font-[600] cursor-pointer text-[18px] hover:opacity-80 ">Portfolio</li>
-            <li className="font-[600] cursor-pointer text-[18px] hover:opacity-80 ">Blog</li>
-            <li className="font-[600] cursor-pointer text-[18px] hover:opacity-80 ">Contact us</li> */}
+            <li className="font-[600] cursor-pointer text-[18px] hover:text-primary"><Link href="/#pricing">Prețuri</Link></li>
+            <li className="font-[600] cursor-pointer text-[18px] hover:text-primary"><Link href="/#howitworks">Funcționalități</Link></li>
+            {/* <li className="font-[600] cursor-pointer text-[18px] hover:opacity-80 ">Întrebări frecvente</li> */}
+            {/* <li className="font-[600] cursor-pointer text-[18px] hover:opacity-80 ">Blog</li> */}
+            <li className="font-[600] cursor-pointer text-[18px] hover:text-primary"><Link href="/contact">Contact</Link></li>
           </ul>
         </nav>
         <div className="hidden md:flex gap-2">

@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 type Props = {
 
 }
@@ -24,10 +26,10 @@ export const Footer: React.FC<Props> = ({ }) => {
           <div>
             <h4 className="text-white font-semibold text-xl mb-3">Produs</h4>
             <ul className="space-y-2 text-md">
-              <li><a href="/features" className="text-white hover:text-white">Funcționalități</a></li>
-              <li><a href="/pricing" className="text-white hover:text-white">Prețuri</a></li>
-              <li><a href="/faq" className="text-white hover:text-white">Întrebări frecvente</a></li>
-              <li><a href="/security" className="text-white hover:text-white">Securitate</a></li>
+              <li><Link href="#howitworks" className="text-white hover:text-white">Funcționalități</Link></li>
+              <li><Link href="#pricing" className="text-white hover:text-white">Prețuri</Link></li>
+              <li><Link href="#faq" className="text-white hover:text-white">Întrebări frecvente</Link></li>
+              <li><Link href="/security" className="text-white hover:text-white">Securitate</Link></li>
             </ul>
           </div>
 
@@ -35,17 +37,17 @@ export const Footer: React.FC<Props> = ({ }) => {
           <div>
             <h4 className="text-white font-semibold mb-3 text-xl">Suport</h4>
             <ul className="space-y-2 text-md">
-              <li><a href="/contact" className="text-white hover:text-white">Contact</a></li>
+              <li><Link href="/contact" className="text-white hover:text-white">Contact</Link></li>
               <li>
-                <a
+                <Link
                   href="mailto:support@contracttransparent.com"
                   className="text-white hover:text-white"
                 >
                   support@contracttransparent.com
-                </a>
+                </Link>
               </li>
-              <li><a href="/terms" className="text-white hover:text-white">Termeni și condiții</a></li>
-              <li><a href="/privacy" className="text-white hover:text-white">Politica de confidențialitate</a></li>
+              <li><Link href="/tos" className="text-white hover:text-white">Termeni și condiții</Link></li>
+              <li><Link href="/privacy" className="text-white hover:text-white">Politica de confidențialitate</Link></li>
             </ul>
           </div>
 

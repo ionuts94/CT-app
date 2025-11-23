@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 
 export const PricingPlans: React.FC = ({ }) => {
   return (
-    <div className="py-[110px]">
+    <div className="py-[110px]" id="pricing">
       <LandingPageWidth className="flex flex-col gap-[40px]">
         <SectionHeaderContainer>
           <SectionLabel>Prețuri simple și transparente</SectionLabel>

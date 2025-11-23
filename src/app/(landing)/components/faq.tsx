@@ -16,10 +16,10 @@ type Props = {
 
 export const FaQ: React.FC<Props> = ({ }) => {
   return (
-    <div className="py-[110px] bg-white">
+    <div className="py-[110px] bg-white" id="faq">
       <LandingPageWidth className="flex flex-col gap-[40px]">
         <SectionHeaderContainer>
-          <SectionLabel>FaQ's</SectionLabel>
+          <SectionLabel>FaQ&rsquo;s</SectionLabel>
           <SectionTitle>Informații utile</SectionTitle>
           <SectionSubtitle>Răspunsuri rapide la cele mai comune întrebări.</SectionSubtitle>
         </SectionHeaderContainer>
@@ -39,6 +39,7 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Fiecare semnătură generează un audit complet cu timestamp, IP și identitatea semnatarului.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-2">
             <AccordionTrigger>
               <AcordionTitle>
@@ -49,6 +50,7 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Nu. Clientul primește un link securizat și poate semna direct din browser, fără cont și fără instalări.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-3">
             <AccordionTrigger>
               <AcordionTitle>3. Pot edita contractele înainte de a le trimite?</AcordionTitle>
@@ -57,15 +59,17 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Da. Poți modifica orice secțiune în editorul nostru rich text, poți adăuga clauze noi, elimina clauze sau personaliza branding-ul.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-4">
             <AccordionTrigger>
               <AcordionTitle>4. Ce se întâmplă dacă cineva cere modificări?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Toate comentariile și discuțiile se pot face direct în document, în secțiunea dedicată. </AcordionBody>
+              <AcordionBody>Toate comentariile și discuțiile se pot face direct în document, în secțiunea dedicată.</AcordionBody>
               <AcordionBody>Modificările sunt salvate automat, iar istoricul rămâne vizibil pentru ambele părți.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-5">
             <AccordionTrigger>
               <AcordionTitle>5. Pot să încarc contractele mele proprii?</AcordionTitle>
@@ -74,6 +78,7 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Da. Le poți încărca în format text sau copy-paste, după care le editezi direct în platformă.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-6">
             <AccordionTrigger>
               <AcordionTitle>6. Ce se întâmplă când consum cele 3 contracte gratuite?</AcordionTitle>
@@ -83,15 +88,17 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Alegi în funcție de câte contracte trimiți lunar.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-7">
             <AccordionTrigger>
               <AcordionTitle>7. Datele mele sunt în siguranță?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
               <AcordionBody>Da. Toate datele sunt criptate, stocate pe servere din UE și protejate prin standarde moderne de securitate.</AcordionBody>
-              <AcordionBody>Doar dumneavoastră și clientul aveți acces la documente.</AcordionBody>
+              <AcordionBody>Doar tu și clientul aveți acces la documente.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-8">
             <AccordionTrigger>
               <AcordionTitle>8. Pot descărca contractele semnate?</AcordionTitle>
@@ -100,6 +107,7 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Da. Poți descărca în orice moment contractul final, audit log-ul și versiunile anterioare.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-9">
             <AccordionTrigger>
               <AcordionTitle>9. Pot să lucrez cu echipa mea în aceeași companie?</AcordionTitle>
@@ -108,6 +116,7 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Da, în planurile Team și Business poți avea mai mulți membri, cu roluri și permisiuni diferite.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-10">
             <AccordionTrigger>
               <AcordionTitle>10. Platforma poate explica clauzele către client?</AcordionTitle>
@@ -116,6 +125,7 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Da. Asistentul AI traduce clauzele în limbaj simplu și răspunde la întrebările clientului, pentru claritate totală.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-11">
             <AccordionTrigger>
               <AcordionTitle>11. Ce se întâmplă dacă pierd accesul la cont?</AcordionTitle>
@@ -125,6 +135,7 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Contractele tale rămân stocate în siguranță și pot fi recuperate oricând.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-12">
             <AccordionTrigger>
               <AcordionTitle>12. Pot să schimb planul oricând?</AcordionTitle>
@@ -133,6 +144,7 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Da. Poți trece la un plan mai mare sau mai mic oricând.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-13">
             <AccordionTrigger>
               <AcordionTitle>13. Cum se facturează contractele în Pay as You Go?</AcordionTitle>
@@ -141,6 +153,7 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Plătești individual pentru fiecare contract trimis, fără abonament lunar și fără costuri ascunse.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-14">
             <AccordionTrigger>
               <AcordionTitle>14. Pot folosi platforma și pentru contracte recurente?</AcordionTitle>
@@ -149,8 +162,11 @@ export const FaQ: React.FC<Props> = ({ }) => {
               <AcordionBody>Da. Poți crea template-uri proprii și le poți reutiliza oricând, instant.</AcordionBody>
             </AccordionContent>
           </AccordionItem>
+
         </Accordion>
       </LandingPageWidth>
+
+      {/* Bottom CTA */}
       <section className="w-full pt-[100px] border-t border-gray-200 mt-4">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h3 className="text-2xl font-semibold text-gray-900 mb-3">
@@ -167,23 +183,19 @@ export const FaQ: React.FC<Props> = ({ }) => {
           </p>
         </div>
       </section>
-    </div >
-  )
-}
+    </div>
+  );
+};
 
 
-export const AcordionTitle: React.FC<PropsWithChildren> = ({ children }) => {
-  return (
-    <Text className="text-[24px] leading-[35px] font-[600] text-[#14141f] tracking-[-0.8px]">
-      {children}
-    </Text>
-  )
-}
+export const AcordionTitle: React.FC<PropsWithChildren> = ({ children }) => (
+  <Text className="text-[24px] leading-[35px] font-[600] text-[#14141f] tracking-[-0.8px]">
+    {children}
+  </Text>
+);
 
-export const AcordionBody: React.FC<PropsWithChildren> = ({ children }) => {
-  return (
-    <Text className="text-[16px] leading-[24px] font-[400] text-[#475569]">
-      {children}
-    </Text>
-  )
-}
+export const AcordionBody: React.FC<PropsWithChildren> = ({ children }) => (
+  <Text className="text-[16px] leading-[24px] font-[400] text-[#475569]">
+    {children}
+  </Text>
+);

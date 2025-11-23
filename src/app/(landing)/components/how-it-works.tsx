@@ -10,7 +10,7 @@ type Props = {
 
 export const HowItWorks: React.FC<Props> = ({ }) => {
   return (
-    <div className="py-[100px] bg-[rgb(245,248,255)]">
+    <div className="py-[100px] bg-[rgb(245,248,255)]" id="howitworks">
       <LandingPageWidth>
         <SectionHeaderContainer>
           <SectionTitle>Cum funcționează Contract Transparent?</SectionTitle>

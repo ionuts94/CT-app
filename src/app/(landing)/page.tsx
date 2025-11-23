@@ -12,7 +12,6 @@ import { Footer } from "./components/footer";
 export default async function LandingPage() {
   return (
     <>
-      <LandingPageHeader />
       <LandingPageHero />
       <Benefits />
       <HowItWorks />
@@ -21,7 +20,6 @@ export default async function LandingPage() {
       <Testimonials />
       <FaQ />
       <FinalCta />
-      <Footer />
     </>
   )
 }
