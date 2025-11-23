@@ -72,14 +72,19 @@ export async function CreateContractRecord({
 }
 
 
-export async function GetAuthUserContracts(): Promise<CustomApiResponse<Contract[]>> {
+export async function GetAuthUserContracts({ status }: { status?: string }): Promise<CustomApiResponse<Contract[]>> {
   const supabase = await createClient();
+
+  console.log("Getting contracts")
 
   try {
     const { data: authUser } = await GetAuthUser()
     if (!authUser) throw new Error("You are not signed in")
 
-    const { data, error } = await supabase.from("contracts").select("*").eq("ownerId", authUser.id)
+    const query = supabase.from("contracts").select("*").eq("ownerId", authUser.id)
+    if (status) query.eq("status", status)
+
+    const { data, error } = await query
     if (error) throw new Error("Failed to retrieve contracts. Error: " + error.message)
 
     return {

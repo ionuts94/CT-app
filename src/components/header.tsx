@@ -1,12 +1,10 @@
 "use client"
 
 import { PageWidth } from "./layout"
-import { ChevronDown, ReceiptText } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import { Searchbar } from "./searchbar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "./ui/dropdown-menu"
-import { Button } from "./ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { userMockData } from "@/mock-data/user"
 import { Text } from "./topography"
 import { User } from "@prisma/client"
 
@@ -20,9 +18,9 @@ export const Header: React.FC<Props> = ({ user }) => {
     <header className="h-18 border-b border-border sticky top-0 left-0 bg-app z-50">
       <PageWidth className="flex items-center justify-between h-full">
         <div className="flex items-center gap-2">
-          <div className="text-primary font-bold">
+          {/* <div className="text-primary font-bold">
             <ReceiptText size={30} />
-          </div>
+          </div> */}
           <Searchbar />
         </div>
 

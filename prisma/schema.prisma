@@ -38,7 +38,8 @@ model User {
   activities  Activity[]
   templates   Template[]   @relation("TemplateCreator")
 
-  onboarding Onboarding?
+  onboarding             Onboarding?
+  userTemplateCategories UserTemplateCategory[]
 
   @@index([currentCompanyId])
   // table mapping
@@ -315,6 +316,17 @@ model Onboarding {
   status OnboardingStatusSimple @default(IN_PROGRESS)
 
   @@map("onboarding")
+}
+
+model UserTemplateCategory {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @unique @db.Uuid
+  createdAt DateTime @default(dbgenerated("now()"))
+  category  String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_templates_categories")
 }
 
 /**
