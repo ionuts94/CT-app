@@ -2,14 +2,15 @@
 
 import { FilterBar, T_Filter } from "@/components/filter-bar"
 import { useQueryParam } from "@/hooks/use-query-param"
+import { useMemo } from "react"
 
 type Props = {
-
+  categories: { category: string }[]
 }
 
 const QUERY_KEY = "category"
 
-export const TemplatesFilterBar: React.FC<Props> = ({ }) => {
+export const TemplatesFilterBar: React.FC<Props> = ({ categories }) => {
   const { addQueryParam, deleteQueryParam } = useQueryParam()
 
   const handleFilterChange = (filter: T_Filter) => {
@@ -17,34 +18,24 @@ export const TemplatesFilterBar: React.FC<Props> = ({ }) => {
     addQueryParam(QUERY_KEY, filter.value)
   }
 
+  const filters = useMemo(() => {
+    const f = [...BASE_FILTERS]
+    categories.forEach(category => f.push({ label: category.category, value: category.category }))
+    return f
+  }, [categories])
+
   return (
     <FilterBar
-      filters={FILTERS}
+      filters={filters}
       onFilterChange={handleFilterChange}
-      defaultActiveFilterValue={FILTERS[0]}
+      defaultActiveFilterValue={filters[0]}
     />
   )
 }
 
-const FILTERS = [
+const BASE_FILTERS: { label: string, value: string | null }[] = [
   {
     label: "All",
     value: null
-  },
-  {
-    label: "Pending",
-    value: "pending"
-  },
-  {
-    label: "Signed",
-    value: "signed"
-  },
-  {
-    label: "Expired",
-    value: "expired"
-  },
-  {
-    label: "Draft",
-    value: "draft"
   }
 ]

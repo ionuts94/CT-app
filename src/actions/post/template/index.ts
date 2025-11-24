@@ -38,7 +38,7 @@ export async function CreateTemplate({
 }
 
 
-export async function GetTemplates(): Promise<CustomApiResponse<Template[]>> {
+export async function GetUserTemplates({ category }: { category?: string }): Promise<CustomApiResponse<Template[]>> {
   const supabase = await createClient();
 
   try {
@@ -46,9 +46,13 @@ export async function GetTemplates(): Promise<CustomApiResponse<Template[]>> {
 
     if (!authUser || authError) throw Error(authError || "You are not authorised to perform this action")
 
-    const { data: templates, error: templatesError } = await supabase.from("templates")
+    const query = supabase.from("templates")
       .select("*")
       .eq("userId", authUser.id)
+
+    if (category) query.eq("category", category)
+
+    const { data: templates, error: templatesError } = await query
 
     if (templatesError) throw Error(templatesError.message)
 
@@ -90,6 +94,65 @@ export async function GetTemplateById({
     return {
       status: Status.SUCCESS,
       data: data
+    };
+  } catch (err: any) {
+    const errMessage = `${err.message}`;
+    console.log(errMessage);
+    return {
+      status: Status.FAILED,
+      error: errMessage
+    };
+  }
+}
+
+export async function UpdateTemplate({
+  template
+}: {
+  template: Template
+}): Promise<CustomApiResponse> {
+  const supabase = await createClient();
+
+  try {
+    const { error } = await supabase.from("templates")
+      .update(template)
+      .eq("id", template.id)
+      .maybeSingle()
+
+    if (error) throw new Error(error.message)
+
+    return {
+      status: Status.SUCCESS,
+      data: ""
+    };
+  } catch (err: any) {
+    const errMessage = `${err.message}`;
+    console.log(errMessage);
+    return {
+      status: Status.FAILED,
+      error: errMessage
+    };
+  }
+}
+
+
+export async function DeleteTemplate({
+  templateId
+}: {
+  templateId: string
+}): Promise<CustomApiResponse> {
+  const supabase = await createClient();
+
+  try {
+    const { error } = await supabase.from("templates")
+      .delete()
+      .eq("id", templateId)
+      .maybeSingle()
+
+    if (error) throw new Error("Failed to delete template. Error: " + error.message)
+
+    return {
+      status: Status.SUCCESS,
+      data: ""
     };
   } catch (err: any) {
     const errMessage = `${err.message}`;

@@ -5,13 +5,14 @@ import { PageHeader, PageHeading } from "@/components/page-header"
 import { TextCTA } from "@/components/topography/cta"
 import { Button } from "@/components/ui/button"
 import { useTemplateContext } from "@/contexts/template-assistant-context"
-import { Eye, Save } from "lucide-react"
+import { Eye, Save, Trash } from "lucide-react"
+import { DeleteTemplateAlertDialog } from "./delete-template-alert-dialog"
 
 type Props = {
-
+  templateId?: string;
 }
 
-export const TemplateHeader: React.FC<Props> = ({ }) => {
+export const TemplateHeader: React.FC<Props> = ({ templateId }) => {
   const { form, handleSaveTemplate } = useTemplateContext()
   const { formState } = form
 
@@ -22,12 +23,9 @@ export const TemplateHeader: React.FC<Props> = ({ }) => {
         {/* <PageSubHeading>Aici iti poti gestiona si organiza toate sabloanele</PageSubHeading> */}
       </PageHeader>
       <div className="flex items-stretch gap-1">
-        <Button variant="outline" className="hover:bg-transparent hover:text-primary hover:opacity-75">
-          <Eye strokeWidth={3} />
-          <TextCTA>
-            Previzualizeaza
-          </TextCTA>
-        </Button>
+        {templateId &&
+          <DeleteTemplateAlertDialog templateId={templateId} />
+        }
         <ButtonWithLoading
           variant="default"
           className="cursor-pointer p-3"

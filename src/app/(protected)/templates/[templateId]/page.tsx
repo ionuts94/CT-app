@@ -25,7 +25,7 @@ export default async function TemplatePage({ params }: Props) {
     <TemplateProvider templateData={templateData}>
       <main>
         <PageContainer className="flex flex-col gap-4">
-          <TemplateHeader />
+          <TemplateHeader templateId={templateData?.id} />
           <TemplateForm />
         </PageContainer>
       </main>
