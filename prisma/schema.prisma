@@ -146,12 +146,31 @@ model Contract {
   placements SignaturePlacement[]
   invites    Invite[]
   signature  Signature            @relation(fields: [ownerSignatureId], references: [id])
+  contractVersions ContractVersion[]
 
   @@index([companyId, status, createdAt])
   @@index([ownerId])
   // table mapping
   @@map("contracts")
+  auditLogs AuditLog[]
 }
+
+model ContractVersion {
+  id              String   @id @default(uuid())
+  contractId      String
+  contract        Contract @relation(fields: [contractId], references: [id])
+
+  versionNumber   Int
+  content         String   @db.Text
+  createdAt       DateTime @default(now())
+  createdBy       String?  // ownerId / signerEmail / system
+  createdByType   PartyRole
+
+  metadata        Json?
+
+  @@index([contractId, versionNumber])
+}
+
 
 model Party {
   id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -329,6 +348,25 @@ model UserTemplateCategory {
   @@map("user_templates_categories")
 }
 
+model AuditLog {
+  id              String     @id @default(uuid())
+  contractId      String
+  contract        Contract   @relation(fields: [contractId], references: [id])
+
+  userId          String?    // prestator
+  userEmail       String?    // client extern
+  actorType       PartyRole
+  action          AuditAction
+  contractVersion Int?
+  ip              String?
+  userAgent       String?
+  metadata        Json?
+
+  createdAt       DateTime   @default(now())
+
+  @@index([contractId, createdAt])
+}
+
 /**
  * ====================
  * ENUMS
@@ -354,6 +392,7 @@ enum PartyRole {
   SIGNER
   SENDER
   SYSTEM
+  ASSISTANT
 }
 
 enum SignatureType {
@@ -381,4 +420,18 @@ enum ActivityAction {
 enum OnboardingStatusSimple {
   IN_PROGRESS
   COMPLETED
+}
+
+enum AuditAction {
+  CONTRACT_CREATED
+  CONTRACT_SENT
+  CONTRACT_VIEWED
+  COMMENT_ADDED
+  COMMENT_RESOLVED
+  CONTRACT_UPDATED
+  CONTRACT_SIGNED_OWNER
+  CONTRACT_SIGNED_SIGNER
+  CONTRACT_DECLINED
+  CONTRACT_EXPIRED
+  PDF_GENERATED
 }
