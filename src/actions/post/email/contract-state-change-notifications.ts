@@ -24,7 +24,7 @@ export async function SendContractSignedNotification({
 
     const message = {
       subject: `Contractul, ${contractData?.title}, a fost semnat. `,
-      to: [{ email: contractData?.owner.email }, { email: contractData?.reciverEmail }],
+      to: [{ email: contractData?.owner.email }, { email: contractData?.receiverEmail }],
       templateId: templateId,
       params: paramsObject,
       headers: {

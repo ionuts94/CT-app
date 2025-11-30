@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form"
 import { useDebouncedCallback } from "use-debounce"
 import { ContractSentSuccessfully } from "./contract-sent-successfully"
 import { Status } from "@/types/api-call"
+import { toast } from "sonner"
 
 type Props = {
   template?: Template,
@@ -34,13 +35,13 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
       title: "",
       content: template?.content || "",
       signatureId: signatures?.[0].id || "",
-      reciverName: "",
-      reciverEmail: "",
+      receiverName: "",
+      receiverEmail: "",
       optionalMessage: "",
     }
   })
 
-  const reciverEmail = watch("reciverEmail")
+  const receiverEmail = watch("receiverEmail")
 
   const debouncedSetContent = useDebouncedCallback(
     (html: string) => {
@@ -55,14 +56,16 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
       title: values.title,
       content: values.content,
       ownerSignatureId: values.signatureId,
-      reciverName: values.reciverName,
-      reciverEmail: values.reciverEmail,
+      receiverName: values.receiverName,
+      receiverEmail: values.receiverEmail,
       optionalMessage: values.optionalMessage
     })
 
+    if (error) return toast.error(error)
+
     await SendContractEmail({
       contractId: data?.id!,
-      reciverEmail: values.reciverEmail,
+      receiverEmail: values.receiverEmail,
       optionalMessage: values.optionalMessage
     })
 
@@ -75,7 +78,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
   if (contractSent.status === Status.SUCCESS) {
     return (
       <ContractSentSuccessfully
-        reciverEmail={reciverEmail}
+        receiverEmail={receiverEmail}
         newContractId={contractSent.newContractId}
       />
     )
@@ -125,11 +128,11 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
           <FormRow className="flex-row ">
             <FormRow>
               <Label>Nume Destinatar <RequiredFieldMark /></Label>
-              <Input {...register("reciverName")} placeholder="Dragos Popescu" />
+              <Input {...register("receiverName")} placeholder="Dragos Popescu" />
             </FormRow>
             <FormRow>
               <Label>Email Destinatar <RequiredFieldMark /></Label>
-              <Input {...register("reciverEmail")} placeholder="dragos@popescu.com" />
+              <Input {...register("receiverEmail")} placeholder="dragos@popescu.com" />
             </FormRow>
           </FormRow>
           <FormRow>

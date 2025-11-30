@@ -114,7 +114,6 @@ model Role {
 model Contract {
   id      String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title   String
-  content Json // was String; use JSON for structured content/variables
   status  ContractStatus @default(DRAFT)
 
   ownerId String @db.Uuid
@@ -134,10 +133,10 @@ model Contract {
   accessPassword Int
 
   ownerSignatureId   String @db.Uuid
-  reciverSignatureId String @db.Uuid
+  receiverSignatureId String @db.Uuid
 
-  reciverName     String
-  reciverEmail    String
+  receiverName     String
+  receiverEmail    String
   optionalMessage String
 
   comments   Comment[]
@@ -147,12 +146,12 @@ model Contract {
   invites    Invite[]
   signature  Signature            @relation(fields: [ownerSignatureId], references: [id])
   contractVersions ContractVersion[]
+  auditLogs AuditLog[]
 
   @@index([companyId, status, createdAt])
   @@index([ownerId])
   // table mapping
   @@map("contracts")
-  auditLogs AuditLog[]
 }
 
 model ContractVersion {

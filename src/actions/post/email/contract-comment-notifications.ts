@@ -78,13 +78,13 @@ export async function SendSignerNewCommentNotification({
 
     const message = {
       subject: `${contractData?.company.name} a adaugat un comentariu la contract.`,
-      to: [{ email: contractData.reciverEmail }],
+      to: [{ email: contractData.receiverEmail }],
       templateId: templateId,
       params: {
         companyLogoUrl: contractData?.company.logoUrl,
         companyName: contractData?.company.name,
         colorPrimary: contractData?.company.colorPrimary,
-        receiverName: contractData?.reciverName,
+        receiverName: contractData?.receiverName,
         contractTitle: contractData.title,
         commentContent: commentData.content,
         commentDate: commentData.createdAt,
@@ -132,7 +132,7 @@ export async function SendSenderNewCommentNotification({
       companyLogoUrl: contractData?.company.logoUrl,
       companyName: contractData?.company.name,
       colorPrimary: contractData?.company.colorPrimary,
-      receiverName: contractData?.reciverName,
+      receiverName: contractData?.receiverName,
       contractTitle: contractData.title,
       commentContent: commentData.content,
       commentDate: new Date(commentData.createdAt).toISOString(),
@@ -143,7 +143,7 @@ export async function SendSenderNewCommentNotification({
 
 
     const message = {
-      subject: `Beneficiarul, ${contractData.reciverName}, a adaugat un comentariu la contract. `,
+      subject: `Beneficiarul, ${contractData.receiverName}, a adaugat un comentariu la contract. `,
       to: [{ email: contractData.owner.email }],
       templateId: templateId,
       params: paramsObject,

@@ -3,18 +3,17 @@ import { Card } from "@/components/ui/card"
 import { Dot, MessageSquare, X } from "lucide-react"
 import { Text } from "@/components/topography"
 import { ContractViewSignatures } from "./contract-view-signatures"
-import { Button } from "@/components/ui/button"
-import { UserSignatureDialog } from "./user-signature-dialog"
-import { RichTextEditor } from "@/components/rich-text-editor"
 import { SignerContractControls } from "./signer-contract-controls"
+import { SenderContractControlls } from "./sender-contract-controls"
 
 
 type Props = {
-  contract: T_ViewContract
+  contract: T_ViewContract,
+  isSender?: boolean
 }
 
-export const ContractContentView: React.FC<Props> = ({ contract }) => {
-  const contentHtml = contract?.content?.toString().replace(/<p>(<br\s*\/?>)?<\/p>/g, '<p>&nbsp;</p>');
+export const ContractContentView: React.FC<Props> = ({ contract, isSender }) => {
+  const contentHtml = contract?.currentVersion?.content?.toString().replace(/<p>(<br\s*\/?>)?<\/p>/g, '<p>&nbsp;</p>');
 
   return (
     <Card className="p-0 gap-0 max-h-[85vh] overflow-auto">
@@ -39,7 +38,10 @@ export const ContractContentView: React.FC<Props> = ({ contract }) => {
         <ContractViewSignatures contract={contract} />
       </div>
       <div className="px-10 py-4 flex justify-end gap-2">
-        <SignerContractControls contract={contract} />
+        {isSender
+          ? <SenderContractControlls contract={contract} />
+          : <SignerContractControls contract={contract} />
+        }
       </div>
     </Card>
   )

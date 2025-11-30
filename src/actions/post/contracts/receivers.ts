@@ -18,8 +18,8 @@ export async function ReceiverSignContract({
   try {
     const { error } = await supabase.from("contracts")
       .update({
-        reciverName: receiverName,
-        reciverSignatureId: receiverSignatureId,
+        receiverName: receiverName,
+        receiverSignatureId: receiverSignatureId,
         status: ContractStatus.FULLY_SIGNED,
       })
       .eq("id", contractId)

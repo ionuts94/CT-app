@@ -31,7 +31,7 @@ export default async function ViewContractPage({ searchParams }: Props) {
         )
     }
 
-    if (authUser && authUser.email !== contractData.reciverEmail) {
+    if (authUser && authUser.email !== contractData.receiverEmail) {
         return redirect("/dashboard")
     }
 
@@ -43,7 +43,7 @@ export default async function ViewContractPage({ searchParams }: Props) {
                     <ContractContentView contract={contractData} />
                 </div>
                 <div className="lg:w-2/5 flex-1">
-                    <ReceiverContractAssistant contractContent={contractData.content as string} />
+                    <ReceiverContractAssistant contractContent={contractData.currentVersion.content as string} />
                 </div>
             </PageWidth>
             <PageWidth className="px-[70px] py-4 w-full">

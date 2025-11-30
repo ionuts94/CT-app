@@ -7,11 +7,11 @@ import { Check, FileText, Layers } from "lucide-react"
 import Link from "next/link"
 
 type Props = {
-  reciverEmail: string,
+  receiverEmail: string,
   newContractId: string
 }
 
-export const ContractSentSuccessfully: React.FC<Props> = ({ reciverEmail, newContractId }) => {
+export const ContractSentSuccessfully: React.FC<Props> = ({ receiverEmail, newContractId }) => {
   const baseUrl = envs.NEXT_PUBLIC_URL
 
   return (
@@ -23,7 +23,7 @@ export const ContractSentSuccessfully: React.FC<Props> = ({ reciverEmail, newCon
       <Text className="text-color-secondary">Te anuntam cand il vor revizui sau semna. Poti vedea contractul sau te poti intoarce la pagina de contracte</Text>
       <div className="w-full bg-muted/40 rounded-lg border-[2px] p-4 flex justify-between items-center">
         <Text size="sm" className="text-color-secondary">Destinatar</Text>
-        <Text weight="bold">{reciverEmail}</Text>
+        <Text weight="bold">{receiverEmail}</Text>
       </div>
       <div className="flex flex-col gap-2 w-full lg:w-fit lg:flex-row">
         <Link href={baseUrl + "/c/view-contract?c=" + newContractId}>

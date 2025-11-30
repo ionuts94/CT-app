@@ -30,7 +30,7 @@ export const ContractViewSignatures: React.FC<Props> = ({ contract }) => {
         <Text className="text-color-secondary">Semnătura Beneficiar</Text>
         <div className="rounded-lg gap-2 relative">
           <Text className="flex gap-2 items-center" size="lg" weight="semibold">
-            {contract.reciverName}
+            {contract.receiverName}
           </Text>
         </div>
         <div className="flex-1 flex items-end">

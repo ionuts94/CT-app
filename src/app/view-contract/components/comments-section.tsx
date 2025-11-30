@@ -26,8 +26,8 @@ export const CommentsSection: React.FC<Props> = ({ comments, contract, isSender 
       content: input,
       contractId: contract.id,
       partyRole: isSender ? "SENDER" : "SIGNER",
-      firstName: isSender ? contract.company.name.split(" ")[0] : contract.reciverName.split(" ")[0],
-      lastName: isSender ? contract.company.name.split(" ")[1] : contract.reciverName.split(" ")[1],
+      firstName: isSender ? contract.company.name.split(" ")[0] : contract.receiverName.split(" ")[0],
+      lastName: isSender ? contract.company.name.split(" ")[1] : contract.receiverName.split(" ")[1],
     })
     if (error) return toast.error(error)
     toast.success("Comentariul a fost postat")

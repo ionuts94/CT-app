@@ -8,13 +8,13 @@ import { envs } from "@/constants/envs";
 
 export type T_SendContractArgs = {
   contractId: string,
-  reciverEmail: string,
+  receiverEmail: string,
   optionalMessage: string,
 }
 
 export async function SendContractEmail({
   contractId,
-  reciverEmail,
+  receiverEmail,
   optionalMessage,
 }: T_SendContractArgs): Promise<CustomApiResponse<{ templateId: number }>> {
   const templateId = EMAIL_TEMPLATE_IDS.sendContract
@@ -23,7 +23,7 @@ export async function SendContractEmail({
 
     const message = {
       subject: `${contractData?.company.name} ți-a trimis un contract spre semnare`,
-      to: [{ email: reciverEmail }],
+      to: [{ email: receiverEmail }],
       templateId: templateId,
       params: {
         companyLogoUrl: contractData?.company.logoUrl,
@@ -35,7 +35,7 @@ export async function SendContractEmail({
         expiryDate: contractData?.expiresAt,
         viewContractUrl: envs.NEXT_PUBLIC_URL + `/view-contract?c=${contractData?.id}`,
         viewContractPassword: contractData?.accessPassword,
-        reciverEmail,
+        receiverEmail,
         optionalMessage,
       },
       headers: {

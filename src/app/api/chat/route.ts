@@ -10,14 +10,14 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: openai('gpt-4.1'),
-    system: generateReciverContractAssistantInstructions(contractContent),
+    system: generatereceiverContractAssistantInstructions(contractContent),
     messages: convertToModelMessages(messages),
   });
 
   return result.toUIMessageStreamResponse();
 }
 
-export const generateReciverContractAssistantInstructions = (contractContent: string) => {
+export const generatereceiverContractAssistantInstructions = (contractContent: string) => {
   return `
 Tu ești un avocat expert în contracte, cu peste 20 de ani de experiență.
 Rolul tău este să ajuți beneficiarul să înțeleagă contractul clar și simplu.

@@ -8,7 +8,7 @@ type Props = {
 export default async function GenerateContractPage({ searchParams }: Props) {
   const { c } = await searchParams
   const { data } = await FreeGetViewContract({ contractId: c })
-  const contentHtml = data?.content?.toString().replace(/<p>(<br\s*\/?>)?<\/p>/g, '<p>&nbsp;</p>');
+  const contentHtml = data?.currentVersion?.content?.toString().replace(/<p>(<br\s*\/?>)?<\/p>/g, '<p>&nbsp;</p>');
 
   if (!data) return null;
 

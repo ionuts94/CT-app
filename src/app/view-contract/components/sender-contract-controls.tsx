@@ -5,12 +5,13 @@ import { Text } from "@/components/topography"
 import { getContractStatusOptions } from "@/components/status-badge"
 import { cn } from "@/lib/utils"
 import { UserContractDeclineDialog } from "./dialogs/user-contract-decline-dialog"
+import { SenderContractRevokeDialog } from "./dialogs/sender-contract-revoke-dialog"
 
 type Props = {
   contract: T_ViewContract
 }
 
-export const SignerContractControls: React.FC<Props> = ({ contract }) => {
+export const SenderContractControlls: React.FC<Props> = ({ contract }) => {
   if (contract.status === "FULLY_SIGNED") {
     return contract?.receiverSignature?.createdAt
       ? (
@@ -38,8 +39,8 @@ export const SignerContractControls: React.FC<Props> = ({ contract }) => {
 
   return (
     <>
-      <UserContractDeclineDialog contract={contract} />
-      <UserSignatureDialog contract={contract} />
+      <SenderContractRevokeDialog contract={contract} />
+      {/* <UserSignatureDialog contract={contract} /> */}
     </>
   )
 }

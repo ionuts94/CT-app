@@ -36,7 +36,7 @@ export const ContractsTable: React.FC<Props> = ({ contracts }) => {
             {contracts.map((contract, index) => (
               <TableRow key={index} className="hover:bg-muted/50" onClick={() => viewContract(contract.id)}>
                 <TableCell className="py-5 text-[15px]"><Input type="checkbox" className="size-4" /></TableCell>
-                <TableCell className="py-5 text-[15px]">{contract.reciverName}</TableCell>
+                <TableCell className="py-5 text-[15px]">{contract.receiverName}</TableCell>
                 <TableCell className="py-5 text-[15px]">{contract.title}</TableCell>
                 <TableCell>
                   <StatusBadge status={contract.status} />

@@ -36,7 +36,10 @@ export default async function CompnayViewContract({ searchParams }: Props) {
       <ViewContractPageHeader contract={contractData}>
       </ViewContractPageHeader>
       <PageWidth className="flex flex-1 gap-4 justify-between py-4 shadow-sm">
-        <ContractContentView contract={contractData} />
+        <ContractContentView
+          isSender={true}
+          contract={contractData}
+        />
       </PageWidth>
       <PageWidth>
         <CommentsSection

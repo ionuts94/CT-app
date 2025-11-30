@@ -28,7 +28,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
 
   const { formState, setValue, register, handleSubmit, watch } = useForm({
     defaultValues: {
-      userFullName: contract.reciverName || "",
+      userFullName: contract.receiverName || "",
       signature: {
         png: "",
         svg: "",
