@@ -1,3 +1,4 @@
+import { LogAudit } from "@/actions/post/audit"
 import { GetAuthUser } from "@/actions/post/auth"
 import { FreeGetViewContract, GetContractWithCompanyAndOwner } from "@/actions/post/contracts"
 import { GetContractComments } from "@/actions/post/contracts/comments"
@@ -30,6 +31,16 @@ export default async function CompnayViewContract({ searchParams }: Props) {
   if (!contractData) {
     return (<p>Nu am putut incarca contractul</p>)
   }
+
+  LogAudit({
+    contractId: contractData?.id!,
+    action: "CONTRACT_VIEWED",
+    actorType: "SENDER",
+    ip: "192.168.1.1",
+    userAgent: "Chrome",
+    metadata: {},
+    contractVersion: 1
+  })
 
   return (
     <main>

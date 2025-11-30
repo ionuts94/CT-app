@@ -5,6 +5,7 @@ import { CustomApiResponse, Status } from "@/types/api-call";
 import { EMAIL_TEMPLATE_IDS } from "./constants";
 import { GetContractWithCompanyAndOwner } from "../contracts";
 import { envs } from "@/constants/envs";
+import { LogAudit } from "../audit";
 
 export type T_SendContractArgs = {
   contractId: string,
@@ -49,6 +50,16 @@ export async function SendContractEmail({
 
     const response = await brevo.sendTransacEmail(message)
     console.log(response)
+
+    await LogAudit({
+      contractId: contractData?.id!,
+      action: "CONTRACT_SENT",
+      actorType: "SENDER",
+      ip: "192.168.1.1",
+      userAgent: "Chrome",
+      metadata: {},
+      contractVersion: 1
+    })
 
 
     return {

@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { CustomApiResponse, Status } from "@/types/api-call";
 import { ContractStatus } from "@prisma/client";
+import { LogAudit } from "../audit";
 
 export async function ReceiverSignContract({
   contractId,
@@ -60,6 +61,16 @@ export async function ReceiverDeclineContract({
       .eq("id", contractId)
 
     if (error) throw error
+
+    await LogAudit({
+      contractId: contractId,
+      action: "CONTRACT_DECLINED",
+      actorType: "SIGNER",
+      ip: "192.168.1.1",
+      userAgent: "Chrome",
+      metadata: {},
+      contractVersion: 1
+    })
 
     return {
       status: Status.SUCCESS,

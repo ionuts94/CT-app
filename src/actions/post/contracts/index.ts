@@ -7,6 +7,7 @@ import { Company, Contract, ContractStatus, ContractVersion, Signature, User } f
 import { GetCurrentUserWithCompany } from "../company";
 import { v4 as uuid } from "uuid";
 import { CreateContractVersion } from "./contract-versions";
+import { LogAudit } from "../audit";
 
 export async function CreateContractRecord({
   title,
@@ -70,6 +71,27 @@ export async function CreateContractRecord({
       .maybeSingle()
 
     if (contractError) throw new Error(BASE_ERROR_MESSAGE + contractError.message)
+
+    await Promise.all([
+      LogAudit({
+        contractId: contractData?.id!,
+        action: "CONTRACT_CREATED",
+        actorType: "SENDER",
+        ip: "192.168.1.1",
+        userAgent: "Chrome",
+        metadata: {},
+        contractVersion: 1
+      }),
+      LogAudit({
+        contractId: contractData?.id!,
+        action: "CONTRACT_SIGNED_OWNER",
+        actorType: "SENDER",
+        ip: "192.168.1.1",
+        userAgent: "Chrome",
+        metadata: {},
+        contractVersion: 1
+      })
+    ])
 
     return {
       status: Status.SUCCESS,

@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { SendContractSignedNotification } from "@/actions/post/email/contract-state-change-notifications";
 import { CustomApiResponse, Status } from "@/types/api-call";
 import { UpdateContractSignedPdfUrl } from "@/actions/post/contracts";
+import { LogAudit } from "@/actions/post/audit";
 
 export async function POST(req: Request) {
   const { contractId } = await req.json();
@@ -20,6 +21,16 @@ export async function POST(req: Request) {
       // Notify admin about the error 
       throw new Error("Failed to generate contract pdf - generate contract url")
     }
+
+    await LogAudit({
+      contractId: contractId,
+      action: "PDF_GENERATED",
+      actorType: "SYSTEM",
+      ip: "192.168.1.1",
+      userAgent: "Chrome",
+      metadata: {},
+      contractVersion: 1
+    })
 
     const { error: updateContractUrlError } = await UpdateContractSignedPdfUrl({
       contractId: contractId,

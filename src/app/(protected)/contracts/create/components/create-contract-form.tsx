@@ -18,6 +18,7 @@ import { useDebouncedCallback } from "use-debounce"
 import { ContractSentSuccessfully } from "./contract-sent-successfully"
 import { Status } from "@/types/api-call"
 import { toast } from "sonner"
+import { LogAudit } from "@/actions/post/audit"
 
 type Props = {
   template?: Template,

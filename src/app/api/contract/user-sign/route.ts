@@ -1,3 +1,4 @@
+import { LogAudit } from "@/actions/post/audit";
 import { ReceiverSignContract } from "@/actions/post/contracts/receivers";
 import { CreateSignature } from "@/actions/post/signature";
 import { Status } from "@/types/api-call";
@@ -27,6 +28,16 @@ export async function POST(req: NextRequest) {
     });
 
     if (error) throw Error(error)
+
+    await LogAudit({
+      contractId: body.contractId,
+      action: "CONTRACT_SIGNED_SIGNER",
+      actorType: "SIGNER",
+      ip: "192.168.1.1",
+      userAgent: "Chrome",
+      metadata: {},
+      contractVersion: 1,
+    })
 
     return NextResponse.json({
       status: Status.SUCCESS,

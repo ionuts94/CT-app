@@ -12,7 +12,9 @@ export async function LogAudit({
   contractVersion,
   ip,
   userAgent,
-  metadata
+  metadata,
+  userId,
+  userEmail,
 }: {
   contractId: string,
   actorType: PartyRole,
@@ -20,16 +22,18 @@ export async function LogAudit({
   contractVersion?: number,
   ip: string,
   userAgent?: string,
-  metadata: any
+  metadata: any,
+  userId?: string,
+  userEmail?: string
 }): Promise<CustomApiResponse> {
   const supabase = await createClient();
 
   try {
     const { data } = await GetCurrentUserWithCompany()
     const { error: auditInsertError } = await supabase.from("audit_logs").insert({
-      userId: data?.id,
+      userId: userId || data?.id,
       contractId,
-      userEmail: data?.email,
+      userEmail: userEmail || data?.email,
       actorType,
       action,
       contractVersion,

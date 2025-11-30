@@ -7,6 +7,7 @@ import { CommentsSection } from "./components/comments-section"
 import { GetContractComments } from "@/actions/post/contracts/comments"
 import { GetAuthUser } from "@/actions/post/auth"
 import { redirect } from "next/navigation"
+import { LogAudit } from "@/actions/post/audit"
 
 type Props = {
     searchParams: Promise<{ c: string }>
@@ -34,6 +35,17 @@ export default async function ViewContractPage({ searchParams }: Props) {
     if (authUser && authUser.email !== contractData.receiverEmail) {
         return redirect("/dashboard")
     }
+
+    LogAudit({
+        contractId: contractData?.id!,
+        action: "CONTRACT_VIEWED",
+        actorType: "SIGNER",
+        ip: "192.168.1.1",
+        userAgent: "Chrome",
+        metadata: {},
+        contractVersion: 1,
+        userEmail: contractData.receiverEmail
+    })
 
     return (
         <main className="bg-app flex flex-col min-h-screen">

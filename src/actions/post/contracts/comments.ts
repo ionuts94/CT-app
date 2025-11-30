@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { CustomApiResponse, Status } from "@/types/api-call";
 import { Comment, PartyRole } from "@prisma/client";
 import { SendContractNewCommentNotification } from "../email/contract-comment-notifications";
+import { LogAudit } from "../audit";
 
 export async function PostContractComment({
   content,
@@ -11,13 +12,15 @@ export async function PostContractComment({
   partyRole,
   firstName,
   lastName,
+  email,
 }: {
   content: string,
   userId?: string,
   contractId: string,
   partyRole: PartyRole,
   firstName: string,
-  lastName: string
+  lastName: string,
+  email?: string
 }): Promise<CustomApiResponse> {
   const supabase = await createClient();
 
@@ -32,6 +35,17 @@ export async function PostContractComment({
     })
       .select("*")
       .maybeSingle()
+
+    await LogAudit({
+      contractId: contractId,
+      action: "COMMENT_ADDED",
+      actorType: partyRole,
+      ip: "192.168.1.1",
+      userAgent: "Chrome",
+      metadata: {},
+      contractVersion: 1,
+      userEmail: email
+    })
 
     await SendContractNewCommentNotification({ contractId, commentId: data.id })
 

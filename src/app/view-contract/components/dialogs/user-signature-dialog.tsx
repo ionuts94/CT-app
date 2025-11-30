@@ -65,6 +65,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
           contractId: contract.id,
           signatureImageUrl: data?.fileUrl,
           receiverName: values.userFullName,
+          email: contract.receiverEmail
         })
       })
 
