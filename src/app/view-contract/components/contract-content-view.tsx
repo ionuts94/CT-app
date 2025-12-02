@@ -20,7 +20,7 @@ export const ContractContentView: React.FC<Props> = ({ contract, isSender }) => 
       <div className="flex flex-row items-center py-3 px-10 bg-input border-b border-black/10">
         <Text size="sm" className="text-color-secondary">Shared securely via link</Text>
         <Dot />
-        <Text size="sm" className="text-color-secondary">Expira la {new Date(contract.expiresAt!).toLocaleDateString()}</Text>
+        <Text size="sm" className="text-color-secondary">Expira la {new Date(contract.expiresAt!).toISOString().split("T")[0]}</Text>
       </div>
       <div className="bg-background py-5 px-10 flex items-start justify-between gap-2 border-b-[2px]">
         <div className="flex items-start gap-2">

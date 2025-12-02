@@ -1,14 +1,10 @@
-import { PageWidth } from "@/components/layout"
-import { PageHeader } from "./components/page-header"
-import { ContractContentView } from "./components/contract-content-view"
-import { ReceiverContractAssistant } from "./components/assistant/receiver-contract-assistant"
-import { CommentsSection } from "./components/comments-section"
 import { GetContractComments } from "@/actions/post/contracts/comments"
 import { GetAuthUser } from "@/actions/post/auth"
 import { redirect } from "next/navigation"
 import { LogAudit } from "@/actions/post/audit"
 import { GetContractForReceiver } from "@/actions/post/contracts/receivers"
 import { ViewContractContentPage } from "./components/view-contract-page-content"
+import { sleep } from "@/lib/utils"
 
 type Props = {
   searchParams: Promise<{ t: string }>
@@ -36,6 +32,8 @@ export default async function ViewContractPage({ searchParams }: Props) {
   }
 
   const { data: commentsData, error: commentsError } = await GetContractComments({ contractId: contractData.id })
+
+  await sleep(800)
 
   LogAudit({
     contractId: contractData?.id!,

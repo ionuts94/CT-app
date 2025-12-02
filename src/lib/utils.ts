@@ -10,3 +10,7 @@ export async function base64ToFile(base64Data: string, filename: string) {
   const blob = await res.blob();
   return new File([blob], filename, { type: blob.type });
 }
+
+export function sleep(time: number) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
