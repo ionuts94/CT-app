@@ -5,6 +5,45 @@ import { CustomApiResponse, Status } from "@/types/api-call";
 import { ContractStatus } from "@prisma/client";
 import { LogAudit } from "../audit";
 
+
+export async function GetContractForReceiver({
+  receiverToken
+}: {
+  receiverToken: string
+}): Promise<CustomApiResponse> {
+  const supabase = await createClient();
+
+  try {
+    const { data, error } = await supabase.from("contracts")
+      .select(`
+        *,
+        company: companies(*),
+        ownerSignature: contracts_ownerSignatureId_fkey(*),
+        receiverSignature: contracts_receiverSignatureId_fkey(*),
+        owner: users(*),
+        currentVersion: contract_versions(*)
+      `)
+      .eq("receiverToken", receiverToken)
+      .maybeSingle()
+
+    if (error) throw Error(error.message)
+    if (!data) throw Error("Contract not found")
+    if (data && !data.company) throw Error("Company not found")
+
+    return {
+      status: Status.SUCCESS,
+      data: data
+    };
+  } catch (err: any) {
+    const errMessage = `${err.message}`;
+    console.log(errMessage);
+    return {
+      status: Status.FAILED,
+      error: errMessage
+    };
+  }
+}
+
 export async function ReceiverSignContract({
   contractId,
   receiverSignatureId,

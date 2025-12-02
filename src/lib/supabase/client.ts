@@ -1,9 +1,8 @@
 import { envs } from "@/constants/envs";
 import { createBrowserClient } from "@supabase/ssr";
 
-export function createClient() {
-  return createBrowserClient(
+export const createClient = () =>
+  createBrowserClient(
     envs.NEXT_PUBLIC_SUPABASE_URL!,
-    envs.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY!,
+    envs.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!,
   );
-}
