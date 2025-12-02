@@ -1,4 +1,4 @@
-import { LogAudit } from "@/actions/post/audit"
+import { GetContractAuditLog, LogAudit } from "@/actions/post/audit"
 import { GetAuthUser } from "@/actions/post/auth"
 import { FreeGetViewContract, GetContractWithCompanyAndOwner } from "@/actions/post/contracts"
 import { GetContractComments } from "@/actions/post/contracts/comments"
@@ -21,11 +21,13 @@ export default async function CompnayViewContract({ searchParams }: Props) {
   const [
     { data: contractData, error: contractError },
     { data: commentsData, error: commentsError },
-    { data: authUser }
+    { data: authUser },
+    { data: auditLogData, error: auditLogError }
   ] = await Promise.all([
     FreeGetViewContract({ contractId: c }),
     GetContractComments({ contractId: c }),
-    GetAuthUser()
+    GetAuthUser(),
+    GetContractAuditLog({ contractId: c })
   ])
 
   if (!contractData) {
@@ -45,6 +47,7 @@ export default async function CompnayViewContract({ searchParams }: Props) {
   return (
     <main>
       <ViewContractPageHeader contract={contractData}>
+
       </ViewContractPageHeader>
       <PageWidth className="flex flex-1 gap-4 justify-between py-4 shadow-sm">
         <ContractContentView
@@ -54,7 +57,7 @@ export default async function CompnayViewContract({ searchParams }: Props) {
       </PageWidth>
       <PageWidth>
         <CommentsSection
-          comments={commentsData}
+          comments={commentsData || []}
           contract={contractData}
           isSender={true}
         />

@@ -22,7 +22,7 @@ export const UserContractDeclineDialog: React.FC<Props> = ({ contract }) => {
 
   const form = useForm({
     defaultValues: {
-      declineReason: ""
+      failedReason: ""
     }
   })
   const { watch, formState } = form
@@ -32,7 +32,7 @@ export const UserContractDeclineDialog: React.FC<Props> = ({ contract }) => {
   const handleDeclineContract = async () => {
     const { error } = await ReceiverDeclineContract({
       contractId: contract.id,
-      declineReason: formValues.declineReason
+      failedReason: formValues.failedReason
     })
     if (error) {
       return toast.error("Failed to decline contract. Error: " + error)
@@ -54,7 +54,7 @@ export const UserContractDeclineDialog: React.FC<Props> = ({ contract }) => {
         </DialogHeader>
         <form onSubmit={form.handleSubmit(handleDeclineContract)}>
           <Textarea
-            {...form.register("declineReason")}
+            {...form.register("failedReason")}
             className="min-h-[100px] max-h-[150px]"
             placeholder="Optional. Puteti scrie aici motivul pentru care refuzati acest contract"
           />

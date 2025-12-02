@@ -70,7 +70,7 @@ export async function GetContractComments({
   contractId
 }: {
   contractId: string
-}): Promise<CustomApiResponse> {
+}): Promise<CustomApiResponse<Comment[]>> {
   const supabase = await createClient();
 
   try {

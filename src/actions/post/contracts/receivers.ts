@@ -83,10 +83,10 @@ export async function ReceiverSignContract({
 
 export async function ReceiverDeclineContract({
   contractId,
-  declineReason = ""
+  failedReason = ""
 }: {
   contractId: string,
-  declineReason?: string
+  failedReason?: string
 }): Promise<CustomApiResponse> {
   const supabase = await createClient();
 
@@ -94,8 +94,8 @@ export async function ReceiverDeclineContract({
     const { error } = await supabase.from("contracts")
       .update({
         status: ContractStatus.DECLINED,
-        declineReason,
-        declinedAt: new Date()
+        failedReason,
+        failedAt: new Date()
       })
       .eq("id", contractId)
 

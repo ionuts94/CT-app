@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { CustomApiResponse, Status } from "@/types/api-call";
-import { AuditAction, PartyRole } from "@prisma/client";
+import { AuditAction, AuditLog, PartyRole } from "@prisma/client";
 import { GetCurrentUserWithCompany } from "../company";
 
 export async function LogAudit({
@@ -47,6 +47,35 @@ export async function LogAudit({
     return {
       status: Status.SUCCESS,
       data: ""
+    };
+  } catch (err: any) {
+    const errMessage = `${err.message}`;
+    console.log(errMessage);
+    return {
+      status: Status.FAILED,
+      error: errMessage
+    };
+  }
+}
+
+
+export async function GetContractAuditLog({
+  contractId
+}: {
+  contractId: string
+}): Promise<CustomApiResponse<AuditLog[]>> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase.from("audit_logs")
+      .select("*")
+      .eq("contractId", contractId)
+      .order("createdAt", { ascending: false })
+
+    if (error) throw new Error("Failed to retrieve audit for contract. Error: " + error.message)
+
+    return {
+      status: Status.SUCCESS,
+      data: data
     };
   } catch (err: any) {
     const errMessage = `${err.message}`;

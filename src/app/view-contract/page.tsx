@@ -1,7 +1,7 @@
 import { GetContractComments } from "@/actions/post/contracts/comments"
 import { GetAuthUser } from "@/actions/post/auth"
 import { redirect } from "next/navigation"
-import { LogAudit } from "@/actions/post/audit"
+import { GetContractAuditLog, LogAudit } from "@/actions/post/audit"
 import { GetContractForReceiver } from "@/actions/post/contracts/receivers"
 import { ViewContractContentPage } from "./components/view-contract-page-content"
 import { sleep } from "@/lib/utils"
@@ -31,7 +31,13 @@ export default async function ViewContractPage({ searchParams }: Props) {
     return redirect("/dashboard")
   }
 
-  const { data: commentsData, error: commentsError } = await GetContractComments({ contractId: contractData.id })
+  const [
+    { data: commentsData, error: commentsError },
+    { data: auditLogData, error: auditLogError }
+  ] = await Promise.all([
+    GetContractComments({ contractId: contractData.id }),
+    GetContractAuditLog({ contractId: contractData.id })
+  ])
 
   await sleep(800)
 
@@ -49,7 +55,8 @@ export default async function ViewContractPage({ searchParams }: Props) {
   return (
     <ViewContractContentPage
       contractData={contractData}
-      commentsData={commentsData}
+      commentsData={commentsData || []}
+      auditLogData={auditLogData || []}
     />
   )
 }

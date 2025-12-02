@@ -6,17 +6,18 @@ import { ContractContentView } from "./contract-content-view"
 import { ReceiverContractAssistant } from "./assistant/receiver-contract-assistant"
 import { CommentsSection } from "./comments-section"
 import { T_ViewContract } from "@/actions/post/contracts"
-import { Comment } from "@prisma/client"
+import { AuditLog, Comment } from "@prisma/client"
 
 type Props = {
   contractData: T_ViewContract,
-  commentsData: Comment[]
+  commentsData: Comment[],
+  auditLogData: AuditLog[]
 }
 
-export const ViewContractContentPage: React.FC<Props> = ({ contractData, commentsData }) => {
+export const ViewContractContentPage: React.FC<Props> = ({ contractData, commentsData, auditLogData }) => {
   return (
     <main className="bg-app flex flex-col min-h-screen">
-      <PageHeader contract={contractData} />
+      <PageHeader contract={contractData} auditLog={auditLogData} />
       <PageWidth className="px-[70px] flex flex-1 gap-4 justify-between py-4 shadow-sm">
         <div className="w-full lg:w-3/5">
           <ContractContentView contract={contractData} />
