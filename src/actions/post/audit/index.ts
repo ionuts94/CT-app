@@ -69,7 +69,7 @@ export async function GetContractAuditLog({
     const { data, error } = await supabase.from("audit_logs")
       .select("*")
       .eq("contractId", contractId)
-      .order("createdAt", { ascending: false })
+      .order("createdAt", { ascending: true })
 
     if (error) throw new Error("Failed to retrieve audit for contract. Error: " + error.message)
 

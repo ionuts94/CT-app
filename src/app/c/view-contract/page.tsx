@@ -46,7 +46,7 @@ export default async function CompnayViewContract({ searchParams }: Props) {
 
   return (
     <main>
-      <ViewContractPageHeader contract={contractData}>
+      <ViewContractPageHeader contract={contractData} auditLog={auditLogData || []}>
 
       </ViewContractPageHeader>
       <PageWidth className="flex flex-1 gap-4 justify-between py-4 shadow-sm">

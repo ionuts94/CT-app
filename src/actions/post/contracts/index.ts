@@ -72,26 +72,26 @@ export async function CreateContractRecord({
 
     if (contractError) throw new Error(BASE_ERROR_MESSAGE + contractError.message)
 
-    await Promise.all([
-      LogAudit({
-        contractId: contractData?.id!,
-        action: "CONTRACT_CREATED",
-        actorType: "SENDER",
-        ip: "192.168.1.1",
-        userAgent: "Chrome",
-        metadata: {},
-        contractVersion: 1
-      }),
-      LogAudit({
-        contractId: contractData?.id!,
-        action: "CONTRACT_SIGNED_OWNER",
-        actorType: "SENDER",
-        ip: "192.168.1.1",
-        userAgent: "Chrome",
-        metadata: {},
-        contractVersion: 1
-      })
-    ])
+
+    await LogAudit({
+      contractId: contractData?.id!,
+      action: "CONTRACT_CREATED",
+      actorType: "SENDER",
+      ip: "192.168.1.1",
+      userAgent: "Chrome",
+      metadata: {},
+      contractVersion: 1
+    })
+    await LogAudit({
+      contractId: contractData?.id!,
+      action: "CONTRACT_SIGNED_OWNER",
+      actorType: "SENDER",
+      ip: "192.168.1.1",
+      userAgent: "Chrome",
+      metadata: {},
+      contractVersion: 1
+    })
+
 
     return {
       status: Status.SUCCESS,

@@ -41,17 +41,6 @@ export default async function ViewContractPage({ searchParams }: Props) {
 
   await sleep(800)
 
-  LogAudit({
-    contractId: contractData?.id!,
-    action: "CONTRACT_VIEWED",
-    actorType: "SIGNER",
-    ip: "192.168.1.1",
-    userAgent: "Chrome",
-    metadata: {},
-    contractVersion: 1,
-    userEmail: contractData.receiverEmail
-  })
-
   return (
     <ViewContractContentPage
       contractData={contractData}

@@ -28,8 +28,8 @@ export const ViewContractPageHeader: React.FC<Props> = ({ contract, children, au
         </Text>
         <div className="flex items-center gap-2">
           <AuditLogDialog auditLog={auditLog} />
-          <StatusBadge status={contract.status} />
           <DownloadContractButton contract={contract} />
+          <StatusBadge status={contract.status} />
           {children}
         </div>
       </PageWidth>

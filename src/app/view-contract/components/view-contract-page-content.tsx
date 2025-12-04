@@ -7,6 +7,8 @@ import { ReceiverContractAssistant } from "./assistant/receiver-contract-assista
 import { CommentsSection } from "./comments-section"
 import { T_ViewContract } from "@/actions/post/contracts"
 import { AuditLog, Comment } from "@prisma/client"
+import { useEffect } from "react"
+import { LogAudit } from "@/actions/post/audit"
 
 type Props = {
   contractData: T_ViewContract,
@@ -15,6 +17,19 @@ type Props = {
 }
 
 export const ViewContractContentPage: React.FC<Props> = ({ contractData, commentsData, auditLogData }) => {
+  useEffect(() => {
+    LogAudit({
+      contractId: contractData?.id!,
+      action: "CONTRACT_VIEWED",
+      actorType: "SIGNER",
+      ip: "192.168.1.1",
+      userAgent: "Chrome",
+      metadata: {},
+      contractVersion: 1,
+      userEmail: contractData.receiverEmail
+    })
+  }, [])
+
   return (
     <main className="bg-app flex flex-col min-h-screen">
       <PageHeader contract={contractData} auditLog={auditLogData} />

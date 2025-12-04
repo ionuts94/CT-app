@@ -1,31 +1,34 @@
 import { AuditAction, AuditLog, PartyRole } from "@prisma/client";
 import { Eye, FileText, Mail, MessageCircle, PencilLine, ReceiptText, ShieldBan, Signature, Undo, X } from "lucide-react";
 
-const getUserTypeLabel = (userType: PartyRole) => {
+export const getUserTypeLabel = (userType: PartyRole) => {
   switch (userType) {
     case "SENDER":
       return "Inițiator"
     case "SIGNER":
       return "Destinatar"
+    case "SYSTEM":
+      return "SYSTEM"
     default: "SYSTEM"
   }
 }
+
 export const AUDIT_ACTIONS = {
   CONTRACT_CREATED: (log: AuditLog) => {
     return {
-      message: "Contractul a fost creat de catre " + getUserTypeLabel(log.actorType) + ".",
+      message: "Contractul a fost creat.",
       icon: ReceiptText,
     }
   },
   CONTRACT_SENT: (log: AuditLog) => {
     return {
-      message: "Contractul a fost trimis de catre " + getUserTypeLabel(log.actorType) + ".",
+      message: "Contractul a fost trimis.",
       icon: Mail,
     }
   },
   CONTRACT_VIEWED: (log: AuditLog) => {
     return {
-      message: "Contractul a fost vazut de catre " + getUserTypeLabel(log.actorType) + ".",
+      message: "Contractul a fost deschis.",
       icon: Eye,
     }
   },
@@ -38,31 +41,31 @@ export const AUDIT_ACTIONS = {
   },
   CONTRACT_UPDATED: (log: AuditLog) => {
     return {
-      message: "Contractul a fost modificat de catre " + getUserTypeLabel(log.actorType) + ".",
+      message: "Contractul a fost modificat.",
       icon: PencilLine,
     }
   },
   CONTRACT_SIGNED_OWNER: (log: AuditLog) => {
     return {
-      message: "Contractul a fost semnat de cate " + getUserTypeLabel(log.actorType) + ".",
+      message: "Contractul a fost semnat.",
       icon: Signature,
     }
   },
   CONTRACT_SIGNED_SIGNER: (log: AuditLog) => {
     return {
-      message: "Contractul a fost semnat de cate " + getUserTypeLabel(log.actorType) + ".",
+      message: "Contractul a fost semnat.",
       icon: Signature,
     }
   },
   CONTRACT_DECLINED: (log: AuditLog) => {
     return {
-      message: "Contractul a fost respins de cate " + getUserTypeLabel(log.actorType) + ".",
+      message: "Contractul a fost respins.",
       icon: X,
     }
   },
   CONTRACT_REVOKED: (log: AuditLog) => {
     return {
-      message: "Contractul a fost retras de cate " + getUserTypeLabel(log.actorType) + ".",
+      message: "Contractul a fost retras.",
       icon: Undo,
     }
   },
