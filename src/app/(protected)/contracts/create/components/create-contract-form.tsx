@@ -19,6 +19,7 @@ import { ContractSentSuccessfully } from "./contract-sent-successfully"
 import { Status } from "@/types/api-call"
 import { toast } from "sonner"
 import { LogAudit } from "@/actions/post/audit"
+import * as CT from "@/sdk/contracts"
 
 type Props = {
   template?: Template,
@@ -53,7 +54,8 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
 
   const handleFormSubmit = async (values: any) => {
     console.log(values)
-    const { data, error } = await CreateContractRecord({
+
+    const { data, error } = await CT.createContract({
       title: values.title,
       content: values.content,
       ownerSignatureId: values.signatureId,

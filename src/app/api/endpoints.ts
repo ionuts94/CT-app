@@ -5,5 +5,8 @@ export const api = {
     userSign: envs.NEXT_PUBLIC_URL + "/api/contract/user-sign",
     generateContractPdf: envs.NEXT_PUBLIC_URL + "/api/contract/generate",
     onContractSigned: envs.NEXT_PUBLIC_URL + "/api/contract/on-contract-signed"
+  },
+  contracts: {
+    create: envs.NEXT_PUBLIC_URL + "/api/contracts/create"
   }
 } as const
