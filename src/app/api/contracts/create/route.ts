@@ -4,8 +4,8 @@ import { z, ZodError } from "zod";
 import { v4 as uuid } from "uuid";
 import { ContractStatus } from "@prisma/client";
 import { extractClientIp } from "../../utils";
-import * as ContractService from "@/services/contracts"
-import * as AuthService from "@/services/auth"
+import ContractService from "@/services/contracts"
+import AuthService from "@/services/auth"
 
 const CreateContractSchema = z.object({
   title: z.string().min(1),

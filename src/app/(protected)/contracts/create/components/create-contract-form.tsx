@@ -19,7 +19,10 @@ import { ContractSentSuccessfully } from "./contract-sent-successfully"
 import { Status } from "@/types/api-call"
 import { toast } from "sonner"
 import { LogAudit } from "@/actions/post/audit"
-import * as CT from "@/sdk/contracts"
+
+import CTContract from "@/sdk/contracts"
+import CTEmail from "@/sdk/email"
+
 
 type Props = {
   template?: Template,
@@ -55,7 +58,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
   const handleFormSubmit = async (values: any) => {
     console.log(values)
 
-    const { data, error } = await CT.createContract({
+    const { data, error } = await CTContract.createContract({
       title: values.title,
       content: values.content,
       ownerSignatureId: values.signatureId,
@@ -66,7 +69,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
 
     if (error) return toast.error(error)
 
-    await SendContractEmail({
+    await CTEmail.sendContractToClient({
       contractId: data?.id!,
       receiverEmail: values.receiverEmail,
       optionalMessage: values.optionalMessage

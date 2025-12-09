@@ -5,6 +5,9 @@ import { GetContractAuditLog, LogAudit } from "@/actions/post/audit"
 import { GetContractForReceiver } from "@/actions/post/contracts/receivers"
 import { ViewContractContentPage } from "./components/view-contract-page-content"
 import { sleep } from "@/lib/utils"
+import AuthService from "@/services/auth"
+import ContractService from "@/services/contracts"
+import { withSafeService } from "@/lib/services-utils/with-safe-service"
 
 type Props = {
   searchParams: Promise<{ t: string }>
@@ -14,11 +17,11 @@ export default async function ViewContractPage({ searchParams }: Props) {
   const { t } = await searchParams
 
   const [
-    { data: contractData, error: contractError },
-    { data: authUser }
+    { data: authUser },
+    { data: contractData, error: contractError }
   ] = await Promise.all([
-    GetContractForReceiver({ receiverToken: t }),
-    GetAuthUser()
+    withSafeService(() => AuthService.getAuthUser()),
+    withSafeService(() => ContractService.getReceiverContract({ receiverToken: t }))
   ])
 
   if (!contractData) {

@@ -12,7 +12,6 @@ export async function getUserWithCompany() {
     throw new Error("Unauthorized: user is not authenticated.");
   }
 
-  // 2️⃣ Fetch user row + the company joined
   const { data: profile, error } = await supabase
     .from("users")
     .select("*, company: companies(*)")
