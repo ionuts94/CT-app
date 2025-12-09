@@ -5,6 +5,7 @@ import ContractService from "@/services/contracts"
 import { withSafeService } from "@/lib/services-utils/with-safe-service"
 import CommentService from "@/services/comments"
 import AuditService from "@/services/audit"
+import { ContractViewedTracker } from "./components/contract-viewed-tracker"
 
 type Props = {
   searchParams: Promise<{ t: string }>
@@ -40,10 +41,16 @@ export default async function ViewContractPage({ searchParams }: Props) {
   ])
 
   return (
-    <ViewContractContentPage
-      contractData={contractData}
-      commentsData={commentsData || []}
-      auditLogData={auditLogData || []}
-    />
+    <>
+      <ViewContractContentPage
+        contractData={contractData}
+        commentsData={commentsData || []}
+        auditLogData={auditLogData || []}
+      />
+      <ContractViewedTracker
+        actorType="SIGNER"
+        contractId={contractData.id}
+      />
+    </>
   )
 }

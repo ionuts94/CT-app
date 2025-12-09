@@ -8,22 +8,9 @@ import AuditService from "@/services/audit";
 
 export async function POST(req: NextRequest) {
   try {
-    const { ip, userAgent } = extractClientIp(req)
     const { receiverToken } = await req.json() as T_GetReceiverContractBody
 
     const contractData = await ContractService.getReceiverContract({ receiverToken })
-
-    await AuditService.logAudit({
-      contractId: contractData.id,
-      action: "CONTRACT_VIEWED",
-      actorType: "SIGNER",
-      ip,
-      userAgent,
-      contractVersion: 1,
-      metadata: {},
-      userId: null,
-      userEmail: contractData.receiverEmail,
-    })
 
     return NextResponse.json({
       status: Status.SUCCESS,

@@ -17,19 +17,6 @@ type Props = {
 }
 
 export const ViewContractContentPage: React.FC<Props> = ({ contractData, commentsData, auditLogData }) => {
-  useEffect(() => {
-    LogAudit({
-      contractId: contractData?.id!,
-      action: "CONTRACT_VIEWED",
-      actorType: "SIGNER",
-      ip: "192.168.1.1",
-      userAgent: "Chrome",
-      metadata: {},
-      contractVersion: 1,
-      userEmail: contractData.receiverEmail
-    })
-  }, [])
-
   return (
     <main className="bg-app flex flex-col min-h-screen">
       <PageHeader contract={contractData} auditLog={auditLogData} />

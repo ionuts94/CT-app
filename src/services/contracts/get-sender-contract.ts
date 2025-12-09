@@ -1,9 +1,8 @@
 import { createClient } from "@/lib/supabase/server"
-import { Company, Contract, ContractVersion, Signature, User } from "@prisma/client"
-import { T_ContractForReceiver } from "./get-receiver-contract"
+import { T_ViewContract } from "@/types/services/contracts"
 
 
-export async function getSenderContract({ contractId }: { contractId: string }): Promise<T_ContractForReceiver> {
+export async function getSenderContract({ contractId }: { contractId: string }): Promise<T_ViewContract> {
   const supabase = await createClient()
 
   const { data, error } = await supabase.from("contracts")
@@ -23,5 +22,5 @@ export async function getSenderContract({ contractId }: { contractId: string }):
   if (data && !data.company) throw Error("Company not found")
 
 
-  return data as T_ContractForReceiver
+  return data as T_ViewContract
 }

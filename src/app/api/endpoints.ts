@@ -15,5 +15,8 @@ export const api = {
       receiver: envs.NEXT_PUBLIC_URL + "/api/contracts/get/receiver",
       sender: envs.NEXT_PUBLIC_URL + "/api/contracts/get/sender",
     },
-  }
+  },
+  audit: {
+    contractViewed: `${envs.NEXT_PUBLIC_URL}/api/audit/contract-viewed`,
+  },
 } as const

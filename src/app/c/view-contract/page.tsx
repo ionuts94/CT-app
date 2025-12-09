@@ -1,11 +1,13 @@
-import { GetContractAuditLog, LogAudit } from "@/actions/post/audit"
-import { GetAuthUser } from "@/actions/post/auth"
-import { FreeGetViewContract, GetContractWithCompanyAndOwner } from "@/actions/post/contracts"
-import { GetContractComments } from "@/actions/post/contracts/comments"
 import { CommentsSection } from "@/app/view-contract/components/comments-section"
 import { ContractContentView } from "@/app/view-contract/components/contract-content-view"
+import { ContractViewedTracker } from "@/app/view-contract/components/contract-viewed-tracker"
 import { PageWidth } from "@/components/layout"
 import { ViewContractPageHeader } from "@/components/view-contract-page-header"
+import { withSafeService } from "@/lib/services-utils/with-safe-service"
+import AuditService from "@/services/audit"
+import AuthService from "@/services/auth"
+import CommentService from "@/services/comments"
+import ContractService from "@/services/contracts"
 
 type Props = {
   searchParams: Promise<{ c: string }>
@@ -18,37 +20,30 @@ export default async function CompnayViewContract({ searchParams }: Props) {
   // Check if user is authenticated
   // Check if the contract belongs to the user
 
+  const { data: authUser } = await withSafeService(() => AuthService.getAuthUser())
+
   const [
     { data: contractData, error: contractError },
     { data: commentsData, error: commentsError },
-    { data: authUser },
     { data: auditLogData, error: auditLogError }
   ] = await Promise.all([
-    FreeGetViewContract({ contractId: c }),
-    GetContractComments({ contractId: c }),
-    GetAuthUser(),
-    GetContractAuditLog({ contractId: c })
+    withSafeService(() => ContractService.getSenderContract({ contractId: c })),
+    withSafeService(() => CommentService.getContractComments({ contractId: c })),
+    withSafeService(() => AuditService.getContractAuditLog({ contractId: c })),
   ])
 
   if (!contractData) {
     return (<p>Nu am putut incarca contractul</p>)
   }
 
-  LogAudit({
-    contractId: contractData?.id!,
-    action: "CONTRACT_VIEWED",
-    actorType: "SENDER",
-    ip: "192.168.1.1",
-    userAgent: "Chrome",
-    metadata: {},
-    contractVersion: 1
-  })
+  // TODO: Error handling for contractError, commentsError, auditLogError
 
   return (
     <main>
-      <ViewContractPageHeader contract={contractData} auditLog={auditLogData || []}>
+      <ViewContractPageHeader
+        contract={contractData} auditLog={auditLogData || []}
+      />
 
-      </ViewContractPageHeader>
       <PageWidth className="flex flex-1 gap-4 justify-between py-4 shadow-sm">
         <ContractContentView
           isSender={true}
@@ -62,6 +57,10 @@ export default async function CompnayViewContract({ searchParams }: Props) {
           isSender={true}
         />
       </PageWidth>
+      <ContractViewedTracker
+        actorType="SENDER"
+        contractId={contractData.id}
+      />
     </main>
   )
 }
