@@ -137,6 +137,7 @@ model Contract {
 
   receiverName     String
   receiverEmail    String
+  receiverToken    String @db.Uuid
   optionalMessage String
 
   comments   Comment[]

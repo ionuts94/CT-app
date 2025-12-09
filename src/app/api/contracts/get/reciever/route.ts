@@ -3,10 +3,8 @@ import { extractClientIp } from "@/app/api/utils";
 import ContractService from "@/services/contracts";
 import { Status } from "@/types/api-call";
 import { ZodError } from "zod";
-
-export type T_GetReceiverContractBody = {
-  receiverToken: string
-}
+import { T_GetReceiverContractBody } from "@/types/api/contracts";
+import AuditService from "@/services/audit";
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     const contractData = await ContractService.getReceiverContract({ receiverToken })
 
-    await ContractService.logAudit({
+    await AuditService.logAudit({
       contractId: contractData.id,
       action: "CONTRACT_VIEWED",
       actorType: "SIGNER",

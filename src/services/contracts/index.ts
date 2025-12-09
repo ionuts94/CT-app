@@ -8,7 +8,6 @@ import { createContract } from "./create"
 // export * from "./list"
 import { getContractWithCompanyAndOwner } from "./get"
 import { createContractVersion } from "./versions"
-import { logAudit } from "./log-audit"
 import { getReceiverContract } from "./get-receiver-contract"
 import { getSenderContract } from "./get-sender-contract"
 
@@ -18,7 +17,6 @@ const ContractService = {
   getContractWithCompanyAndOwner,
   getSenderContract,
   getReceiverContract,
-  logAudit,
 }
 
 export default ContractService

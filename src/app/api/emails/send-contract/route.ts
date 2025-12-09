@@ -6,7 +6,7 @@ import ContractService from "@/services/contracts";
 import { EMAIL_TEMPLATE_IDS } from "@/constants/email-utils";
 import { envs } from "@/constants/envs";
 import { brevo } from "@/lib/brevo";
-import { LogAudit } from "@/actions/post/audit";
+import AuditService from "@/services/audit";
 
 export type T_SendContractEmailBody = {
   contractId: string,
@@ -22,9 +22,10 @@ export async function POST(req: NextRequest) {
       receiverEmail,
       optionalMessage
     } = await req.json() as T_SendContractEmailBody
-    const templateId = EMAIL_TEMPLATE_IDS.sendContract
 
+    const templateId = EMAIL_TEMPLATE_IDS.sendContract
     const contractData = await ContractService.getContractWithCompanyAndOwner({ contractId })
+
     const message = {
       subject: `${contractData?.company.name} ți-a trimis un contract spre semnare`,
       to: [{ email: receiverEmail }],
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
         colorAccent: contractData?.company.colorAccent,
         contractTitle: contractData?.title,
         expiryDate: contractData?.expiresAt,
-        viewContractUrl: envs.NEXT_PUBLIC_URL + `/view-contract?c=${contractData?.id}`,
+        viewContractUrl: envs.NEXT_PUBLIC_URL + `/view-contract?t=${contractData?.receiverToken}`,
         viewContractPassword: contractData?.accessPassword,
         receiverEmail,
         optionalMessage,
@@ -49,9 +50,9 @@ export async function POST(req: NextRequest) {
       },
     };
 
-    await brevo.sendTransacEmail(message)
+    const response = await brevo.sendTransacEmail(message)
 
-    await ContractService.logAudit({
+    await AuditService.logAudit({
       contractId: contractData?.id!,
       action: "CONTRACT_SENT",
       actorType: "SENDER",
@@ -60,7 +61,6 @@ export async function POST(req: NextRequest) {
       metadata: {},
       contractVersion: 1
     })
-
 
     return NextResponse.json({
       status: Status.SUCCESS,

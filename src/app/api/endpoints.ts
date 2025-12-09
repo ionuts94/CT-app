@@ -10,6 +10,10 @@ export const api = {
     sendContract: envs.NEXT_PUBLIC_URL + "/api/emails/send-contract"
   },
   contracts: {
-    create: envs.NEXT_PUBLIC_URL + "/api/contracts/create"
+    create: envs.NEXT_PUBLIC_URL + "/api/contracts/create",
+    get: {
+      receiver: envs.NEXT_PUBLIC_URL + "/api/contracts/get/receiver",
+      sender: envs.NEXT_PUBLIC_URL + "/api/contracts/get/sender",
+    },
   }
 } as const

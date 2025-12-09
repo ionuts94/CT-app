@@ -6,6 +6,7 @@ import { ContractStatus } from "@prisma/client";
 import { extractClientIp } from "../../utils";
 import ContractService from "@/services/contracts"
 import AuthService from "@/services/auth"
+import AuditService from "@/services/audit";
 
 const CreateContractSchema = z.object({
   title: z.string().min(1),
@@ -50,7 +51,7 @@ export async function POST(req: NextRequest) {
       currentVersionId: contractVersionUUID,
     })
 
-    await ContractService.logAudit({
+    await AuditService.logAudit({
       contractId: contractData.id,
       action: "CONTRACT_CREATED",
       actorType: "SENDER",
@@ -62,7 +63,7 @@ export async function POST(req: NextRequest) {
       userEmail: user.email,
     });
 
-    await ContractService.logAudit({
+    await AuditService.logAudit({
       contractId: contractData.id!,
       action: "CONTRACT_SIGNED_OWNER",
       actorType: "SENDER",
