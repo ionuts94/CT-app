@@ -13,6 +13,7 @@ import { BUCKETS } from "@/constants/buckets"
 import { envs } from "@/constants/envs"
 import { useDialog } from "@/hooks/use-dialog"
 import { base64ToFile } from "@/lib/utils"
+import CTContract from "@/sdk/contracts"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -26,7 +27,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
   const router = useRouter()
   const { isOpen, toggleDialog, openDialog, closeDialog } = useDialog()
 
-  const { formState, setValue, register, handleSubmit, watch } = useForm({
+  const { formState, setValue, register, handleSubmit } = useForm({
     defaultValues: {
       userFullName: contract.receiverName || "",
       signature: {
@@ -59,24 +60,17 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
 
       setValue("signature.url", data?.fileUrl!)
 
-      const response = await fetch(api.contract.userSign, {
-        method: "POST",
-        body: JSON.stringify({
-          contractId: contract.id,
-          signatureImageUrl: data?.fileUrl,
-          receiverName: values.userFullName,
-          email: contract.receiverEmail
-        })
+      const { error: signatureError } = await CTContract.receiverSignContract({
+        contractId: contract.id,
+        signatureImageUrl: data?.fileUrl!,
+        receiverName: values.userFullName,
       })
 
-      const result = await response.json()
-      if (result.error) {
-        return toast.error(result.error)
+      if (signatureError) {
+        return toast.error(signatureError)
       }
-      fetch(api.contract.onContractSigned, {
-        method: "POST",
-        body: JSON.stringify({ contractId: contract.id })
-      })
+
+      CTContract.onContractSigned({ contractId: contract.id })
       toast.success("Contractul a fost semnat. Vei primi un email de confirmare.")
       router.refresh()
       closeDialog()

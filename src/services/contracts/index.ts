@@ -10,6 +10,9 @@ import { getContractWithCompanyAndOwner } from "./get"
 import { createContractVersion } from "./versions"
 import { getReceiverContract } from "./get-receiver-contract"
 import { getSenderContract } from "./get-sender-contract"
+import { receiverSignContract } from "./sign"
+import { generatePdf } from "./generate-pdf"
+import { updateContractPdfUrl } from "./update"
 
 const ContractService = {
   createContract,
@@ -17,6 +20,9 @@ const ContractService = {
   getContractWithCompanyAndOwner,
   getSenderContract,
   getReceiverContract,
+  receiverSignContract,
+  generatePdf,
+  updateContractPdfUrl,
 }
 
 export default ContractService

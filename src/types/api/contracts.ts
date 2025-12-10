@@ -9,3 +9,9 @@ export type T_GetContractCommentsBody = {
 export type T_GetContractAuditLogBody = {
   contractId: string
 }
+
+export type T_ReceiverSignContractBody = {
+  contractId: string,
+  signatureImageUrl: string,
+  receiverName: string,
+}

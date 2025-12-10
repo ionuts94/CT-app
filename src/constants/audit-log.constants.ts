@@ -81,4 +81,10 @@ export const AUDIT_ACTIONS = {
       icon: FileText
     }
   },
+  CONTRACT_SIGNED_NOTIFICATION_SENT: (log: AuditLog) => {
+    return {
+      message: "Versiunea PDF semnata a fost trimisa catre ambele parti",
+      icon: Mail
+    }
+  }
 }

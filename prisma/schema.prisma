@@ -112,9 +112,9 @@ model Role {
 }
 
 model Contract {
-  id      String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title   String
-  status  ContractStatus @default(DRAFT)
+  id     String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title  String
+  status ContractStatus @default(DRAFT)
 
   ownerId String @db.Uuid
   owner   User   @relation("ContractOwner", fields: [ownerId], references: [id], onDelete: Cascade)
@@ -132,22 +132,23 @@ model Contract {
 
   accessPassword Int
 
-  ownerSignatureId   String @db.Uuid
+  ownerSignatureId    String @db.Uuid
   receiverSignatureId String @db.Uuid
 
   receiverName     String
   receiverEmail    String
   receiverToken    String @db.Uuid
-  optionalMessage String
+  optionalMessage  String
+  currentVersionId String
 
-  comments   Comment[]
-  activities Activity[]
-  parties    Party[]
-  placements SignaturePlacement[]
-  invites    Invite[]
-  signature  Signature            @relation(fields: [ownerSignatureId], references: [id])
+  comments         Comment[]
+  activities       Activity[]
+  parties          Party[]
+  placements       SignaturePlacement[]
+  invites          Invite[]
+  signature        Signature            @relation(fields: [ownerSignatureId], references: [id])
   contractVersions ContractVersion[]
-  auditLogs AuditLog[]
+  auditLogs        AuditLog[]
 
   @@index([companyId, status, createdAt])
   @@index([ownerId])
@@ -156,21 +157,20 @@ model Contract {
 }
 
 model ContractVersion {
-  id              String   @id @default(uuid())
-  contractId      String
-  contract        Contract @relation(fields: [contractId], references: [id])
+  id         String   @id @default(uuid())
+  contractId String
+  contract   Contract @relation(fields: [contractId], references: [id])
 
-  versionNumber   Int
-  content         String   @db.Text
-  createdAt       DateTime @default(now())
-  createdBy       String?  // ownerId / signerEmail / system
-  createdByType   PartyRole
+  versionNumber Int
+  content       String    @db.Text
+  createdAt     DateTime  @default(now())
+  createdBy     String? // ownerId / signerEmail / system
+  createdByType PartyRole
 
-  metadata        Json?
+  metadata Json?
 
   @@index([contractId, versionNumber])
 }
-
 
 model Party {
   id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -349,12 +349,12 @@ model UserTemplateCategory {
 }
 
 model AuditLog {
-  id              String     @id @default(uuid())
-  contractId      String
-  contract        Contract   @relation(fields: [contractId], references: [id])
+  id         String   @id @default(uuid())
+  contractId String
+  contract   Contract @relation(fields: [contractId], references: [id])
 
-  userId          String?    // prestator
-  userEmail       String?    // client extern
+  userId          String? // prestator
+  userEmail       String? // client extern
   actorType       PartyRole
   action          AuditAction
   contractVersion Int?
@@ -362,7 +362,7 @@ model AuditLog {
   userAgent       String?
   metadata        Json?
 
-  createdAt       DateTime   @default(now())
+  createdAt DateTime @default(now())
 
   @@index([contractId, createdAt])
 }
@@ -435,4 +435,5 @@ enum AuditAction {
   CONTRACT_REVOKED
   CONTRACT_EXPIRED // TODO
   PDF_GENERATED
+  CONTRACT_SIGNED_NOTIFICATION_SENT
 }

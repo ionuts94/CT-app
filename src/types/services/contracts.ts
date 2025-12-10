@@ -3,7 +3,17 @@ import { Company, Contract, ContractVersion, Signature, User } from "@prisma/cli
 export type T_ViewContract = Contract & {
   company: Company,
   ownerSignature: Signature,
-  reciverSignature: Signature,
+  receiverSignature: Signature,
   owner: User,
   currentVersion: ContractVersion
+}
+
+export type T_ContractWithVersion = Contract & {
+  currentVersion: ContractVersion
+}
+
+export type T_ReceiverSignContractPayload = {
+  contractId: string,
+  receiverSignatureId: string,
+  receiverName: string,
 }
