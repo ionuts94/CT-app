@@ -141,6 +141,9 @@ model Contract {
   optionalMessage  String
   currentVersionId String
 
+  failedReason String?
+  failedAt     DateTime
+
   comments         Comment[]
   activities       Activity[]
   parties          Party[]

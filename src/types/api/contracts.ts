@@ -15,3 +15,8 @@ export type T_ReceiverSignContractBody = {
   signatureImageUrl: string,
   receiverName: string,
 }
+
+export type T_FailContractBody = {
+  contractId: string,
+  failedReason?: string
+}

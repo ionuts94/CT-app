@@ -13,5 +13,6 @@ export const EMAIL_TEMPLATE_IDS = {
   "sendContractSignedNotification": 7,
   "newSenderCommentNotification": 5,
   "newSignerCommentNotification": 4,
-  "newSystemCommentNotification": 6
+  "newSystemCommentNotification": 6,
+  "sendContractFailedNotification": 8
 }

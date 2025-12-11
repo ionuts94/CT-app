@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { extractClientIp } from "@/app/api/utils";
 import ContractService from "@/services/contracts";
 import { Status } from "@/types/api-call";
 import { ZodError } from "zod";
 import { T_GetReceiverContractBody } from "@/types/api/contracts";
-import AuditService from "@/services/audit";
 
 export async function POST(req: NextRequest) {
   try {
     const { receiverToken } = await req.json() as T_GetReceiverContractBody
-
     const contractData = await ContractService.getReceiverContract({ receiverToken })
 
     return NextResponse.json({

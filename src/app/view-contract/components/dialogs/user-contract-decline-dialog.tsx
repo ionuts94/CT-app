@@ -1,14 +1,12 @@
 "use client"
 import { T_ViewContract } from "@/actions/post/contracts"
-import { ReceiverDeclineContract } from "@/actions/post/contracts/receivers"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { Textarea } from "@/components/form-elements"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { useDialog } from "@/hooks/use-dialog"
-import { ThumbsDown } from "lucide-react"
+import CTContract from "@/sdk/contracts"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -30,7 +28,7 @@ export const UserContractDeclineDialog: React.FC<Props> = ({ contract }) => {
   const isLoading = formState.isSubmitting
 
   const handleDeclineContract = async () => {
-    const { error } = await ReceiverDeclineContract({
+    const { error } = await CTContract.declineContract({
       contractId: contract.id,
       failedReason: formValues.failedReason
     })

@@ -1,11 +1,7 @@
 import { openai } from '@ai-sdk/openai';
 import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
-// Allow streaming responses up to 30 seconds
-export const maxDuration = 30;
-
 export async function POST(req: Request) {
-  console.log("something")
   const { messages, contractContent }: { messages: UIMessage[], contractContent: string } = await req.json();
 
   const result = streamText({
@@ -17,7 +13,7 @@ export async function POST(req: Request) {
   return result.toUIMessageStreamResponse();
 }
 
-export const generatereceiverContractAssistantInstructions = (contractContent: string) => {
+const generatereceiverContractAssistantInstructions = (contractContent: string) => {
   return `
 Tu ești un avocat expert în contracte, cu peste 20 de ani de experiență.
 Rolul tău este să ajuți beneficiarul să înțeleagă contractul clar și simplu.

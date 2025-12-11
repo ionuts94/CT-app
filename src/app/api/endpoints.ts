@@ -16,7 +16,9 @@ export const api = {
       sender: envs.NEXT_PUBLIC_URL + "/api/contracts/get/sender",
     },
     sign: envs.NEXT_PUBLIC_URL + "/api/contracts/sign",
-    onContractSigned: envs.NEXT_PUBLIC_URL + "/api/contracts/on-contract-signed"
+    onContractSigned: envs.NEXT_PUBLIC_URL + "/api/contracts/on-contract-signed",
+    decline: envs.NEXT_PUBLIC_URL + "/api/contracts/decline",
+    revoke: envs.NEXT_PUBLIC_URL + "/api/contracts/revoke"
   },
   audit: {
     contractViewed: `${envs.NEXT_PUBLIC_URL}/api/audit/contract-viewed`,

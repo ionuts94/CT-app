@@ -13,6 +13,8 @@ import { getSenderContract } from "./get-sender-contract"
 import { receiverSignContract } from "./sign"
 import { generatePdf } from "./generate-pdf"
 import { updateContractPdfUrl } from "./update"
+import { declineContract } from "./decline"
+import { revokeContract } from "./revoke"
 
 const ContractService = {
   createContract,
@@ -23,6 +25,8 @@ const ContractService = {
   receiverSignContract,
   generatePdf,
   updateContractPdfUrl,
+  declineContract,
+  revokeContract
 }
 
 export default ContractService
