@@ -20,6 +20,7 @@ import Image from "next/image"
 import { SupabaseStoreFile } from "@/actions/post/storage"
 import { BUCKETS } from "@/constants/buckets"
 import { v4 as uuid } from "uuid"
+import CTOnboarding from "@/sdk/onboarding"
 
 export const BrandingStep: React.FC = ({ }) => {
   const { onboarding, currentStepView, completedSteps, onboardingData, next, findNextStep, setOnboardingBranding } = useOnboardingContext()
@@ -40,7 +41,7 @@ export const BrandingStep: React.FC = ({ }) => {
   const values = watch()
 
   const handleFormSubmit = async (values: T_BrandingOnboardingSchema) => {
-    await UpdateOnboardingState({
+    const { error } = await CTOnboarding.updateState({
       onboardingId: onboarding.id,
       nextUncompleteStep: findNextStep() || LAST_ONBOARDING_STEP.name,
       stepsDone: [...completedSteps, currentStepView],

@@ -10,8 +10,8 @@ import { OnboardingContractPreview } from "../../components/onboarding-contract-
 import { useState } from "react"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useRouter } from "next/navigation"
-import { CompleteOnboarding } from "@/actions/post/onboarding"
 import { DialogTitle } from "@radix-ui/react-dialog"
+import CTOnboarding from "@/sdk/onboarding"
 
 export const DoneStep: React.FC = ({ }) => {
   const router = useRouter()
@@ -20,7 +20,7 @@ export const DoneStep: React.FC = ({ }) => {
 
   const handleCompleteOnboarding = async (redirectAfterComplete: string) => {
     setLoading(true)
-    const { error } = await CompleteOnboarding()
+    const { error } = await CTOnboarding.complete()
     setLoading(false)
     router.replace(redirectAfterComplete)
   }

@@ -19,6 +19,7 @@ import { base64ToFile } from "@/lib/utils"
 import { v4 as uuid } from "uuid"
 import { BUCKETS } from "@/constants/buckets"
 import { useRouter } from "next/navigation"
+import CTOnboarding from "@/sdk/onboarding"
 
 type Props = {
 
@@ -58,7 +59,7 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
       form.setValue("url", data?.fileUrl!)
       setOnboardingSignature({ ...values, url: data?.fileUrl! })
 
-      const { error } = await UpdateOnboardingState({
+      const { error } = await CTOnboarding.updateState({
         nextUncompleteStep: findNextStep() || LAST_ONBOARDING_STEP.name,
         data: {
           ...onboardingData,
@@ -70,9 +71,9 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
         onboardingId: onboarding.id,
         stepsDone: [...completedSteps, currentStepView]
       })
-    }
 
-    next()
+      next()
+    }
   }
 
   const onSigatureChange = ({ svg, png }: { svg: string, png: string }) => {

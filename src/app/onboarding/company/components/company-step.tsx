@@ -11,12 +11,21 @@ import { CompanyOnboarding, T_CompanyOnboardingSchema } from "@/validators/onboa
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { LAST_ONBOARDING_STEP } from "../../components/stepts"
+import CTOnboarding from "@/sdk/onboarding"
 
 type Props = {
 }
 
 export const CompanyStep: React.FC<Props> = ({ }) => {
-  const { onboardingData, currentStepView, completedSteps, onboarding, next, findNextStep, setOnboardingCompany, } = useOnboardingContext()
+  const {
+    onboardingData,
+    currentStepView,
+    completedSteps,
+    onboarding,
+    next,
+    findNextStep,
+    setOnboardingCompany,
+  } = useOnboardingContext()
 
   const form = useForm<T_CompanyOnboardingSchema>({
     resolver: zodResolver(CompanyOnboarding),
@@ -32,7 +41,17 @@ export const CompanyStep: React.FC<Props> = ({ }) => {
   const { isSubmitting, errors } = formState
 
   const handleFormSubmit = async (values: T_CompanyOnboardingSchema) => {
-    const { error } = await UpdateOnboardingState({
+    // const { error } = await UpdateOnboardingState({
+    //   onboardingId: onboarding.id,
+    //   nextUncompleteStep: findNextStep() || LAST_ONBOARDING_STEP.name,
+    //   stepsDone: [...completedSteps, currentStepView],
+    //   data: {
+    //     ...onboardingData,
+    //     company: values
+    //   }
+    // })
+
+    const { error } = await CTOnboarding.updateState({
       onboardingId: onboarding.id,
       nextUncompleteStep: findNextStep() || LAST_ONBOARDING_STEP.name,
       stepsDone: [...completedSteps, currentStepView],

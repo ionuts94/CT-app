@@ -30,4 +30,8 @@ export const api = {
   audit: {
     contractViewed: `${envs.NEXT_PUBLIC_URL}/api/audit/contract-viewed`,
   },
+  onboarding: {
+    updateState: envs.NEXT_PUBLIC_URL + "/api/onboarding/update-state",
+    complete: envs.NEXT_PUBLIC_URL + "/api/onboarding/complete"
+  }
 } as const
