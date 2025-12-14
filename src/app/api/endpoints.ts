@@ -20,6 +20,9 @@ export const api = {
     decline: envs.NEXT_PUBLIC_URL + "/api/contracts/decline",
     revoke: envs.NEXT_PUBLIC_URL + "/api/contracts/revoke"
   },
+  comments: {
+    postNewComment: envs.NEXT_PUBLIC_URL + "/api/comments/post-new-comment"
+  },
   audit: {
     contractViewed: `${envs.NEXT_PUBLIC_URL}/api/audit/contract-viewed`,
   },

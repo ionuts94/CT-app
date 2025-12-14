@@ -6,6 +6,7 @@ import { Comment } from "@/components/comment"
 import { ResizableTextInput } from "@/components/resizable-text-input"
 import { Text } from "@/components/topography"
 import { cn } from "@/lib/utils"
+import CTComments from "@/sdk/comments"
 import { Comment as CommentType, Contract } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -22,7 +23,7 @@ export const CommentsSection: React.FC<Props> = ({ comments, contract, isSender 
   const [input, setInput] = useState("")
 
   const postComment = async () => {
-    const { error } = await PostContractComment({
+    const { error } = await CTComments.postNewComment({
       content: input,
       contractId: contract.id,
       partyRole: isSender ? "SENDER" : "SIGNER",
@@ -30,6 +31,7 @@ export const CommentsSection: React.FC<Props> = ({ comments, contract, isSender 
       lastName: isSender ? contract.company.name.split(" ")[1] : contract.receiverName.split(" ")[1],
       email: isSender ? contract.owner.email : contract.receiverEmail
     })
+
     if (error) return toast.error(error)
     toast.success("Comentariul a fost postat")
     router.refresh()
