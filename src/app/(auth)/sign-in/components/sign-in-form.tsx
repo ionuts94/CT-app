@@ -13,6 +13,7 @@ import { LoginSchema, T_LoginSchema } from "@/validators/auth.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SignIn } from "@/actions/post/auth"
 import { useRouter } from "next/navigation"
+import CTAuth from "@/sdk/auth"
 
 type Props = {
 
@@ -32,10 +33,12 @@ export const SignInForm: React.FC<Props> = ({ }) => {
   const { isSubmitting, errors } = formState
 
   const handleSignIn = async (values: T_LoginSchema) => {
-    const { error } = await SignIn({
+    console.time("Logging")
+    const { error } = await CTAuth.signInWithPassword({
       email: values.email,
       password: values.password
     })
+    console.timeEnd("Logging")
 
     if (error) {
 

@@ -6,6 +6,10 @@ export const api = {
     generateContractPdf: envs.NEXT_PUBLIC_URL + "/api/contract/generate",
     onContractSigned: envs.NEXT_PUBLIC_URL + "/api/contract/on-contract-signed"
   },
+  auth: {
+    signInWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-in-with-password",
+    signUpWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-up-with-password"
+  },
   emails: {
     sendContract: envs.NEXT_PUBLIC_URL + "/api/emails/send-contract"
   },

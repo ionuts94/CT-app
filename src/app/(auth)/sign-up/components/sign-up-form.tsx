@@ -13,6 +13,7 @@ import { ReceiptText } from "lucide-react"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { AuthFormCard } from "../../components/auth-form-card"
+import CTAuth from "@/sdk/auth"
 
 type Props = {
 
@@ -34,7 +35,7 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
     const { errors, isSubmitting } = formState
 
     const handleSignUp = async (values: T_SignUpSchema) => {
-        const { error } = await SignUp(values)
+        const { error } = await CTAuth.signUpWithPassword(values)
         if (error) {
             throw Error(error)
         }
