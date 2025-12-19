@@ -1,4 +1,4 @@
-import { DeleteTemplate } from "@/actions/post/template"
+
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { TextCTA } from "@/components/topography/cta"
 import {
@@ -13,6 +13,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import CTTemplate from "@/sdk/templates"
 import { Trash } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -28,7 +29,7 @@ export const DeleteTemplateAlertDialog: React.FC<Props> = ({ templateId }) => {
 
   const handleDeleteTemplate = async () => {
     setLoading(true)
-    const { error } = await DeleteTemplate({ templateId })
+    const { error } = await CTTemplate.deleteTemplate({ templateId })
     setLoading(false)
     if (error) return toast.error(error)
     router.replace("/templates")

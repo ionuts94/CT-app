@@ -2,8 +2,7 @@ import { PageContainer } from "@/components/layout";
 import { TemplatesHeader } from "./components/templates-header";
 import { TemplatesList } from "./components/templates-list";
 import { TemplatesFilterBar } from "./components/templates-filter-bar";
-import { GetUserTemplates } from "@/actions/post/template";
-import { GetUserTemplatesCategories } from "@/actions/post/template/templates-categories";
+import TemplateService from "@/services/templates";
 
 type Props = {
   searchParams: Promise<{
@@ -13,12 +12,13 @@ type Props = {
 
 export default async function TemplatesPage({ searchParams }: Props) {
   const { category } = await searchParams
+
   const [
-    { data, error },
-    { data: categories, error: categoriesError }
+    data,
+    categories
   ] = await Promise.all([
-    GetUserTemplates({ category }),
-    GetUserTemplatesCategories()
+    TemplateService.getUserTemplates({ category }),
+    TemplateService.getUserTemplatesCategories()
   ])
 
   return (

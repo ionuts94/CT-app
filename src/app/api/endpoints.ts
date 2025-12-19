@@ -1,4 +1,5 @@
 import { envs } from "@/constants/envs";
+import { reviewTemplate } from "@/services/ai/templates/review-template";
 
 export const api = {
   contract: {
@@ -27,11 +28,23 @@ export const api = {
   comments: {
     postNewComment: envs.NEXT_PUBLIC_URL + "/api/comments/post-new-comment"
   },
+  templates: {
+    create: "/api/templates/create",
+    update: "/api/templates/update",
+    delete: "/api/templates/delete",
+  },
   audit: {
     contractViewed: `${envs.NEXT_PUBLIC_URL}/api/audit/contract-viewed`,
   },
   onboarding: {
     updateState: envs.NEXT_PUBLIC_URL + "/api/onboarding/update-state",
     complete: envs.NEXT_PUBLIC_URL + "/api/onboarding/complete"
+  },
+  ai: {
+    templates: {
+      fixTemplate: "/api/ai/templates/fix-template",
+      generateTemplate: "/api/ai/templates/generate-template",
+      reviewTemplate: "/api/ai/templates/review-template",
+    }
   }
 } as const

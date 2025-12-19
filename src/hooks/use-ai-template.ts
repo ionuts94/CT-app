@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react"
-import { AIGenerateTemplate } from "@/actions/post/template/ai-generate-template"
-import { AIReviewTemplate, T_AITemplateReviewInputs } from "@/actions/post/template/ai-review-template"
+import { useState } from "react"
 import { T_AiTemplateWriteSchema } from "@/validators/template.validator"
 import { T_AITemplateHookReturn } from "@/types/template/ai-template-context"
-import { AIFixTemplate, T_AiFixTemplateArgs } from "@/actions/post/template/ai-fix-template"
+import { T_AiFixTemplateArgs, T_AITemplateReviewInputs } from "@/types/services/ai/templates"
+import CTai from "@/sdk/ai"
 
 
 export const useAITemplate = (): T_AITemplateHookReturn => {
@@ -16,7 +15,7 @@ export const useAITemplate = (): T_AITemplateHookReturn => {
 
     const aiGenerateTemplate = async (templateDetails: T_AiTemplateWriteSchema) => {
         setAIGenerateLoading(true)
-        const { data, error } = await AIGenerateTemplate(templateDetails)
+        const { data, error } = await CTai.templates.generateTemplate(templateDetails)
         setAIGenerateLoading(false)
         setCurrentTemplateRichText(data)
         setTemplateInputs(templateDetails)
@@ -29,7 +28,7 @@ export const useAITemplate = (): T_AITemplateHookReturn => {
 
     const runAITemplateReview = async ({ initialInput, templateRichTextString }: T_AITemplateReviewInputs) => {
         setAIReviewLoading(true)
-        const { data, error } = await AIReviewTemplate({ initialInput, templateRichTextString })
+        const { data, error } = await CTai.templates.reviewTemplate({ initialInput, templateRichTextString })
         setAIReviewLoading(false)
 
         return {
@@ -40,11 +39,7 @@ export const useAITemplate = (): T_AITemplateHookReturn => {
 
     const runAIFixTemplate = async ({ baseInput, baseHtml, issues }: T_AiFixTemplateArgs) => {
         setAiFixLoading(true)
-        const { data, error } = await AIFixTemplate({
-            baseInput,
-            baseHtml,
-            issues,
-        })
+        const { data, error } = await CTai.templates.fixTemplate({ baseInput, baseHtml, issues })
         setAiFixLoading(false)
 
         return {

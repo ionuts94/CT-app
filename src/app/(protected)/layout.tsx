@@ -1,18 +1,22 @@
-import { CheckForOnboarding, GetAuthUser } from "@/actions/post/auth";
 import { Header } from "@/components/header";
 import { AppSidebar } from "@/components/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { envs } from "@/constants/envs";
+import { withSafeService } from "@/lib/services-utils/with-safe-service";
 import { userMockData } from "@/mock-data/user";
+import AuthService from "@/services/auth";
+import OnboardingService from "@/services/onboarding";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
 
 export default async function ProtectedLayout({ children }: PropsWithChildren) {
-    const { data, error } = await GetAuthUser()
-    if (error || !data) {
+    const { data: authUser } = await withSafeService(() => AuthService.getAuthUser())
+
+    if (!authUser) {
         redirect(envs.NEXT_PUBLIC_URL + "/sign-in")
     }
-    await CheckForOnboarding(data)
+
+    await OnboardingService.checkUserOnboarding(authUser)
 
     return (
         <>

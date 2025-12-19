@@ -1,3 +1,4 @@
+import { checkUserOnboarding } from "./check-user-onboarding"
 import { completeOnboarding } from "./complete-onboarding"
 import { createUserOnboarding } from "./create-user-onboarding"
 import { getUserOnboarding } from "./get-user-onboarding"
@@ -7,7 +8,8 @@ const OnboardingService = {
   createUserOnboarding,
   getUserOnboarding,
   updateOnboardingState,
-  completeOnboarding
+  completeOnboarding,
+  checkUserOnboarding,
 }
 
 export default OnboardingService

@@ -1,7 +1,3 @@
-"use server"
-
-import { createClient } from "@/lib/supabase/server";
-import { CustomApiResponse, Status } from "@/types/api-call";
 import { TemplateReviewOutput } from "@/types/services/ai/templates";
 import { T_AiTemplateWriteSchema } from "@/validators/template.validator";
 import OpenAI from "openai";
@@ -13,38 +9,26 @@ export type T_AITemplateReviewInputs = {
   templateRichTextString: string
 }
 
-export async function AIReviewTemplate({
+export async function reviewTemplate({
   initialInput,
   templateRichTextString
-}: T_AITemplateReviewInputs): Promise<CustomApiResponse<TemplateReviewOutput>> {
-  try {
-    const prompt = getPromptForAI({
-      initialInput,
-      templateRichTextString
-    })
+}: T_AITemplateReviewInputs): Promise<TemplateReviewOutput> {
+  const prompt = getPromptForAI({
+    initialInput,
+    templateRichTextString
+  })
 
-    const res = await openai.responses.create({
-      model: "gpt-4o-mini",
-      input: prompt,
-      temperature: 0.2,
-    });
+  const res = await openai.responses.create({
+    model: "gpt-4o-mini",
+    input: prompt,
+    temperature: 0.2,
+  });
 
-    const raw = res.output_text;
-    if (!raw) throw new Error("Missing output_text in response");
-    const parsed = JSON.parse(raw);
+  const raw = res.output_text;
+  if (!raw) throw new Error("Missing output_text in response");
+  const parsed = JSON.parse(raw);
 
-    return {
-      status: Status.SUCCESS,
-      data: parsed
-    };
-  } catch (err: any) {
-    const errMessage = `${err.message}`;
-    console.log(errMessage);
-    return {
-      status: Status.FAILED,
-      error: errMessage
-    };
-  }
+  return parsed
 }
 
 const getPromptForAI = ({

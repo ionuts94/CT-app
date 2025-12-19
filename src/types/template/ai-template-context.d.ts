@@ -1,5 +1,5 @@
 import { T_AiTemplateWriteSchema } from "@/validators/template.validator"
-import { TemplateReviewOutput } from "@/types/template/ai-review-template"
+import { TemplateReviewOutput } from "../services/ai/templates"
 
 export type T_AIGenerateTemplateReturn = {
     templateRichTextString?: string,

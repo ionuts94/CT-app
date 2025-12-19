@@ -3,7 +3,8 @@ import { TemplateHeader } from "./components/template-header";
 import { TemplateForm } from "./components/template-form";
 import { TemplateProvider } from "@/contexts/template-assistant-context";
 import { Template } from "@prisma/client";
-import { GetTemplateById } from "@/actions/post/template";
+import { withSafeService } from "@/lib/services-utils/with-safe-service";
+import TemplateService from "@/services/templates";
 
 type Props = {
   params: Promise<{ templateId: string }>
@@ -14,11 +15,11 @@ export default async function TemplatePage({ params }: Props) {
 
   let templateData: Template | undefined = undefined
   if (templateId !== "new") {
-    const { data, error } = await GetTemplateById({ templateId })
+    const { data, error } = await withSafeService(() => TemplateService.getTemplateById({ templateId }))
     if (error) {
       return (<p className="text-center py-4">Nu putem afisa acest sablon. Va rugam incercati mai tarziu</p>)
     }
-    templateData = data
+    templateData = data || undefined
   }
 
   return (
