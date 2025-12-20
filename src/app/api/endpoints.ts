@@ -46,5 +46,8 @@ export const api = {
       generateTemplate: "/api/ai/templates/generate-template",
       reviewTemplate: "/api/ai/templates/review-template",
     }
+  },
+  storage: {
+    storeFile: "/api/storage/store-file"
   }
 } as const

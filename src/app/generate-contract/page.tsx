@@ -1,5 +1,6 @@
-import { FreeGetViewContract } from "@/actions/post/contracts"
 import { ContractViewSignatures } from "../view-contract/components/contract-view-signatures"
+import { withSafeService } from "@/lib/services-utils/with-safe-service"
+import ContractService from "@/services/contracts"
 
 type Props = {
   searchParams: Promise<{ c: string }>
@@ -7,7 +8,7 @@ type Props = {
 
 export default async function GenerateContractPage({ searchParams }: Props) {
   const { c } = await searchParams
-  const { data } = await FreeGetViewContract({ contractId: c })
+  const { data } = await withSafeService(() => ContractService.getSenderContract({ contractId: c }))
   const contentHtml = data?.currentVersion?.content?.toString().replace(/<p>(<br\s*\/?>)?<\/p>/g, '<p>&nbsp;</p>');
 
   if (!data) return null;

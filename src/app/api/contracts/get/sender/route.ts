@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { CreateUserRecord } from "@/actions/post/user";
-import { CreateOnboardingForUser } from "@/actions/post/onboarding";
+import UserService from "@/services/users";
+import OnboardingService from "@/services/onboarding";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -16,13 +16,13 @@ export async function GET(req: NextRequest) {
     if (error) {
       return NextResponse.redirect(new URL("/sign-in?error=exchange_failed", req.url));
     }
-    await CreateUserRecord({
+    await UserService.createUserRecord({
       id: data.user.id,
-      email: data.user.email,
+      email: data.user.email!,
       firstName: data.user.user_metadata.firstName,
       lastName: data.user.user_metadata.lastName,
     })
-    await CreateOnboardingForUser({ userId: data.user.id })
+    await OnboardingService.createUserOnboarding({ userId: data.user.id })
   }
 
   return NextResponse.redirect(new URL("/onboarding/company", req.url));

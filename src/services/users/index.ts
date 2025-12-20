@@ -1,7 +1,7 @@
 import { createUserRecord } from "./create-user-record"
 
-const UserServices = {
+const UserService = {
   createUserRecord,
 }
 
-export default UserServices
+export default UserService

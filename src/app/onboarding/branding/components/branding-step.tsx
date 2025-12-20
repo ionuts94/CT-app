@@ -11,16 +11,14 @@ import { useForm } from "react-hook-form"
 import { Text } from "@/components/topography"
 import { ArrowRight, UploadCloudIcon } from "lucide-react"
 import { ColorPicker } from "@/components/color-picker"
-import { OnboardingContractPreview } from "../../components/onboarding-contract-preview"
-import { UpdateOnboardingState } from "@/actions/post/onboarding"
 import { LAST_ONBOARDING_STEP } from "../../components/stepts"
 import { ChangeEvent, useState } from "react"
+import { BUCKETS } from "@/constants/buckets"
+import CTOnboarding from "@/sdk/onboarding"
+import { v4 as uuid } from "uuid"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import { SupabaseStoreFile } from "@/actions/post/storage"
-import { BUCKETS } from "@/constants/buckets"
-import { v4 as uuid } from "uuid"
-import CTOnboarding from "@/sdk/onboarding"
+import CTStorage from "@/sdk/storage"
 
 export const BrandingStep: React.FC = ({ }) => {
   const { onboarding, currentStepView, completedSteps, onboardingData, next, findNextStep, setOnboardingBranding } = useOnboardingContext()
@@ -63,7 +61,7 @@ export const BrandingStep: React.FC = ({ }) => {
     if (!file) return;
     const imageD = URL.createObjectURL(file)
     setImagePreviewUrl(imageD)
-    const { data } = await SupabaseStoreFile({
+    const { data } = await CTStorage.storeFile({
       file,
       bucket: BUCKETS.logos,
       filePath: file.name + uuid()
