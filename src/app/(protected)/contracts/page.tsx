@@ -1,9 +1,9 @@
 import { PageContainer } from "@/components/layout";
 import { ContractsHeader } from "./components/contracts-header";
-import { KPIStats } from "../dashboard/components/kpi-stats";
 import { ContractsTable } from "./components/contracts-table";
-import { GetAuthUserContracts } from "@/actions/post/contracts";
 import { ContractsFilterBar } from "./components/contracts-filter-bar";
+import { withSafeService } from "@/lib/services-utils/with-safe-service";
+import ContractService from "@/services/contracts";
 
 type Props = {
   searchParams: Promise<{
@@ -13,11 +13,7 @@ type Props = {
 
 export default async function ContractsPage({ searchParams }: Props) {
   const { status } = await searchParams
-
-  console.log("searchparams in page")
-  console.log(status)
-
-  const { data: contractsData, error: contractsError } = await GetAuthUserContracts({ status })
+  const { data: contractsData, error: contractsError } = await withSafeService(() => ContractService.getAuthUserContracts({ status }))
 
   return (
     <main className="min-h-screen" key={status || "default"}>

@@ -1,6 +1,5 @@
 "use client"
 
-import { SignUp } from "@/actions/post/auth"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-elements"
 import { Body, H1, H2, Text } from "@/components/topography"

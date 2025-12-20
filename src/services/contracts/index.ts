@@ -15,6 +15,7 @@ import { generatePdf } from "./generate-pdf"
 import { updateContractPdfUrl } from "./update"
 import { declineContract } from "./decline"
 import { revokeContract } from "./revoke"
+import { getAuthUserContracts } from "./get-auth-user-contracts"
 
 const ContractService = {
   createContract,
@@ -26,7 +27,8 @@ const ContractService = {
   generatePdf,
   updateContractPdfUrl,
   declineContract,
-  revokeContract
+  revokeContract,
+  getAuthUserContracts
 }
 
 export default ContractService
