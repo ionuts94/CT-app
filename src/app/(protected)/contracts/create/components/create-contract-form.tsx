@@ -1,32 +1,26 @@
 "use client"
 
-import { CreateContractRecord } from "@/actions/post/contracts"
-import { SendContractEmail } from "@/actions/post/email"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark, Textarea } from "@/components/form-elements"
 import { RichTextEditor } from "@/components/rich-text-editor"
 import { SignatureItem } from "@/components/signature-item"
 import { Text } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
-import { Button } from "@/components/ui/button"
 import { Card, CardTitle } from "@/components/ui/card"
 import { Signature, Template } from "@prisma/client"
-import { Check, FileText, Layers } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDebouncedCallback } from "use-debounce"
 import { ContractSentSuccessfully } from "./contract-sent-successfully"
 import { Status } from "@/types/api-call"
 import { toast } from "sonner"
-import { LogAudit } from "@/actions/post/audit"
-
 import CTContract from "@/sdk/contracts"
 import CTEmail from "@/sdk/email"
 
 
 type Props = {
-  template?: Template,
-  signatures?: Signature[]
+  template?: Template | null,
+  signatures?: Signature[] | null
 }
 
 export const CreateContractForm: React.FC<Props> = ({ template, signatures }) => {

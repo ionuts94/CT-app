@@ -1,10 +1,9 @@
-import { GetTemplateById } from "@/actions/post/template"
 import { PageContainer } from "@/components/layout"
-import { RichTextEditor } from "@/components/rich-text-editor"
-import { Card } from "@/components/ui/card"
 import { redirect } from "next/navigation"
 import { CreateContractForm } from "./components/create-contract-form"
-import { GetSignatures } from "@/actions/post/signature"
+import TemplateService from "@/services/templates"
+import SignatureService from "@/services/signatures"
+import { withSafeService } from "@/lib/services-utils/with-safe-service"
 
 type Props = {
   searchParams: Promise<{ t: string }>
@@ -21,8 +20,8 @@ export default async function ContractPage({ searchParams }: Props) {
     { data: template, error: templateError },
     { data: signatures, error: signaturesError }
   ] = await Promise.all([
-    GetTemplateById({ templateId: t }),
-    GetSignatures()
+    withSafeService(() => TemplateService.getTemplateById({ templateId: t })),
+    withSafeService(() => SignatureService.getAuthUserSignatures())
   ])
 
   return (
