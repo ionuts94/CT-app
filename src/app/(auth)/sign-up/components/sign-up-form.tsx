@@ -13,6 +13,7 @@ import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { AuthFormCard } from "../../components/auth-form-card"
 import CTAuth from "@/sdk/auth"
+import { toast } from "sonner"
 
 type Props = {
 
@@ -36,7 +37,7 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
     const handleSignUp = async (values: T_SignUpSchema) => {
         const { error } = await CTAuth.signUpWithPassword(values)
         if (error) {
-            throw Error(error)
+            toast.error(error)
         }
     }
 

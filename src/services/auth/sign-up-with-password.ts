@@ -36,7 +36,10 @@ export async function signUpWithPassword({
     },
   })
 
-  if (error) throw Error("Am intampinat o eroare: " + error.message)
+  if (error) {
+    console.log("Am intampinat o eroare: " + error.message)
+    throw Error("Am intampinat o eroare: " + error.message)
+  }
 
   return data.user
 }

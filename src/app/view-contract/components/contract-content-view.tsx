@@ -1,11 +1,11 @@
-import { T_ViewContract } from "@/actions/post/contracts"
+
 import { Card } from "@/components/ui/card"
 import { Dot, MessageSquare, X } from "lucide-react"
 import { Text } from "@/components/topography"
 import { ContractViewSignatures } from "./contract-view-signatures"
 import { SignerContractControls } from "./signer-contract-controls"
 import { SenderContractControlls } from "./sender-contract-controls"
-
+import { T_ViewContract } from "@/types/services/contracts"
 
 type Props = {
   contract: T_ViewContract,

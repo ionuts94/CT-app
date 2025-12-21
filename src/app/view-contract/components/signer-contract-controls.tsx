@@ -1,10 +1,9 @@
-import { Button } from "@/components/ui/button"
 import { UserSignatureDialog } from "./dialogs/user-signature-dialog"
-import { T_ViewContract } from "@/actions/post/contracts"
 import { Text } from "@/components/topography"
 import { getContractStatusOptions } from "@/components/status-badge"
 import { cn } from "@/lib/utils"
 import { UserContractDeclineDialog } from "./dialogs/user-contract-decline-dialog"
+import { T_ViewContract } from "@/types/services/contracts"
 
 type Props = {
   contract: T_ViewContract

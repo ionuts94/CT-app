@@ -5,10 +5,8 @@ import { PageHeader } from "./page-header"
 import { ContractContentView } from "./contract-content-view"
 import { ReceiverContractAssistant } from "./assistant/receiver-contract-assistant"
 import { CommentsSection } from "./comments-section"
-import { T_ViewContract } from "@/actions/post/contracts"
 import { AuditLog, Comment } from "@prisma/client"
-import { useEffect } from "react"
-import { LogAudit } from "@/actions/post/audit"
+import { T_ViewContract } from "@/types/services/contracts"
 
 type Props = {
   contractData: T_ViewContract,

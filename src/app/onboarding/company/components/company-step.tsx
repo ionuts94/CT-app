@@ -1,6 +1,4 @@
 "use client"
-
-import { UpdateOnboardingState } from "@/actions/post/onboarding"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-elements"
 import { H2 } from "@/components/topography"

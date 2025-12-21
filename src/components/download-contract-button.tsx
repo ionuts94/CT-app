@@ -1,6 +1,6 @@
 "use client"
 
-import { T_ViewContract } from "@/actions/post/contracts"
+import { T_ViewContract } from "@/types/services/contracts"
 import { Button } from "./ui/button"
 import { Download } from "lucide-react"
 import { toast } from "sonner"

@@ -12,6 +12,7 @@ import { LoginSchema, T_LoginSchema } from "@/validators/auth.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import CTAuth from "@/sdk/auth"
+import { toast } from "sonner"
 
 type Props = {
 
@@ -31,15 +32,13 @@ export const SignInForm: React.FC<Props> = ({ }) => {
   const { isSubmitting, errors } = formState
 
   const handleSignIn = async (values: T_LoginSchema) => {
-    console.time("Logging")
     const { error } = await CTAuth.signInWithPassword({
       email: values.email,
       password: values.password
     })
-    console.timeEnd("Logging")
 
     if (error) {
-
+      return toast.error(error)
     }
 
     router.replace("/dashboard")

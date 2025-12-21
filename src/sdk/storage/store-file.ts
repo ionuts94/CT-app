@@ -1,7 +1,25 @@
 import { T_StoreFileBody } from "@/types/api/storage";
-import { httpPost } from "../http";
 import { api } from "@/app/api/endpoints";
 
-export async function storeFile(body: T_StoreFileBody) {
-  return httpPost(api.storage.storeFile, body)
+export async function storeFile({
+  file,
+  filePath,
+  bucket,
+  contentType,
+}: T_StoreFileBody) {
+  const formData = new FormData()
+
+  formData.append("file", file)
+  formData.append("filePath", filePath)
+  formData.append("bucket", bucket)
+  if (contentType) {
+    formData.append("contentType", contentType)
+  }
+
+  const res = await fetch(api.storage.storeFile, {
+    method: "POST",
+    body: formData,
+  })
+
+  return res.json()
 }

@@ -1,11 +1,11 @@
-import { T_ViewContract } from "@/actions/post/contracts"
+
 import { PageWidth } from "@/components/layout"
 import { Text } from "@/components/topography"
-import { Clock } from "lucide-react"
 import { StatusBadge } from "./status-badge"
 import { DownloadContractButton } from "./download-contract-button"
 import { AuditLogDialog } from "./audit-log-dialog"
 import { AuditLog } from "@prisma/client"
+import { T_ViewContract } from "@/types/services/contracts"
 
 type Props = {
   contract: T_ViewContract,

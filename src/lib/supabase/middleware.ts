@@ -1,5 +1,6 @@
-import { CheckForOnboarding, GetAuthUser } from "@/actions/post/auth";
 import { envs } from "@/constants/envs";
+import AuthService from "@/services/auth";
+import OnboardingService from "@/services/onboarding";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -7,7 +8,6 @@ export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
-
 
 
   // With Fluid compute, don't put this client in a global environment
@@ -44,14 +44,14 @@ export async function updateSession(request: NextRequest) {
 
   const [
     { data },
-    { data: authUser },
+    authUser,
   ] = await Promise.all([
     supabase.auth.getClaims(),
-    GetAuthUser(),
+    AuthService.getAuthUser()
   ])
 
   const user = data?.claims;
-  await CheckForOnboarding(authUser!)
+  await OnboardingService.checkUserOnboarding(authUser!)
 
   if (
     request.nextUrl.pathname !== "/" &&

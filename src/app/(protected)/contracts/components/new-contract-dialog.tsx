@@ -6,19 +6,19 @@ import { Dialog, DialogContent, DialogFooter, DialogTitle, DialogTrigger } from 
 import { Plus } from "lucide-react"
 import { TemplateCard } from "../../templates/components/template-card"
 import { useQuery } from "@tanstack/react-query"
-import { GetUserTemplates } from "@/actions/post/template"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import CTTemplate from "@/sdk/templates"
 
 type Props = {
 
 }
 
 export const NewContractDialog: React.FC<Props> = ({ }) => {
-  const query = useQuery({ queryKey: ['templates'], queryFn: () => GetUserTemplates({}) })
+  const query = useQuery({ queryKey: ['templates'], queryFn: () => CTTemplate.getAuthUserTemplates({}) })
   const templates = query.data?.data || []
-
+  console.log(query.data)
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>()
 
   return (

@@ -12,14 +12,12 @@ import { Text } from "@/components/topography"
 import { ArrowRight } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import SignaturePad from "./signature-pad"
-import { UpdateOnboardingState } from "@/actions/post/onboarding"
 import { LAST_ONBOARDING_STEP } from "../../components/stepts"
-import { SupabaseStoreFile } from "@/actions/post/storage"
 import { base64ToFile } from "@/lib/utils"
 import { v4 as uuid } from "uuid"
 import { BUCKETS } from "@/constants/buckets"
-import { useRouter } from "next/navigation"
 import CTOnboarding from "@/sdk/onboarding"
+import CTStorage from "@/sdk/storage"
 
 type Props = {
 
@@ -50,7 +48,7 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
   const handleFormSubmit = async (values: T_SignatureOnboardingSchema) => {
     if (values.png) {
       const file = await base64ToFile(values.png, "signature" + uuid())
-      const { data } = await SupabaseStoreFile({
+      const { data } = await CTStorage.storeFile({
         bucket: BUCKETS.signatures,
         file,
         filePath: file.name,

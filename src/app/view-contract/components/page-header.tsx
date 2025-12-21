@@ -1,5 +1,5 @@
-import { T_ViewContract } from "@/actions/post/contracts"
 import { ViewContractPageHeader } from "@/components/view-contract-page-header"
+import { T_ViewContract } from "@/types/services/contracts"
 import { AuditLog } from "@prisma/client"
 
 type Props = {

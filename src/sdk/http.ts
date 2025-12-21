@@ -25,6 +25,9 @@ export async function httpGet<T = any>(
       ? `?${new URLSearchParams(params as Record<string, string>)}`
       : "";
 
+    console.log("Query in get")
+    console.log(query)
+
     const res = await fetch(`${path}${query}`, {
       method: "GET",
       credentials: "include",

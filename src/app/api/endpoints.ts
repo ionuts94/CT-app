@@ -32,6 +32,7 @@ export const api = {
     create: "/api/templates/create",
     update: "/api/templates/update",
     delete: "/api/templates/delete",
+    getAuthUserTemplates: "/api/templates/get-auth-user-templates"
   },
   audit: {
     contractViewed: `${envs.NEXT_PUBLIC_URL}/api/audit/contract-viewed`,

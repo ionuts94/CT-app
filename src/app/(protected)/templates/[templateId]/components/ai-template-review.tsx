@@ -3,11 +3,10 @@
 import { Card } from "@/components/ui/card"
 import { Text } from "@/components/topography"
 import { useTemplateContext } from "@/contexts/template-assistant-context"
-import { useEffect, useState } from "react"
-import { TemplateReviewOutput } from "@/types/template/ai-review-template"
-import { StatusBadge } from "@/components/status-badge"
+import { useState } from "react"
 import { ButtonWithLoading } from "@/components/button-with-loading"
-import { ContractFixOutputSelective } from "@/types/template/ai-fix-template"
+import { ContractFixOutputSelective, TemplateReviewOutput } from "@/types/services/ai/templates"
+
 
 type Props = {
 

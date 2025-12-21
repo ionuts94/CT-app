@@ -1,5 +1,5 @@
-import { T_ViewContract } from "@/actions/post/contracts"
 import { Text } from "@/components/topography"
+import { T_ViewContract } from "@/types/services/contracts"
 
 type Props = {
   contract: T_ViewContract

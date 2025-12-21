@@ -1,19 +1,16 @@
 "use client"
 
-import { T_ViewContract } from "@/actions/post/contracts"
-import { GeneratePDFForContract } from "@/actions/post/contracts/pdf"
-import { SupabaseStoreFile } from "@/actions/post/storage"
-import { api } from "@/app/api/endpoints"
 import SignaturePad from "@/app/onboarding/signature/components/signature-pad"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, Label } from "@/components/form-elements"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { BUCKETS } from "@/constants/buckets"
-import { envs } from "@/constants/envs"
 import { useDialog } from "@/hooks/use-dialog"
 import { base64ToFile } from "@/lib/utils"
 import CTContract from "@/sdk/contracts"
+import CTStorage from "@/sdk/storage"
+import { T_ViewContract } from "@/types/services/contracts"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -52,7 +49,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
   const handleFormSubmit = handleSubmit(async (values) => {
     if (values.signature.png) {
       const file = await base64ToFile(values.signature.png, "signature" + uuid())
-      const { data } = await SupabaseStoreFile({
+      const { data } = await CTStorage.storeFile({
         bucket: BUCKETS.signatures,
         file,
         filePath: file.name,
