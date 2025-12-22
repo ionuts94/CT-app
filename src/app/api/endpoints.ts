@@ -9,7 +9,9 @@ export const api = {
   },
   auth: {
     signInWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-in-with-password",
-    signUpWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-up-with-password"
+    signUpWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-up-with-password",
+    verifyOTP: "/api/auth/verify-otp",
+    resendOTP: "/api/auth/resend-otp"
   },
   emails: {
     sendContract: envs.NEXT_PUBLIC_URL + "/api/emails/send-contract"

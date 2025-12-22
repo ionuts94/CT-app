@@ -2,18 +2,17 @@
 
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/components/form-elements"
-import { Body, H1, H2, Text } from "@/components/topography"
+import { Text } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
-import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { SignUpSchema, T_SignUpSchema } from "@/validators/auth.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ReceiptText } from "lucide-react"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { AuthFormCard } from "../../components/auth-form-card"
 import CTAuth from "@/sdk/auth"
 import { toast } from "sonner"
+import { ConfirmOTPWindow } from "./confirm-otp-window"
 
 type Props = {
 
@@ -32,7 +31,8 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
     })
 
     const { register, handleSubmit, formState } = form
-    const { errors, isSubmitting } = formState
+    const { errors, isSubmitting, isSubmitSuccessful } = formState
+    const email = form.watch("email")
 
     const handleSignUp = async (values: T_SignUpSchema) => {
         const { error } = await CTAuth.signUpWithPassword(values)
@@ -41,18 +41,9 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
         }
     }
 
-    if (formState.isSubmitSuccessful) {
+    if (isSubmitSuccessful) {
         return (
-            <Card className="w-full max-w-[800px] p-4">
-                <div className="text-primary font-bold flex gap-2 items-center">
-                    <ReceiptText size={30} />
-                    <Text className="text-black text-md font-semibold">CONTRACT TRANSPARENT</Text>
-                </div>
-                <div className="flex flex-col gap-2">
-                    <H2>Verifica-ti emailul</H2>
-                    <Body className="text-color-secondary">Ti-am trimis un link de verificare pe email</Body>
-                </div>
-            </Card>
+            <ConfirmOTPWindow email={email} />
         )
     }
 

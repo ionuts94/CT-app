@@ -33,7 +33,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
     defaultValues: {
       title: "",
       content: template?.content || "",
-      signatureId: signatures?.[0].id || "",
+      signatureId: signatures?.[0]?.id || "",
       receiverName: "",
       receiverEmail: "",
       optionalMessage: "",

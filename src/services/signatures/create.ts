@@ -3,6 +3,9 @@ import { T_CreateSignaturePayload } from "@/types/services/signatures";
 import { Signature } from "@prisma/client";
 
 export async function createSignature({ type, title, imageUrl, userId }: T_CreateSignaturePayload): Promise<Signature> {
+  console.log("Creating signature for user")
+  console.log(userId)
+
   const supabase = await createClient()
   const { data, error } = await supabase.from("signatures").insert({
     type,

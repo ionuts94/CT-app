@@ -10,3 +10,8 @@ export type T_SingUpWithPasswordPayload = {
   password: string,
   cPassword: string
 }
+
+export type T_OTPOperationPayload = {
+  email: string,
+  token: string
+}
