@@ -3,6 +3,7 @@ import { TemplatesHeader } from "./components/templates-header";
 import { TemplatesList } from "./components/templates-list";
 import { TemplatesFilterBar } from "./components/templates-filter-bar";
 import TemplateService from "@/services/templates";
+import { withSafeService } from "@/lib/services-utils/with-safe-service";
 
 type Props = {
   searchParams: Promise<{
@@ -14,11 +15,11 @@ export default async function TemplatesPage({ searchParams }: Props) {
   const { category } = await searchParams
 
   const [
-    data,
-    categories
+    { data, error: dataError },
+    { data: categories, error: categoriesError },
   ] = await Promise.all([
-    TemplateService.getUserTemplates({ category }),
-    TemplateService.getUserTemplatesCategories()
+    withSafeService(() => TemplateService.getUserTemplates({ category })),
+    withSafeService(() => TemplateService.getUserTemplatesCategories())
   ])
 
   return (

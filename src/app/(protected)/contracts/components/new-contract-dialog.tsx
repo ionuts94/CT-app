@@ -10,6 +10,8 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import CTTemplate from "@/sdk/templates"
+import { NoTemplatesFound } from "../../templates/components/no-templates-found"
+import { Text } from "@/components/topography"
 
 type Props = {
 
@@ -18,13 +20,14 @@ type Props = {
 export const NewContractDialog: React.FC<Props> = ({ }) => {
   const query = useQuery({ queryKey: ['templates'], queryFn: () => CTTemplate.getAuthUserTemplates({}) })
   const templates = query.data?.data || []
-  console.log(query.data)
+
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>()
+  const userHasTemplates = templates && templates?.length > 0
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer p-3" variant={"outline"}>
+        <Button className="cursor-pointer p-3">
           <Plus strokeWidth={3} />
           <TextCTA weight="extrabold">
             CREEAZA CONTRACT
@@ -35,23 +38,49 @@ export const NewContractDialog: React.FC<Props> = ({ }) => {
         <DialogTitle className="text-center">
           Alege sablonul din care sa porneasca contractul
         </DialogTitle>
-        <div className="flex w-full max-w-[1200px]">
-          {templates?.map(template => (
-            <div
-              key={template.id}
-              className={cn(
-                "p-4 rounded-lg w-full max-w-[350px] border-[2px] border-transparent",
-                selectedTemplateId === template.id && "border-primary"
-              )}
-              onClick={() => setSelectedTemplateId(template.id)}
-            >
-              <TemplateCard
-                template={template}
-              />
+        {userHasTemplates ? (
+          <>
+            <div className="flex w-full max-w-[1200px]">
+              {templates?.map(template => (
+                <div
+                  key={template.id}
+                  className={cn(
+                    "p-4 rounded-lg w-full max-w-[350px] border-[2px] border-transparent",
+                    selectedTemplateId === template.id && "border-primary"
+                  )}
+                  onClick={() => setSelectedTemplateId(template.id)}
+                >
+                  <TemplateCard
+                    template={template}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <DialogFooter className="flex items-center !justify-center">
+            <DialogFooter className="flex items-center !justify-center">
+              <Button className="px-4 py-4" asChild>
+                <Link href={`/contracts/create?t=${selectedTemplateId || 'new'}`}>
+                  <TextCTA>
+                    Creeaza contract
+                  </TextCTA>
+                </Link>
+              </Button>
+            </DialogFooter>
+          </>
+        ) : (
+          <div className="w-full flex-col gap-4 flex h-full items-center justify-center">
+            <NoTemplatesFound />
+            <Text>sau</Text>
+            <Button className="" variant="link" asChild>
+              <Link href={`/contracts/create?t=new`}>
+                <TextCTA>
+                  Creeaza contract fara șablon
+                </TextCTA>
+              </Link>
+            </Button>
+          </div>
+        )}
+
+        {/* <DialogFooter className="flex items-center !justify-center">
           <Button className="px-4 py-4" asChild>
             <Link href={`/contracts/create?t=${selectedTemplateId}`}>
               <TextCTA>
@@ -59,7 +88,8 @@ export const NewContractDialog: React.FC<Props> = ({ }) => {
               </TextCTA>
             </Link>
           </Button>
-        </DialogFooter>
+        </DialogFooter> */}
+
       </DialogContent>
     </Dialog>
   )

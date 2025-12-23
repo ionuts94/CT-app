@@ -25,7 +25,7 @@ export const PageHeading: React.FC<Props> = ({ children, className }) => {
 export const PageSubHeading: React.FC<Props> = ({ children, className }) => {
   return (
     <Body className={cn("text-color-secondary", className)}>
-      Gestioneaza si semneaza contracte cu claritate!
+      {children}
     </Body>
   )
 }

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Contract } from "@prisma/client"
 import { useRouter } from "next/navigation"
+import { NoContractsFound } from "./no-contracts-found"
 
 type Props = {
   contracts: Contract[]
@@ -15,6 +16,14 @@ type Props = {
 export const ContractsTable: React.FC<Props> = ({ contracts }) => {
   const router = useRouter()
   const viewContract = (contractId: string) => router.push("/c/view-contract?c=" + contractId)
+
+  if (!contracts || contracts.length < 1) {
+    return (
+      <div className="w-full flex justify-center mt-2">
+        <NoContractsFound />
+      </div>
+    )
+  }
 
   return (
     <div className="w-full">

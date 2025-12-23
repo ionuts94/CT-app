@@ -13,7 +13,7 @@ type Props = {
 }
 
 export const TemplateHeader: React.FC<Props> = ({ templateId }) => {
-  const { form, handleSaveTemplate } = useTemplateContext()
+  const { form, isSavingTemplate, handleSaveTemplate } = useTemplateContext()
   const { formState } = form
 
   return (
@@ -30,8 +30,8 @@ export const TemplateHeader: React.FC<Props> = ({ templateId }) => {
           variant="default"
           className="cursor-pointer p-3"
           onClick={handleSaveTemplate}
-          loading={formState.isSubmitting}
-          disabled={!formState.isDirty}
+          loading={isSavingTemplate}
+          disabled={isSavingTemplate || !formState.isDirty}
         >
           <Save strokeWidth={3} />
           <TextCTA weight="extrabold">

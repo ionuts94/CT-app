@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { useDialog } from "@/hooks/use-dialog"
 import { useTemplateContext } from "@/contexts/template-assistant-context"
-
+import { Text } from "@/components/topography"
 
 type Props = {
   onGenerateTemplate: (template: string) => any
@@ -79,6 +79,7 @@ const AiTemplateWriterForm: React.FC<AiTemplateWriterFormProps> = ({ onGenerateT
   }
 
   const handleFormSubmit = async (values: T_AiTemplateWriteSchema) => {
+    if (aiGenerateLoading) return;
     const { templateRichTextString, error } = await aiGenerateTemplate(values)
     if (error) {
       return alert(error)
@@ -121,6 +122,13 @@ const AiTemplateWriterForm: React.FC<AiTemplateWriterFormProps> = ({ onGenerateT
         <Textarea {...register("description")} placeholder="ex: Contract de inchiriere apartament; chirie 600 EUR, garantie 1 luna, utilitati pe chirias, stare initiala, mici reparatii pe chirias, reziliere cu 30 zile." />
         <InvalidInputError>{errors.description?.message}</InvalidInputError>
       </FormRow>
+      {aiGenerateLoading &&
+        <Text size="sm" className="text-color-secondary mt-2 text-center">
+          <RequiredFieldMark />
+          Generăm șablonul tău cu ajutorul AI.
+          Procesul poate dura câteva minute. Te rugăm să nu închizi fereastra.
+        </Text>
+      }
       <DialogFooter className="mt-5">
         <DialogClose asChild>
           <Button type="button" variant="outline">Anuleaza</Button>
@@ -128,6 +136,7 @@ const AiTemplateWriterForm: React.FC<AiTemplateWriterFormProps> = ({ onGenerateT
         <ButtonWithLoading
           type="submit"
           loading={aiGenerateLoading}
+          disabled={aiGenerateLoading}
         >
           {aiGenerateLoading
             ? "Se proceseaza"

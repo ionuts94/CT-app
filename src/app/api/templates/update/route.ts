@@ -4,7 +4,7 @@ import { ZodError } from "zod";
 import TemplateService from "@/services/templates";
 import { Template } from "@prisma/client";
 
-export async function POST(req: NextRequest) {
+export async function PATCH(req: NextRequest) {
   try {
     const updateTemplatePayload = await req.json() as Template
     const data = await TemplateService.update(updateTemplatePayload)
