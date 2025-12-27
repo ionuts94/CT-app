@@ -14,7 +14,7 @@ export const TemplateCard: React.FC<Props> = ({ template, className }) => {
     <Card className="p-4 flex-col gap-2 opacity-85 transition cursor-pointer">
       <div className="flex items-center justify-between">
         <Text weight="bold" className="text-ellipsis line-clamp-1">{template.title}</Text>
-        <TemplateCardControls />
+        <TemplateCardControls template={template} />
       </div>
       <Text className="text-color-secondary">Actualizat la <span className="font-semibold">{new Date(template.updatedAt).toLocaleDateString()}</span></Text>
       <div className="w-ful h-[150px] bg-blue-50 shadow-sm my-2 overflow-hidden" dangerouslySetInnerHTML={{ __html: contentHtml as string }} />
