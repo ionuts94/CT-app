@@ -8,6 +8,8 @@ import { useState } from "react"
 import CTAuth from "@/sdk/auth"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { useCountdown } from "@/hooks/use-countdown"
+import { cn } from "@/lib/utils"
 
 type Props = {
   email: string
@@ -17,23 +19,37 @@ export const ConfirmOTPWindow: React.FC<Props> = ({ email }) => {
   const router = useRouter()
   const [value, setValue] = useState("")
   const [isProcessing, setIsProcessing] = useState(false)
+  const [isProcessingResend, setIsProcessingResend] = useState(false)
+
+  const {
+    isActive: isCountdownActive,
+    secondsLeft,
+    reset,
+    start
+  } = useCountdown(60)
 
   const isButtonDisabled = isProcessing || value.length < 6
+  const isResetOTPDisabled = isProcessing || isCountdownActive
 
   const handleVerify = async () => {
     setIsProcessing(true)
     const { data, error } = await CTAuth.verifyOTP({ email, token: value })
     setIsProcessing(false)
     if (!data || error) {
-      return toast.error("Nu am putut verifica codul. Va rucam incercati din nou.")
+      return toast.error("Codul introdus este invalid sau a expirat. Te rugăm să încerci din nou.")
     }
 
-    toast.success("Emailul a fost verificat cu succes")
+    toast.success("Contul a fost confirmat cu succes.")
     router.push("/onboarding/company")
   }
 
-  const handleResend = async () => {
-
+  const handleResendOTP = async () => {
+    setIsProcessingResend(true)
+    const { error } = await CTAuth.resendOTP({ email })
+    setIsProcessingResend(false)
+    if (error) return toast.error("Nu am putut retrimite codul momentan. Te rugăm să încerci din nou.")
+    start()
+    toast.success("Am trimis un nou cod de verificare.")
   }
 
   return (
@@ -46,14 +62,14 @@ export const ConfirmOTPWindow: React.FC<Props> = ({ email }) => {
         <div className="flex flex-col gap-4">
           <H2>Introdu codul de verificare</H2>
           <Body className="text-color-secondary">
-            Ti-am trimis un cod unic pe email.
-            Te rugam sa il introduci mai jos pentru a confirma contul si a continua catre onboarding.
+            Ți-am trimis un cod de verificare pe adresa de email.
+            Introdu codul mai jos pentru a confirma contul și a continua configurarea.
           </Body>
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <Text weight="semibold">Cod de verificare</Text>
-            <Text className="text-color-secondary">Codul este valabil cateva minute.</Text>
+            <Text className="text-color-secondary">Codul este valabil pentru o perioadă limitată.</Text>
           </div>
           <InputOTP
             maxLength={6}
@@ -69,10 +85,21 @@ export const ConfirmOTPWindow: React.FC<Props> = ({ email }) => {
               <InputOTPSlot className="border-black/40 border-l-[1px] size-10 text-[16px] rounded-md bg-slate-100/40" index={5} />
             </InputOTPGroup>
           </InputOTP>
-          <Text>
-            Nu ai primit codul?
-            <span className="text-primary cursor-pointer hover:text-blue-600"> Trimite codul din nou.</span>
-          </Text>
+          <div>
+            <Text>
+              Nu ai primit codul?
+              <button
+                disabled={isResetOTPDisabled}
+                onClick={handleResendOTP}
+                className="ml-1 text-primary cursor-pointer hover:text-blue-600 disabled:opacity-40 disabled:hover:text-primary"
+              >
+                Retrimite codul
+              </button>
+            </Text>
+            <Text className={cn("text-color-secondary invisible", isCountdownActive && "visible")} size="sm">
+              Poți retrimite codul în {secondsLeft} secunde.
+            </Text>
+          </div>
         </div>
         <ButtonWithLoading
           loading={isProcessing}
@@ -81,7 +108,7 @@ export const ConfirmOTPWindow: React.FC<Props> = ({ email }) => {
           onClick={handleVerify}
         >
           <TextCTA>
-            Confirma contul
+            Confirmă contul
           </TextCTA>
         </ButtonWithLoading>
       </div>

@@ -10,6 +10,7 @@ export const api = {
   auth: {
     signInWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-in-with-password",
     signUpWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-up-with-password",
+    signOut: "/api/auth/sign-out",
     verifyOTP: "/api/auth/verify-otp",
     resendOTP: "/api/auth/resend-otp"
   },

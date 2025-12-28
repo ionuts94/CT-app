@@ -1,6 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
-import { T_OTPOperationPayload } from "@/types/services/auth";
 
-export async function resendOTP({ email }: T_OTPOperationPayload) {
+export async function resendOTP({ email }: { email: string }) {
   const supabase = await createClient()
+
+  const { error } = await supabase.auth.resend({
+    type: 'signup',
+    email: email,
+  })
+
+  if (error) throw Error(error.message)
+
+  return "OK"
 }

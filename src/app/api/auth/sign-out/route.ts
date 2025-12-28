@@ -1,12 +1,11 @@
 import AuthService from "@/services/auth";
 import { Status } from "@/types/api-call";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
-    const { email } = await req.json();
-    const response = await AuthService.resendOTP({ email })
+    const response = await AuthService.signOut()
 
     return NextResponse.json({
       status: Status.SUCCESS,
@@ -15,9 +14,6 @@ export async function POST(req: NextRequest) {
       status: 200
     });
   } catch (error: any) {
-    console.log("Error while resending OTP")
-    console.log(error)
-
     if (error instanceof ZodError) {
       return NextResponse.json({
         status: Status.FAILED,
