@@ -7,6 +7,7 @@ import { extractClientIp } from "../../utils";
 import ContractService from "@/services/contracts"
 import AuthService from "@/services/auth"
 import AuditService from "@/services/audit";
+import UserService from "@/services/users";
 
 const CreateContractSchema = z.object({
   title: z.string().min(1),
@@ -26,7 +27,7 @@ export async function POST(req: NextRequest) {
     const contractUUID = uuid();
     const contractVersionUUID = uuid();
 
-    const user = await AuthService.getUserWithCompany()
+    const { user } = await UserService.getCurrentUserWithCompany()
 
     await ContractService.createContractVersion({
       versionId: contractVersionUUID,

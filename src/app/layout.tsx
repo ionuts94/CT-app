@@ -33,10 +33,8 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-app`}
       >
         <TanstackProvider>
-          <UserProvider>
-            {children}
-            <Toaster richColors position="top-center" />
-          </UserProvider>
+          {children}
+          <Toaster richColors position="top-center" />
         </TanstackProvider>
       </body>
     </html>

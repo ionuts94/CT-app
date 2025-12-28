@@ -10,13 +10,17 @@ import { User } from "@prisma/client"
 import CTAuth from "@/sdk/auth"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { useUserContext } from "@/contexts/user-context"
 
 type Props = {
   user: User
 }
 
-export const Header: React.FC<Props> = ({ user }) => {
+export const Header: React.FC<Props> = ({ }) => {
   const router = useRouter()
+  const { user } = useUserContext()
+
+  console.log(user)
 
   const handleLogOut = async () => {
     const { error } = await CTAuth.signOut()
@@ -38,58 +42,25 @@ export const Header: React.FC<Props> = ({ user }) => {
         <DropdownMenu>
           <DropdownMenuTrigger className="px-3 py-2 border-[2px] rounded-lg border-sidebar-primary flex gap-3 items-center cursor-pointer">
             <Avatar>
-              <AvatarImage src="https://images.pexels.com/photos/686094/pexels-photo-686094.jpeg" />
-              <AvatarFallback>IS</AvatarFallback>
+              <AvatarImage src="" />
+              <AvatarFallback>{(user?.firstName?.[0] || "A") + (user?.lastName?.[0] || "A")}</AvatarFallback>
             </Avatar>
-            <Text size="lg">{user.firstName} {user.lastName}</Text>
+            <Text size="lg">{user?.firstName} {user?.lastName}</Text>
             <ChevronDown />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-80" align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel className="font-semibold">Contul meu</DropdownMenuLabel>
             <DropdownMenuGroup>
               <DropdownMenuItem className="py-3 cursor-pointer">
-                Profile
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                Profil
               </DropdownMenuItem>
               <DropdownMenuItem className="py-3 cursor-pointer">
-                Billing
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="py-3 cursor-pointer">
-                Settings
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="py-3 cursor-pointer">
-                Keyboard shortcuts
-                <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                Setări cont
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem className="py-3 cursor-pointer">Team</DropdownMenuItem>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                <DropdownMenuPortal>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem className="py-3 cursor-pointer">Email</DropdownMenuItem>
-                    <DropdownMenuItem className="py-3 cursor-pointer">Message</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="py-3 cursor-pointer">More...</DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuPortal>
-              </DropdownMenuSub>
-              <DropdownMenuItem className="py-3 cursor-pointer">
-                New Team
-                <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="py-3 cursor-pointer">GitHub</DropdownMenuItem>
-            <DropdownMenuItem className="py-3 cursor-pointer">Support</DropdownMenuItem>
-            <DropdownMenuItem disabled>API</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogOut} className="py-3 cursor-pointer">
-              Log out
+              Deconectare
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

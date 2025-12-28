@@ -2,31 +2,34 @@ import { Header } from "@/components/header";
 import { AppSidebar } from "@/components/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { envs } from "@/constants/envs";
+import { UserProvider } from "@/contexts/user-context";
 import { withSafeService } from "@/lib/services-utils/with-safe-service";
 import { userMockData } from "@/mock-data/user";
-import AuthService from "@/services/auth";
 import OnboardingService from "@/services/onboarding";
+import UserService from "@/services/users";
 import { redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
 
 export default async function ProtectedLayout({ children }: PropsWithChildren) {
-    const { data: authUser } = await withSafeService(() => AuthService.getAuthUser())
+    const { data } = await withSafeService(() => UserService.getCurrentUserWithCompany())
 
-    if (!authUser) {
+    if (!data || !data.authUser) {
         redirect(envs.NEXT_PUBLIC_URL + "/sign-in")
     }
 
-    await OnboardingService.checkUserOnboarding(authUser)
+    await OnboardingService.checkUserOnboarding(data.authUser)
 
     return (
         <>
-            <SidebarProvider>
-                <AppSidebar />
-                <div className="w-full">
-                    <Header user={userMockData as any} />
-                    {children}
-                </div>
-            </SidebarProvider>
+            <UserProvider authUser={data.authUser} user={data.user}>
+                <SidebarProvider>
+                    <AppSidebar />
+                    <div className="w-full">
+                        <Header user={userMockData as any} />
+                        {children}
+                    </div>
+                </SidebarProvider>
+            </UserProvider>
         </>
     )
 }
