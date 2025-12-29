@@ -49,30 +49,38 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
     500
   )
 
-  const handleFormSubmit = async (values: any) => {
-    console.log(values)
+  const handleFormSubmit = (values: any) => {
+    toast.promise(
+      async () => {
+        const { data, error } = await CTContract.createContract({
+          title: values.title,
+          content: values.content,
+          ownerSignatureId: values.signatureId,
+          receiverName: values.receiverName,
+          receiverEmail: values.receiverEmail,
+          optionalMessage: values.optionalMessage
+        })
 
-    const { data, error } = await CTContract.createContract({
-      title: values.title,
-      content: values.content,
-      ownerSignatureId: values.signatureId,
-      receiverName: values.receiverName,
-      receiverEmail: values.receiverEmail,
-      optionalMessage: values.optionalMessage
-    })
+        if (error) throw new Error("Nu am putut trimite contractul. Eroare: " + error)
 
-    if (error) return toast.error(error)
+        await CTEmail.sendContractToClient({
+          contractId: data?.id!,
+          receiverEmail: values.receiverEmail,
+          optionalMessage: values.optionalMessage
+        })
 
-    await CTEmail.sendContractToClient({
-      contractId: data?.id!,
-      receiverEmail: values.receiverEmail,
-      optionalMessage: values.optionalMessage
-    })
-
-    setContractSent({
-      status: Status.SUCCESS,
-      newContractId: data?.id!
-    })
+        setContractSent({
+          status: Status.SUCCESS,
+          newContractId: data?.id!
+        })
+        return "Contractul a fost trimis"
+      },
+      {
+        loading: "Se trimite contractul",
+        success: (successMessage: string) => successMessage,
+        error: (error: any) => error.message
+      }
+    )
   }
 
   if (contractSent.status === Status.SUCCESS) {
