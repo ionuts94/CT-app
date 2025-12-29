@@ -22,8 +22,6 @@ export const Header: React.FC<Props> = ({ }) => {
   const router = useRouter()
   const { user } = useUserContext()
 
-  console.log(user)
-
   const handleLogOut = async () => {
     const { error } = await CTAuth.signOut()
     if (error) return toast.error(error)
@@ -47,6 +45,7 @@ export const Header: React.FC<Props> = ({ }) => {
               firstName={user?.firstName}
               lastName={user?.lastName}
               profilePictureUrl={user?.profilePictureUrl}
+              partyRole="SENDER"
             />
             <Text size="sm">{user?.firstName} {user?.lastName}</Text>
             <ChevronDown />

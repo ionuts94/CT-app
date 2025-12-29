@@ -10,7 +10,7 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-6 w-full">
       <PageContainer className="flex flex-col gap-4">
-        <DashboardHeader user={userMockData} />
+        <DashboardHeader />
         <KPIStats />
         <UpcomingNext />
         <div className="flex gap-4">
