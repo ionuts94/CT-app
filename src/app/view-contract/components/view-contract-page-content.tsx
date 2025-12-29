@@ -5,12 +5,13 @@ import { PageHeader } from "./page-header"
 import { ContractContentView } from "./contract-content-view"
 import { ReceiverContractAssistant } from "./assistant/receiver-contract-assistant"
 import { CommentsSection } from "./comments-section"
-import { AuditLog, Comment } from "@prisma/client"
+import { AuditLog } from "@prisma/client"
 import { T_ViewContract } from "@/types/services/contracts"
+import { CommentWithUser } from "@/types/services/comments"
 
 type Props = {
   contractData: T_ViewContract,
-  commentsData: Comment[],
+  commentsData: CommentWithUser[],
   auditLogData: AuditLog[]
 }
 

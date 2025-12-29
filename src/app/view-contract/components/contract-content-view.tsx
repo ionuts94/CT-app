@@ -16,7 +16,7 @@ export const ContractContentView: React.FC<Props> = ({ contract, isSender }) => 
   const contentHtml = contract?.currentVersion?.content?.toString().replace(/<p>(<br\s*\/?>)?<\/p>/g, '<p>&nbsp;</p>');
 
   return (
-    <Card className="p-0 gap-0 max-h-[85vh] overflow-auto">
+    <Card className="p-0 gap-0 max-h-[85vh] overflow-auto w-full">
       <div className="flex flex-row items-center py-3 px-10 bg-input border-b border-black/10">
         <Text size="sm" className="text-color-secondary">Shared securely via link</Text>
         <Dot />

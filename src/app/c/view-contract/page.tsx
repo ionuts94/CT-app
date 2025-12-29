@@ -39,11 +39,10 @@ export default async function CompnayViewContract({ searchParams }: Props) {
   // TODO: Error handling for contractError, commentsError, auditLogError
 
   return (
-    <main>
+    <main className="bg-app">
       <ViewContractPageHeader
         contract={contractData} auditLog={auditLogData || []}
       />
-
       <PageWidth className="flex flex-1 gap-4 justify-between py-4 shadow-sm">
         <ContractContentView
           isSender={true}
@@ -52,6 +51,7 @@ export default async function CompnayViewContract({ searchParams }: Props) {
       </PageWidth>
       <PageWidth>
         <CommentsSection
+          user={contractData.owner}
           comments={commentsData || []}
           contract={contractData}
           isSender={true}

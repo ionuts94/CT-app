@@ -27,6 +27,8 @@ model User {
 
   createdAt DateTime @default(dbgenerated("now()"))
   updatedAt DateTime @default(dbgenerated("now()")) @updatedAt
+  profilePictureUrl String? 
+
 
   // relații
   memberships Membership[]

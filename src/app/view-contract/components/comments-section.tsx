@@ -5,36 +5,47 @@ import { ResizableTextInput } from "@/components/resizable-text-input"
 import { Text } from "@/components/topography"
 import { cn } from "@/lib/utils"
 import CTComments from "@/sdk/comments"
+import { CommentWithUser } from "@/types/services/comments"
 import { T_ViewContract } from "@/types/services/contracts"
-import { Comment as CommentType } from "@prisma/client"
+import { User } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 
 type Props = {
-  comments: CommentType[],
+  comments: CommentWithUser[],
   contract: T_ViewContract,
-  isSender: boolean
+  isSender: boolean,
+  user?: User
 }
 
-export const CommentsSection: React.FC<Props> = ({ comments, contract, isSender }) => {
+export const CommentsSection: React.FC<Props> = ({ comments, contract, isSender, user }) => {
   const router = useRouter()
   const [input, setInput] = useState("")
 
-  const postComment = async () => {
-    const { error } = await CTComments.postNewComment({
-      content: input,
-      contractId: contract.id,
-      partyRole: isSender ? "SENDER" : "SIGNER",
-      firstName: isSender ? contract.company.name.split(" ")[0] : contract.receiverName.split(" ")[0],
-      lastName: isSender ? contract.company.name.split(" ")[1] : contract.receiverName.split(" ")[1],
-      email: isSender ? contract.owner.email : contract.receiverEmail
-    })
-
-    if (error) return toast.error(error)
-    toast.success("Comentariul a fost postat")
-    router.refresh()
-    setInput("")
+  const postComment = () => {
+    toast.promise(
+      async () => {
+        const { error } = await CTComments.postNewComment({
+          content: input,
+          contractId: contract.id,
+          partyRole: isSender ? "SENDER" : "SIGNER",
+          firstName: isSender ? contract.company.name.split(" ")[0] : contract.receiverName.split(" ")[0],
+          lastName: isSender ? contract.company.name.split(" ")[1] : contract.receiverName.split(" ")[1],
+          email: isSender ? contract.owner.email : contract.receiverEmail,
+          userId: user?.id
+        })
+        if (error) throw new Error("Nu am putut posta comentariul")
+        setInput("")
+        router.refresh()
+        return "Comentariul a fost postat"
+      },
+      {
+        loading: "Se posteaza comentariul...",
+        success: (data: string) => data,
+        error: (error: any) => error.message,
+      }
+    )
   }
 
   return (

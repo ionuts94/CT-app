@@ -11,6 +11,8 @@ import CTAuth from "@/sdk/auth"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useUserContext } from "@/contexts/user-context"
+import Link from "next/link"
+import { UserAvatar } from "./user-avatar"
 
 type Props = {
   user: User
@@ -41,18 +43,21 @@ export const Header: React.FC<Props> = ({ }) => {
 
         <DropdownMenu>
           <DropdownMenuTrigger className="px-3 py-2 border-[2px] rounded-lg border-sidebar-primary flex gap-3 items-center cursor-pointer">
-            <Avatar>
-              <AvatarImage src="" />
-              <AvatarFallback>{(user?.firstName?.[0] || "A") + (user?.lastName?.[0] || "A")}</AvatarFallback>
-            </Avatar>
-            <Text size="lg">{user?.firstName} {user?.lastName}</Text>
+            <UserAvatar
+              firstName={user?.firstName}
+              lastName={user?.lastName}
+              profilePictureUrl={user?.profilePictureUrl}
+            />
+            <Text size="sm">{user?.firstName} {user?.lastName}</Text>
             <ChevronDown />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-80" align="end">
             <DropdownMenuLabel className="font-semibold">Contul meu</DropdownMenuLabel>
             <DropdownMenuGroup>
-              <DropdownMenuItem className="py-3 cursor-pointer">
-                Profil
+              <DropdownMenuItem className="py-3 cursor-pointer" asChild>
+                <Link href="/profile">
+                  Profil
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="py-3 cursor-pointer">
                 Setări cont
