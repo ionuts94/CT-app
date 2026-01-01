@@ -6,7 +6,7 @@ import { RichTextEditor } from "@/components/rich-text-editor"
 import { SignatureItem } from "@/components/signature-item"
 import { Text } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
-import { Card, CardTitle } from "@/components/ui/card"
+import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { Signature, Template } from "@prisma/client"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -16,6 +16,10 @@ import { Status } from "@/types/api-call"
 import { toast } from "sonner"
 import CTContract from "@/sdk/contracts"
 import CTEmail from "@/sdk/email"
+import { Save } from "lucide-react"
+import { SendContractDialog } from "./send-contract-dialog"
+import { FormLabel } from "@/components/ui/form"
+import { DatePicker } from "@/components/ui/date-picker"
 
 
 type Props = {
@@ -34,13 +38,11 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
       title: "",
       content: template?.content || "",
       signatureId: signatures?.[0]?.id || "",
-      receiverName: "",
-      receiverEmail: "",
-      optionalMessage: "",
+
     }
   })
 
-  const receiverEmail = watch("receiverEmail")
+  // const receiverEmail = watch("receiverEmail")
 
   const debouncedSetContent = useDebouncedCallback(
     (html: string) => {
@@ -56,23 +58,20 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
           title: values.title,
           content: values.content,
           ownerSignatureId: values.signatureId,
-          receiverName: values.receiverName,
-          receiverEmail: values.receiverEmail,
-          optionalMessage: values.optionalMessage
         })
 
         if (error) throw new Error("Nu am putut trimite contractul. Eroare: " + error)
 
-        await CTEmail.sendContractToClient({
-          contractId: data?.id!,
-          receiverEmail: values.receiverEmail,
-          optionalMessage: values.optionalMessage
-        })
+        // await CTEmail.sendContractToClient({
+        //   contractId: data?.id!,
+        //   receiverEmail: values.receiverEmail,
+        //   optionalMessage: values.optionalMessage
+        // })
 
-        setContractSent({
-          status: Status.SUCCESS,
-          newContractId: data?.id!
-        })
+        // setContractSent({
+        //   status: Status.SUCCESS,
+        //   newContractId: data?.id!
+        // })
         return "Contractul a fost trimis"
       },
       {
@@ -86,7 +85,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
   if (contractSent.status === Status.SUCCESS) {
     return (
       <ContractSentSuccessfully
-        receiverEmail={receiverEmail}
+        receiverEmail={""}
         newContractId={contractSent.newContractId}
       />
     )
@@ -119,7 +118,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
         </Card>
 
         <Card className="p-4">
-          <CardTitle>Selecteaza Semnatura</CardTitle>
+          <CardTitle>Selecteaza semnatura</CardTitle>
           <FormRow>
             {signatures?.map(signature => (
               <SignatureItem
@@ -129,9 +128,29 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
               />
             ))}
           </FormRow>
+          <FormRow>
+            <CardTitle>Valabilitatea contractului</CardTitle>
+            <CardDescription className="max-w-[600px]">
+              Contractul nu are, implicit, o dată de expirare.
+              Bifați opțiunea de mai jos pentru a seta o dată.
+            </CardDescription>
+            <div className="flex gap-2 items-center">
+              <input className="size-4" type="checkbox" />
+              <Label>Contractul are data de expirare</Label>
+            </div>
+            <DatePicker />
+            <CardDescription>Vei primi un email de reamintire cu 7 zile înainte de expirare.</CardDescription>
+          </FormRow>
+          <FormRow className="flex  flex-row justify-end gap-2">
+            <ButtonWithLoading variant="outline" className="p-4">
+              <Save />
+              Salveaza ca draft
+            </ButtonWithLoading>
+            <SendContractDialog />
+          </FormRow>
         </Card>
 
-        <Card className="p-4">
+        {/* <Card className="p-4">
           <CardTitle>Trimite Contractul</CardTitle>
           <FormRow className="flex-row ">
             <FormRow>
@@ -153,7 +172,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
               Trimite Contractul
             </TextCTA>
           </ButtonWithLoading>
-        </Card>
+        </Card> */}
 
       </div>
       <div className="w-1/3">
