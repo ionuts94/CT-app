@@ -1,21 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { ContractDBInsertPayload } from "@/types/services/contracts";
 import { Contract, ContractStatus } from "@prisma/client";
-
-export type ContractDBInsertPayload = {
-  id: string;
-  title: string;
-  ownerId: string;
-  companyId?: string | null;
-  status: ContractStatus;
-  createdAt: Date;
-  updatedAt: Date;
-  expiresAt: Date;
-  ownerSignatureId: string;
-  receiverName: string;
-  receiverEmail: string;
-  optionalMessage?: string | null;
-  currentVersionId: string;
-};
 
 export async function createContract(payload: ContractDBInsertPayload): Promise<Contract> {
   const supabase = await createClient();
@@ -27,16 +12,15 @@ export async function createContract(payload: ContractDBInsertPayload): Promise<
       title: payload.title,
       ownerId: payload.ownerId,
       companyId: payload.companyId ?? null,
-      status: ContractStatus.OUT_FOR_SIGNATURE,
+      status: payload.status,
 
       createdAt: new Date(),
       updatedAt: new Date(),
-      expiresAt: payload.expiresAt,
+      expiresAt: payload.expiresAt ? new Date(payload.expiresAt) : null,
 
       ownerSignatureId: payload.ownerSignatureId,
       receiverName: payload.receiverName,
       receiverEmail: payload.receiverEmail,
-      optionalMessage: payload.optionalMessage ?? null,
 
       currentVersionId: payload.currentVersionId,
     })

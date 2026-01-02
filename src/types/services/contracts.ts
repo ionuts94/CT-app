@@ -1,4 +1,4 @@
-import { Company, Contract, ContractVersion, Signature, User } from "@prisma/client"
+import { Company, Contract, ContractStatus, ContractVersion, Signature, User } from "@prisma/client"
 
 export type T_ViewContract = Contract & {
   company: Company,
@@ -27,3 +27,19 @@ export type T_FailContractPayload = {
   contractId: string,
   failedReason?: string
 }
+
+export type ContractDBInsertPayload = {
+  id: string;
+  title: string;
+  ownerId: string;
+  companyId?: string | null;
+  status: ContractStatus;
+  createdAt: Date;
+  updatedAt: Date;
+  expiresAt?: string | null;
+  ownerSignatureId: string;
+  receiverName: string;
+  receiverEmail: string;
+  // optionalMessage?: string | null;
+  currentVersionId: string;
+};

@@ -5,18 +5,9 @@ import { v4 as uuid } from "uuid";
 import { ContractStatus } from "@prisma/client";
 import { extractClientIp } from "../../utils";
 import ContractService from "@/services/contracts"
-import AuthService from "@/services/auth"
 import AuditService from "@/services/audit";
 import UserService from "@/services/users";
-
-const CreateContractSchema = z.object({
-  title: z.string().min(1),
-  content: z.string().min(1),
-  ownerSignatureId: z.string().uuid(),
-  receiverName: z.string().min(1),
-  receiverEmail: z.string().email(),
-  optionalMessage: z.string().optional(),
-});
+import { CreateContractSchema } from "@/validators/contract.validator";
 
 export async function POST(req: NextRequest) {
   try {
@@ -40,15 +31,15 @@ export async function POST(req: NextRequest) {
       title: body.title,
       ownerId: user.id,
       companyId: user.company?.id,
-      status: ContractStatus.OUT_FOR_SIGNATURE,
+      status: body.contractStatus || ContractStatus.DRAFT,
       createdAt: new Date(),
       updatedAt: new Date(),
-      expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+      expiresAt: body.expiresAt ?? null,
 
       ownerSignatureId: body.ownerSignatureId,
       receiverName: body.receiverName,
       receiverEmail: body.receiverEmail,
-      optionalMessage: body.optionalMessage ?? null,
+      // optionalMessage: body.optionalMessage ?? null,
       currentVersionId: contractVersionUUID,
     })
 
@@ -87,7 +78,7 @@ export async function POST(req: NextRequest) {
     if (error instanceof ZodError) {
       return NextResponse.json({
         status: Status.FAILED,
-        error: error.flatten(),
+        error: error.message,
       }, {
         status: 400
       });
