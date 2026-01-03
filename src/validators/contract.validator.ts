@@ -26,6 +26,14 @@ export const CreateContractSchema = z.object({
         .string()
         .optional(),
 
+    signingDeadline: z
+        .string()
+        .optional(),
+
+    optionalMessage: z
+        .string()
+        .optional(),
+
     contractStatus: z.nativeEnum(ContractStatus),
 })
 

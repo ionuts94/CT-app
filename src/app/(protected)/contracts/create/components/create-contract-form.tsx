@@ -6,7 +6,7 @@ import { RichTextEditor } from "@/components/rich-text-editor"
 import { SignatureItem } from "@/components/signature-item"
 import { Text } from "@/components/topography"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
-import { ContractStatus, Signature, Template } from "@prisma/client"
+import { Contract, ContractStatus, Signature, Template } from "@prisma/client"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDebouncedCallback } from "use-debounce"
@@ -14,13 +14,16 @@ import { ContractSentSuccessfully } from "./contract-sent-successfully"
 import { Status } from "@/types/api-call"
 import { toast } from "sonner"
 import CTContract from "@/sdk/contracts"
-import { Save } from "lucide-react"
+import { Save, Send } from "lucide-react"
 import { SendContractDialog } from "./send-contract-dialog"
 import { ExpiryDate } from "./expiry-date"
 import { dateUtils } from "@/lib/date-utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CreateContractSchema, T_CreateContractPayload } from "@/validators/contract.validator"
 import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { useDialog } from "@/hooks/use-dialog"
+import CTEmail from "@/sdk/email"
 
 type Props = {
   data: Data,
@@ -42,6 +45,7 @@ type Data = {
 
 export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) => {
   const router = useRouter()
+  const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
 
   const [contractSent, setContractSent] = useState({
     status: "",
@@ -67,10 +71,12 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
       receiverEmail: "",
       contractStatus: ContractStatus.DRAFT,
       expiresAt: undefined,
+      signingDeadline: undefined,
+      optionalMessage: ""
     }
   })
 
-  const { receiverEmail } = watch()
+  const values = watch()
   const {
     errors: formErrors,
     isDirty: formHasChanges,
@@ -93,62 +99,54 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
     )
   }
 
+  const handleOpenDialog = async () => {
+    if (isOpen) {
+      return closeDialog()
+    }
+    const isValid = await runFieldsCheck()
+    if (!isValid) return toast.warning("Te rugăm să corectezi câmpurile marcate.")
+    openDialog()
+  }
+
   const handleSaveDraft = () => {
     toast.promise(
       async () => {
-        console.log("Hereee")
-        let response = ""
+        const values = getValues()
         if (isEditing) {
-          response = await updateContract()
+          await updateContract(values)
+          return "Modificarile au fost salvate"
         } else {
-          response = await createContract()
+          await createContract(values)
+          return "Contractul a fost salvat ca DRAFT"
         }
-
-        console.log("Got responseee")
-        router.replace("/contracts")
-        return response
       },
       {
         loading: "Se salveaza contractul",
-        success: (successMessage: string) => successMessage,
+        success: (successMessage: string) => {
+          router.replace("/contracts")
+          return successMessage
+        },
         error: (error: any) => error.message
       }
     )
   }
 
-  console.log(formErrors)
-
-  const createContract = async () => {
-    console.log("inside create contract func")
-    const values = getValues()
+  const createContract = async (values: T_CreateContractPayload) => {
     const { data, error } = await CTContract.createContract(values)
-
     if (error) {
       console.log("Failed to create contract. Error: " + error)
-      throw new Error("Nu am putut trimite contractul. Eroare: " + error)
+      throw new Error("Nu am putut creea contractul. Eroare: " + error)
     }
-
-    // await CTEmail.sendContractToClient({
-    //   contractId: data?.id!,
-    //   receiverEmail: values.receiverEmail,
-    //   optionalMessage: values.optionalMessage
-    // })
-
-    // setContractSent({
-    //   status: Status.SUCCESS,
-    //   newContractId: data?.id!
-    // })
-    return "Contractul a fost salvat ca DRAFT"
+    return data
   }
 
-  const updateContract = async () => {
-    const values = getValues()
+  const updateContract = async (values: T_CreateContractPayload) => {
     const { data, error } = await CTContract.createContract(values)
     if (error) {
       console.log("Failed to create contract. Error: " + error)
       throw new Error("Nu am putut trimite contractul. Eroare: " + error)
     }
-    return "Modificarile au fost salvate"
+    return data
   }
 
   useEffect(() => {
@@ -174,7 +172,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
   if (contractSent.status === Status.SUCCESS) {
     return (
       <ContractSentSuccessfully
-        receiverEmail={receiverEmail}
+        receiverEmail={values.receiverEmail}
         newContractId={contractSent.newContractId}
       />
     )
@@ -262,7 +260,22 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
               <Save />
               Salveaza ca draft
             </ButtonWithLoading>
-            <SendContractDialog receiverEmail={receiverEmail} />
+            <div>
+              <Button type="button" className="h-full" onClick={handleOpenDialog}>
+                <Send />
+                Trimite spre semnare
+              </Button>
+              <SendContractDialog
+                isOpen={isOpen}
+                contractData={values}
+                onOpenChange={toggleDialog}
+                actionBeforeSend={isEditing ? updateContract : createContract}
+                actionAfterSend={(newContractData: Contract) => setContractSent({
+                  status: Status.SUCCESS,
+                  newContractId: newContractData?.id!
+                })}
+              />
+            </div>
           </FormRow>
         </Card>
 

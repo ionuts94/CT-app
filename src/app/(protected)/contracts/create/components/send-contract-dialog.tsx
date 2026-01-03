@@ -8,26 +8,40 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { DatePicker } from "@/components/ui/date-picker"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { dateUtils } from "@/lib/date-utils"
-import { SendContractSchema, T_SendContractPayload } from "@/validators/contract.validator"
+import { SendContractSchema, T_CreateContractPayload, T_SendContractPayload } from "@/validators/contract.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Send } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { ExpiryDate } from "./expiry-date"
 import { useEffect } from "react"
+import { Contract } from "@prisma/client"
+import CTEmail from "@/sdk/email"
 
 type Props = {
-  receiverEmail: string
+  isOpen: boolean,
+  contractData: T_CreateContractPayload,
+  onOpenChange?: (newValue: boolean) => any,
+  actionBeforeSend: (data: T_CreateContractPayload) => Promise<Contract | undefined>,
+  actionAfterSend: (data: Contract) => any,
 }
 
-export const SendContractDialog: React.FC<Props> = ({ receiverEmail }) => {
-  const { register, formState, setValue } = useForm<T_SendContractPayload>({
+export const SendContractDialog: React.FC<Props> = ({
+  isOpen,
+  contractData,
+  onOpenChange = () => null,
+  actionBeforeSend = () => null,
+  actionAfterSend = () => null
+}) => {
+  const { register, formState, setValue, handleSubmit, watch } = useForm<T_SendContractPayload>({
     resolver: zodResolver(SendContractSchema),
     defaultValues: {
-      receiverEmail: receiverEmail,
+      receiverEmail: contractData.receiverEmail,
       signingDeadline: undefined,
       optionalMessage: ""
     }
   })
+
+  const sendValues = watch()
 
   const handleSigningDeadline = (newDate: Date | null) => {
     setValue(
@@ -39,21 +53,26 @@ export const SendContractDialog: React.FC<Props> = ({ receiverEmail }) => {
   }
 
   const handleFormSubmit = async () => {
-
+    const response = await actionBeforeSend({
+      ...contractData,
+      ...sendValues
+    })
+    if (!response) throw new Error("Nu putem trimite contractul. Va rugam incercati din nou in cateva minute.")
+    await CTEmail.sendContractToClient({
+      contractId: response?.id!,
+      receiverEmail: response.receiverEmail,
+      optionalMessage: response.optionalMessage
+    })
+    onOpenChange(false)
+    actionAfterSend(response)
   }
 
   useEffect(() => {
-    setValue("receiverEmail", receiverEmail)
-  }, [receiverEmail])
+    setValue("receiverEmail", contractData.receiverEmail)
+  }, [contractData])
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>
-          <Send />
-          Trimite spre semnare
-        </Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
@@ -63,17 +82,7 @@ export const SendContractDialog: React.FC<Props> = ({ receiverEmail }) => {
 
           </DialogDescription>
         </DialogHeader>
-        <form className="flex flex-col gap-4">
-          {/* <FormRow className="flex-row ">
-            <FormRow>
-              <Label>Mesaj(optional) <RequiredFieldMark /></Label>
-              <Input {...register("receiverName")} placeholder="Dragos Popescu" />
-            </FormRow>
-            <FormRow>
-              <Label>Email Destinatar <RequiredFieldMark /></Label>
-              <Input {...register("receiverEmail")} placeholder="dragos@popescu.com" />
-            </FormRow>
-          </FormRow> */}
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleFormSubmit)}>
           <FormRow>
             <Label>Email Destinatar <RequiredFieldMark /></Label>
             <Input {...register("receiverEmail")} placeholder="dragos@popescu.com" />
