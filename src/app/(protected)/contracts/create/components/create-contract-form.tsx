@@ -7,7 +7,7 @@ import { SignatureItem } from "@/components/signature-item"
 import { Text } from "@/components/topography"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { ContractStatus, Signature, Template } from "@prisma/client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDebouncedCallback } from "use-debounce"
 import { ContractSentSuccessfully } from "./contract-sent-successfully"
@@ -18,27 +18,49 @@ import { Save } from "lucide-react"
 import { SendContractDialog } from "./send-contract-dialog"
 import { ExpiryDate } from "./expiry-date"
 import { dateUtils } from "@/lib/date-utils"
-import { TextCTA } from "@/components/topography/cta"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CreateContractSchema, T_CreateContractPayload } from "@/validators/contract.validator"
-
+import { useRouter } from "next/navigation"
 
 type Props = {
-  template?: Template | null,
   signatures?: Signature[] | null
+  data: Data,
+  isEditing?: boolean
 }
 
-export const CreateContractForm: React.FC<Props> = ({ template, signatures }) => {
+type Data = {
+  contractId?: string,
+  title?: string,
+  content?: string,
+  ownerSignatureId?: string,
+  receiverName?: string,
+  receiverEmail?: string,
+  contractStatus?: ContractStatus,
+  expiresAt?: string,
+}
+
+export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) => {
+  const router = useRouter()
+
   const [contractSent, setContractSent] = useState({
     status: "",
     newContractId: ""
   })
 
-  const { formState, register, setValue, watch, handleSubmit, getValues, trigger: runFieldsCheck } = useForm<T_CreateContractPayload>({
+  const {
+    formState,
+    register,
+    setValue,
+    watch,
+    handleSubmit,
+    getValues,
+    reset,
+    trigger: runFieldsCheck
+  } = useForm<T_CreateContractPayload>({
     resolver: zodResolver(CreateContractSchema),
     defaultValues: {
       title: "",
-      content: template?.content || "" as any,
+      content: "" as any,
       ownerSignatureId: signatures?.[0]?.id || "",
       receiverName: "",
       receiverEmail: "",
@@ -47,7 +69,21 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
     }
   })
 
-  const receiverEmail = watch("receiverEmail")
+  const values = watch()
+  const {
+    title,
+    receiverEmail,
+    content,
+    contractStatus,
+    ownerSignatureId,
+    receiverName,
+    expiresAt
+  } = values
+  const {
+    errors: formErrors,
+    isDirty: formHasChanges,
+    isSubmitting,
+  } = formState
 
   const debouncedSetContent = useDebouncedCallback(
     (html: string) => {
@@ -68,7 +104,13 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
   const handleSaveDraft = () => {
     toast.promise(
       async () => {
-        const response = await createContract()
+        let response = ""
+        if (isEditing) {
+          response = await updateContract()
+        } else {
+          response = await createContract()
+        }
+        router.replace("/contracts")
         return response
       },
       {
@@ -81,15 +123,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
 
   const createContract = async () => {
     const values = getValues()
-    const { data, error } = await CTContract.createContract({
-      title: values.title,
-      content: values.content,
-      ownerSignatureId: values.ownerSignatureId,
-      contractStatus: values.contractStatus,
-      receiverName: values.receiverName,
-      receiverEmail: values.receiverEmail,
-      expiresAt: values.expiresAt
-    })
+    const { data, error } = await CTContract.createContract(values)
 
     if (error) {
       console.log("Failed to create contract. Error: " + error)
@@ -109,6 +143,36 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
     return "Contractul a fost salvat ca DRAFT"
   }
 
+  const updateContract = async () => {
+    const values = getValues()
+    const { data, error } = await CTContract.createContract(values)
+    if (error) {
+      console.log("Failed to create contract. Error: " + error)
+      throw new Error("Nu am putut trimite contractul. Eroare: " + error)
+    }
+    return "Modificarile au fost salvate"
+  }
+
+  useEffect(() => {
+    reset({
+      title: data.title,
+      content: data?.content || "" as any,
+      ownerSignatureId: signatures?.[0]?.id || "",
+      receiverName: data.receiverName,
+      receiverEmail: data.receiverEmail,
+      contractStatus: data.contractStatus,
+      expiresAt: data.expiresAt
+        ? dateUtils
+          .toUtcEndOfDay(
+            new Date(data.expiresAt),
+            dateUtils.getUserTimeZone()
+          )
+          .toISOString()
+        : undefined
+    })
+
+  }, [data])
+
   if (contractSent.status === Status.SUCCESS) {
     return (
       <ContractSentSuccessfully
@@ -118,19 +182,25 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
     )
   }
 
+  console.log("Content")
+  console.log(content)
+
+  console.log(values)
+  // s
+
   return (
     <form onSubmit={handleSubmit(handleSaveDraft)} className="w-full flex gap-4">
       <div className="w-2/3 flex flex-col gap-4">
         <Card className="p-4">
           <Label htmlFor="template-title">
             Titlu Sablon:
-            <Text size="lg" weight="bold">{template?.title}</Text>
+            <Text size="lg" weight="bold">{"Placeholder for now"}</Text>
           </Label>
 
           <FormRow>
             <Label>Titlu Contract <RequiredFieldMark /></Label>
             <Input {...register("title")} placeholder="" />
-            <InvalidInputError>{formState.errors.title?.message}</InvalidInputError>
+            <InvalidInputError>{formErrors.title?.message}</InvalidInputError>
           </FormRow>
         </Card>
 
@@ -139,7 +209,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
             <CardTitle className="mb-2">Editor contract</CardTitle>
             <InvalidInputError>{ }</InvalidInputError>
             <RichTextEditor
-              content={template?.content as string || ""}
+              content={data.content as string || ""}
               onChange={(htmlString) => debouncedSetContent(htmlString)}
               showAiHelper={false}
             />
@@ -164,6 +234,8 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
               Bifați opțiunea de mai jos pentru a seta o dată.
             </CardDescription>
             <ExpiryDate
+              isOpen={Boolean(data.expiresAt)}
+              defaultValue={data.expiresAt ? new Date(data.expiresAt) : undefined}
               onSelectDate={handleContractExpiryDate}
               ctaText="Contractul are data de expirare"
               additionalInfo={
@@ -183,12 +255,12 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
             <FormRow>
               <Label>Nume Destinatar <RequiredFieldMark /></Label>
               <Input {...register("receiverName")} placeholder="Dragos Popescu" />
-              <InvalidInputError>{formState.errors.receiverName?.message}</InvalidInputError>
+              <InvalidInputError>{formErrors.receiverName?.message}</InvalidInputError>
             </FormRow>
             <FormRow>
               <Label>Email Destinatar <RequiredFieldMark /></Label>
               <Input {...register("receiverEmail")} placeholder="dragos@popescu.com" />
-              <InvalidInputError>{formState.errors.receiverEmail?.message}</InvalidInputError>
+              <InvalidInputError>{formErrors.receiverEmail?.message}</InvalidInputError>
             </FormRow>
           </FormRow>
           <FormRow className="flex  flex-row justify-end gap-2">

@@ -4,13 +4,17 @@ import { DatePicker } from "@/components/ui/date-picker"
 import { useState } from "react"
 
 type Props = {
+    isOpen?: boolean,
     onSelectDate: (newDate: Date | null) => any,
     ctaText: string,
-    additionalInfo: string | React.ReactNode
+    additionalInfo: string | React.ReactNode,
+    defaultValue?: Date,
 }
 
-export const ExpiryDate: React.FC<Props> = ({ onSelectDate, ctaText, additionalInfo }) => {
-    const [checked, setChecked] = useState(false)
+export const ExpiryDate: React.FC<Props> = ({ onSelectDate, ctaText, additionalInfo, defaultValue, isOpen = false }) => {
+    console.log("Got is open")
+    console.log(isOpen)
+    const [checked, setChecked] = useState(isOpen)
 
     const handleRevealClick = (_checked: boolean) => {
         if (!_checked) onSelectDate(null)
@@ -32,7 +36,7 @@ export const ExpiryDate: React.FC<Props> = ({ onSelectDate, ctaText, additionalI
 
             {checked &&
                 <>
-                    <DatePicker onSelectDate={onSelectDate} />
+                    <DatePicker defaultValue={defaultValue} onSelectDate={onSelectDate} />
                     <CardDescription>{additionalInfo}</CardDescription>
                 </>
             }

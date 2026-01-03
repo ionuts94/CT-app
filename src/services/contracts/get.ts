@@ -1,9 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
-import { Company, Contract, User } from "@prisma/client";
+import { Company, Contract, ContractVersion, User } from "@prisma/client";
 
 export type T_ContractWithCompanyAndOwner = Contract & {
   company: Company,
-  owner: User
+  owner: User,
+  currentVersionContent: ContractVersion
 }
 
 export async function getContractWithCompanyAndOwner({

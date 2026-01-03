@@ -13,7 +13,7 @@ export async function getAuthUserContracts({
   const query = supabase.from("contracts").select("*").eq("ownerId", authUser.id)
   if (status) query.eq("status", status)
 
-  const { data, error } = await query
+  const { data, error } = await query.order("createdAt", { ascending: false })
   if (error) throw new Error("Failed to retrieve contracts. Error: " + error.message)
   return data
 }
