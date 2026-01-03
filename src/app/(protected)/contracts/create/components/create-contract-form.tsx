@@ -47,7 +47,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
     }
   })
 
-  // const receiverEmail = watch("receiverEmail")
+  const receiverEmail = watch("receiverEmail")
 
   const debouncedSetContent = useDebouncedCallback(
     (html: string) => {
@@ -112,7 +112,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
   if (contractSent.status === Status.SUCCESS) {
     return (
       <ContractSentSuccessfully
-        receiverEmail={""}
+        receiverEmail={receiverEmail}
         newContractId={contractSent.newContractId}
       />
     )
@@ -136,6 +136,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
 
         <Card className="p-4">
           <FormRow>
+            <CardTitle className="mb-2">Editor contract</CardTitle>
             <InvalidInputError>{ }</InvalidInputError>
             <RichTextEditor
               content={template?.content as string || ""}
@@ -195,7 +196,7 @@ export const CreateContractForm: React.FC<Props> = ({ template, signatures }) =>
               <Save />
               Salveaza ca draft
             </ButtonWithLoading>
-            <SendContractDialog />
+            <SendContractDialog receiverEmail={receiverEmail} />
           </FormRow>
         </Card>
 

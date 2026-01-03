@@ -5,9 +5,10 @@ import { Text } from "@/components/topography"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Contract } from "@prisma/client"
+import { Contract, ContractStatus } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { NoContractsFound } from "./no-contracts-found"
+import { format } from "date-fns"
 
 type Props = {
   contracts: Contract[]
@@ -15,7 +16,12 @@ type Props = {
 
 export const ContractsTable: React.FC<Props> = ({ contracts }) => {
   const router = useRouter()
-  const viewContract = (contractId: string) => router.push("/c/view-contract?c=" + contractId)
+
+  const viewContract = (contract: Contract) => {
+    if (contract.status === ContractStatus.DRAFT)
+      return router.push("/contracts/edit?c=" + contract.id)
+    router.push("/c/view-contract?c=" + contract.id)
+  }
 
   if (!contracts || contracts.length < 1) {
     return (
@@ -43,7 +49,7 @@ export const ContractsTable: React.FC<Props> = ({ contracts }) => {
           </TableHeader>
           <TableBody>
             {contracts.map((contract, index) => (
-              <TableRow key={index} className="hover:bg-muted/50" onClick={() => viewContract(contract.id)}>
+              <TableRow key={index} className="hover:bg-muted/50" onClick={() => viewContract(contract)}>
                 <TableCell className="py-5 text-[15px]"><Input type="checkbox" className="size-4" /></TableCell>
                 <TableCell className="py-5 text-[15px]">{contract.receiverName}</TableCell>
                 <TableCell className="py-5 text-[15px]">{contract.title}</TableCell>
@@ -51,7 +57,7 @@ export const ContractsTable: React.FC<Props> = ({ contracts }) => {
                   <StatusBadge status={contract.status} />
                 </TableCell>
                 <TableCell className="py-5 text-[15px]">
-                  {new Date(contract.createdAt).toLocaleDateString()}
+                  {format(contract.createdAt, "dd.MM.yyyy, HH:mm:ss")}
                 </TableCell>
                 <TableCell className="py-5 text-[15px] text-right">TODO</TableCell>
               </TableRow>

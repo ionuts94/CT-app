@@ -30,3 +30,19 @@ export const CreateContractSchema = z.object({
 })
 
 export type T_CreateContractPayload = z.infer<typeof CreateContractSchema>
+
+
+export const SendContractSchema = z.object({
+    receiverEmail: z
+        .string()
+        .email("Adresa de email a destinatarului nu este validă."),
+    optionalMessage: z
+        .string()
+        .optional()
+    ,
+    signingDeadline: z
+        .string()
+        .optional(),
+})
+
+export type T_SendContractPayload = z.infer<typeof SendContractSchema>

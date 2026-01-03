@@ -7,25 +7,44 @@ import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { DatePicker } from "@/components/ui/date-picker"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { dateUtils } from "@/lib/date-utils"
+import { SendContractSchema, T_SendContractPayload } from "@/validators/contract.validator"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Send } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { ExpiryDate } from "./expiry-date"
+import { useEffect } from "react"
 
 type Props = {
-
+  receiverEmail: string
 }
 
-export const SendContractDialog: React.FC<Props> = ({ }) => {
-  const { register, formState } = useForm({
+export const SendContractDialog: React.FC<Props> = ({ receiverEmail }) => {
+  const { register, formState, setValue } = useForm<T_SendContractPayload>({
+    resolver: zodResolver(SendContractSchema),
     defaultValues: {
-      receiverName: "",
-      receiverEmail: "",
+      receiverEmail: receiverEmail,
+      signingDeadline: undefined,
       optionalMessage: ""
     }
   })
 
+  const handleSigningDeadline = (newDate: Date | null) => {
+    setValue(
+      "signingDeadline",
+      newDate
+        ? dateUtils.toUtcEndOfDay(newDate, dateUtils.getUserTimeZone()).toISOString()
+        : undefined
+    )
+  }
+
   const handleFormSubmit = async () => {
 
   }
+
+  useEffect(() => {
+    setValue("receiverEmail", receiverEmail)
+  }, [receiverEmail])
 
   return (
     <Dialog>
@@ -45,15 +64,19 @@ export const SendContractDialog: React.FC<Props> = ({ }) => {
           </DialogDescription>
         </DialogHeader>
         <form className="flex flex-col gap-4">
-          <FormRow className="flex-row ">
+          {/* <FormRow className="flex-row ">
             <FormRow>
-              <Label>Nume Destinatar <RequiredFieldMark /></Label>
+              <Label>Mesaj(optional) <RequiredFieldMark /></Label>
               <Input {...register("receiverName")} placeholder="Dragos Popescu" />
             </FormRow>
             <FormRow>
               <Label>Email Destinatar <RequiredFieldMark /></Label>
               <Input {...register("receiverEmail")} placeholder="dragos@popescu.com" />
             </FormRow>
+          </FormRow> */}
+          <FormRow>
+            <Label>Email Destinatar <RequiredFieldMark /></Label>
+            <Input {...register("receiverEmail")} placeholder="dragos@popescu.com" />
           </FormRow>
           <FormRow>
             <Label>Mesaj optional</Label>
@@ -64,12 +87,13 @@ export const SendContractDialog: React.FC<Props> = ({ }) => {
             <CardDescription className="max-w-[600px]">
               Contractul poate fi semnat oricând, implicit.
             </CardDescription>
-            <div className="flex gap-2 items-center">
-              <input className="size-4" type="checkbox" />
-              <Label>Setează un termen de semnare</Label>
-            </div>
-            <DatePicker />
-            <CardDescription>Vom trimite un email de reamintire cu 48 de ore înainte de acest termen.</CardDescription>
+
+            <ExpiryDate
+              onSelectDate={handleSigningDeadline}
+              ctaText="Setează un termen de semnare"
+              additionalInfo="Vom trimite un email de reamintire cu 48 de ore înainte de acest termen."
+            />
+
           </FormRow>
 
           <ButtonWithLoading loading={formState.isSubmitting} className="py-4 px-6 w-fit">
