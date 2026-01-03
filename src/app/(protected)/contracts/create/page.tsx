@@ -27,7 +27,15 @@ export default async function ContractPage({ searchParams }: Props) {
   return (
     <main>
       <PageContainer className="flex flex-col gap-4">
-        <ContractForm template={template} signatures={signatures} />
+        <ContractForm
+          signatures={signatures}
+          data={{
+            content: template?.content as string,
+            templateTitle: template?.title,
+          }}
+        />
+
+
       </PageContainer>
     </main>
   )

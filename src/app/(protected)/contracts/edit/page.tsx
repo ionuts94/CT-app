@@ -23,19 +23,20 @@ export default async function EditContractPage({ searchParams }: Props) {
     return <p>Errorr</p>
   }
 
+
+  console.log(contract)
   return (
     <main>
       <PageContainer className="flex flex-col gap-4">
         <ContractForm
           isEditing
-          contract={contract}
           signatures={signatures}
           data={{
             contractId: c,
             title: contract.title,
             content: contract.currentVersionContent.content,
             contractStatus: contract.status,
-            expiresAt: contract.expiresAt,
+            expiresAt: contract.expiresAt || undefined,
             ownerSignatureId: contract.ownerSignatureId,
             receiverEmail: contract.receiverEmail,
             receiverName: contract.receiverName

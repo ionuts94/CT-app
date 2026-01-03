@@ -23,12 +23,13 @@ import { CreateContractSchema, T_CreateContractPayload } from "@/validators/cont
 import { useRouter } from "next/navigation"
 
 type Props = {
-  signatures?: Signature[] | null
   data: Data,
+  signatures?: Signature[] | null
   isEditing?: boolean
 }
 
 type Data = {
+  templateTitle?: string
   contractId?: string,
   title?: string,
   content?: string,
@@ -69,16 +70,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
     }
   })
 
-  const values = watch()
-  const {
-    title,
-    receiverEmail,
-    content,
-    contractStatus,
-    ownerSignatureId,
-    receiverName,
-    expiresAt
-  } = values
+  const { receiverEmail } = watch()
   const {
     errors: formErrors,
     isDirty: formHasChanges,
@@ -104,12 +96,15 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
   const handleSaveDraft = () => {
     toast.promise(
       async () => {
+        console.log("Hereee")
         let response = ""
         if (isEditing) {
           response = await updateContract()
         } else {
           response = await createContract()
         }
+
+        console.log("Got responseee")
         router.replace("/contracts")
         return response
       },
@@ -121,7 +116,10 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
     )
   }
 
+  console.log(formErrors)
+
   const createContract = async () => {
+    console.log("inside create contract func")
     const values = getValues()
     const { data, error } = await CTContract.createContract(values)
 
@@ -160,7 +158,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
       ownerSignatureId: signatures?.[0]?.id || "",
       receiverName: data.receiverName,
       receiverEmail: data.receiverEmail,
-      contractStatus: data.contractStatus,
+      contractStatus: data.contractStatus || ContractStatus.DRAFT,
       expiresAt: data.expiresAt
         ? dateUtils
           .toUtcEndOfDay(
@@ -182,20 +180,16 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
     )
   }
 
-  console.log("Content")
-  console.log(content)
-
-  console.log(values)
-  // s
-
   return (
     <form onSubmit={handleSubmit(handleSaveDraft)} className="w-full flex gap-4">
       <div className="w-2/3 flex flex-col gap-4">
         <Card className="p-4">
-          <Label htmlFor="template-title">
-            Titlu Sablon:
-            <Text size="lg" weight="bold">{"Placeholder for now"}</Text>
-          </Label>
+          {data.templateTitle &&
+            <Label htmlFor="template-title">
+              Titlu Sablon:
+              <Text size="lg" weight="bold">{data.templateTitle}</Text>
+            </Label>
+          }
 
           <FormRow>
             <Label>Titlu Contract <RequiredFieldMark /></Label>
@@ -264,7 +258,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
             </FormRow>
           </FormRow>
           <FormRow className="flex  flex-row justify-end gap-2">
-            <ButtonWithLoading type="submit" variant="outline" className="p-4">
+            <ButtonWithLoading disabled={!formHasChanges} type="submit" variant="outline" className="p-4">
               <Save />
               Salveaza ca draft
             </ButtonWithLoading>
