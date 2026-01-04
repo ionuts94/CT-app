@@ -5,9 +5,11 @@ import { getSenderContract } from "./get-sender-contract"
 import { onContractSigned } from "./on-contract-signed"
 import { receiverSignContract } from "./receiver-sign-contract"
 import { revokeContract } from "./revoke"
+import { updateContract } from "./update"
 
 const CTContract = {
   createContract,
+  updateContract,
   getSenderContract,
   getReceiverContract,
   receiverSignContract,

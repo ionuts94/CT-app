@@ -33,8 +33,6 @@ export const CreateContractSchema = z.object({
     optionalMessage: z
         .string()
         .optional(),
-
-    contractStatus: z.nativeEnum(ContractStatus),
 })
 
 export type T_CreateContractPayload = z.infer<typeof CreateContractSchema>

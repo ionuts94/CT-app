@@ -69,7 +69,6 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
       ownerSignatureId: signatures?.[0]?.id || "",
       receiverName: "",
       receiverEmail: "",
-      contractStatus: ContractStatus.DRAFT,
       expiresAt: undefined,
       signingDeadline: undefined,
       optionalMessage: ""
@@ -141,7 +140,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
   }
 
   const updateContract = async (values: T_CreateContractPayload) => {
-    const { data, error } = await CTContract.createContract(values)
+    const { data, error } = await CTContract.updateContract(values)
     if (error) {
       console.log("Failed to create contract. Error: " + error)
       throw new Error("Nu am putut trimite contractul. Eroare: " + error)
@@ -156,7 +155,6 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
       ownerSignatureId: signatures?.[0]?.id || "",
       receiverName: data.receiverName,
       receiverEmail: data.receiverEmail,
-      contractStatus: data.contractStatus || ContractStatus.DRAFT,
       expiresAt: data.expiresAt
         ? dateUtils
           .toUtcEndOfDay(

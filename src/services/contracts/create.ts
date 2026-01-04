@@ -12,7 +12,7 @@ export async function createContract(payload: ContractDBInsertPayload): Promise<
       title: payload.title,
       ownerId: payload.ownerId,
       companyId: payload.companyId ?? null,
-      status: payload.status,
+      status: ContractStatus.DRAFT,
 
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -28,7 +28,7 @@ export async function createContract(payload: ContractDBInsertPayload): Promise<
     .maybeSingle();
 
   if (error) {
-    throw new Error("Failed to insert contract: " + error.message);
+    throw new Error("Failed to create contract: " + error.message);
   }
 
   return data;

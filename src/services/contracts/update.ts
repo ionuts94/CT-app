@@ -1,19 +1,17 @@
 import { createClient } from "@/lib/supabase/server";
-import { T_ContractWithVersion } from "@/types/services/contracts";
+import { ContractDBInsertPayload } from "@/types/services/contracts";
+import { Contract } from "@prisma/client";
 
-export async function updateContractPdfUrl({
-  contractId, pdfUrl
-}: {
-  contractId: string, pdfUrl: string
-}): Promise<T_ContractWithVersion> {
-  const supabase = await createClient();
+export async function updateContract(payload: ContractDBInsertPayload): Promise<Contract> {
+  const supabase = await createClient()
 
   const { data, error } = await supabase.from("contracts")
-    .update({ signedPdfUrl: pdfUrl })
-    .eq("id", contractId)
-    .select("*, currentVersion: contract_versions(*)")
+    .update(payload)
+    .eq("id", payload.id)
+    .select("*")
     .maybeSingle()
 
-  if (error) throw new Error(error.message)
+  if (error) throw new Error("Failed to update contract. Error: " + error.message)
+
   return data
 }

@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       title: body.title,
       ownerId: user.id,
       companyId: user.company?.id,
-      status: body.contractStatus || ContractStatus.DRAFT,
+      status: ContractStatus.DRAFT,
       createdAt: new Date(),
       updatedAt: new Date(),
       expiresAt: body.expiresAt ?? null,

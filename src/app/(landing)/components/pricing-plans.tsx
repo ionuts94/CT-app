@@ -15,7 +15,7 @@ export const PricingPlans: React.FC = ({ }) => {
         <div className="mx-auto w-full max-w-[680px] flex flex-col gap-4 items-center justify-center">
           <PricingCard
             pricingTitle="Trial"
-            pricingDetails="3 contracte gratuite — fără obligații."
+            pricingDetails="3 contracte gratuite. Fără card. Fără obligații."
             price={<p className="text-xl font-bold text-primary">0 €</p>}
           />
 

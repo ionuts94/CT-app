@@ -33,13 +33,14 @@ export type ContractDBInsertPayload = {
   title: string;
   ownerId: string;
   companyId?: string | null;
-  status: ContractStatus;
   createdAt: Date;
   updatedAt: Date;
   expiresAt?: string | null;
+  signingDeadline?: string | null;
+  status: ContractStatus,
   ownerSignatureId: string;
   receiverName: string;
   receiverEmail: string;
-  // optionalMessage?: string | null;
+  optionalMessage?: string | null;
   currentVersionId: string;
 };

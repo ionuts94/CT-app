@@ -19,6 +19,7 @@ export const api = {
   },
   contracts: {
     create: envs.NEXT_PUBLIC_URL + "/api/contracts/create",
+    update: envs.NEXT_PUBLIC_URL + "/api/contracts/update",
     get: {
       receiver: envs.NEXT_PUBLIC_URL + "/api/contracts/get/receiver",
       sender: envs.NEXT_PUBLIC_URL + "/api/contracts/get/sender",
