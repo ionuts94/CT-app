@@ -1,11 +1,4 @@
 import { createContract } from "./create"
-// export * from "./send"
-// export * from "./view"
-// export * from "./comment"
-// export * from "./sign"
-// export * from "./decline"
-// export * from "./revoke"
-// export * from "./list"
 import { getContractWithCompanyAndOwner } from "./get"
 import { createContractVersion } from "./versions"
 import { getReceiverContract } from "./get-receiver-contract"
@@ -17,6 +10,8 @@ import { declineContract } from "./decline"
 import { revokeContract } from "./revoke"
 import { getAuthUserContracts } from "./get-auth-user-contracts"
 import { updateContract } from "./update"
+import { hashContent } from "./hash-content"
+import { hasContentChanged } from "./has-content-changed"
 
 const ContractService = {
   createContract,
@@ -30,7 +25,9 @@ const ContractService = {
   updateContractPdfUrl,
   declineContract,
   revokeContract,
-  getAuthUserContracts
+  getAuthUserContracts,
+  hashContent,
+  hasContentChanged,
 }
 
 export default ContractService

@@ -20,6 +20,7 @@ export default async function EditContractPage({ searchParams }: Props) {
   ])
 
   if (contractError || !contract) {
+    console.log("error" + contractError?.message)
     return <p>Errorr</p>
   }
 

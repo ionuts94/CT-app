@@ -12,8 +12,6 @@ type Props = {
 }
 
 export const ExpiryDate: React.FC<Props> = ({ onSelectDate, ctaText, additionalInfo, defaultValue, isOpen = false }) => {
-    console.log("Got is open")
-    console.log(isOpen)
     const [checked, setChecked] = useState(isOpen)
 
     const handleRevealClick = (_checked: boolean) => {

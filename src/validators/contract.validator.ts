@@ -1,7 +1,7 @@
 import { ContractStatus } from "@prisma/client";
 import z from "zod";
 
-export const CreateContractSchema = z.object({
+export const ContractSchema = z.object({
     title: z
         .string()
         .min(5, "Titlul contractului trebuie să conțină cel puțin 5 caractere."),
@@ -35,7 +35,7 @@ export const CreateContractSchema = z.object({
         .optional(),
 })
 
-export type T_CreateContractPayload = z.infer<typeof CreateContractSchema>
+export type T_ContractPayload = z.infer<typeof ContractSchema>
 
 
 export const SendContractSchema = z.object({

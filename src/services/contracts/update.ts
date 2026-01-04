@@ -1,12 +1,31 @@
 import { createClient } from "@/lib/supabase/server";
 import { ContractDBInsertPayload } from "@/types/services/contracts";
-import { Contract } from "@prisma/client";
+import { Contract, ContractStatus } from "@prisma/client";
 
-export async function updateContract(payload: ContractDBInsertPayload): Promise<Contract> {
+type ContractDBUpdatePayload = ContractDBInsertPayload & {
+  status: ContractStatus
+}
+
+export async function updateContract(payload: ContractDBUpdatePayload): Promise<Contract> {
   const supabase = await createClient()
 
   const { data, error } = await supabase.from("contracts")
-    .update(payload)
+    .update({
+      title: payload.title,
+      ownerId: payload.ownerId,
+      companyId: payload.companyId ?? null,
+      status: payload.status,
+
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiresAt: payload.expiresAt ? new Date(payload.expiresAt) : null,
+
+      ownerSignatureId: payload.ownerSignatureId,
+      receiverName: payload.receiverName,
+      receiverEmail: payload.receiverEmail,
+
+      currentVersionId: payload.currentVersionId,
+    })
     .eq("id", payload.id)
     .select("*")
     .maybeSingle()

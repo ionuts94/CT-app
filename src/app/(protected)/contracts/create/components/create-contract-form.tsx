@@ -19,7 +19,7 @@ import { SendContractDialog } from "./send-contract-dialog"
 import { ExpiryDate } from "./expiry-date"
 import { dateUtils } from "@/lib/date-utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CreateContractSchema, T_CreateContractPayload } from "@/validators/contract.validator"
+import { ContractSchema, T_ContractPayload } from "@/validators/contract.validator"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useDialog } from "@/hooks/use-dialog"
@@ -61,8 +61,8 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
     getValues,
     reset,
     trigger: runFieldsCheck
-  } = useForm<T_CreateContractPayload>({
-    resolver: zodResolver(CreateContractSchema),
+  } = useForm<T_ContractPayload>({
+    resolver: zodResolver(ContractSchema),
     defaultValues: {
       title: "",
       content: "" as any,
@@ -130,7 +130,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
     )
   }
 
-  const createContract = async (values: T_CreateContractPayload) => {
+  const createContract = async (values: T_ContractPayload) => {
     const { data, error } = await CTContract.createContract(values)
     if (error) {
       console.log("Failed to create contract. Error: " + error)
@@ -139,13 +139,16 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
     return data
   }
 
-  const updateContract = async (values: T_CreateContractPayload) => {
-    const { data, error } = await CTContract.updateContract(values)
+  const updateContract = async (values: T_ContractPayload) => {
+    const { data: updateData, error } = await CTContract.updateContract({
+      ...values,
+      contractId: data.contractId!
+    })
     if (error) {
       console.log("Failed to create contract. Error: " + error)
       throw new Error("Nu am putut trimite contractul. Eroare: " + error)
     }
-    return data
+    return updateData
   }
 
   useEffect(() => {

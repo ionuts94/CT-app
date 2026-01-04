@@ -7,13 +7,14 @@ import { extractClientIp } from "../../utils";
 import ContractService from "@/services/contracts"
 import AuditService from "@/services/audit";
 import UserService from "@/services/users";
-import { CreateContractSchema } from "@/validators/contract.validator";
+import { ContractSchema } from "@/validators/contract.validator";
+import { T_CreateContractBody } from "@/types/api/contracts";
 
 export async function POST(req: NextRequest) {
   try {
     const { ip, userAgent } = extractClientIp(req)
-    const json = await req.json();
-    const body = CreateContractSchema.parse(json);
+    const json = await req.json() as T_CreateContractBody
+    const body = ContractSchema.parse(json);
 
     const contractUUID = uuid();
     const contractVersionUUID = uuid();

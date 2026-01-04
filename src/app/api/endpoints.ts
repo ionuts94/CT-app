@@ -1,5 +1,4 @@
 import { envs } from "@/constants/envs";
-import { reviewTemplate } from "@/services/ai/templates/review-template";
 
 export const api = {
   contract: {
