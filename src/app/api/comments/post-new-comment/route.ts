@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
       data: ""
     })
   } catch (err: any) {
+    console.log("Failed to post comment. Error: " + err.message)
     return NextResponse.json({
       status: Status.FAILED,
       error: err.message

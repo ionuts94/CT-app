@@ -35,6 +35,7 @@ export const CommentsSection: React.FC<Props> = ({ comments, contract, isSender,
           email: isSender ? contract.owner.email : contract.receiverEmail,
           userId: user?.id
         })
+
         if (error) throw new Error("Nu am putut posta comentariul")
         setInput("")
         router.refresh()

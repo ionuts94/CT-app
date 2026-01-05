@@ -6,5 +6,5 @@ export const envs = {
   NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
   DATABASE_URL: process.env.DATABASE_URL,
   DIRECT_URL: process.env.DIRECT_URL,
-  NEXT_PUBLIC_BREVO_API_KEY: process.env.NEXT_PUBLIC_BREVO_API_KEY
+  BREVO_API_KEY: process.env.BREVO_API_KEY
 } as const 

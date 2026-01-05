@@ -3,12 +3,10 @@
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, Label, RequiredFieldMark, Textarea } from "@/components/form-elements"
 import { TextCTA } from "@/components/topography/cta"
-import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardTitle } from "@/components/ui/card"
-import { DatePicker } from "@/components/ui/date-picker"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { CardDescription, CardTitle } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { dateUtils } from "@/lib/date-utils"
-import { SendContractSchema, T_CreateContractPayload, T_SendContractPayload } from "@/validators/contract.validator"
+import { SendContractSchema, T_ContractPayload, T_SendContractPayload } from "@/validators/contract.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Send } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -19,9 +17,9 @@ import CTEmail from "@/sdk/email"
 
 type Props = {
   isOpen: boolean,
-  contractData: T_CreateContractPayload,
+  contractData: T_ContractPayload,
   onOpenChange?: (newValue: boolean) => any,
-  actionBeforeSend: (data: T_CreateContractPayload) => Promise<Contract | undefined>,
+  actionBeforeSend: (data: T_ContractPayload) => Promise<Contract | undefined>,
   actionAfterSend: (data: Contract) => any,
 }
 
@@ -82,7 +80,8 @@ export const SendContractDialog: React.FC<Props> = ({
 
           </DialogDescription>
         </DialogHeader>
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleFormSubmit)}>
+        <div className="flex flex-col gap-4">
+
           <FormRow>
             <Label>Email Destinatar <RequiredFieldMark /></Label>
             <Input {...register("receiverEmail")} placeholder="dragos@popescu.com" />
@@ -105,14 +104,17 @@ export const SendContractDialog: React.FC<Props> = ({
 
           </FormRow>
 
-          <ButtonWithLoading loading={formState.isSubmitting} className="py-4 px-6 w-fit">
+          <ButtonWithLoading
+            type="button"
+            loading={formState.isSubmitting}
+            className="py-4 px-6 w-fit"
+            onClick={handleSubmit(handleFormSubmit)}
+          >
             <Send />
-            <TextCTA>
-              Trimite Contractul
-            </TextCTA>
+            <TextCTA>Trimite Contractul</TextCTA>
           </ButtonWithLoading>
 
-        </form>
+        </div>
       </DialogContent>
     </Dialog>
   )

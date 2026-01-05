@@ -7,6 +7,7 @@ import { EMAIL_TEMPLATE_IDS } from "@/constants/email-utils";
 import { envs } from "@/constants/envs";
 import { brevo } from "@/lib/brevo";
 import AuditService from "@/services/audit";
+import { ContractStatus } from "@prisma/client";
 
 export type T_SendContractEmailBody = {
   contractId: string,
@@ -22,9 +23,15 @@ export async function POST(req: NextRequest) {
       receiverEmail,
       optionalMessage
     } = await req.json() as T_SendContractEmailBody
-
     const templateId = EMAIL_TEMPLATE_IDS.sendContract
     const contractData = await ContractService.getContractWithCompanyAndOwner({ contractId })
+
+    await ContractService.updateContract({
+      ...contractData,
+      id: contractData.id,
+      status: ContractStatus.OUT_FOR_SIGNATURE,
+      receiverEmail,
+    })
 
     const message = {
       subject: `${contractData?.company.name} ți-a trimis un contract spre semnare`,
@@ -69,6 +76,7 @@ export async function POST(req: NextRequest) {
       status: 200
     });
   } catch (error: any) {
+    console.log("Filed to send contract email. Error: " + error.message)
     // Zod validation error
     if (error instanceof ZodError) {
       return NextResponse.json({
