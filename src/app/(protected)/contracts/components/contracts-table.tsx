@@ -9,6 +9,7 @@ import { Contract, ContractStatus } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { NoContractsFound } from "./no-contracts-found"
 import { format } from "date-fns"
+import { ContractControls } from "./contract-controls"
 
 type Props = {
   contracts: Contract[]
@@ -59,7 +60,9 @@ export const ContractsTable: React.FC<Props> = ({ contracts }) => {
                 <TableCell className="py-5 text-[15px]">
                   {format(contract.createdAt, "dd.MM.yyyy, HH:mm:ss")}
                 </TableCell>
-                <TableCell className="py-5 text-[15px] text-right">TODO</TableCell>
+                <TableCell className="py-5 text-[15px] text-right flex justify-end">
+                  <ContractControls contract={contract} />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

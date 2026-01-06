@@ -55,6 +55,10 @@ export async function POST(req: NextRequest) {
         'content-type': 'application/json',
         'accept': 'application/json'
       },
+      sender: {
+        name: "Contract Transparent",
+        email: "support@contracttransparent.ro"
+      }
     };
 
     const response = await brevo.sendTransacEmail(message)
@@ -77,6 +81,8 @@ export async function POST(req: NextRequest) {
     });
   } catch (error: any) {
     console.log("Filed to send contract email. Error: " + error.message)
+    console.log(error)
+
     // Zod validation error
     if (error instanceof ZodError) {
       return NextResponse.json({

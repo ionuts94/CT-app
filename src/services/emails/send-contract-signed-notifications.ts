@@ -26,6 +26,10 @@ export async function sendContractSignedNotifications({
       'content-type': 'application/json',
       'accept': 'application/json'
     },
+    sender: {
+      name: "Contract Transparent",
+      email: "support@contracttransparent.ro"
+    }
   };
 
   await brevo.sendTransacEmail(message)

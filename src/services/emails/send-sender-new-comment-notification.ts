@@ -30,6 +30,10 @@ export async function sendSenderNewCommentNotification({
       'X-Mailin-custom': 'custom_header_1:custom_value_1|custom_header_2:custom_value_2',
       'content-type': 'application/json',
       'accept': 'application/json'
+    },
+    sender: {
+      name: "Contract Transparent",
+      email: "support@contracttransparent.ro"
     }
   };
 
