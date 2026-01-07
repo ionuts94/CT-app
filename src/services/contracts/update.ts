@@ -25,6 +25,8 @@ export async function updateContract(payload: ContractDBUpdatePayload): Promise<
       receiverEmail: payload.receiverEmail,
 
       currentVersionId: payload.currentVersionId,
+      optionalMessage: payload.optionalMessage,
+      signingDeadline: payload.signingDeadline
     })
     .eq("id", payload.id)
     .select("*")

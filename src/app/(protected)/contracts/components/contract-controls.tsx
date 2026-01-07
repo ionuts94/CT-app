@@ -9,6 +9,7 @@ import { Eye, Pen, Send, View } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
+import { SendContractDialog } from "../create/components/send-contract-dialog"
 
 type Props = {
     contract: Contract

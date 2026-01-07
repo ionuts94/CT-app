@@ -131,6 +131,7 @@ model Contract {
   createdAt DateTime  @default(dbgenerated("now()"))
   updatedAt DateTime  @default(dbgenerated("now()")) @updatedAt
   expiresAt String?
+  signingDeadline String?
 
   accessPassword Int
 

@@ -27,9 +27,6 @@ export async function PATCH(req: NextRequest) {
 
     if (!contractId) throw new Error("Am intampinat o eroare tehnica")
 
-    console.log("Body")
-    console.log(body)
-
     const contractData = await ContractService.getContractWithCompanyAndOwner({ contractId })
 
     if (LOCKED_UPDATE_STATES.includes(contractData.status)) {

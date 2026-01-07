@@ -41,9 +41,14 @@ type Data = {
   receiverEmail?: string,
   contractStatus?: ContractStatus,
   expiresAt?: string,
+  signingDeadline?: string,
+  optionalMessage?: string,
 }
 
 export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) => {
+  console.log("data here")
+  console.log(data)
+
   const router = useRouter()
   const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
 
@@ -140,6 +145,9 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
   }
 
   const updateContract = async (values: T_ContractPayload) => {
+    console.log("Updating contract")
+    console.log(values)
+
     const { data: updateData, error } = await CTContract.updateContract({
       ...values,
       contractId: data.contractId!
@@ -268,7 +276,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
               </Button>
               <SendContractDialog
                 isOpen={isOpen}
-                contractData={values}
+                contractData={{ ...data, ...values }}
                 onOpenChange={toggleDialog}
                 actionBeforeSend={isEditing ? updateContract : createContract}
                 actionAfterSend={(newContractData: Contract) => setContractSent({

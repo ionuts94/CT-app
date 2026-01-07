@@ -40,7 +40,9 @@ export default async function EditContractPage({ searchParams }: Props) {
             expiresAt: contract.expiresAt || undefined,
             ownerSignatureId: contract.ownerSignatureId,
             receiverEmail: contract.receiverEmail,
-            receiverName: contract.receiverName
+            receiverName: contract.receiverName,
+            signingDeadline: contract.signingDeadline || undefined,
+            optionalMessage: contract.optionalMessage,
           }}
         />
       </PageContainer>

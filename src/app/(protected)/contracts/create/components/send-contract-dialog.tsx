@@ -67,6 +67,8 @@ export const SendContractDialog: React.FC<Props> = ({
 
   useEffect(() => {
     setValue("receiverEmail", contractData.receiverEmail)
+    setValue("signingDeadline", contractData.signingDeadline)
+    setValue("optionalMessage", contractData.optionalMessage)
   }, [contractData])
 
   return (
@@ -97,6 +99,8 @@ export const SendContractDialog: React.FC<Props> = ({
             </CardDescription>
 
             <ExpiryDate
+              isOpen={Boolean(contractData.signingDeadline)}
+              defaultValue={contractData.signingDeadline ? new Date(contractData.signingDeadline) : undefined}
               onSelectDate={handleSigningDeadline}
               ctaText="Setează un termen de semnare"
               additionalInfo="Vom trimite un email de reamintire cu 48 de ore înainte de acest termen."

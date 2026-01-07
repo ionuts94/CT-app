@@ -8,6 +8,7 @@ import { envs } from "@/constants/envs";
 import { brevo } from "@/lib/brevo";
 import AuditService from "@/services/audit";
 import { ContractStatus } from "@prisma/client";
+import { format } from "date-fns";
 
 export type T_SendContractEmailBody = {
   contractId: string,
@@ -17,6 +18,7 @@ export type T_SendContractEmailBody = {
 
 export async function POST(req: NextRequest) {
   try {
+
     const { ip, userAgent } = extractClientIp(req)
     const {
       contractId,
@@ -44,7 +46,8 @@ export async function POST(req: NextRequest) {
         colorSecondary: contractData?.company.colorSecondary,
         colorAccent: contractData?.company.colorAccent,
         contractTitle: contractData?.title,
-        expiryDate: contractData?.expiresAt,
+        expiryDate: contractData.expiresAt ? format(contractData.expiresAt, "dd.MM.yyyy") : "contractul nu are data de expirare",
+        signingDeadline: contractData.signingDeadline ? format(contractData.signingDeadline, "dd.MM.yyyy") + ", 23:59:59" : null,
         viewContractUrl: envs.NEXT_PUBLIC_URL + `/view-contract?t=${contractData?.receiverToken}`,
         viewContractPassword: contractData?.accessPassword,
         receiverEmail,
@@ -82,6 +85,8 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.log("Filed to send contract email. Error: " + error.message)
     console.log(error)
+    // console.log(error.request)
+    console.log(error.response)
 
     // Zod validation error
     if (error instanceof ZodError) {
