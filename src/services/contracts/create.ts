@@ -23,6 +23,8 @@ export async function createContract(payload: ContractDBInsertPayload): Promise<
       receiverEmail: payload.receiverEmail,
 
       currentVersionId: payload.currentVersionId,
+      optionalMessage: payload.optionalMessage,
+      signingDeadline: payload.signingDeadline ?? null
     })
     .select("*")
     .maybeSingle();

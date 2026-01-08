@@ -161,6 +161,9 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
 
   const handleSendContract = async (sendValues: T_SendContractPayload) => {
     try {
+      console.log("Sending contract")
+      console.log(sendValues)
+
       const response = isEditing
         ? await updateContract({ ...values, ...sendValues })
         : await createContract({ ...values, ...sendValues })
@@ -169,7 +172,8 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
       await CTEmail.sendContractToClient({
         contractId: response?.id!,
         receiverEmail: response.receiverEmail,
-        optionalMessage: response.optionalMessage
+        optionalMessage: response.optionalMessage,
+        signingDeadline: response.signingDeadline || undefined
       })
 
       setContractSent({

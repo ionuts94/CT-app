@@ -2,6 +2,7 @@ import { EMAIL_TEMPLATE_IDS } from "@/constants/email-utils";
 import { envs } from "@/constants/envs";
 import { brevo } from "@/lib/brevo";
 import { T_NewCommentNotificationPayload } from "@/types/services/emails";
+import { format } from "date-fns";
 
 export async function sendSenderNewCommentNotification({
   contractData,
@@ -17,8 +18,8 @@ export async function sendSenderNewCommentNotification({
     receiverName: contractData?.receiverName,
     contractTitle: contractData.title,
     commentContent: commentData.content,
-    commentDate: new Date(commentData.createdAt).toISOString(),
-    viewContractUrl: envs.NEXT_PUBLIC_URL + `/view-contract?c=${contractData.id}`
+    commentDate: format(commentData.createdAt, "dd.MM.yyyy, HH:mm:ss"),
+    viewContractUrl: envs.NEXT_PUBLIC_URL + `/c/view-contract?c=${contractData.id}`
   }
 
   const message = {

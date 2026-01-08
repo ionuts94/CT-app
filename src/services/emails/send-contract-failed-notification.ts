@@ -1,6 +1,7 @@
 import ContractService from "../contracts";
 import { brevo } from "@/lib/brevo";
 import { EMAIL_TEMPLATE_IDS } from "@/constants/email-utils";
+import { format } from "date-fns";
 
 export async function sendContractFailedNotifications({
   contractId
@@ -15,7 +16,7 @@ export async function sendContractFailedNotifications({
     action: contractData.status === "DECLINED" ? "declined" : "revoked",
     actorName: contractData.status === "DECLINED" ? contractData.receiverName : contractData.owner.firstName + " " + contractData.owner.lastName,
     failedReason: contractData.failedReason,
-    timestamp: contractData.failedAt
+    timestamp: format(contractData.failedAt, "dd.MM.yyyy, HH:mm:ss"),
   }
 
   const message = {

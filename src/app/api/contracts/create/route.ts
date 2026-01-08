@@ -40,8 +40,9 @@ export async function POST(req: NextRequest) {
       ownerSignatureId: body.ownerSignatureId,
       receiverName: body.receiverName,
       receiverEmail: body.receiverEmail,
-      // optionalMessage: body.optionalMessage ?? null,
+      optionalMessage: body.optionalMessage ?? null,
       currentVersionId: contractVersionUUID,
+      signingDeadline: body.signingDeadline
     })
 
     await AuditService.logAudit({
