@@ -19,6 +19,7 @@ export const ContractsTable: React.FC<Props> = ({ contracts }) => {
   const router = useRouter()
 
   const viewContract = (contract: Contract) => {
+    return null;
     if (contract.status === ContractStatus.DRAFT)
       return router.push("/contracts/edit?c=" + contract.id)
     router.push("/c/view-contract?c=" + contract.id)

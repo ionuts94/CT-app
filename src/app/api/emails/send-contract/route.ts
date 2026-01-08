@@ -9,11 +9,10 @@ import { brevo } from "@/lib/brevo";
 import AuditService from "@/services/audit";
 import { ContractStatus } from "@prisma/client";
 import { format } from "date-fns";
+import { T_SendContractPayload } from "@/validators/contract.validator";
 
-export type T_SendContractEmailBody = {
+export type T_SendContractEmailBody = T_SendContractPayload & {
   contractId: string,
-  receiverEmail: string,
-  optionalMessage: string,
 }
 
 export async function POST(req: NextRequest) {
@@ -23,7 +22,8 @@ export async function POST(req: NextRequest) {
     const {
       contractId,
       receiverEmail,
-      optionalMessage
+      optionalMessage,
+      signingDeadline,
     } = await req.json() as T_SendContractEmailBody
     const templateId = EMAIL_TEMPLATE_IDS.sendContract
     const contractData = await ContractService.getContractWithCompanyAndOwner({ contractId })
@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
       id: contractData.id,
       status: ContractStatus.OUT_FOR_SIGNATURE,
       receiverEmail,
+      signingDeadline
     })
 
     const message = {
@@ -47,11 +48,11 @@ export async function POST(req: NextRequest) {
         colorAccent: contractData?.company.colorAccent,
         contractTitle: contractData?.title,
         expiryDate: contractData.expiresAt ? format(contractData.expiresAt, "dd.MM.yyyy") : "contractul nu are data de expirare",
-        signingDeadline: contractData.signingDeadline ? format(contractData.signingDeadline, "dd.MM.yyyy") + ", 23:59:59" : null,
         viewContractUrl: envs.NEXT_PUBLIC_URL + `/view-contract?t=${contractData?.receiverToken}`,
         viewContractPassword: contractData?.accessPassword,
-        receiverEmail,
-        optionalMessage,
+        receiverEmail: receiverEmail,
+        optionalMessage: optionalMessage,
+        signingDeadline: signingDeadline ? format(signingDeadline, "dd.MM.yyyy") + ", 23:59:59" : null,
       },
       headers: {
         'X-Mailin-custom': 'custom_header_1:custom_value_1|custom_header_2:custom_value_2',

@@ -6,7 +6,7 @@ import { RichTextEditor } from "@/components/rich-text-editor"
 import { SignatureItem } from "@/components/signature-item"
 import { Text } from "@/components/topography"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
-import { Contract, ContractStatus, Signature, Template } from "@prisma/client"
+import { ContractStatus, Signature } from "@prisma/client"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDebouncedCallback } from "use-debounce"
@@ -19,7 +19,7 @@ import { SendContractDialog } from "./send-contract-dialog"
 import { ExpiryDate } from "./expiry-date"
 import { dateUtils } from "@/lib/date-utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ContractSchema, T_ContractPayload } from "@/validators/contract.validator"
+import { ContractSchema, T_ContractPayload, T_SendContractPayload } from "@/validators/contract.validator"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useDialog } from "@/hooks/use-dialog"
@@ -159,6 +159,29 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
     return updateData
   }
 
+  const handleSendContract = async (sendValues: T_SendContractPayload) => {
+    try {
+      const response = isEditing
+        ? await updateContract({ ...values, ...sendValues })
+        : await createContract({ ...values, ...sendValues })
+
+      if (!response) throw new Error("Am intampinat o eroare tehnica. Va rugam sa incercati in cateva minute.")
+      await CTEmail.sendContractToClient({
+        contractId: response?.id!,
+        receiverEmail: response.receiverEmail,
+        optionalMessage: response.optionalMessage
+      })
+
+      setContractSent({
+        status: Status.SUCCESS,
+        newContractId: response.id
+      })
+      closeDialog()
+    } catch (error: any) {
+      toast.error(error.message)
+    }
+  }
+
   useEffect(() => {
     reset({
       title: data.title,
@@ -166,6 +189,8 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
       ownerSignatureId: signatures?.[0]?.id || "",
       receiverName: data.receiverName,
       receiverEmail: data.receiverEmail,
+      optionalMessage: data.optionalMessage || "",
+      signingDeadline: data.signingDeadline,
       expiresAt: data.expiresAt
         ? dateUtils
           .toUtcEndOfDay(
@@ -276,13 +301,11 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
               </Button>
               <SendContractDialog
                 isOpen={isOpen}
-                contractData={{ ...data, ...values }}
+                receiverEmail={values.receiverEmail}
+                optionalMessage={values.optionalMessage}
+                signingDeadline={values.signingDeadline}
+                onSendContract={handleSendContract}
                 onOpenChange={toggleDialog}
-                actionBeforeSend={isEditing ? updateContract : createContract}
-                actionAfterSend={(newContractData: Contract) => setContractSent({
-                  status: Status.SUCCESS,
-                  newContractId: newContractData?.id!
-                })}
               />
             </div>
           </FormRow>
