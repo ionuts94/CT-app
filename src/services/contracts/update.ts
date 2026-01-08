@@ -9,6 +9,9 @@ type ContractDBUpdatePayload = ContractDBInsertPayload & {
 export async function updateContract(payload: ContractDBUpdatePayload): Promise<Contract> {
   const supabase = await createClient()
 
+  console.log("Came to update contract")
+  console.log(payload)
+
   const { data, error } = await supabase.from("contracts")
     .update({
       title: payload.title,
@@ -25,8 +28,8 @@ export async function updateContract(payload: ContractDBUpdatePayload): Promise<
       receiverEmail: payload.receiverEmail,
 
       currentVersionId: payload.currentVersionId,
-      optionalMessage: payload.optionalMessage,
-      signingDeadline: payload.signingDeadline
+      optionalMessage: payload.optionalMessage || "",
+      signingDeadline: payload.signingDeadline || null
     })
     .eq("id", payload.id)
     .select("*")
