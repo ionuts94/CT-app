@@ -6,6 +6,7 @@ import { withSafeService } from "@/lib/services-utils/with-safe-service"
 import CommentService from "@/services/comments"
 import AuditService from "@/services/audit"
 import { ContractViewedTracker } from "./components/contract-viewed-tracker"
+import { DEFAULT_REDIRECT_AUTH_ROUTE } from "@/constants/others"
 
 type Props = {
   searchParams: Promise<{ t: string }>
@@ -29,7 +30,7 @@ export default async function ViewContractPage({ searchParams }: Props) {
   }
 
   if (authUser && authUser.email !== contractData.receiverEmail) {
-    return redirect("/dashboard")
+    return redirect(DEFAULT_REDIRECT_AUTH_ROUTE)
   }
 
   const [

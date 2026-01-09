@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import CTAuth from "@/sdk/auth"
 import { toast } from "sonner"
+import { DEFAULT_REDIRECT_AUTH_ROUTE } from "@/constants/others"
 
 type Props = {
 
@@ -41,7 +42,7 @@ export const SignInForm: React.FC<Props> = ({ }) => {
       return toast.error(error)
     }
 
-    router.replace("/dashboard")
+    router.replace(DEFAULT_REDIRECT_AUTH_ROUTE)
   }
 
 

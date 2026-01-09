@@ -130,6 +130,7 @@ model Contract {
 
   createdAt DateTime  @default(dbgenerated("now()"))
   updatedAt DateTime  @default(dbgenerated("now()")) @updatedAt
+  lastSentAt DateTime?
   expiresAt String?
   signingDeadline String?
 

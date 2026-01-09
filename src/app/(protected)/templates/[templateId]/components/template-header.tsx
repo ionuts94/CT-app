@@ -26,7 +26,7 @@ export const TemplateHeader: React.FC<Props> = ({ templateId }) => {
         {templateId &&
           <DeleteTemplateAlertDialog templateId={templateId} />
         }
-        <ButtonWithLoading
+        {/* <ButtonWithLoading
           variant="default"
           className="cursor-pointer p-3"
           onClick={handleSaveTemplate}
@@ -37,7 +37,7 @@ export const TemplateHeader: React.FC<Props> = ({ templateId }) => {
           <TextCTA weight="extrabold">
             SALVEAZA SABLON
           </TextCTA>
-        </ButtonWithLoading>
+        </ButtonWithLoading> */}
       </div>
     </div>
   )

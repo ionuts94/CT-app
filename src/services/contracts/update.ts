@@ -3,7 +3,8 @@ import { ContractDBInsertPayload } from "@/types/services/contracts";
 import { Contract, ContractStatus } from "@prisma/client";
 
 type ContractDBUpdatePayload = ContractDBInsertPayload & {
-  status: ContractStatus
+  status: ContractStatus,
+  lastSentAt: string
 }
 
 export async function updateContract(payload: ContractDBUpdatePayload): Promise<Contract> {
@@ -19,7 +20,7 @@ export async function updateContract(payload: ContractDBUpdatePayload): Promise<
       companyId: payload.companyId ?? null,
       status: payload.status,
 
-      createdAt: new Date(),
+      createdAt: payload.createdAt,
       updatedAt: new Date(),
       expiresAt: payload.expiresAt ? new Date(payload.expiresAt) : null,
 
@@ -29,7 +30,8 @@ export async function updateContract(payload: ContractDBUpdatePayload): Promise<
 
       currentVersionId: payload.currentVersionId,
       optionalMessage: payload.optionalMessage || "",
-      signingDeadline: payload.signingDeadline || null
+      signingDeadline: payload.signingDeadline || null,
+      lastSentAt: payload.lastSentAt || null,
     })
     .eq("id", payload.id)
     .select("*")

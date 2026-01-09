@@ -7,10 +7,13 @@ import { FormRow, Input, InvalidInputError, Label, RequiredFieldMark } from "@/c
 import { useTemplateContext } from "@/contexts/template-assistant-context"
 import { useEffect } from "react"
 import { useDebouncedCallback } from "use-debounce"
+import { ButtonWithLoading } from "@/components/button-with-loading"
+import { Save } from "lucide-react"
+import { TextCTA } from "@/components/topography/cta"
 
 
 export const TemplateForm: React.FC = ({ }) => {
-  const { currentTemplateRichText, form } = useTemplateContext()
+  const { currentTemplateRichText, form, isSavingTemplate, handleSaveTemplate } = useTemplateContext()
 
   const { register, watch, formState } = form
   const values = watch()
@@ -60,6 +63,18 @@ export const TemplateForm: React.FC = ({ }) => {
             />
           </FormRow>
         </Card>
+        <ButtonWithLoading
+          variant="default"
+          className="cursor-pointer p-3 w-fit"
+          onClick={handleSaveTemplate}
+          loading={isSavingTemplate}
+          disabled={isSavingTemplate || !formState.isDirty}
+        >
+          <Save strokeWidth={3} />
+          <TextCTA weight="extrabold">
+            SALVEAZA SABLON
+          </TextCTA>
+        </ButtonWithLoading>
       </div>
       <div className="w-1/3">
         <AiTemplateReview />

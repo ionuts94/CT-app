@@ -10,6 +10,7 @@ import AuditService from "@/services/audit";
 import { ContractStatus } from "@prisma/client";
 import { format } from "date-fns";
 import { T_SendContractPayload } from "@/validators/contract.validator";
+import { dateUtils } from "@/lib/date-utils";
 
 export type T_SendContractEmailBody = T_SendContractPayload & {
   contractId: string,
@@ -32,6 +33,11 @@ export async function POST(req: NextRequest) {
       ...contractData,
       id: contractData.id,
       status: ContractStatus.OUT_FOR_SIGNATURE,
+      lastSentAt: dateUtils
+        .toUTC(
+          new Date(),
+          dateUtils.getUserTimeZone()
+        ).toISOString(),
       receiverEmail,
       signingDeadline
     })

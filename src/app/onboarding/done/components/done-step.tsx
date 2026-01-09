@@ -12,6 +12,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useRouter } from "next/navigation"
 import { DialogTitle } from "@radix-ui/react-dialog"
 import CTOnboarding from "@/sdk/onboarding"
+import { DEFAULT_REDIRECT_AUTH_ROUTE } from "@/constants/others"
 
 export const DoneStep: React.FC = ({ }) => {
   const router = useRouter()
@@ -25,7 +26,7 @@ export const DoneStep: React.FC = ({ }) => {
     router.replace(redirectAfterComplete)
   }
 
-  const completeAndGoDashboard = () => handleCompleteOnboarding("/dashboard")
+  const completeAndGoDashboard = () => handleCompleteOnboarding(DEFAULT_REDIRECT_AUTH_ROUTE)
   const completeAndCreateTemplate = () => handleCompleteOnboarding("/templates/new")
 
   return (

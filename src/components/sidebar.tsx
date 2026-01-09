@@ -105,11 +105,11 @@ export function AppSidebar() {
 }
 
 const items = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: Gauge,
-  },
+  // {
+  //   title: "Dashboard",
+  //   url: "/dashboard",
+  //   icon: Gauge,
+  // },
   {
     title: "Contracte",
     url: "/contracts",

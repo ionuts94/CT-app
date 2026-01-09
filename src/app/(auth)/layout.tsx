@@ -1,3 +1,4 @@
+import { DEFAULT_REDIRECT_AUTH_ROUTE } from "@/constants/others";
 import { withSafeService } from "@/lib/services-utils/with-safe-service";
 import AuthService from "@/services/auth";
 import OnboardingService from "@/services/onboarding";
@@ -9,7 +10,7 @@ export default async function AuthLayout({ children }: PropsWithChildren) {
 
   if (authUser) {
     await OnboardingService.checkUserOnboarding(authUser)
-    redirect("/dashboard")
+    redirect(DEFAULT_REDIRECT_AUTH_ROUTE)
   }
 
   return (

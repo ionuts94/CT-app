@@ -60,15 +60,17 @@ export const TemplateCardControls: React.FC<Props> = ({ template }) => {
         </TooltipContent>
       </Tooltip>
       <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Tooltip delayDuration={0}>
-            <TooltipTrigger className="p-2 rounded-md border border-gray-300 cursor-pointer  hover:border-primary">
-              <Trash2 size={16} />
-            </TooltipTrigger>
-            <TooltipContent>
-              Sterge template
-            </TooltipContent>
-          </Tooltip>
+        <AlertDialogTrigger>
+          <div>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger className="p-2 rounded-md border border-gray-300 cursor-pointer  hover:border-primary">
+                <Trash2 size={16} />
+              </TooltipTrigger>
+              <TooltipContent>
+                Sterge template
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
