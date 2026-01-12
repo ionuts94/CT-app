@@ -374,6 +374,45 @@ model AuditLog {
   @@index([contractId, createdAt])
 }
 
+model ContractAllowance {
+  id          String   @id @default(uuid())
+  userId      String
+  contractId  String?
+  source      ContractAllowanceSource
+  planType    String?
+  expiresAt   DateTime?
+  consumedAt  DateTime?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([consumedAt])
+}
+
+model Subscription {
+  id                     String               @id @default(uuid())
+  userId                 String
+
+  plan                   SubscriptionPlan
+  status                 SubscriptionStatus
+
+  stripeCustomerId       String?
+  stripeSubscriptionId   String?
+  stripePriceId          String?
+
+  currentPeriodStart     DateTime?
+  currentPeriodEnd       DateTime?
+
+  cancelAtPeriodEnd      Boolean              @default(false)
+  canceledAt             DateTime?
+
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
+
+  @@map("subscriptions")
+  @@index([userId])
+}
+
 /**
  * ====================
  * ENUMS
@@ -443,4 +482,27 @@ enum AuditAction {
   CONTRACT_EXPIRED // TODO
   PDF_GENERATED
   CONTRACT_SIGNED_NOTIFICATION_SENT
+}
+
+enum ContractAllowanceSource {
+  SUBSCRIPTION
+  PAYG
+  TRIAL
+  PROMO
+  MANUAL
+}
+
+enum SubscriptionStatus {
+  TRIAL
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  EXPIRED
+}
+
+enum SubscriptionPlan {
+  FREE
+  STARTER
+  TEAM
+  BUSINESS
 }
