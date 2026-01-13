@@ -1,7 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
 import AuthService from "../auth";
-import { User } from "@supabase/supabase-js";
-import { Company, User as UserData } from "@prisma/client"
 import { T_AuthUserWithProfileAndCompany } from "@/types/services/users";
 
 export async function getCurrentUserWithCompany(): Promise<T_AuthUserWithProfileAndCompany> {

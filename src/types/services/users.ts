@@ -1,5 +1,5 @@
 import { User } from "@supabase/supabase-js"
-import { Company, User as UserData } from "@prisma/client"
+import { Company, Subscription, User as UserData } from "@prisma/client"
 
 export type T_CreateUserPayload = {
   id: string,
@@ -13,4 +13,10 @@ export type T_AuthUserWithProfileAndCompany = {
   user: T_UserWithCompany
 }
 
+export type T_AuthUserWithProfileAndSubscription = {
+  authUser: User,
+  user: T_UserWithSubscription
+}
+
 export type T_UserWithCompany = UserData & { company: Company }
+export type T_UserWithSubscription = UserData & { subscription?: Subscription }

@@ -29,6 +29,8 @@ model User {
   updatedAt DateTime @default(dbgenerated("now()")) @updatedAt
   profilePictureUrl String? 
 
+  stripeCustomerId String?
+
 
   // relații
   memberships Membership[]

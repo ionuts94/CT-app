@@ -53,5 +53,8 @@ export const api = {
   },
   storage: {
     storeFile: "/api/storage/store-file"
+  },
+  billing: {
+    checkout: "/api/billing/checkout"
   }
 } as const
