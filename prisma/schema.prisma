@@ -25,12 +25,11 @@ model User {
   currentCompanyId String?  @db.Uuid
   currentCompany   Company? @relation("CurrentCompany", fields: [currentCompanyId], references: [id])
 
-  createdAt DateTime @default(dbgenerated("now()"))
-  updatedAt DateTime @default(dbgenerated("now()")) @updatedAt
-  profilePictureUrl String? 
+  createdAt         DateTime @default(dbgenerated("now()"))
+  updatedAt         DateTime @default(dbgenerated("now()")) @updatedAt
+  profilePictureUrl String?
 
   stripeCustomerId String?
-
 
   // relații
   memberships Membership[]
@@ -130,10 +129,10 @@ model Contract {
   draftPdfUrl  String?
   signedPdfUrl String?
 
-  createdAt DateTime  @default(dbgenerated("now()"))
-  updatedAt DateTime  @default(dbgenerated("now()")) @updatedAt
-  lastSentAt DateTime?
-  expiresAt String?
+  createdAt       DateTime  @default(dbgenerated("now()"))
+  updatedAt       DateTime  @default(dbgenerated("now()")) @updatedAt
+  lastSentAt      DateTime?
+  expiresAt       String?
   signingDeadline String?
 
   accessPassword Int
@@ -377,14 +376,14 @@ model AuditLog {
 }
 
 model ContractAllowance {
-  id          String   @id @default(uuid())
-  userId      String
-  contractId  String?
-  source      ContractAllowanceSource
-  planType    String?
-  expiresAt   DateTime?
-  consumedAt  DateTime?
-  createdAt   DateTime @default(now())
+  id         String                  @id @default(uuid())
+  userId     String
+  contractId String?
+  source     ContractAllowanceSource
+  planType   String?
+  expiresAt  DateTime?
+  consumedAt DateTime?
+  createdAt  DateTime                @default(now())
 
   @@index([userId])
   @@index([expiresAt])
@@ -392,27 +391,27 @@ model ContractAllowance {
 }
 
 model Subscription {
-  id                     String               @id @default(uuid())
-  userId                 String
+  id     String @id @default(uuid())
+  userId String
 
-  plan                   SubscriptionPlan
-  status                 SubscriptionStatus
+  plan   SubscriptionPlan
+  status SubscriptionStatus
 
-  stripeCustomerId       String?
-  stripeSubscriptionId   String?
-  stripePriceId          String?
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  stripePriceId        String?
 
-  currentPeriodStart     DateTime?
-  currentPeriodEnd       DateTime?
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
 
-  cancelAtPeriodEnd      Boolean              @default(false)
-  canceledAt             DateTime?
+  cancelAtPeriodEnd Boolean   @default(false)
+  canceledAt        DateTime?
 
-  createdAt              DateTime              @default(now())
-  updatedAt              DateTime              @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@map("subscriptions")
   @@index([userId])
+  @@map("subscriptions")
 }
 
 /**
