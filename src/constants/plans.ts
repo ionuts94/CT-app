@@ -13,6 +13,7 @@ export type FeatureKey = keyof typeof FEATURES
 
 export const PLANS_AND_DETAILS = {
   FREE: {
+    id: "FREE",
     label: "Free",
     type: "free",
     price: 0,
@@ -20,8 +21,9 @@ export const PLANS_AND_DETAILS = {
     contracts: {
       count: 3,
       period: undefined,
-      expires: false, // one-time
+      expires: false,
     },
+    stripePriceId: null,
     features: [
       "AUDIT_LOG",
       "EMAIL_REMINDERS",
@@ -31,6 +33,7 @@ export const PLANS_AND_DETAILS = {
   },
 
   PAYG: {
+    id: "PAYG",
     label: "Pay as you go",
     type: "one_time",
     price: 5,
@@ -39,6 +42,7 @@ export const PLANS_AND_DETAILS = {
       count: 1,
       period: undefined
     },
+    stripePriceId: "price_1Sp2Z4CvzVco3QENtupsLLUZ",
     features: [
       "AUDIT_LOG",
       "EMAIL_REMINDERS",
@@ -50,6 +54,7 @@ export const PLANS_AND_DETAILS = {
   },
 
   STARTER: {
+    id: "STARTER",
     label: "Starter",
     type: "subscription",
     price: 15,
@@ -59,7 +64,7 @@ export const PLANS_AND_DETAILS = {
       count: 5,
       period: "lună"
     },
-    stripePriceId: "price_xxx",
+    stripePriceId: "price_1Sp2X3CvzVco3QENUCGzyQvw",
     features: [
       "AUDIT_LOG",
       "EMAIL_REMINDERS",
@@ -71,6 +76,7 @@ export const PLANS_AND_DETAILS = {
   },
 
   TEAM: {
+    id: "TEAM",
     label: "Team",
     type: "subscription",
     price: 30,
@@ -80,7 +86,7 @@ export const PLANS_AND_DETAILS = {
       count: 20,
       period: "lună"
     },
-    stripePriceId: "price_xxx",
+    stripePriceId: "price_1Sp2XiCvzVco3QEN2u3Wmd5P",
     features: [
       "AUDIT_LOG",
       "EMAIL_REMINDERS",
@@ -92,6 +98,7 @@ export const PLANS_AND_DETAILS = {
   },
 
   BUSINESS: {
+    id: "BUSINESS",
     label: "Business",
     type: "subscription",
     price: 50,
@@ -101,7 +108,7 @@ export const PLANS_AND_DETAILS = {
       count: 50,
       period: "lună"
     },
-    stripePriceId: "price_xxx",
+    stripePriceId: "price_1Sp2YVCvzVco3QEN4SAIwF5z",
     features: [
       "AUDIT_LOG",
       "EMAIL_REMINDERS",
@@ -113,7 +120,9 @@ export const PLANS_AND_DETAILS = {
   },
 } as const
 
+export type T_PlanDetails = (typeof PLANS_AND_DETAILS)[keyof typeof PLANS_AND_DETAILS]
+
 export const getPlanDetailsByPlanId = (planId?: keyof typeof PLANS_AND_DETAILS) => {
-  if (!planId) return undefined;
+  if (!planId) return PLANS_AND_DETAILS.FREE;
   return PLANS_AND_DETAILS[planId]
 }

@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
             ],
             mode: "subscription",
             success_url: envs.NEXT_PUBLIC_URL + "/payment_success",
-            cancel_url: envs.NEXT_PUBLIC_URL + "/settings/billing",
+            cancel_url: envs.NEXT_PUBLIC_URL + "/billing",
             metadata: {
                 userId: userData.authUser.id,
                 priceId,
