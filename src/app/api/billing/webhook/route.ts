@@ -1,5 +1,6 @@
 import { stripe } from "@/lib/stripe"
 import { createClient } from "@/lib/supabase/server"
+import BillingServices from "@/services/billing"
 import { Status } from "@/types/api-call"
 import { NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
@@ -26,11 +27,23 @@ export async function POST(req: NextRequest) {
     try {
         switch (event.type) {
             case "checkout.session.completed":
+                await BillingServices.processCheckoutCompleted(event)
+                break;
             case "customer.subscription.created":
+                await BillingServices.processSubscriptionCreated(event)
+                break
             case "customer.subscription.updated":
+                await BillingServices.processSubscriptionUpdated(event)
+                break
             case "customer.subscription.deleted":
+                await BillingServices.processSubscriptionDeleted(event)
+                break
             case "invoice.payment_succeeded":
+                await BillingServices.processPaymentSucceeded(event)
+                break
             case "invoice.payment_failed":
+                await BillingServices.processPaymentFailed(event)
+                break
         }
 
 
