@@ -55,6 +55,7 @@ export const api = {
     storeFile: "/api/storage/store-file"
   },
   billing: {
-    checkout: "/api/billing/checkout"
+    checkout: "/api/billing/checkout",
+    webhook: "/api/billing/webhook"
   }
 } as const
