@@ -1,13 +1,15 @@
+import { envs } from "@/constants/envs"
 import { stripe } from "@/lib/stripe"
-import { createClient } from "@/lib/supabase/server"
-import BillingServices from "@/services/billing"
+import BillingService from "@/services/billing"
+import StripeEventService from "@/services/stripe-event"
 import { Status } from "@/types/api-call"
 import { NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
 
-const webhookSecret = ""
+const webhookSecret = envs.STRIPE_TEST_WEBHOOK_SECRET!
 
 export async function POST(req: NextRequest) {
+    console.log("Stripe called webhook")
     const body = await req.text()
     const signature = req.headers.get("stripe-signature")!
 
@@ -15,6 +17,7 @@ export async function POST(req: NextRequest) {
 
     try {
         event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
+        console.log(event.data)
     } catch (error: any) {
         console.log(error)
         return NextResponse.json({
@@ -23,29 +26,37 @@ export async function POST(req: NextRequest) {
         }, { status: 400 })
     }
 
+    const claimed = await StripeEventService.createEvent(event)
+    if (!claimed) {
+        return NextResponse.json({
+            status: Status.FAILED,
+            error: "Event already claimed"
+        }, { status: 409 })
+    }
 
     try {
         switch (event.type) {
             case "checkout.session.completed":
-                await BillingServices.processCheckoutCompleted(event)
+                await BillingService.processCheckoutCompleted(event)
                 break;
             case "customer.subscription.created":
-                await BillingServices.processSubscriptionCreated(event)
+                await BillingService.processSubscriptionCreated(event)
                 break
             case "customer.subscription.updated":
-                await BillingServices.processSubscriptionUpdated(event)
+                await BillingService.processSubscriptionUpdated(event)
                 break
             case "customer.subscription.deleted":
-                await BillingServices.processSubscriptionDeleted(event)
+                await BillingService.processSubscriptionDeleted(event)
                 break
             case "invoice.payment_succeeded":
-                await BillingServices.processPaymentSucceeded(event)
+                await BillingService.processPaymentSucceeded(event)
                 break
             case "invoice.payment_failed":
-                await BillingServices.processPaymentFailed(event)
+                await BillingService.processPaymentFailed(event)
                 break
         }
 
+        await StripeEventService.markProcessed(event)
 
         return NextResponse.json({
             status: Status.SUCCESS,

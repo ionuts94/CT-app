@@ -13,7 +13,7 @@ export type FeatureKey = keyof typeof FEATURES
 
 export const PLANS_AND_DETAILS = {
   FREE: {
-    id: "FREE",
+    id: SubscriptionPlan.FREE,
     label: "Free",
     type: "free",
     price: 0,
@@ -54,7 +54,7 @@ export const PLANS_AND_DETAILS = {
   },
 
   STARTER: {
-    id: "STARTER",
+    id: SubscriptionPlan.STARTER,
     label: "Starter",
     type: "subscription",
     price: 15,
@@ -76,7 +76,7 @@ export const PLANS_AND_DETAILS = {
   },
 
   TEAM: {
-    id: "TEAM",
+    id: SubscriptionPlan.TEAM,
     label: "Team",
     type: "subscription",
     price: 30,
@@ -98,7 +98,7 @@ export const PLANS_AND_DETAILS = {
   },
 
   BUSINESS: {
-    id: "BUSINESS",
+    id: SubscriptionPlan.BUSINESS,
     label: "Business",
     type: "subscription",
     price: 50,
@@ -125,4 +125,10 @@ export type T_PlanDetails = (typeof PLANS_AND_DETAILS)[keyof typeof PLANS_AND_DE
 export const getPlanDetailsByPlanId = (planId?: keyof typeof PLANS_AND_DETAILS) => {
   if (!planId) return PLANS_AND_DETAILS.FREE;
   return PLANS_AND_DETAILS[planId]
+}
+
+export const getPlanDetailsByStripePriceId = (priceId: string) => {
+  const items = Object.values(PLANS_AND_DETAILS)
+  const plan = items.find(item => item.stripePriceId === priceId)
+  return plan
 }

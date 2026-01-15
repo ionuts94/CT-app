@@ -394,12 +394,13 @@ model Subscription {
   id     String @id @default(uuid())
   userId String
 
-  plan   SubscriptionPlan
+  plan   SubscriptionPlan?
   status SubscriptionStatus
 
   stripeCustomerId     String?
   stripeSubscriptionId String?
   stripePriceId        String?
+  stripeCheckoutSessionId String?
 
   currentPeriodStart DateTime?
   currentPeriodEnd   DateTime?
@@ -412,6 +413,22 @@ model Subscription {
 
   @@index([userId])
   @@map("subscriptions")
+}
+
+model StripeEvent {
+  id              String   @id @default(cuid())
+  stripeEventId   String   @unique
+  type            String
+  livemode        Boolean
+  payload         Json?
+  
+  claimedAt       DateTime @default(now())
+  processedAt     DateTime?
+  failedAt        DateTime?
+  errorMessage    String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 /**
@@ -499,6 +516,7 @@ enum SubscriptionStatus {
   PAST_DUE
   CANCELED
   EXPIRED
+  PENDING
 }
 
 enum SubscriptionPlan {

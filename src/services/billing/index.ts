@@ -5,7 +5,7 @@ import { processSubscriptionCreated } from "./process-subscription-created"
 import { processSubscriptionDeleted } from "./process-subscription-deleted"
 import { processSubscriptionUpdated } from "./process-subscription-updated"
 
-const BillingServices = {
+const BillingService = {
   processCheckoutCompleted,
   processSubscriptionCreated,
   processSubscriptionUpdated,
@@ -14,4 +14,4 @@ const BillingServices = {
   processPaymentFailed,
 }
 
-export default BillingServices
+export default BillingService
