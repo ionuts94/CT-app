@@ -8,8 +8,8 @@ type CreateFromStripeSubscriptionInput = {
     stripePriceId: string
     plan: SubscriptionPlan
     status: SubscriptionStatus
-    currentPeriodStart: Date
-    currentPeriodEnd: Date
+    currentPeriodStart: Date | null,
+    currentPeriodEnd: Date | null,
     cancelAtPeriodEnd: boolean
     canceledAt: Date | null
 }

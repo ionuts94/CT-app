@@ -2,6 +2,7 @@ import Stripe from "stripe";
 import SubscriptionService from "../subscription-service";
 
 export async function processCheckoutCompleted(event: Stripe.Event) {
+  console.log("Processing checkout complete")
   const session = event.data.object as Stripe.Checkout.Session
 
   if (session.mode !== "subscription") return;
@@ -16,11 +17,6 @@ export async function processCheckoutCompleted(event: Stripe.Event) {
     throw new Error("checkout.session.completed missing subscription")
   }
 
-  await SubscriptionService.upsertFromStripeCheckout({
-    userId,
-    stripeCustomerId: session.customer as string,
-    stripeSubscriptionId,
-    status: "PENDING",
-    stripeCheckoutSessionId: session.id,
-  })
+
+  return;
 }
