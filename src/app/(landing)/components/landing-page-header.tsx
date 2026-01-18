@@ -14,10 +14,7 @@ export const LandingPageHeader: React.FC<Props> = ({ }) => {
     <header className="border-b">
       <LandingPageWidth className="flex flex-row items-center justify-between h-[94px]">
         <Link href="/" className="flex items-center cursor-pointer">
-          <ReceiptText className="text-primary" size={40} />
-          <Text size="lg" weight="extrabold" className="uppercase leading-4">
-            Contract <br />Transparent
-          </Text>
+          <img src="./assets/logo/pactly-logo-no-bg.png" className="h-[40px]" />
         </Link>
         <nav>
           <ul className="flex gap-8">
