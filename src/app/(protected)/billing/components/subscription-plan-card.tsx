@@ -4,6 +4,7 @@ import { getPlanDetailsByPlanId } from "@/constants/plans"
 import { Subscription, SubscriptionPlan, User } from "@prisma/client"
 import { PlanDetails } from "./plan-details"
 import { ChangePlanDialog } from "./change-plan-dialog"
+import { CancelSubscriptionDialog } from "./cancel-subscription-dialog"
 
 type Props = {
   subscription?: Subscription,
@@ -41,9 +42,36 @@ export const SubscriptionPlanCard: React.FC<Props> = ({ subscription, user }) =>
       </div>
 
       <div className="w-1/2 flex flex-col gap-2 h-full justify-end">
-        <Text size="sm" className="text-muted-foreground">Schimba planul</Text>
-        <Text size="sm" className="text-muted-foreground">Poți alege un alt plan de abonament. Modificarea se va aplica imediat și va fi regularizată pe următoarea factură.</Text>
-        <ChangePlanDialog currentUserPlanId={userPlanId} />
+        <div className="flex flex-col gap-2">
+          <Text className="" weight="bold">Schimba planul</Text>
+          <Text size="sm" className="text-muted-foreground">Alege un alt plan de abonament, în funcție de nevoile echipei tale.</Text>
+          <div className="border-[1px] broder-border rounded-md p-4 max-w-[550px] shadow-sm flex flex-col gap-2">
+            <Text size="sm" weight="semibold">Cum funcționează upgrade-ul</Text>
+            <div className="help-text element-inspector-selected flex flex-col gap-2">
+              <Text size="sm" className="text-muted-foreground">• Dacă faci <strong >upgrade</strong>, plătești diferența <strong>imediat</strong>, iar perioada de facturare se actualizează.<br /></Text>
+              <Text size="sm" className="text-muted-foreground"> • Beneficiile noului plan (număr de contracte, featuri, membri de echipă) sunt <strong>activate imediat</strong> după schimbare.</Text>
+            </div>
+            <Text size="sm" className="" weight="semibold">Cum funcționează downgrade-ul</Text>
+            <div className="help-text">
+              <Text size="sm" className="text-muted-foreground">• Dacă faci <strong>downgrade</strong>, nu plătești nimic acum.<br /></Text>
+              <Text size="sm" className="text-muted-foreground"> • Rămâi pe planul curent până la următoarea <strong>dată de facturare</strong>, când noul plan va intra în vigoare.</Text>
+            </div>
+            <ChangePlanDialog currentUserPlanId={userPlanId} />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <Text size="sm" className="" weight="bold">Oprește abonamentul</Text>
+          <Text size="sm" className="text-muted-foreground">Poți întrerupe abonamentul, dar vei păstra accesul până la finalul perioadei plătite.</Text>
+          <div className="border-[1px] broder-border rounded-md p-4 max-w-[550px] shadow-sm flex flex-col gap-2">
+            <Text size="sm" weight="semibold">Ce se întâmplă când oprești abonamentul</Text>
+            <div className="help-text element-inspector-selected flex flex-col gap-2">
+              <Text size="sm" className="text-muted-foreground"> • Abonamentul rămâne <strong>activ</strong> până la următoarea <strong>dată de facturare</strong>.<br /></Text>
+              <Text size="sm" className="text-muted-foreground">  • După această dată, nu vei mai fi taxat și accesul la funcționalitățile plătite va fi oprit.</Text>
+            </div>
+            <CancelSubscriptionDialog />
+          </div>
+        </div>
       </div>
     </Card>
   )
