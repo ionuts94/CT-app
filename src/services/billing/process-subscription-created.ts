@@ -43,6 +43,8 @@ export async function processSubscriptionCreated(event: Stripe.Event) {
         )
     }
 
+    await SubscriptionService.deactiaveUserActiveSubscriptions({ userId })
+
     const item = subscription.items.data[0]
 
     await SubscriptionService.createFromStripeSubscription({
