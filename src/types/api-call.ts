@@ -3,6 +3,10 @@ export type CustomApiResponse<T = any> = {
   data: T,
   error?: null
 } | {
+  status: Status.ACTION_REQUIRED,
+  data: T,
+  error?: null
+} | {
   status: Status.FAILED,
   error: string,
   data?: undefined
@@ -10,5 +14,6 @@ export type CustomApiResponse<T = any> = {
 
 export enum Status {
   SUCCESS = 'success',
-  FAILED = 'failed'
+  FAILED = 'failed',
+  ACTION_REQUIRED = "action_required"
 }

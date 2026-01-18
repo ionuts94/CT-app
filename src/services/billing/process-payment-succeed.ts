@@ -3,7 +3,7 @@ import SubscriptionService from "../subscription-service"
 import { SubscriptionStatus } from "@prisma/client"
 
 export async function processPaymentSucceeded(event: Stripe.Event) {
-    console.log("[billing] invoice.payment_succeeded")
+    console.log("[billing] invoice.payment_succeeded 1")
 
     const invoice = event.data.object as Stripe.Invoice & {
         subscription: string | null

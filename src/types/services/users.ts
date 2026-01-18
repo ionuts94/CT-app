@@ -15,7 +15,8 @@ export type T_AuthUserWithProfileAndCompany = {
 
 export type T_AuthUserWithProfileAndSubscription = {
   authUser: User,
-  user: T_UserWithSubscription
+  user: UserData,
+  subscription: Subscription
 }
 
 export type T_UserWithCompany = UserData & { company: Company }

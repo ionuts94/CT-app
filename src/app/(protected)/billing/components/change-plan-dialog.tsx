@@ -16,10 +16,23 @@ type Props = {
 export const ChangePlanDialog: React.FC<Props> = ({ currentUserPlanId }) => {
     const availablePlans = Object.values(PLANS_AND_DETAILS).filter(item => item.type === "subscription")
 
-    const handleInitiateCheckout = async (priceId: string) => {
-        const { data, error } = await CTBilling.createCheckoutSession({ priceId })
-        if (!data?.redirectUrl || error) return toast.error("Nu putem procesa plati in acest moment. Va rugam sa incercati mai tarziu.")
-        window.location.href = data.redirectUrl
+    const handleChangePlan = async (priceId: string) => {
+        const repsponse = await CTBilling.changePlan({ priceId })
+
+        const { data, error } = repsponse
+        console.log(repsponse)
+
+        if (error) {
+            toast.error("Nu putem procesa plata în acest moment.")
+            return
+        }
+
+        if (data?.redirectUrl) {
+            window.location.href = data.redirectUrl
+            return
+        }
+
+        toast.success("Planul a fost actualizat.")
     }
 
     const isCurrentPlan = (planId: string) => planId === currentUserPlanId
@@ -47,7 +60,7 @@ export const ChangePlanDialog: React.FC<Props> = ({ currentUserPlanId }) => {
                             </div>
                             <Button
                                 disabled={isCurrentPlan(item.id)}
-                                onClick={() => handleInitiateCheckout(item.stripePriceId)}
+                                onClick={() => handleChangePlan(item.stripePriceId)}
                             >
                                 {isCurrentPlan(item.id)
                                     ? `Plan curent`

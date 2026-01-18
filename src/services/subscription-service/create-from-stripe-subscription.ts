@@ -4,6 +4,7 @@ import { SubscriptionStatus, SubscriptionPlan } from "@prisma/client"
 type CreateFromStripeSubscriptionInput = {
     userId: string
     stripeSubscriptionId: string
+    stripeSubscriptionItemId: string
     stripeCustomerId: string
     stripePriceId: string
     plan: SubscriptionPlan
@@ -32,6 +33,7 @@ export async function createFromStripeSubscription(
             currentPeriodEnd: input.currentPeriodEnd,
             cancelAtPeriodEnd: input.cancelAtPeriodEnd,
             canceledAt: input.canceledAt,
+            stripeSubscriptionItemId: input.stripeSubscriptionItemId
         })
 
     // 🔁 idempotency: dacă a fost deja creată, ignorăm

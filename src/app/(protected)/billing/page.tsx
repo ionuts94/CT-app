@@ -7,7 +7,7 @@ import UserService from "@/services/users";
 export default async function BillingPage() {
   const { data, error } = await withSafeService(() => UserService.getCurrentUserWithSubscription())
 
-  const userPlan = data?.user.subscription?.plan || "FREE"
+  console.log(data)
 
   return (
     <main className="min-h-screen">
@@ -17,7 +17,7 @@ export default async function BillingPage() {
           <PageSubHeading>Gestionează-ți abonamentul, consumul și facturile.</PageSubHeading>
         </PageHeader>
         <SubscriptionPlanCard
-          subscription={data?.user.subscription}
+          subscription={data?.subscription}
           user={data?.user!}
         />
       </PageContainer>

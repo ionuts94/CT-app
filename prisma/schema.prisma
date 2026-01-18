@@ -397,9 +397,10 @@ model Subscription {
   plan   SubscriptionPlan?
   status SubscriptionStatus
 
-  stripeCustomerId     String?
-  stripeSubscriptionId String?
-  stripePriceId        String?
+  stripeCustomerId     String
+  stripeSubscriptionId String
+  stripeSubscriptionItemId String
+  stripePriceId        String
   stripeCheckoutSessionId String?
 
   currentPeriodStart DateTime?

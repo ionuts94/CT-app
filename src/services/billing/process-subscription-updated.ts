@@ -9,12 +9,7 @@ export async function processSubscriptionUpdated(event: Stripe.Event) {
     console.log("[billing] subscription.updated")
     console.log(event)
 
-    const subscription = event.data.object as Stripe.Subscription & {
-        current_period_start: number
-        current_period_end: number
-        cancel_at_period_end: boolean
-        canceled_at: number | null
-    }
+    const subscription = event.data.object as Stripe.Subscription
 
     const stripeSubscriptionId = subscription.id
     if (!stripeSubscriptionId) return
@@ -39,12 +34,18 @@ export async function processSubscriptionUpdated(event: Stripe.Event) {
         return
     }
 
+    const subscriptionItem = subscription.items.data[0]
+
+    if (!subscriptionItem) {
+        throw new Error("subscription.updated has no subscription item")
+    }
+
     await SubscriptionService.updateById(existing.id, {
         plan,
         status,
         stripePriceId,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        currentPeriodStart: new Date(subscriptionItem.current_period_start * 1000),
+        currentPeriodEnd: new Date(subscriptionItem.current_period_end * 1000),
         cancelAtPeriodEnd: subscription.cancel_at_period_end,
         canceledAt: subscription.canceled_at
             ? new Date(subscription.canceled_at * 1000)

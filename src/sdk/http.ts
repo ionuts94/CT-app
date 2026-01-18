@@ -1,5 +1,5 @@
 export type ApiResponse<T> = {
-  status: "SUCCESS" | "FAILED";
+  status: "SUCCESS" | "FAILED" | "ACTION_REQUIRED";
   data?: T;
   error?: string;
 };

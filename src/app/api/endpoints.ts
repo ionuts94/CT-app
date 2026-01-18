@@ -56,6 +56,7 @@ export const api = {
   },
   billing: {
     checkout: "/api/billing/checkout",
+    changePlan: "/api/billing/change-plan",
     webhook: "/api/billing/webhook"
   }
 } as const

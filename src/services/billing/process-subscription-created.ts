@@ -10,11 +10,14 @@ export async function processSubscriptionCreated(event: Stripe.Event) {
 
     const subscription = event.data.object as Stripe.Subscription
 
-    const jsonEvent = JSON.stringify(event)
-    console.log(jsonEvent)
-
     const stripeSubscriptionId = subscription.id
-    if (!stripeSubscriptionId) return
+    const stripeSubscriptionItemId = subscription.items.data[0].id
+
+    if (!stripeSubscriptionId || !stripeSubscriptionItemId) {
+        console.log("Returning early from processing subscription created")
+        console.log("stripeSubscriptionId: ", stripeSubscriptionId)
+        console.log("stripeSubscriptionItemId: ", stripeSubscriptionItemId)
+    }
 
     const stripeCustomerId = subscription.customer as string | null
     if (!stripeCustomerId) {
@@ -48,6 +51,7 @@ export async function processSubscriptionCreated(event: Stripe.Event) {
         status,
         stripeCustomerId,
         stripeSubscriptionId,
+        stripeSubscriptionItemId: item.id,
         stripePriceId,
         currentPeriodStart: item.current_period_start
             ? new Date(item.current_period_start * 1000)
