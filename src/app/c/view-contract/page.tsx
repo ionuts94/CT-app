@@ -33,7 +33,7 @@ export default async function CompnayViewContract({ searchParams }: Props) {
   ])
 
   if (!contractData) {
-    return (<p>Nu am putut incarca contractul</p>)
+    return (<p className="text-red-400">Could not load the contract</p>)
   }
 
   // TODO: Error handling for contractError, commentsError, auditLogError

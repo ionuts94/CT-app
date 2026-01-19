@@ -2,13 +2,15 @@
 
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Label } from "@/components/form-elements"
-import { H2 } from "@/components/topography"
+import { H2, Text } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
 import { useOnboardingContext } from "@/contexts/onboarding-context"
-import { SignatureOnboarding, T_SignatureOnboardingSchema } from "@/validators/onboarding.validator"
+import {
+  SignatureOnboarding,
+  T_SignatureOnboardingSchema,
+} from "@/validators/onboarding.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Text } from "@/components/topography"
 import { ArrowRight } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import SignaturePad from "./signature-pad"
@@ -19,9 +21,7 @@ import { BUCKETS } from "@/constants/buckets"
 import CTOnboarding from "@/sdk/onboarding"
 import CTStorage from "@/sdk/storage"
 
-type Props = {
-
-}
+type Props = {}
 
 export const SignatureStep: React.FC<Props> = ({ }) => {
   const {
@@ -31,7 +31,7 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
     completedSteps,
     next,
     findNextStep,
-    setOnboardingSignature
+    setOnboardingSignature,
   } = useOnboardingContext()
 
   const form = useForm<T_SignatureOnboardingSchema>({
@@ -39,15 +39,16 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
     defaultValues: {
       svg: "",
       png: "",
-      url: ""
-    }
+      url: "",
+    },
   })
 
   const { handleSubmit, formState } = form
 
   const handleFormSubmit = async (values: T_SignatureOnboardingSchema) => {
     if (values.png) {
-      const file = await base64ToFile(values.png, "signature" + uuid())
+      const file = await base64ToFile(values.png, "signature-" + uuid())
+
       const { data } = await CTStorage.storeFile({
         bucket: BUCKETS.signatures,
         file,
@@ -57,24 +58,30 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
       form.setValue("url", data?.fileUrl!)
       setOnboardingSignature({ ...values, url: data?.fileUrl! })
 
-      const { error } = await CTOnboarding.updateState({
+      await CTOnboarding.updateState({
+        onboardingId: onboarding.id,
         nextUncompleteStep: findNextStep() || LAST_ONBOARDING_STEP.name,
+        stepsDone: [...completedSteps, currentStepView],
         data: {
           ...onboardingData,
           signature: {
             ...values,
-            url: data?.fileUrl!
-          }
+            url: data?.fileUrl!,
+          },
         },
-        onboardingId: onboarding.id,
-        stepsDone: [...completedSteps, currentStepView]
       })
 
       next()
     }
   }
 
-  const onSigatureChange = ({ svg, png }: { svg: string, png: string }) => {
+  const onSignatureChange = ({
+    svg,
+    png,
+  }: {
+    svg: string
+    png: string
+  }) => {
     form.setValue("svg", svg)
     form.setValue("png", png)
   }
@@ -84,21 +91,20 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
       onSubmit={handleSubmit(handleFormSubmit)}
       className="w-full max-w-[800px] mx-auto py-[20px] space-y-[30px] px-4"
     >
-      <H2>Configurați-vă semnătura</H2>
-      <Text
-        className="text-color-secondary"
-        weight="semibold"
-      >
-        Selectați modul în care doriți să apară semnătura dvs. pe contracte. Ulterior, puteți modifica această opțiune din setări
-        <ArrowRight className=" inline-flex mx-1" size={14} />
-        semnătură.
+      <H2>Set up your signature</H2>
+
+      <Text className="text-color-secondary" weight="semibold">
+        Choose how your signature will appear on contracts. You can update this
+        later from the settings
+        <ArrowRight className="inline-flex mx-1" size={14} />
+        signature section.
       </Text>
 
       <FormRow>
-        <Label>Semnătura</Label>
+        <Label>Signature</Label>
         <Card className="p-4">
           <SignaturePad
-            onChange={onSigatureChange}
+            onChange={onSignatureChange}
             onChangeMode="trimmed"
             onChangeDebounceMs={150}
           />
@@ -106,10 +112,11 @@ export const SignatureStep: React.FC<Props> = ({ }) => {
       </FormRow>
 
       <div className="flex justify-end">
-        <ButtonWithLoading loading={formState.isSubmitting} className="py-4 px-10">
-          <TextCTA>
-            Urmatorul
-          </TextCTA>
+        <ButtonWithLoading
+          loading={formState.isSubmitting}
+          className="py-4 px-10"
+        >
+          <TextCTA>Next</TextCTA>
         </ButtonWithLoading>
       </div>
     </form>

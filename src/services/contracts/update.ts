@@ -4,7 +4,7 @@ import { Contract, ContractStatus } from "@prisma/client";
 
 type ContractDBUpdatePayload = ContractDBInsertPayload & {
   status: ContractStatus,
-  lastSentAt: string
+  lastSentAt: string | null
 }
 
 export async function updateContract(payload: ContractDBUpdatePayload): Promise<Contract> {
