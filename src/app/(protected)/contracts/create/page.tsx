@@ -34,8 +34,6 @@ export default async function ContractPage({ searchParams }: Props) {
             templateTitle: template?.title,
           }}
         />
-
-
       </PageContainer>
     </main>
   )

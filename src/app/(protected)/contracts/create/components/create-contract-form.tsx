@@ -46,9 +46,6 @@ type Data = {
 }
 
 export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) => {
-  console.log("data here")
-  console.log(data)
-
   const router = useRouter()
   const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
 
@@ -108,7 +105,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
       return closeDialog()
     }
     const isValid = await runFieldsCheck()
-    if (!isValid) return toast.warning("Te rugăm să corectezi câmpurile marcate.")
+    if (!isValid) return toast.warning("Please correct the highlighted fields.")
     openDialog()
   }
 
@@ -118,14 +115,14 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
         const values = getValues()
         if (isEditing) {
           await updateContract(values)
-          return "Modificarile au fost salvate"
+          return "Changes have been saved"
         } else {
           await createContract(values)
-          return "Contractul a fost salvat ca DRAFT"
+          return "Contract saved as draft"
         }
       },
       {
-        loading: "Se salveaza contractul",
+        loading: "Saving contract…",
         success: (successMessage: string) => {
           router.replace("/contracts")
           return successMessage
@@ -138,39 +135,34 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
   const createContract = async (values: T_ContractPayload) => {
     const { data, error } = await CTContract.createContract(values)
     if (error) {
-      console.log("Failed to create contract. Error: " + error)
-      throw new Error("Nu am putut creea contractul. Eroare: " + error)
+      throw new Error("We couldn’t create the contract. Error: " + error)
     }
     return data
   }
 
   const updateContract = async (values: T_ContractPayload) => {
-    console.log("Updating contract")
-    console.log(values)
-
     const { data: updateData, error } = await CTContract.updateContract({
       ...values,
       contractId: data.contractId!
     })
     if (error) {
-      console.log("Failed to create contract. Error: " + error)
-      throw new Error("Nu am putut trimite contractul. Eroare: " + error)
+      throw new Error("We couldn’t update the contract. Error: " + error)
     }
     return updateData
   }
 
   const handleSendContract = async (sendValues: T_SendContractPayload) => {
     try {
-      console.log("Sending contract")
-      console.log(sendValues)
-
       const response = isEditing
         ? await updateContract({ ...values, ...sendValues })
         : await createContract({ ...values, ...sendValues })
 
-      if (!response) throw new Error("Am intampinat o eroare tehnica. Va rugam sa incercati in cateva minute.")
+      if (!response) {
+        throw new Error("We encountered a technical issue. Please try again in a few minutes.")
+      }
+
       await CTEmail.sendContractToClient({
-        contractId: response?.id!,
+        contractId: response.id!,
         receiverEmail: response.receiverEmail,
         optionalMessage: response.optionalMessage,
         signingDeadline: response.signingDeadline || undefined
@@ -204,7 +196,6 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
           .toISOString()
         : undefined
     })
-
   }, [data])
 
   if (contractSent.status === Status.SUCCESS) {
@@ -222,21 +213,21 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
         <Card className="p-4">
           {data.templateTitle &&
             <Label htmlFor="template-title">
-              Titlu Sablon:
+              Template title:
               <Text size="lg" weight="bold">{data.templateTitle}</Text>
             </Label>
           }
 
           <FormRow>
-            <Label>Titlu Contract <RequiredFieldMark /></Label>
-            <Input {...register("title")} placeholder="" />
+            <Label>Contract title <RequiredFieldMark /></Label>
+            <Input {...register("title")} />
             <InvalidInputError>{formErrors.title?.message}</InvalidInputError>
           </FormRow>
         </Card>
 
         <Card className="p-4">
           <FormRow>
-            <CardTitle className="mb-2">Editor contract</CardTitle>
+            <CardTitle>Contract editor</CardTitle>
             <InvalidInputError>{ }</InvalidInputError>
             <RichTextEditor
               content={data.content as string || ""}
@@ -247,7 +238,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
         </Card>
 
         <Card className="p-4">
-          <CardTitle>Selecteaza semnatura</CardTitle>
+          <CardTitle>Select signature</CardTitle>
           <FormRow>
             {signatures?.map(signature => (
               <SignatureItem
@@ -257,22 +248,23 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
               />
             ))}
           </FormRow>
+
           <FormRow>
-            <CardTitle>Valabilitatea contractului</CardTitle>
+            <CardTitle>Contract validity</CardTitle>
             <CardDescription className="max-w-[600px]">
-              Contractul nu are, implicit, o dată de expirare.
-              Bifați opțiunea de mai jos pentru a seta o dată.
+              By default, the contract does not have an expiry date.
+              Enable the option below to set one.
             </CardDescription>
             <ExpiryDate
               isOpen={Boolean(data.expiresAt)}
               defaultValue={data.expiresAt ? new Date(data.expiresAt) : undefined}
               onSelectDate={handleContractExpiryDate}
-              ctaText="Contractul are data de expirare"
+              ctaText="This contract has an expiry date"
               additionalInfo={
                 <>
-                  Contractul este valabil până la sfârșitul zilei selectate.
+                  The contract will remain valid until the end of the selected day.
                   <br />
-                  Vei primi un email de reamintire cu 7 zile înainte de expirare.
+                  You will receive an email reminder 7 days before expiry.
                 </>
               }
             />
@@ -280,28 +272,29 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
         </Card>
 
         <Card className="p-4">
-          <CardTitle>Date client</CardTitle>
-          <FormRow className="flex-row ">
+          <CardTitle>Recipient details</CardTitle>
+          <FormRow className="flex-row">
             <FormRow>
-              <Label>Nume Destinatar <RequiredFieldMark /></Label>
-              <Input {...register("receiverName")} placeholder="Dragos Popescu" />
+              <Label>Recipient name <RequiredFieldMark /></Label>
+              <Input {...register("receiverName")} placeholder="John Smith" />
               <InvalidInputError>{formErrors.receiverName?.message}</InvalidInputError>
             </FormRow>
             <FormRow>
-              <Label>Email Destinatar <RequiredFieldMark /></Label>
-              <Input {...register("receiverEmail")} placeholder="dragos@popescu.com" />
+              <Label>Recipient email <RequiredFieldMark /></Label>
+              <Input {...register("receiverEmail")} placeholder="john.smith@email.com" />
               <InvalidInputError>{formErrors.receiverEmail?.message}</InvalidInputError>
             </FormRow>
           </FormRow>
-          <FormRow className="flex  flex-row justify-end gap-2">
+
+          <FormRow className="flex flex-row justify-end gap-2">
             <ButtonWithLoading disabled={!formHasChanges} type="submit" variant="outline" className="p-4">
               <Save />
-              Salveaza ca draft
+              Save as draft
             </ButtonWithLoading>
             <div>
               <Button type="button" className="h-full" onClick={handleOpenDialog}>
                 <Send />
-                Trimite spre semnare
+                Send for signing
               </Button>
               <SendContractDialog
                 isOpen={isOpen}
@@ -314,11 +307,10 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
             </div>
           </FormRow>
         </Card>
-
       </div>
+
       <div className="w-1/3">
-        {/* <AiTemplateReview /> */}
-        ceva
+        {/* right column */}
       </div>
     </form>
   )

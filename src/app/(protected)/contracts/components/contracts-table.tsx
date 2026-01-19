@@ -34,28 +34,45 @@ export const ContractsTable: React.FC<Props> = ({ contracts }) => {
     )
   }
 
-  console.log("first contract")
-  console.log(contracts[0])
-
   return (
     <div className="w-full">
       <Card className="pt-0 w-full overflow-hidden">
         <Table>
-          <TableHeader className="">
+          <TableHeader>
             <TableRow className="h-auto bg-slate-100">
-              <TableHead className="py-4 text-[16px] font-bold pl-4">Client</TableHead>
-              <TableHead className="py-4 text-[16px] font-bold">Titlu</TableHead>
-              <TableHead className="py-4 text-[16px] font-bold">Status</TableHead>
-              <TableHead className="py-4 text-[16px] font-bold">Creat</TableHead>
-              <TableHead className="py-4 text-[16px] font-bold">Trimis</TableHead>
-              <TableHead className="text-right py-4 text-[16px] font-bold pr-4">Actions</TableHead>
+              <TableHead className="py-4 text-[16px] font-bold pl-4">
+                Client
+              </TableHead>
+              <TableHead className="py-4 text-[16px] font-bold">
+                Title
+              </TableHead>
+              <TableHead className="py-4 text-[16px] font-bold">
+                Status
+              </TableHead>
+              <TableHead className="py-4 text-[16px] font-bold">
+                Created
+              </TableHead>
+              <TableHead className="py-4 text-[16px] font-bold">
+                Sent
+              </TableHead>
+              <TableHead className="text-right py-4 text-[16px] font-bold pr-4">
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {contracts.map((contract, index) => (
-              <TableRow key={index} className="hover:bg-muted/50" onClick={() => viewContract(contract)}>
-                <TableCell className="py-5 text-[15px] text-ellipsis max-w-[300px] pl-4 overflow-hidden">{contract.receiverName}</TableCell>
-                <TableCell className="py-5 text-[15px] line-clamp-1 text-ellipsis max-w-[300px]">{contract.title}</TableCell>
+              <TableRow
+                key={index}
+                className="hover:bg-muted/50"
+                onClick={() => viewContract(contract)}
+              >
+                <TableCell className="py-5 text-[15px] text-ellipsis max-w-[300px] pl-4 overflow-hidden">
+                  {contract.receiverName}
+                </TableCell>
+                <TableCell className="py-5 text-[15px] line-clamp-1 text-ellipsis max-w-[300px]">
+                  {contract.title}
+                </TableCell>
                 <TableCell>
                   <StatusBadge status={contract.status} />
                 </TableCell>
@@ -63,7 +80,9 @@ export const ContractsTable: React.FC<Props> = ({ contracts }) => {
                   {dateUtils.formatUtcToLocaleString(contract.createdAt)}
                 </TableCell>
                 <TableCell className="py-5 text-[15px]">
-                  {contract.lastSentAt ? dateUtils.formatUtcToLocaleString(contract.lastSentAt) : ""}
+                  {contract.lastSentAt
+                    ? dateUtils.formatUtcToLocaleString(contract.lastSentAt)
+                    : ""}
                 </TableCell>
                 <TableCell className="py-5 text-[15px] text-right flex justify-end pr-4">
                   <ContractControls contract={contract} />
@@ -76,4 +95,3 @@ export const ContractsTable: React.FC<Props> = ({ contracts }) => {
     </div>
   )
 }
-

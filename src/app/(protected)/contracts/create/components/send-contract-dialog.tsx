@@ -52,7 +52,9 @@ export const SendContractDialog: React.FC<Props> = ({
   }
 
   const handleFormSubmit = async () => {
-    if (!sendValues.receiverEmail) return toast.warning("Emailul destinatarului este obligatoriu")
+    if (!sendValues.receiverEmail) {
+      return toast.warning("Recipient email is required")
+    }
     await onSendContract(sendValues)
   }
 
@@ -67,37 +69,38 @@ export const SendContractDialog: React.FC<Props> = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            Trimite contractul
+            Send contract
           </DialogTitle>
           <DialogDescription>
-
+            Review the details below before sending the contract for signing.
           </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col gap-4">
 
+        <div className="flex flex-col gap-4">
           <FormRow>
-            <Label>Email Destinatar <RequiredFieldMark /></Label>
-            <Input {...register("receiverEmail")} placeholder="dragos@popescu.com" />
+            <Label>Recipient email <RequiredFieldMark /></Label>
+            <Input {...register("receiverEmail")} placeholder="john.smith@email.com" />
             <InvalidInputError>{formState.errors.receiverEmail?.message}</InvalidInputError>
           </FormRow>
+
           <FormRow>
-            <Label>Mesaj optional</Label>
+            <Label>Optional message</Label>
             <Textarea {...register("optionalMessage")} />
           </FormRow>
+
           <FormRow>
-            <CardTitle>Termen de semnare</CardTitle>
+            <CardTitle>Signing deadline</CardTitle>
             <CardDescription className="max-w-[600px]">
-              Contractul poate fi semnat oricând, implicit.
+              By default, the contract can be signed at any time.
             </CardDescription>
 
             <ExpiryDate
               isOpen={Boolean(signingDeadline)}
               defaultValue={signingDeadline ? new Date(signingDeadline) : undefined}
               onSelectDate={handleSigningDeadline}
-              ctaText="Setează un termen de semnare"
-              additionalInfo="Vom trimite un email de reamintire cu 48 de ore înainte de acest termen."
+              ctaText="Set a signing deadline"
+              additionalInfo="We&apos;ll send a reminder email 48 hours before this deadline."
             />
-
           </FormRow>
 
           <ButtonWithLoading
@@ -107,9 +110,8 @@ export const SendContractDialog: React.FC<Props> = ({
             onClick={handleSubmit(handleFormSubmit)}
           >
             <Send />
-            <TextCTA>Trimite Contractul</TextCTA>
+            <TextCTA>Send contract</TextCTA>
           </ButtonWithLoading>
-
         </div>
       </DialogContent>
     </Dialog>

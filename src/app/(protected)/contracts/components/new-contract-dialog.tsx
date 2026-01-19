@@ -30,14 +30,16 @@ export const NewContractDialog: React.FC<Props> = ({ }) => {
         <Button className="cursor-pointer p-3">
           <Plus strokeWidth={3} />
           <TextCTA weight="extrabold">
-            CREEAZA CONTRACT
+            CREATE CONTRACT
           </TextCTA>
         </Button>
       </DialogTrigger>
+
       <DialogContent className="!max-w-[1200px] flex-col gap-10">
         <DialogTitle className="text-center">
-          Alege sablonul din care sa porneasca contractul
+          Choose a template to start your contract
         </DialogTitle>
+
         {userHasTemplates ? (
           <>
             <div className="flex w-full max-w-[1200px]">
@@ -50,17 +52,16 @@ export const NewContractDialog: React.FC<Props> = ({ }) => {
                   )}
                   onClick={() => setSelectedTemplateId(template.id)}
                 >
-                  <TemplateCard
-                    template={template}
-                  />
+                  <TemplateCard template={template} />
                 </div>
               ))}
             </div>
+
             <DialogFooter className="flex items-center !justify-center">
               <Button className="px-4 py-4" asChild>
                 <Link href={`/contracts/create?t=${selectedTemplateId || 'new'}`}>
                   <TextCTA>
-                    Creeaza contract
+                    Create contract
                   </TextCTA>
                 </Link>
               </Button>
@@ -69,27 +70,16 @@ export const NewContractDialog: React.FC<Props> = ({ }) => {
         ) : (
           <div className="w-full flex-col gap-4 flex h-full items-center justify-center">
             <NoTemplatesFound />
-            <Text>sau</Text>
-            <Button className="" variant="link" asChild>
+            <Text>or</Text>
+            <Button variant="link" asChild>
               <Link href={`/contracts/create?t=new`}>
                 <TextCTA>
-                  Creeaza contract fara șablon
+                  Create contract without a template
                 </TextCTA>
               </Link>
             </Button>
           </div>
         )}
-
-        {/* <DialogFooter className="flex items-center !justify-center">
-          <Button className="px-4 py-4" asChild>
-            <Link href={`/contracts/create?t=${selectedTemplateId}`}>
-              <TextCTA>
-                Creeaza contract
-              </TextCTA>
-            </Link>
-          </Button>
-        </DialogFooter> */}
-
       </DialogContent>
     </Dialog>
   )

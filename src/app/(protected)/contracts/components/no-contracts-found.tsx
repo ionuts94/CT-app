@@ -22,12 +22,11 @@ export const NoContractsFound: React.FC<Props> = ({ }) => {
         <FileText className="text-secondary-foreground" size={24} />
       </div>
       <Text size="lg" weight="bold">
-        Nu există încă niciun contract de afișat
+        No contracts to display yet
       </Text>
       <Text>
-        Creează primul tău contract sau ajustează filtrele pentru a
-        vedea rezultatele potrivite. Poți porni de la un șablon sau
-        poți încărca un contract existent.
+        Create your first contract or adjust the filters to see relevant results.
+        You can start from a template or upload an existing contract.
       </Text>
       {/* <Button className="cursor-pointer p-3" onClick={goToNewTemplate}>
         <Plus strokeWidth={3} />

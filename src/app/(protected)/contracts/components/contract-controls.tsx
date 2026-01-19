@@ -45,39 +45,50 @@ export const ContractControls: React.FC<Props> = ({ contract }) => {
     const handleView = (e: React.MouseEvent) => {
         e.preventDefault()
         e.stopPropagation()
-        if (isViewDisabled) return toast.info("Contractul nu poate fi vizualizat încă.\nTrimite-l mai întâi spre semnare pentru a putea fi accesat.")
+        if (isViewDisabled)
+            return toast.info(
+                "This contract can’t be viewed yet.\nSend it for signing first to make it accessible."
+            )
         router.push("/c/view-contract?c=" + contract.id)
     }
 
     const handleEdit = (e: React.MouseEvent) => {
         e.preventDefault()
         e.stopPropagation()
-        if (isEditDisabled) return toast.info("Contractul nu mai poate fi editat.\nStatusul actual îl face definitiv.")
+        if (isEditDisabled)
+            return toast.info(
+                "This contract can no longer be edited.\nIts current status makes it final."
+            )
         router.push("/contracts/edit?c=" + contract.id)
     }
 
     const handleOpenSendContract = async (e: React.MouseEvent) => {
         e.preventDefault()
         e.stopPropagation()
-        if (isSendDisabled) return toast.info("Contractul a fost deja trimis sau este finalizat.\nNu mai poate fi retrimis.")
+        if (isSendDisabled)
+            return toast.info(
+                "This contract has already been sent or completed.\nIt can’t be sent again."
+            )
         openDialog()
     }
 
     const handleSendContract = async (sendValues: T_SendContractPayload) => {
-        console.log("Send values")
-        console.log(sendValues)
         const { error } = await CTEmail.sendContractToClient({
             contractId: contract.id,
             optionalMessage: sendValues.optionalMessage,
             receiverEmail: sendValues.receiverEmail,
             signingDeadline: sendValues.signingDeadline,
         })
-        if (error) return toast.error("Nu am putut trimite contractul. Va rugam incercati din nou iar daca problema persista puteti incerca manual din pagina de editare a contractului.")
-        toast.success("Contractul a fost trimis cu succes. Destinatarul va primi un email cu linkul de semnare.")
+        if (error)
+            return toast.error(
+                "We couldn’t send the contract. Please try again. If the issue persists, you can resend it manually from the contract edit page."
+            )
+        toast.success(
+            "Contract sent successfully. The recipient will receive an email with the signing link."
+        )
         router.refresh()
         closeDialog()
     }
-
 
     return (
         <div className="flex items-center gap-1 w-fit">
@@ -92,9 +103,10 @@ export const ContractControls: React.FC<Props> = ({ contract }) => {
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>{isViewDisabled ? "Disponibil după trimitere" : "Vezi contractul"}</p>
+                    <p>{isViewDisabled ? "Available after sending" : "View contract"}</p>
                 </TooltipContent>
             </Tooltip>
+
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Button
@@ -106,9 +118,10 @@ export const ContractControls: React.FC<Props> = ({ contract }) => {
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>{isEditDisabled ? "Editarea nu mai este permisă" : "Editează contractul"}</p>
+                    <p>{isEditDisabled ? "Editing is no longer allowed" : "Edit contract"}</p>
                 </TooltipContent>
             </Tooltip>
+
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Button
@@ -120,9 +133,10 @@ export const ContractControls: React.FC<Props> = ({ contract }) => {
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>{isSendDisabled ? "Nu mai poate fi trimis" : "Trimite spre semnare"}</p>
+                    <p>{isSendDisabled ? "Can’t be sent again" : "Send for signing"}</p>
                 </TooltipContent>
             </Tooltip>
+
             <SendContractDialog
                 isOpen={isOpen}
                 receiverEmail={contract.receiverEmail}

@@ -6,8 +6,10 @@ export default async function ProfilePage() {
     <main className="min-h-screen" key={"default"}>
       <PageContainer className="flex flex-col gap-4">
         <PageHeader>
-          <PageHeading>Profilul meu</PageHeading>
-          <PageSubHeading>Gestioneaza informatiile tale de baza si in care apari in aplicatie.</PageSubHeading>
+          <PageHeading>My profile</PageHeading>
+          <PageSubHeading>
+            Manage your basic information and how you appear in the application.
+          </PageSubHeading>
         </PageHeader>
 
         Profile page

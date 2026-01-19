@@ -9,8 +9,10 @@ export const ContractsHeader: React.FC<Props> = ({ }) => {
   return (
     <div className="flex items-center justify-between">
       <PageHeader>
-        <PageHeading>Contracte</PageHeading>
-        <PageSubHeading>Aici iti poti gestiona si organiza toate contractele</PageSubHeading>
+        <PageHeading>Contracts</PageHeading>
+        <PageSubHeading>
+          Manage and organise all your contracts in one place
+        </PageSubHeading>
       </PageHeader>
       <NewContractDialog />
     </div>
