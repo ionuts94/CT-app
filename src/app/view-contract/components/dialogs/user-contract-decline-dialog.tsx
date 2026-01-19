@@ -1,8 +1,16 @@
 "use client"
+
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { Textarea } from "@/components/form-elements"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { useDialog } from "@/hooks/use-dialog"
 import CTContract from "@/sdk/contracts"
 import { T_ViewContract } from "@/types/services/contracts"
@@ -20,22 +28,25 @@ export const UserContractDeclineDialog: React.FC<Props> = ({ contract }) => {
 
   const form = useForm({
     defaultValues: {
-      failedReason: ""
-    }
+      declineReason: "",
+    },
   })
+
   const { watch, formState } = form
-  const formValues = watch()
+  const { declineReason } = watch()
   const isLoading = formState.isSubmitting
 
   const handleDeclineContract = async () => {
     const { error } = await CTContract.declineContract({
       contractId: contract.id,
-      failedReason: formValues.failedReason
+      failedReason: declineReason,
     })
+
     if (error) {
-      return toast.error("Failed to decline contract. Error: " + error)
+      return toast.error("Failed to decline the contract. Please try again.")
     }
-    toast.success("Contractul a fost respins")
+
+    toast.success("The contract has been declined.")
     router.refresh()
     closeDialog()
   }
@@ -43,22 +54,46 @@ export const UserContractDeclineDialog: React.FC<Props> = ({ contract }) => {
   return (
     <Dialog open={isOpen} onOpenChange={toggleDialog}>
       <DialogTrigger asChild>
-        <Button onClick={openDialog} variant="secondary" className="p-4 px-10">Refuza</Button>
+        <Button
+          onClick={openDialog}
+          variant="secondary"
+          className="px-10 py-4"
+        >
+          Decline contract
+        </Button>
       </DialogTrigger>
+
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Refuza contractul</DialogTitle>
-          <DialogDescription>Atentie! Odata refuzat, contractul nu mai poate fi modificat sau folosit. Refuzati doar daca sunteti complet siguri de aceasta decizie</DialogDescription>
+          <DialogTitle>Decline contract</DialogTitle>
+          <DialogDescription>
+            This action is final. Once declined, the contract can no longer be
+            signed, modified, or reused. Please continue only if you are certain.
+          </DialogDescription>
         </DialogHeader>
+
         <form onSubmit={form.handleSubmit(handleDeclineContract)}>
           <Textarea
-            {...form.register("failedReason")}
+            {...form.register("declineReason")}
             className="min-h-[100px] max-h-[150px]"
-            placeholder="Optional. Puteti scrie aici motivul pentru care refuzati acest contract"
+            placeholder="Optional. Add a short reason for declining this contract."
           />
-          <div className="flex justify-end gap-1 pt-4">
-            <Button onClick={closeDialog} variant={"secondary"} type="button">Anuleaza</Button>
-            <ButtonWithLoading loading={isLoading} className="gap-1" variant={"destructive"}>Refuza contractul</ButtonWithLoading>
+
+          <div className="flex justify-end gap-2 pt-4">
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={closeDialog}
+            >
+              Cancel
+            </Button>
+
+            <ButtonWithLoading
+              loading={isLoading}
+              variant="destructive"
+            >
+              Decline contract
+            </ButtonWithLoading>
           </div>
         </form>
       </DialogContent>

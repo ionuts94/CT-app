@@ -1,5 +1,5 @@
 import { UIMessage } from "ai"
-import { AssistantMessage, MessageComponent, UserMessage } from "./message"
+import { AssistantMessage, MessageComponent } from "./message"
 
 type Props = {
   messages: any[]
@@ -11,7 +11,14 @@ export const ConversationContainer: React.FC<Props> = ({ messages }) => {
     parts: [
       {
         type: "text",
-        text: "Salut. Sunt asistentul tau pentru acest contract. Pot raspunde la intrebari specifice contractului cum ar fi 'Explica-mi termenii de plata', 'Ce se intampla daca reziliez mai devreme?' sau 'Rezumatul obligatiilor mele'."
+        text: `Hello. I am your contract assistant.
+I can help you understand specific clauses and implications of this contract.
+
+You can ask questions like:
+• “Explain the payment terms”
+• “What happens if I terminate early?”
+• “What are my main obligations?”
+• “Are there any risks I should be aware of?”`
       }
     ]
   }

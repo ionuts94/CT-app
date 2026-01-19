@@ -13,6 +13,7 @@ export default function LoadingContractPage() {
           Contract <br />Transparent
         </Text>
       </div>
+
       <video
         src="./assets/lotties/Files.webm"
         autoPlay
@@ -20,8 +21,9 @@ export default function LoadingContractPage() {
         muted
         playsInline
         className="w-[150px]"
-      ></video>
-      <TextCTA>Se incarca contractul...</TextCTA>
+      />
+
+      <TextCTA>Loading contract…</TextCTA>
     </div>
   )
 }

@@ -27,7 +27,7 @@ export const ReceiverContractAssistant: React.FC<Props> = ({ contractContent }) 
     <Card className="flex flex-col h-full p-0 gap-0 w-full overflow-auto max max-h-[85vh]">
       <div className="flex flex-row items-center h-[50px] px-4 gap-2 bg-input border-b border-black/10">
         <AiSvg className="size-5 group-hover:text-white" />
-        <Text size="lg" weight="bold" className="text-g">Asistent AI</Text>
+        <Text size="lg" weight="bold" className="text-g">AI Assistant</Text>
       </div>
 
       {/* <div className="bg-card-secondary flex gap-2 p-1 border border-sidebar-primary shadow-sm px-4">

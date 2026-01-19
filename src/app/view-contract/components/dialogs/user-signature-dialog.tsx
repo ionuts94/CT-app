@@ -4,7 +4,15 @@ import SignaturePad from "@/app/onboarding/signature/components/signature-pad"
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { FormRow, Input, Label } from "@/components/form-elements"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { BUCKETS } from "@/constants/buckets"
 import { useDialog } from "@/hooks/use-dialog"
 import { base64ToFile } from "@/lib/utils"
@@ -26,84 +34,125 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
 
   const { formState, setValue, register, handleSubmit } = useForm({
     defaultValues: {
-      userFullName: contract.receiverName || "",
+      fullName: contract.receiverName || "",
       signature: {
         png: "",
         svg: "",
-        url: ""
-      }
-    }
+        url: "",
+      },
+    },
   })
 
   const isLoading = formState.isSubmitting
 
   const onOpenChange = () => {
-    if (isLoading) return;
+    if (isLoading) return
     toggleDialog()
   }
 
-  const onSigatureChange = ({ svg, png }: { svg: string, png: string }) => {
+  const onSignatureChange = ({
+    svg,
+    png,
+  }: {
+    svg: string
+    png: string
+  }) => {
     setValue("signature", { png, svg, url: "" })
   }
 
   const handleFormSubmit = handleSubmit(async (values) => {
-    if (values.signature.png) {
-      const file = await base64ToFile(values.signature.png, "signature" + uuid())
-      const { data } = await CTStorage.storeFile({
-        bucket: BUCKETS.signatures,
-        file,
-        filePath: file.name,
-      })
+    if (!values.signature.png) return
 
-      setValue("signature.url", data?.fileUrl!)
+    const file = await base64ToFile(
+      values.signature.png,
+      `signature-${uuid()}`
+    )
 
-      const { error: signatureError } = await CTContract.receiverSignContract({
-        contractId: contract.id,
-        signatureImageUrl: data?.fileUrl!,
-        receiverName: values.userFullName,
-      })
+    const { data } = await CTStorage.storeFile({
+      bucket: BUCKETS.signatures,
+      file,
+      filePath: file.name,
+    })
 
-      if (signatureError) {
-        return toast.error(signatureError)
-      }
-
-      CTContract.onContractSigned({ contractId: contract.id })
-      toast.success("Contractul a fost semnat. Vei primi un email de confirmare.")
-      router.refresh()
-      closeDialog()
+    if (!data?.fileUrl) {
+      return toast.error("Failed to upload signature. Please try again.")
     }
+
+    setValue("signature.url", data.fileUrl)
+
+    const { error } = await CTContract.receiverSignContract({
+      contractId: contract.id,
+      signatureImageUrl: data.fileUrl,
+      receiverName: values.fullName,
+    })
+
+    if (error) {
+      return toast.error(error)
+    }
+
+    CTContract.onContractSigned({ contractId: contract.id })
+
+    toast.success(
+      "The contract has been successfully signed. A confirmation email has been sent."
+    )
+
+    router.refresh()
+    closeDialog()
   })
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button onClick={openDialog} className="p-4 px-10">Semneaza si trimite</Button>
+        <Button onClick={openDialog} className="px-10 py-4">
+          Sign and submit
+        </Button>
       </DialogTrigger>
+
       <DialogContent className="!w-full !max-w-[960px] bg-app">
         <DialogHeader>
-          <DialogTitle>Revizuieste si confirma semnatura</DialogTitle>
-          <DialogDescription>IP-ul si data vor fi inregistrate. O copie va fi trimisa prin email tuturor partilor.</DialogDescription>
+          <DialogTitle>Review and confirm your signature</DialogTitle>
+          <DialogDescription>
+            Your IP address and the signing date will be recorded. A signed copy
+            will be emailed to all parties.
+          </DialogDescription>
         </DialogHeader>
+
         <form className="flex flex-col gap-5">
           <FormRow>
-            <Label>Nume complete</Label>
-            <Input {...register("userFullName")} className="!text-[18px] font-semibold" />
+            <Label>Full name</Label>
+            <Input
+              {...register("fullName")}
+              className="text-lg font-semibold"
+            />
           </FormRow>
+
           <FormRow>
-            <Label>Semnatura</Label>
+            <Label>Signature</Label>
             <div className="py-2">
               <SignaturePad
-                onChange={onSigatureChange}
+                onChange={onSignatureChange}
                 onChangeMode="trimmed"
                 onChangeDebounceMs={150}
               />
             </div>
           </FormRow>
         </form>
+
         <DialogFooter>
-          <Button disabled={isLoading} variant="secondary" className="p-4 px-10" onClick={onOpenChange}>Inapoi</Button>
-          <ButtonWithLoading loading={isLoading} onClick={handleFormSubmit}>
-            Semneaza si trimite
+          <Button
+            disabled={isLoading}
+            variant="secondary"
+            className="px-10 py-4"
+            onClick={onOpenChange}
+          >
+            Back
+          </Button>
+
+          <ButtonWithLoading
+            loading={isLoading}
+            onClick={handleFormSubmit}
+          >
+            Sign and submit
           </ButtonWithLoading>
         </DialogFooter>
       </DialogContent>

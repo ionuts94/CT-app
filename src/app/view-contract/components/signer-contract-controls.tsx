@@ -14,25 +14,35 @@ export const SignerContractControls: React.FC<Props> = ({ contract }) => {
     return contract?.receiverSignature?.createdAt
       ? (
         <Text>
-          Contractul a fost semnat la data {" "}
-          <span className="bg-muted/60 p-2 rounded">{new Date(contract?.receiverSignature?.createdAt).toLocaleString("ro")}</span>
+          The contract was signed on{" "}
+          <span className="bg-muted/60 p-2 rounded">
+            {new Date(contract?.receiverSignature?.createdAt).toLocaleString("en-GB")}
+          </span>
         </Text>
       )
       : (
         <Text>
-          Contractul a fost semnat si nu mai poate fi modificat
+          The contract has been signed and can no longer be modified.
         </Text>
       )
   }
 
   if (contract.status === "DECLINED") {
     const status = getContractStatusOptions(contract.status)
-    return <Text className={cn("p-2 rounded", status.colors)}>Contractul a fost respins de catre beneficiar si nu mai poate fi folosit sau modificat.</Text>
+    return (
+      <Text className={cn("p-2 rounded", status.colors)}>
+        The contract was declined by the recipient and can no longer be used or modified.
+      </Text>
+    )
   }
 
   if (contract.status === "REVOKED") {
     const status = getContractStatusOptions(contract.status)
-    return <Text className={cn("p-2 rounded", status.colors)}>Compania a retras acest contract. Contractul nu mai poate fi modificat</Text>
+    return (
+      <Text className={cn("p-2 rounded", status.colors)}>
+        The company has revoked this contract. It can no longer be modified.
+      </Text>
+    )
   }
 
   return (
