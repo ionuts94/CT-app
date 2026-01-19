@@ -27,7 +27,7 @@ export const ChangePlanDialog: React.FC<Props> = ({ currentUserPlanId }) => {
         console.log(repsponse)
 
         if (error) {
-            toast.error("Nu putem procesa plata în acest moment.")
+            toast.error("We’re unable to process the payment at the moment.")
             return
         }
 
@@ -36,7 +36,7 @@ export const ChangePlanDialog: React.FC<Props> = ({ currentUserPlanId }) => {
             return
         }
 
-        toast.success("Planul a fost actualizat.")
+        toast.success("Your plan has been updated.")
         // TODO: Redirect user to a page where we tell them the plan has changed.
         closeDialog()
     }
@@ -47,14 +47,19 @@ export const ChangePlanDialog: React.FC<Props> = ({ currentUserPlanId }) => {
         <Dialog open={isOpen} onOpenChange={toggleDialog}>
             <DialogTrigger asChild>
                 <Button className="w-fit" onClick={openDialog}>
-                    Schimbă planul
+                    Change plan
                 </Button>
             </DialogTrigger>
             <DialogContent className="!max-w-fit w-fit">
                 <DialogHeader>
-                    <DialogTitle>Schimbă planul</DialogTitle>
-                    <DialogDescription>Alege planul care se potrivește cel mai bine nevoilor echipei tale. Poți schimba planul oricând.</DialogDescription>
+                    <DialogTitle>
+                        Change plan
+                    </DialogTitle>
+                    <DialogDescription>
+                        Choose the plan that best fits your team’s needs. You can change your plan at any time.
+                    </DialogDescription>
                 </DialogHeader>
+
                 <div className="flex gap-4">
                     {availablePlans.map(item => (
                         <Card key={item.label} className="p-4 w-[340px] justify-between">
@@ -69,16 +74,16 @@ export const ChangePlanDialog: React.FC<Props> = ({ currentUserPlanId }) => {
                                 onClick={() => handleChangePlan(item.stripePriceId)}
                             >
                                 {isCurrentPlan(item.id)
-                                    ? `Plan curent`
-                                    : `Alege ${item.label}`
-
+                                    ? "Current plan"
+                                    : `Choose ${item.label}`
                                 }
                             </Button>
                         </Card>
                     ))}
                 </div>
+
                 <DialogDescription>
-                    Upgrade-ul se aplică imediat. Downgrade-ul de la următoarea factură.
+                    Upgrades take effect immediately. Downgrades will apply from your next billing cycle.
                 </DialogDescription>
             </DialogContent>
         </Dialog>

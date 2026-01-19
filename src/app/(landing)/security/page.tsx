@@ -8,98 +8,102 @@ export default function SecurityPage() {
     <section className="w-full py-24 bg-white">
       <LandingPageWidth>
 
-        {/* TITLE */}
         <h1 className="text-4xl font-bold text-gray-900 text-center mb-4">
-          Securitatea datelor tale
+          Data security you can trust
         </h1>
 
-        {/* SUBTITLE */}
         <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-16">
-          Ne luăm securitatea în serios. Contractele tale, datele clienților tăi și informațiile
-          companiei sunt protejate prin standarde moderne, conforme cu legislația europeană.
+          We take security seriously. Your contracts, your clients’ data, and your company
+          information are protected using modern standards, fully compliant with European
+          regulations.
         </p>
 
-        {/* GRID SECTION */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
 
-          {/* Item */}
           <div className="p-8 border border-gray-200 rounded-xl bg-gray-50">
             <Shield className="w-8 h-8 text-primary mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Conform GDPR</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              GDPR compliant
+            </h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Platforma respectă Regulamentul (UE) 2016/679. Toate procesele sunt construite
-              astfel încât datele personale să fie tratate legal, transparent și în siguranță.
+              The platform complies with Regulation (EU) 2016/679. All processes are designed
+              to ensure personal data is handled lawfully, transparently, and securely.
             </p>
           </div>
 
-          {/* Item */}
           <div className="p-8 border border-gray-200 rounded-xl bg-gray-50">
             <Lock className="w-8 h-8 text-primary mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Criptare completă</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              End-to-end encryption
+            </h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Toate datele sunt criptate în tranzit (HTTPS/TLS 1.2+) și în repaus, pe servere
-              europene de înaltă securitate.
+              All data is encrypted in transit (HTTPS/TLS 1.2+) and at rest, on highly secure
+              European servers.
             </p>
           </div>
 
-          {/* Item */}
           <div className="p-8 border border-gray-200 rounded-xl bg-gray-50">
             <Server className="w-8 h-8 text-primary mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Servere în Uniunea Europeană</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              EU-based servers
+            </h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Infrastructura este găzduită exclusiv în centre de date din UE, conforme ISO 27001.
+              Our infrastructure is hosted exclusively in EU data centres compliant with
+              ISO 27001 standards.
             </p>
           </div>
 
-          {/* Item */}
           <div className="p-8 border border-gray-200 rounded-xl bg-gray-50">
             <FileCheck className="w-8 h-8 text-primary mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Audit Trail complet</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Full audit trail
+            </h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Fiecare acțiune din contract este înregistrată: comentarii, modificări, vizualizări,
-              semnături și date tehnice. Totul transparent.
+              Every contract action is logged: comments, edits, views, signatures,
+              and technical metadata. Fully transparent.
             </p>
           </div>
 
-          {/* Item */}
           <div className="p-8 border border-gray-200 rounded-xl bg-gray-50">
             <EyeOff className="w-8 h-8 text-primary mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Acces controlat</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Controlled access
+            </h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Nicio persoană neautorizată nu are acces la contractele tale. Nici măcar echipa
-              Contract Transparent, cu excepția cazurilor strict necesare pentru suport tehnic.
+              No unauthorised person can access your contracts. Not even the Contract
+              Transparent team, except when strictly necessary for technical support.
             </p>
           </div>
 
-          {/* Item */}
           <div className="p-8 border border-gray-200 rounded-xl bg-gray-50">
             <RefreshCcw className="w-8 h-8 text-primary mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Backup-uri automate</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Automatic backups
+            </h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Toate datele sunt replicate și salvate automat pentru evitarea pierderii informațiilor,
-              chiar și în situații neprevăzute.
+              All data is automatically replicated and backed up to prevent information
+              loss, even in unforeseen situations.
             </p>
           </div>
 
         </div>
 
-        {/* LAST SECTION */}
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-semibold text-gray-900 mb-4">
-            Construim o platformă în care poți avea încredere
+            Built to be a platform you can trust
           </h2>
 
           <p className="text-gray-600 text-lg leading-relaxed mb-10">
-            Siguranța datelor tale este prioritatea noastră. Continuăm să îmbunătățim în mod constant
-            tehnologiile de securitate și practicile interne pentru a asigura protecția completă a
-            informațiilor tale și ale clienților tăi.
+            Protecting your data is our top priority. We continuously improve our security
+            technologies and internal practices to ensure full protection of your information
+            and your clients’ data.
           </p>
 
           <a
             href="/contact"
             className="inline-block bg-primary text-white px-8 py-4 text-lg rounded-xl font-medium shadow-sm hover:opacity-90 transition"
           >
-            Contactează-ne pentru detalii
+            Contact us for more details
           </a>
         </div>
 

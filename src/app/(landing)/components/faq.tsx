@@ -8,20 +8,17 @@ import {
 } from "@/components/ui/accordion"
 import { Text } from "@/components/topography"
 import { PropsWithChildren } from "react"
-import { Button } from "@/components/ui/button"
 
-type Props = {
-
-}
+type Props = {}
 
 export const FaQ: React.FC<Props> = ({ }) => {
   return (
     <div className="py-[110px] bg-white" id="faq">
       <LandingPageWidth className="flex flex-col gap-[40px]">
         <SectionHeaderContainer>
-          <SectionLabel>FaQ&rsquo;s</SectionLabel>
-          <SectionTitle>Informații utile</SectionTitle>
-          <SectionSubtitle>Răspunsuri rapide la cele mai comune întrebări.</SectionSubtitle>
+          <SectionLabel>FAQ</SectionLabel>
+          <SectionTitle>Helpful information</SectionTitle>
+          <SectionSubtitle>Quick answers to the most common questions.</SectionSubtitle>
         </SectionHeaderContainer>
 
         <Accordion
@@ -31,149 +28,183 @@ export const FaQ: React.FC<Props> = ({ }) => {
           defaultValue="item-1"
         >
           <AccordionItem value="item-1">
-            <AccordionTrigger className="">
-              <AcordionTitle>1. Contractele semnate aici sunt valide legal?</AcordionTitle>
+            <AccordionTrigger>
+              <AcordionTitle>1. Are contracts signed here legally valid?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Da. Semnătura digitală folosită este recunoscută legal în Uniunea Europeană.</AcordionBody>
-              <AcordionBody>Fiecare semnătură generează un audit complet cu timestamp, IP și identitatea semnatarului.</AcordionBody>
+              <AcordionBody>
+                Yes. The digital signature used is legally recognised across the European Union.
+              </AcordionBody>
+              <AcordionBody>
+                Each signature generates a complete audit trail including timestamp, IP address, and signer identity.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-2">
             <AccordionTrigger>
-              <AcordionTitle>
-                2. Trebuie să își facă și clientul cont?
-              </AcordionTitle>
+              <AcordionTitle>2. Does my client need to create an account?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Nu. Clientul primește un link securizat și poate semna direct din browser, fără cont și fără instalări.</AcordionBody>
+              <AcordionBody>
+                No. The client receives a secure link and can sign directly from their browser, without an account or installation.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-3">
             <AccordionTrigger>
-              <AcordionTitle>3. Pot edita contractele înainte de a le trimite?</AcordionTitle>
+              <AcordionTitle>3. Can I edit contracts before sending them?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Da. Poți modifica orice secțiune în editorul nostru rich text, poți adăuga clauze noi, elimina clauze sau personaliza branding-ul.</AcordionBody>
+              <AcordionBody>
+                Yes. You can edit any section using our rich text editor, add or remove clauses, and customise branding.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-4">
             <AccordionTrigger>
-              <AcordionTitle>4. Ce se întâmplă dacă cineva cere modificări?</AcordionTitle>
+              <AcordionTitle>4. What happens if someone requests changes?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Toate comentariile și discuțiile se pot face direct în document, în secțiunea dedicată.</AcordionBody>
-              <AcordionBody>Modificările sunt salvate automat, iar istoricul rămâne vizibil pentru ambele părți.</AcordionBody>
+              <AcordionBody>
+                All comments and discussions take place directly inside the document.
+              </AcordionBody>
+              <AcordionBody>
+                Changes are saved automatically and the full history remains visible to both parties.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-5">
             <AccordionTrigger>
-              <AcordionTitle>5. Pot să încarc contractele mele proprii?</AcordionTitle>
+              <AcordionTitle>5. Can I upload my own contracts?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Da. Le poți încărca în format text sau copy-paste, după care le editezi direct în platformă.</AcordionBody>
+              <AcordionBody>
+                Yes. You can upload them as text or paste the content, then edit everything directly in the platform.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-6">
             <AccordionTrigger>
-              <AcordionTitle>6. Ce se întâmplă când consum cele 3 contracte gratuite?</AcordionTitle>
+              <AcordionTitle>6. What happens after I use the 3 free contracts?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Vei primi opțiunea să faci upgrade către unul dintre planurile noastre (Pay as You Go, Starter, Team sau Business).</AcordionBody>
-              <AcordionBody>Alegi în funcție de câte contracte trimiți lunar.</AcordionBody>
+              <AcordionBody>
+                You&apos;ll be prompted to upgrade to one of our plans: Pay as You Go, Starter, Team, or Business.
+              </AcordionBody>
+              <AcordionBody>
+                You choose based on how many contracts you send each month.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-7">
             <AccordionTrigger>
-              <AcordionTitle>7. Datele mele sunt în siguranță?</AcordionTitle>
+              <AcordionTitle>7. Is my data secure?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Da. Toate datele sunt criptate, stocate pe servere din UE și protejate prin standarde moderne de securitate.</AcordionBody>
-              <AcordionBody>Doar tu și clientul aveți acces la documente.</AcordionBody>
+              <AcordionBody>
+                Yes. All data is encrypted, stored on EU-based servers, and protected using modern security standards.
+              </AcordionBody>
+              <AcordionBody>
+                Only you and your client have access to the documents.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-8">
             <AccordionTrigger>
-              <AcordionTitle>8. Pot descărca contractele semnate?</AcordionTitle>
+              <AcordionTitle>8. Can I download signed contracts?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Da. Poți descărca în orice moment contractul final, audit log-ul și versiunile anterioare.</AcordionBody>
+              <AcordionBody>
+                Yes. You can download the final contract, the audit log, and previous versions at any time.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-9">
             <AccordionTrigger>
-              <AcordionTitle>9. Pot să lucrez cu echipa mea în aceeași companie?</AcordionTitle>
+              <AcordionTitle>9. Can I work with my team in the same company?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Da, în planurile Team și Business poți avea mai mulți membri, cu roluri și permisiuni diferite.</AcordionBody>
+              <AcordionBody>
+                Yes. With the Team and Business plans, you can add multiple members with different roles and permissions.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-10">
             <AccordionTrigger>
-              <AcordionTitle>10. Platforma poate explica clauzele către client?</AcordionTitle>
+              <AcordionTitle>10. Can the platform explain clauses to my client?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Da. Asistentul AI traduce clauzele în limbaj simplu și răspunde la întrebările clientului, pentru claritate totală.</AcordionBody>
+              <AcordionBody>
+                Yes. The AI assistant translates clauses into plain language and answers client questions for full clarity.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-11">
             <AccordionTrigger>
-              <AcordionTitle>11. Ce se întâmplă dacă pierd accesul la cont?</AcordionTitle>
+              <AcordionTitle>11. What if I lose access to my account?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>E suficient să folosești opțiunea de recuperare prin email.</AcordionBody>
-              <AcordionBody>Contractele tale rămân stocate în siguranță și pot fi recuperate oricând.</AcordionBody>
+              <AcordionBody>
+                You can recover access using the email recovery option.
+              </AcordionBody>
+              <AcordionBody>
+                Your contracts remain securely stored and can always be restored.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-12">
             <AccordionTrigger>
-              <AcordionTitle>12. Pot să schimb planul oricând?</AcordionTitle>
+              <AcordionTitle>12. Can I change my plan at any time?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Da. Poți trece la un plan mai mare sau mai mic oricând.</AcordionBody>
+              <AcordionBody>
+                Yes. You can upgrade or downgrade your plan at any time.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-13">
             <AccordionTrigger>
-              <AcordionTitle>13. Cum se facturează contractele în Pay as You Go?</AcordionTitle>
+              <AcordionTitle>13. How does Pay as You Go billing work?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Plătești individual pentru fiecare contract trimis, fără abonament lunar și fără costuri ascunse.</AcordionBody>
+              <AcordionBody>
+                You pay per contract sent, with no subscription and no hidden costs.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-14">
             <AccordionTrigger>
-              <AcordionTitle>14. Pot folosi platforma și pentru contracte recurente?</AcordionTitle>
+              <AcordionTitle>14. Can I use the platform for recurring contracts?</AcordionTitle>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 text-balance">
-              <AcordionBody>Da. Poți crea template-uri proprii și le poți reutiliza oricând, instant.</AcordionBody>
+              <AcordionBody>
+                Yes. You can create your own templates and reuse them instantly whenever needed.
+              </AcordionBody>
             </AccordionContent>
           </AccordionItem>
-
         </Accordion>
       </LandingPageWidth>
 
-      {/* Bottom CTA */}
       <section className="w-full pt-[100px] border-t border-gray-200 mt-4">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h3 className="text-2xl font-semibold text-gray-900 mb-3">
-            Nu ai găsit ce cauți?
+            Didn&apos;t find what you were looking for?
           </h3>
           <p className="text-gray-600 text-lg leading-relaxed">
-            Scrie-ne și răspundem rapid:{" "}
+            Contact us and we&apos;ll reply quickly at{" "}
             <a
               href="mailto:support@contracttransparent.com"
               className="text-primary font-medium hover:underline"
@@ -184,18 +215,17 @@ export const FaQ: React.FC<Props> = ({ }) => {
         </div>
       </section>
     </div>
-  );
-};
-
+  )
+}
 
 export const AcordionTitle: React.FC<PropsWithChildren> = ({ children }) => (
   <Text className="text-[24px] leading-[35px] font-[600] text-[#14141f] tracking-[-0.8px]">
     {children}
   </Text>
-);
+)
 
 export const AcordionBody: React.FC<PropsWithChildren> = ({ children }) => (
   <Text className="text-[16px] leading-[24px] font-[400] text-[#475569]">
     {children}
   </Text>
-);
+)

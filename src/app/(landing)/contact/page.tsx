@@ -15,12 +15,13 @@ export default function ContactPage() {
 
         {/* Title */}
         <h1 className="text-4xl font-bold text-gray-900 text-center mb-4">
-          Suntem aici să te ajutăm
+          We’re here to help
         </h1>
 
         {/* Subtitle */}
         <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-16">
-          Ai întrebări despre platformă, cont sau contracte? Trimite-ne un mesaj și revenim rapid.
+          Have questions about the platform, your account, or contracts?
+          Send us a message and we’ll get back to you shortly.
         </p>
 
         {/* Info + Map Section */}
@@ -33,9 +34,11 @@ export default function ContactPage() {
             <div className="flex items-start gap-4 p-6 bg-gray-50 border border-gray-200 rounded-xl">
               <Mail className="text-primary w-6 h-6 flex-shrink-0" />
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Email suport</h3>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Support email
+                </h3>
                 <p className="text-gray-600 text-sm mb-2">
-                  Suport tehnic sau întrebări legate de cont.
+                  Technical support or account-related questions.
                 </p>
                 <a
                   href="mailto:support@contracttransparent.com"
@@ -50,9 +53,11 @@ export default function ContactPage() {
             {/* <div className="flex items-start gap-4 p-6 bg-gray-50 border border-gray-200 rounded-xl">
               <Phone className="text-primary w-6 h-6 flex-shrink-0" />
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Asistență comercială</h3>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Sales enquiries
+                </h3>
                 <p className="text-gray-600 text-sm mb-2">
-                  Ai nevoie de informații despre planuri sau colaborări?
+                  Need information about plans or partnerships?
                 </p>
                 <a
                   href="mailto:sales@contracttransparent.com"
@@ -67,9 +72,11 @@ export default function ContactPage() {
             <div className="flex items-start gap-4 p-6 bg-gray-50 border border-gray-200 rounded-xl">
               <MapPin className="text-primary w-6 h-6 flex-shrink-0" />
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Adresă</h3>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Address
+                </h3>
                 <p className="text-gray-600 text-sm">
-                  Str. Exemplu nr. 10, București, România
+                  10 Example Street, Bucharest, Romania
                 </p>
               </div>
             </div>
@@ -78,11 +85,13 @@ export default function ContactPage() {
             <div className="flex items-start gap-4 p-6 bg-gray-50 border border-gray-200 rounded-xl">
               <Building className="text-primary w-6 h-6 flex-shrink-0" />
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Date companie</h3>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Company details
+                </h3>
                 <p className="text-gray-600 text-sm">
                   Contract Transparent SRL
-                  <br />CUI: RO12345678
-                  <br />Reg. Com.: J00/0000/2025
+                  <br />VAT ID: RO12345678
+                  <br />Trade Register: J00/0000/2025
                 </p>
               </div>
             </div>
@@ -102,7 +111,6 @@ export default function ContactPage() {
             ></iframe>
           </div>
 
-
         </div>
 
         {/* FORM */}
@@ -110,39 +118,45 @@ export default function ContactPage() {
           className="bg-gray-50 border border-gray-200 p-10 rounded-xl shadow-sm max-w-3xl mx-auto"
           onSubmit={(e) => {
             e.preventDefault();
-            alert("Integrezi tu cu Brevo aici, bossule 💙");
+            alert("You’ll wire this up with Brevo here, bossule 💙");
           }}
         >
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-            Trimite-ne un mesaj
+            Send us a message
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nume</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Name
+              </label>
               <input
                 type="text"
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Numele tău"
+                placeholder="Your name"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Email
+              </label>
               <input
                 type="email"
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="adresa@exemplu.com"
+                placeholder="email@example.com"
               />
             </div>
           </div>
 
           <div className="mt-6">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Mesaj</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Message
+            </label>
             <textarea
               rows={5}
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="Scrie mesajul tău aici..."
+              placeholder="Write your message here..."
             ></textarea>
           </div>
 
@@ -150,7 +164,7 @@ export default function ContactPage() {
             type="submit"
             className="mt-8 w-full bg-primary text-white text-lg font-medium py-3 rounded-xl hover:opacity-90 transition"
           >
-            Trimite mesajul
+            Send message
           </button>
         </form>
 

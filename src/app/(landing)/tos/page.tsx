@@ -7,115 +7,102 @@ export default function TermsPage() {
     <section className="w-full py-24 bg-white">
       <LandingPageWidth>
 
-        {/* Title */}
         <h1 className="text-4xl font-bold text-gray-900 text-center mb-4">
-          Termeni și Condiții
+          Terms and Conditions
         </h1>
 
-        {/* Subtitle */}
         <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-16">
-          Ultima actualizare: Ianuarie 2025
+          Last updated: January 2025
           <br />
-          Te rugăm să citești cu atenție acești termeni înainte de a utiliza platforma Contract Transparent.
+          Please read these Terms and Conditions carefully before using the Contract Transparent platform.
         </p>
 
-        {/* LEGAL CONTENT */}
         <div className="prose prose-gray max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 leading-relaxed">
 
-          {/* INTRO */}
-          <h2 className="text-2xl font-semibold mt-12">1. Acceptarea termenilor</h2>
+          <h2 className="text-2xl font-semibold mt-12">1. Acceptance of terms</h2>
           <p>
-            Utilizarea platformei Contract Transparent („Platforma”) reprezintă acceptarea integrală a acestor Termeni și Condiții.
-            Dacă nu ești de acord cu oricare dintre secțiuni, te rugăm să nu folosești serviciul.
+            By using the Contract Transparent platform ("Platform"), you fully agree to these Terms and Conditions.
+            If you do not agree with any part of them, please do not use the service.
           </p>
 
-          {/* ACCOUNT */}
-          <h2 className="text-2xl font-semibold mt-12">2. Crearea și utilizarea contului</h2>
+          <h2 className="text-2xl font-semibold mt-12">2. Account creation and use</h2>
           <p>
-            Pentru a accesa funcționalitățile Platformei, utilizatorul trebuie să creeze un cont folosind un email valid.
-            Utilizatorul este responsabil pentru păstrarea confidențialității datelor de autentificare.
+            To access the Platform’s features, users must create an account using a valid email address.
+            Users are responsible for maintaining the confidentiality of their login credentials.
           </p>
           <ul>
-            <li>Este interzisă folosirea contului altei persoane.</li>
-            <li>Ești responsabil pentru activitatea desfășurată în contul tău.</li>
-            <li>Ne rezervăm dreptul de a suspenda conturi suspecte sau abuzive.</li>
+            <li>Using another person’s account is strictly prohibited.</li>
+            <li>You are responsible for all activity carried out under your account.</li>
+            <li>We reserve the right to suspend accounts that appear suspicious or abusive.</li>
           </ul>
 
-          {/* SERVICE */}
-          <h2 className="text-2xl font-semibold mt-12">3. Descrierea serviciului</h2>
+          <h2 className="text-2xl font-semibold mt-12">3. Service description</h2>
           <p>
-            Contract Transparent oferă instrumente pentru crearea, trimiterea, revizuirea și semnarea digitală a contractelor.
-            Platforma include funcționalități precum editor de texte, managementul contractelor, comentarii, audit log,
-            notificări și semnătură digitală conform legislației UE.
+            Contract Transparent provides tools for creating, sending, reviewing, and digitally signing contracts.
+            The Platform includes features such as a text editor, contract management, comments, audit logs,
+            notifications, and digital signatures in accordance with EU legislation.
           </p>
 
-          {/* SIGNATURE */}
-          <h2 className="text-2xl font-semibold mt-12">4. Semnături digitale</h2>
+          <h2 className="text-2xl font-semibold mt-12">4. Digital signatures</h2>
           <p>
-            Semnăturile generate prin Platformă sunt conforme cu legislația europeană privind semnătura electronică simplă.
-            Utilizatorul și clientul acestuia sunt responsabili de exactitatea și legalitatea informațiilor furnizate în documente.
+            Signatures generated through the Platform comply with European legislation regarding simple electronic signatures.
+            Users and their clients are responsible for the accuracy and legality of the information included in documents.
           </p>
 
-          {/* PRICING */}
-          <h2 className="text-2xl font-semibold mt-12">5. Prețuri și facturare</h2>
+          <h2 className="text-2xl font-semibold mt-12">5. Pricing and billing</h2>
           <p>
-            Platforma oferă 3 contracte gratuite la înregistrare. După epuizarea acestora, utilizatorul poate achiziționa
-            contracte suplimentare sau poate activa un plan lunar.
+            The Platform offers 3 free contracts upon registration. After these are used, users may purchase
+            additional contracts or activate a monthly subscription plan.
           </p>
           <ul>
-            <li>Pay as You Go – 5€ / contract</li>
-            <li>Starter – 15€ / lună</li>
-            <li>Team – 30€ / lună</li>
-            <li>Business – 50€ / lună</li>
+            <li>Pay as You Go – €5 per contract</li>
+            <li>Starter – €15 per month</li>
+            <li>Team – €30 per month</li>
+            <li>Business – €50 per month</li>
           </ul>
 
           <p>
-            Toate plățile sunt procesate securizat prin partenerii noștri și nu stocăm date bancare pe serverele noastre.
+            All payments are securely processed through our payment partners. We do not store banking or card details
+            on our servers.
           </p>
 
-          {/* DATA */}
-          <h2 className="text-2xl font-semibold mt-12">6. Date personale și confidențialitate</h2>
+          <h2 className="text-2xl font-semibold mt-12">6. Personal data and privacy</h2>
           <p>
-            Prelucrarea datelor personale este realizată conform Politicii de Confidențialitate. Ne angajăm să protejăm toate
-            informațiile utilizatorilor și clienților acestora.
+            Personal data is processed in accordance with our Privacy Policy. We are committed to protecting
+            the information of our users and their clients.
           </p>
 
-          {/* SECURITY */}
-          <h2 className="text-2xl font-semibold mt-12">7. Securitate</h2>
+          <h2 className="text-2xl font-semibold mt-12">7. Security</h2>
           <p>
-            Platforma utilizează criptare, servere conforme GDPR și audit complet pentru fiecare acțiune efectuată în contracte.
-            Cu toate acestea, utilizatorul este responsabil pentru protejarea propriului dispozitiv și a parolelor.
+            The Platform uses encryption, GDPR-compliant servers, and full audit logs for every contract action.
+            However, users are responsible for securing their own devices and passwords.
           </p>
 
-          {/* LIABILITY */}
-          <h2 className="text-2xl font-semibold mt-12">8. Limitarea răspunderii</h2>
+          <h2 className="text-2xl font-semibold mt-12">8. Limitation of liability</h2>
           <p>
-            Contract Transparent nu poate fi tras la răspundere pentru pierderi rezultate din utilizarea necorespunzătoare a
-            platformei, erori ale utilizatorului sau probleme tehnice cauzate de terți.
+            Contract Transparent shall not be held liable for losses resulting from improper use of the Platform,
+            user errors, or technical issues caused by third parties.
           </p>
 
-          {/* TERMINATION */}
-          <h2 className="text-2xl font-semibold mt-12">9. Suspendarea sau încetarea accesului</h2>
+          <h2 className="text-2xl font-semibold mt-12">9. Suspension or termination of access</h2>
           <p>
-            Ne rezervăm dreptul de a limita sau suspenda accesul unui utilizator în cazul:
+            We reserve the right to restrict or suspend access in cases of:
           </p>
           <ul>
-            <li>încălcării termenilor;</li>
-            <li>tentativelor de fraudă;</li>
-            <li>utilizării abuzive a platformei.</li>
+            <li>violation of these Terms;</li>
+            <li>fraud attempts;</li>
+            <li>abusive use of the Platform.</li>
           </ul>
 
-          {/* CHANGES */}
-          <h2 className="text-2xl font-semibold mt-12">10. Modificarea termenilor</h2>
+          <h2 className="text-2xl font-semibold mt-12">10. Changes to the terms</h2>
           <p>
-            Termenii și Condițiile pot fi actualizați periodic. Continuarea utilizării platformei reprezintă acceptarea
-            versiunii actualizate.
+            These Terms and Conditions may be updated periodically. Continued use of the Platform constitutes
+            acceptance of the updated version.
           </p>
 
-          {/* CONTACT */}
           <h2 className="text-2xl font-semibold mt-12">11. Contact</h2>
           <p>
-            Pentru întrebări privind acești termeni, ne poți contacta la:
+            If you have any questions regarding these Terms, you can contact us at:
           </p>
 
           <p className="font-medium text-gray-900">

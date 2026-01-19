@@ -14,21 +14,28 @@ export const PlanDetails: React.FC<Props> = ({ plan, isActive }) => {
                 <div>
                     <Text size="2xl" weight="bold">{plan?.label}</Text>
                     <Text size="lg" weight="bold">
-                        {plan?.price} {plan?.currency} /  lună
+                        {plan?.price} {plan?.currency} / month
                     </Text>
                 </div>
                 {isActive &&
                     <div className="bg-secondary px-8 py-2 rounded-full">
-                        <Text weight="bold" className="text-blue-700">Activ</Text>
+                        <Text weight="bold" className="text-blue-700">
+                            Active
+                        </Text>
                     </div>
                 }
             </div>
+
             <div className="flex flex-col gap-2">
-                <Text className="text-muted-foreground" size="sm">Planul include: </Text>
+                <Text className="text-muted-foreground" size="sm">
+                    This plan includes:
+                </Text>
                 <div className="flex flex-col gap-2">
                     <PlanFeatureItem>
-                        {plan?.contracts.count} contracte
-                        {plan?.contracts.period ? " / " + plan?.contracts.period : " gratuite"}
+                        {plan?.contracts.count} contracts
+                        {plan?.contracts.period
+                            ? " / " + plan?.contracts.period
+                            : " included"}
                     </PlanFeatureItem>
                     {plan?.features.map(feature => (
                         <PlanFeatureItem key={feature}>

@@ -13,8 +13,10 @@ export default async function BillingPage() {
     <main className="min-h-screen">
       <PageContainer className="flex flex-col gap-4">
         <PageHeader>
-          <PageHeading>Facturare</PageHeading>
-          <PageSubHeading>Gestionează-ți abonamentul, consumul și facturile.</PageSubHeading>
+          <PageHeading>Billing</PageHeading>
+          <PageSubHeading>
+            Manage your subscription, usage, and invoices.
+          </PageSubHeading>
         </PageHeader>
         <SubscriptionPlanCard
           subscription={data?.subscription}

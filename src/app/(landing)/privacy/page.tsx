@@ -7,150 +7,147 @@ export default function PrivacyPolicyPage() {
     <section className="w-full py-24 bg-white">
       <LandingPageWidth>
 
-        {/* TITLE */}
         <h1 className="text-4xl font-bold text-gray-900 text-center mb-4">
-          Politica de Confidențialitate
+          Privacy Policy
         </h1>
 
-        {/* SUBTITLE */}
         <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-16">
-          Ultima actualizare: Ianuarie 2025
+          Last updated: January 2025
           <br />
-          Această politică explică modul în care colectăm, folosim și protejăm datele tale personale.
+          This policy explains how we collect, use, and protect your personal data.
         </p>
 
-        {/* CONTENT */}
         <div className="prose prose-gray max-w-none leading-relaxed prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700">
 
-          <h2 className="text-2xl font-semibold mt-12">1. Introducere</h2>
+          <h2 className="text-2xl font-semibold mt-12">1. Introduction</h2>
           <p>
-            Contract Transparent SRL („noi”, „platforma”, „serviciul”) respectă confidențialitatea
-            datelor tale și se angajează să protejeze toate informațiile personale conform
-            Regulamentului (UE) 2016/679 (GDPR).
+            Contract Transparent SRL (“we”, “the platform”, “the service”) respects your privacy
+            and is committed to protecting all personal data in accordance with Regulation (EU)
+            2016/679 (GDPR).
           </p>
 
-          <h2 className="text-2xl font-semibold mt-12">2. Cine suntem</h2>
+          <h2 className="text-2xl font-semibold mt-12">2. Who we are</h2>
           <p>
-            Operatorul datelor este Contract Transparent SRL, cu sediul în România.
+            The data controller is Contract Transparent SRL, based in Romania.
           </p>
-          <p className="mb-0">Email responsabil cu protecția datelor:</p>
+          <p className="mb-0">Data protection contact email:</p>
           <p className="font-medium text-gray-900">support@contracttransparent.com</p>
 
-          <h2 className="text-2xl font-semibold mt-12">3. Ce date personale colectăm</h2>
+          <h2 className="text-2xl font-semibold mt-12">3. What personal data we collect</h2>
           <p>
-            Colectăm următoarele categorii de date în funcție de modul în care folosești platforma:
+            We collect the following categories of data depending on how you use the platform:
           </p>
 
-          <h3 className="text-xl font-semibold mt-6">3.1. Date furnizate de utilizator</h3>
+          <h3 className="text-xl font-semibold mt-6">3.1. Data provided by the user</h3>
           <ul>
-            <li>Nume și prenume</li>
-            <li>Adresă de email</li>
-            <li>Numele companiei / rol în companie</li>
-            <li>Date din contracte (părți, date de contact, conținut contractual)</li>
+            <li>First and last name</li>
+            <li>Email address</li>
+            <li>Company name / role within the company</li>
+            <li>Contract data (parties, contact details, contractual content)</li>
           </ul>
 
-          <h3 className="text-xl font-semibold mt-6">3.2. Date generate automat</h3>
+          <h3 className="text-xl font-semibold mt-6">3.2. Automatically generated data</h3>
           <ul>
-            <li>Adresă IP</li>
-            <li>Dispozitivul și browser-ul folosit</li>
-            <li>Loguri de acces și audit (acțiuni în contracte)</li>
-            <li>Timestamps pentru semnături și modificări</li>
+            <li>IP address</li>
+            <li>Device and browser information</li>
+            <li>Access and audit logs (actions within contracts)</li>
+            <li>Timestamps for signatures and edits</li>
           </ul>
 
-          <h3 className="text-xl font-semibold mt-6">3.3. Date ale clienților tăi</h3>
+          <h3 className="text-xl font-semibold mt-6">3.3. Data of your clients</h3>
           <p>
-            Atunci când trimiți un contract unei alte persoane, procesăm:
+            When you send a contract to another person, we process:
           </p>
           <ul>
-            <li>emailul destinatarului</li>
-            <li>comentarii adăugate</li>
-            <li>semnături electronice</li>
-            <li>istoricul acțiunilor asupra documentului</li>
+            <li>recipient’s email address</li>
+            <li>added comments</li>
+            <li>electronic signatures</li>
+            <li>document action history</li>
           </ul>
 
-          <h2 className="text-2xl font-semibold mt-12">4. Cum folosim datele tale</h2>
-          <p>Folosim datele personale doar în scopurile permise de GDPR:</p>
+          <h2 className="text-2xl font-semibold mt-12">4. How we use your data</h2>
+          <p>We use personal data only for purposes permitted under GDPR:</p>
           <ul>
-            <li>pentru a crea și gestiona contul tău</li>
-            <li>pentru a trimite contracte și notificări asociate</li>
-            <li>pentru a genera audit log-uri și semnături digitale</li>
-            <li>pentru îmbunătățirea platformei</li>
-            <li>pentru suport tehnic și asistență</li>
-            <li>pentru scopuri legate de securitate și prevenirea abuzului</li>
+            <li>to create and manage your account</li>
+            <li>to send contracts and related notifications</li>
+            <li>to generate audit logs and digital signatures</li>
+            <li>to improve the platform</li>
+            <li>to provide technical support and assistance</li>
+            <li>for security and abuse prevention purposes</li>
           </ul>
 
-          <h2 className="text-2xl font-semibold mt-12">5. Baza legală a prelucrării</h2>
-          <p>Temeiurile pe care ne bazăm sunt:</p>
+          <h2 className="text-2xl font-semibold mt-12">5. Legal basis for processing</h2>
+          <p>The legal bases we rely on include:</p>
           <ul>
-            <li>executarea unui contract – atunci când folosești platforma</li>
-            <li>consimțământ – pentru emailuri de marketing</li>
-            <li>interes legitim – securitatea contului și prevenirea fraudelor</li>
-            <li>obligație legală – păstrarea anumitor înregistrări</li>
+            <li>performance of a contract – when you use the platform</li>
+            <li>consent – for marketing communications</li>
+            <li>legitimate interest – account security and fraud prevention</li>
+            <li>legal obligation – retention of certain records</li>
           </ul>
 
-          <h2 className="text-2xl font-semibold mt-12">6. Stocarea datelor</h2>
+          <h2 className="text-2xl font-semibold mt-12">6. Data storage</h2>
           <p>
-            Datele sunt stocate pe servere sigure din Uniunea Europeană.
-            Contractele și semnăturile electronice sunt păstrate conform
-            perioadelor legale aplicabile, dacă legea nu impune altfel.
+            Data is stored on secure servers located within the European Union.
+            Contracts and electronic signatures are retained in accordance with
+            applicable legal retention periods, unless otherwise required by law.
           </p>
 
-          <h2 className="text-2xl font-semibold mt-12">7. Cine are acces la datele tale</h2>
+          <h2 className="text-2xl font-semibold mt-12">7. Who has access to your data</h2>
           <p>
-            Accesul este strict limitat:
+            Access is strictly limited to:
           </p>
           <ul>
-            <li>echipa Contract Transparent (numai dacă este necesar pentru suport)</li>
-            <li>furnizorii noștri de infrastructură IT (conform acordurilor GDPR)</li>
-            <li>parteneri care gestionează procesarea plăților</li>
+            <li>the Contract Transparent team (only when required for support)</li>
+            <li>our IT infrastructure providers (under GDPR-compliant agreements)</li>
+            <li>partners responsible for payment processing</li>
           </ul>
           <p>
-            Nu vindem, nu închiriem și nu cedăm datele tale unor terți în scopuri comerciale.
+            We do not sell, rent, or share your data with third parties for commercial purposes.
           </p>
 
-          <h2 className="text-2xl font-semibold mt-12">8. Securitatea datelor</h2>
+          <h2 className="text-2xl font-semibold mt-12">8. Data security</h2>
           <p>
-            Folosim criptare, audit trail, controlul accesului, firewall-uri, backup-uri
-            și alte măsuri pentru a proteja datele tale și ale clienților tăi.
+            We use encryption, audit trails, access controls, firewalls, backups,
+            and other measures to protect your data and your clients’ data.
           </p>
 
-          <h2 className="text-2xl font-semibold mt-12">9. Drepturile tale</h2>
-          <p>Conform GDPR, ai următoarele drepturi:</p>
+          <h2 className="text-2xl font-semibold mt-12">9. Your rights</h2>
+          <p>Under GDPR, you have the following rights:</p>
           <ul>
-            <li>dreptul de acces la date</li>
-            <li>dreptul de rectificare</li>
-            <li>dreptul de ștergere („dreptul de a fi uitat”)</li>
-            <li>dreptul de restricționare</li>
-            <li>dreptul la portabilitatea datelor</li>
-            <li>dreptul de opoziție</li>
+            <li>right of access</li>
+            <li>right to rectification</li>
+            <li>right to erasure (“right to be forgotten”)</li>
+            <li>right to restriction of processing</li>
+            <li>right to data portability</li>
+            <li>right to object</li>
           </ul>
 
           <p>
-            Pentru exercitarea acestor drepturi, ne poți contacta la:{" "}
+            To exercise these rights, you can contact us at{" "}
             <span className="font-medium text-gray-900">support@contracttransparent.com</span>.
           </p>
 
-          <h2 className="text-2xl font-semibold mt-12">10. Transferuri internaționale</h2>
+          <h2 className="text-2xl font-semibold mt-12">10. International transfers</h2>
           <p>
-            În mod normal, nu transferăm date în afara UE. Dacă va fi vreodată necesar, vom folosi
-            doar furnizori compatibili GDPR și Clauze Contractuale Standard.
+            We do not normally transfer data outside the EU. If this ever becomes necessary,
+            we will use only GDPR-compliant providers and Standard Contractual Clauses.
           </p>
 
-          <h2 className="text-2xl font-semibold mt-12">11. Cookie-uri</h2>
+          <h2 className="text-2xl font-semibold mt-12">11. Cookies</h2>
           <p>
-            Folosim cookie-uri strict necesare pentru funcționarea platformei și cookie-uri
-            opționale pentru analiză și performanță. Poți controla preferințele tale din browser.
+            We use strictly necessary cookies for platform functionality and optional cookies
+            for analytics and performance. You can manage your preferences through your browser.
           </p>
 
-          <h2 className="text-2xl font-semibold mt-12">12. Modificări ale politicii</h2>
+          <h2 className="text-2xl font-semibold mt-12">12. Changes to this policy</h2>
           <p>
-            Politica poate fi actualizată periodic. Versiunea curentă va fi întotdeauna disponibilă
-            pe această pagină.
+            This policy may be updated periodically. The current version will always be available
+            on this page.
           </p>
 
           <h2 className="text-2xl font-semibold mt-12">13. Contact</h2>
           <p>
-            Pentru întrebări legate de protecția datelor, ne poți contacta la:
+            For questions regarding data protection, you can contact us at:
           </p>
           <p className="font-medium text-gray-900">
             support@contracttransparent.com
