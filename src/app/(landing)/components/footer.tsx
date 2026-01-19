@@ -11,9 +11,7 @@ export const Footer: React.FC<Props> = ({ }) => {
 
           {/* Brand */}
           <div className="col-span-1 sm:col-span-2">
-            <h3 className="text-2xl font-semibold text-white">
-              Contract Transparent
-            </h3>
+            <img src="./assets/logo/pactly-logo-dark.png" className="h-[40px]" />
             <p className="text-white mt-3 text-md max-w-sm">
               A modern platform for sending and signing contracts
               in a clear, secure, and fully transparent way.
@@ -82,11 +80,11 @@ export const Footer: React.FC<Props> = ({ }) => {
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-white flex flex-col sm:flex-row justify-between items-center text-md text-white">
           <p>
-            © {new Date().getFullYear()} Contract Transparent. All rights reserved.
+            © {new Date().getFullYear()} Pactly. All rights reserved.
           </p>
-          <p className="mt-2 sm:mt-0">
+          {/* <p className="mt-2 sm:mt-0">
             Made with ❤️ in Romania
-          </p>
+          </p> */}
         </div>
       </div>
 

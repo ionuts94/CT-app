@@ -11,7 +11,7 @@ export const LandingPageHeader: React.FC<Props> = ({ }) => {
     <header className="border-b">
       <LandingPageWidth className="flex flex-row items-center justify-between h-[94px]">
         <Link href="/" className="flex items-center cursor-pointer">
-          <img src="./assets/logo/pactly-logo-no-bg.png" className="h-[40px]" />
+          <img src="./assets/logo/pactly-logo-light.png" className="h-[40px]" />
         </Link>
 
         <nav>
