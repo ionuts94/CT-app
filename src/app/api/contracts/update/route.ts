@@ -1,20 +1,19 @@
-import ContractService from "@/services/contracts";
-import { Status } from "@/types/api-call";
-import { ContractDBInsertPayload } from "@/types/services/contracts";
-import { NextRequest, NextResponse } from "next/server";
-import { ZodError } from "zod";
-import { extractClientIp } from "../../utils";
-import UserService from "@/services/users";
-import { ContractStatus } from "@prisma/client";
-import { v4 as uuid } from "uuid";
-import AuditService from "@/services/audit";
-import { T_UpdateContractBody } from "@/types/api/contracts";
+import ContractService from "@/services/contracts"
+import { Status } from "@/types/api-call"
+import { NextRequest, NextResponse } from "next/server"
+import { ZodError } from "zod"
+import { extractClientIp } from "../../utils"
+import UserService from "@/services/users"
+import { ContractStatus } from "@prisma/client"
+import { v4 as uuid } from "uuid"
+import AuditService from "@/services/audit"
+import { T_UpdateContractBody } from "@/types/api/contracts"
 
 const LOCKED_UPDATE_STATES: ContractStatus[] = [
   ContractStatus.FULLY_SIGNED,
   ContractStatus.EXPIRED,
   ContractStatus.REVOKED,
-  ContractStatus.DECLINED
+  ContractStatus.DECLINED,
 ]
 
 export async function PATCH(req: NextRequest) {
@@ -22,15 +21,20 @@ export async function PATCH(req: NextRequest) {
     const { ip, userAgent } = extractClientIp(req)
     const { user } = await UserService.getCurrentUserWithCompany()
 
-    const body = await req.json() as T_UpdateContractBody
+    const body = (await req.json()) as T_UpdateContractBody
     const contractId = body.contractId
 
-    if (!contractId) throw new Error("Am intampinat o eroare tehnica")
+    if (!contractId) {
+      throw new Error("A technical error occurred while updating the contract.")
+    }
 
-    const contractData = await ContractService.getContractWithCompanyAndOwner({ contractId })
+    const contractData =
+      await ContractService.getContractWithCompanyAndOwner({ contractId })
 
     if (LOCKED_UPDATE_STATES.includes(contractData.status)) {
-      throw new Error("Contractul este intr-un stadiu care nu ii mai permite modificari")
+      throw new Error(
+        "This contract can no longer be modified due to its current status."
+      )
     }
 
     const hasContentChanged = await ContractService.hasContentChanged({
@@ -38,14 +42,16 @@ export async function PATCH(req: NextRequest) {
       newContent: body.content,
     })
 
-    const newContractVersionId = uuid();
+    const newContractVersionId = uuid()
+
     if (hasContentChanged) {
       const newContractVersionNumber = contractData.currentVersionContent.versionNumber + 1
+
       await ContractService.createContractVersion({
         versionId: newContractVersionId,
         contractId: contractData.id,
         content: body.content,
-        versionNumber: newContractVersionNumber
+        versionNumber: newContractVersionNumber,
       })
 
       await AuditService.logAudit({
@@ -64,31 +70,37 @@ export async function PATCH(req: NextRequest) {
     const data = await ContractService.updateContract({
       ...contractData,
       ...body,
-      currentVersionId: hasContentChanged ? newContractVersionId : contractData.currentVersionId
+      currentVersionId: hasContentChanged
+        ? newContractVersionId
+        : contractData.currentVersionId,
     })
 
-    return NextResponse.json({
-      status: Status.SUCCESS,
-      data: data,
-    }, {
-      status: 200
-    });
+    return NextResponse.json(
+      {
+        status: Status.SUCCESS,
+        data,
+      },
+      { status: 200 }
+    )
   } catch (error: any) {
-    console.log("Error updating contract. Error: " + error.message)
+    console.error("Error updating contract:", error)
+
     if (error instanceof ZodError) {
-      return NextResponse.json({
-        status: Status.FAILED,
-        error: error.flatten(),
-      }, {
-        status: 400
-      });
+      return NextResponse.json(
+        {
+          status: Status.FAILED,
+          error: error.flatten(),
+        },
+        { status: 400 }
+      )
     }
 
-    return NextResponse.json({
-      status: Status.FAILED,
-      error: error.message || "Internal Server Error",
-    }, {
-      status: 500
-    });
+    return NextResponse.json(
+      {
+        status: Status.FAILED,
+        error: error.message || "Internal Server Error",
+      },
+      { status: 500 }
+    )
   }
 }

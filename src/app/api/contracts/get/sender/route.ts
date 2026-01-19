@@ -10,8 +10,6 @@ export async function GET(req: NextRequest) {
 
   if (code) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-    console.log("Data in authcallback")
-    console.log(data)
 
     if (error) {
       return NextResponse.redirect(new URL("/sign-in?error=exchange_failed", req.url));

@@ -36,10 +36,10 @@ export const ConfirmOTPWindow: React.FC<Props> = ({ email }) => {
     const { data, error } = await CTAuth.verifyOTP({ email, token: value })
     setIsProcessing(false)
     if (!data || error) {
-      return toast.error("Codul introdus este invalid sau a expirat. Te rugăm să încerci din nou.")
+      return toast.error("The code you entered is invalid or has expired. Please try again.")
     }
 
-    toast.success("Contul a fost confirmat cu succes.")
+    toast.success("Your account has been successfully verified.")
     router.push("/onboarding/company")
   }
 
@@ -47,30 +47,39 @@ export const ConfirmOTPWindow: React.FC<Props> = ({ email }) => {
     setIsProcessingResend(true)
     const { error } = await CTAuth.resendOTP({ email })
     setIsProcessingResend(false)
-    if (error) return toast.error("Nu am putut retrimite codul momentan. Te rugăm să încerci din nou.")
+    if (error) {
+      return toast.error("We couldn’t resend the code at the moment. Please try again.")
+    }
     start()
-    toast.success("Am trimis un nou cod de verificare.")
+    toast.success("A new verification code has been sent.")
   }
 
   return (
     <Card className="w-full max-w-[800px] p-4">
       <div className="text-primary font-bold flex gap-2 items-center">
         <ReceiptText size={30} />
-        <Text className="text-black text-md font-semibold">CONTRACT TRANSPARENT</Text>
+        <Text className="text-black text-md font-semibold">
+          CONTRACT TRANSPARENT
+        </Text>
       </div>
+
       <div className="flex flex-col gap-9">
         <div className="flex flex-col gap-4">
-          <H2>Introdu codul de verificare</H2>
+          <H2>Enter the verification code</H2>
           <Body className="text-color-secondary">
-            Ți-am trimis un cod de verificare pe adresa de email.
-            Introdu codul mai jos pentru a confirma contul și a continua configurarea.
+            We’ve sent a verification code to your email address.
+            Enter the code below to confirm your account and continue setup.
           </Body>
         </div>
+
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
-            <Text weight="semibold">Cod de verificare</Text>
-            <Text className="text-color-secondary">Codul este valabil pentru o perioadă limitată.</Text>
+            <Text weight="semibold">Verification code</Text>
+            <Text className="text-color-secondary">
+              The code is valid for a limited time.
+            </Text>
           </div>
+
           <InputOTP
             maxLength={6}
             value={value}
@@ -85,22 +94,27 @@ export const ConfirmOTPWindow: React.FC<Props> = ({ email }) => {
               <InputOTPSlot className="border-black/40 border-l-[1px] size-10 text-[16px] rounded-md bg-slate-100/40" index={5} />
             </InputOTPGroup>
           </InputOTP>
+
           <div>
             <Text>
-              Nu ai primit codul?
+              Didn’t receive the code?
               <button
                 disabled={isResetOTPDisabled}
                 onClick={handleResendOTP}
                 className="ml-1 text-primary cursor-pointer hover:text-blue-600 disabled:opacity-40 disabled:hover:text-primary"
               >
-                Retrimite codul
+                Resend code
               </button>
             </Text>
-            <Text className={cn("text-color-secondary invisible", isCountdownActive && "visible")} size="sm">
-              Poți retrimite codul în {secondsLeft} secunde.
+            <Text
+              className={cn("text-color-secondary invisible", isCountdownActive && "visible")}
+              size="sm"
+            >
+              You can resend the code in {secondsLeft} seconds.
             </Text>
           </div>
         </div>
+
         <ButtonWithLoading
           loading={isProcessing}
           disabled={isButtonDisabled}
@@ -108,7 +122,7 @@ export const ConfirmOTPWindow: React.FC<Props> = ({ email }) => {
           onClick={handleVerify}
         >
           <TextCTA>
-            Confirmă contul
+            Confirm account
           </TextCTA>
         </ButtonWithLoading>
       </div>

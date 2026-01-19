@@ -14,9 +14,7 @@ import CTAuth from "@/sdk/auth"
 import { toast } from "sonner"
 import { ConfirmOTPWindow } from "./confirm-otp-window"
 
-type Props = {
-
-}
+type Props = {}
 
 export const SignUpForm: React.FC<Props> = ({ }) => {
     const form = useForm<T_SignUpSchema>({
@@ -49,56 +47,76 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
 
     return (
         <AuthFormCard
-            heading="Creaza-ti contul"
-            subHeading="Incepe gratuit. Fara card. Dureaza 2 minute"
+            heading="Create your account"
+            subHeading="Start for free. No card required. Takes 2 minutes"
         >
             <form
                 onSubmit={handleSubmit(handleSignUp)}
                 className="flex flex-col gap-4"
             >
                 <FormRow className="flex-row justify-between items-center gap-2">
-                    <FormRow >
-                        <Label className="text-black/70"><RequiredFieldMark />Nume</Label>
+                    <FormRow>
+                        <Label className="text-black/70">
+                            <RequiredFieldMark />Last name
+                        </Label>
                         <Input {...register("lastName")} />
                         <InvalidInputError>{errors.lastName?.message}</InvalidInputError>
                     </FormRow>
-                    <FormRow >
-                        <Label className="text-black/70"><RequiredFieldMark />Prenume</Label>
+                    <FormRow>
+                        <Label className="text-black/70">
+                            <RequiredFieldMark />First name
+                        </Label>
                         <Input {...register("firstName")} />
                         <InvalidInputError>{errors.firstName?.message}</InvalidInputError>
                     </FormRow>
                 </FormRow>
+
                 <FormRow>
-                    <Label className="text-black/70"><RequiredFieldMark />Email</Label>
+                    <Label className="text-black/70">
+                        <RequiredFieldMark />Email
+                    </Label>
                     <Input {...register("email")} />
                     <InvalidInputError>{errors.email?.message}</InvalidInputError>
                 </FormRow>
+
                 <FormRow>
-                    <Label className="text-black/70"><RequiredFieldMark />Parola</Label>
+                    <Label className="text-black/70">
+                        <RequiredFieldMark />Password
+                    </Label>
                     <Input {...register("password")} type="password" />
                     <InvalidInputError>{errors.password?.message}</InvalidInputError>
                 </FormRow>
+
                 <FormRow>
-                    <Label className="text-black/70"><RequiredFieldMark />Comfirmare Parola</Label>
+                    <Label className="text-black/70">
+                        <RequiredFieldMark />Confirm password
+                    </Label>
                     <Input {...register("cPassword")} type="password" />
                     <InvalidInputError>{errors.cPassword?.message}</InvalidInputError>
                 </FormRow>
+
                 <FormRow className="w-full flex-row justify-end">
                     <ButtonWithLoading className="py-4 px-12" loading={isSubmitting}>
                         <TextCTA>
-                            Continua
+                            Continue
                         </TextCTA>
                     </ButtonWithLoading>
                 </FormRow>
+
                 <Separator />
+
                 <FormRow className="flex-row items-center justify-center">
-                    <Text>Ai deja cont? </Text>
-                    <Link href="/sign-in" className="text-primary cursor-pointer transition hover:text-blue-900">
-                        <TextCTA>Autentifica-te</TextCTA>
+                    <Text>Already have an account?</Text>
+                    <Link
+                        href="/sign-in"
+                        className="text-primary cursor-pointer transition hover:text-blue-900"
+                    >
+                        <TextCTA>Sign in</TextCTA>
                     </Link>
                 </FormRow>
+
                 <Text size="sm" className="text-color-secondary pb-2 text-center">
-                    Continuand, esti de acord cu Termenii si Politica de Confidentialitate.
+                    By continuing, you agree to the Terms and Privacy Policy.
                 </Text>
             </form>
         </AuthFormCard>

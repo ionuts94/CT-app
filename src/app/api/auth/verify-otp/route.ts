@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const { email, token } = await req.json() as T_OTPOperationPayload
     const user = await AuthService.verifyOTP({ email, token })
 
-    if (!user) throw new Error("Nu am putut gasi userul in baza de date.")
+    if (!user) throw new Error("User not found")
 
     await UserService.createUserRecord({
       id: user.id,
