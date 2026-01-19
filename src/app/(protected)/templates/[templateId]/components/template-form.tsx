@@ -37,7 +37,7 @@ export const TemplateForm: React.FC = ({ }) => {
         <Card className="p-4">
           <FormRow>
             <Label htmlFor="template-title">
-              Titlu Sablon
+              Template title
               <RequiredFieldMark />
             </Label>
             <Input {...register("title")} id="template-title" />
@@ -46,7 +46,7 @@ export const TemplateForm: React.FC = ({ }) => {
 
           <FormRow>
             <Label htmlFor="template-caterogry">
-              Categorie Sablon
+              Template category
               <RequiredFieldMark />
             </Label>
             <Input {...register("category")} id="template-caterogry" />
@@ -72,7 +72,7 @@ export const TemplateForm: React.FC = ({ }) => {
         >
           <Save strokeWidth={3} />
           <TextCTA weight="extrabold">
-            SALVEAZA SABLON
+            SAVE TEMPLATE
           </TextCTA>
         </ButtonWithLoading>
       </div>

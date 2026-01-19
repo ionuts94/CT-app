@@ -18,13 +18,15 @@ export const TemplatesHeader: React.FC<Props> = ({ }) => {
   return (
     <div className="flex items-center justify-between">
       <PageHeader>
-        <PageHeading>Saboloane</PageHeading>
-        <PageSubHeading>Aici iti poti gestiona si organiza toate sabloanele</PageSubHeading>
+        <PageHeading>Templates</PageHeading>
+        <PageSubHeading>
+          Manage and organise all your contract templates in one place
+        </PageSubHeading>
       </PageHeader>
       <Button className="cursor-pointer p-3" variant={"outline"} onClick={goToNewTemplate}>
         <Plus strokeWidth={3} />
         <TextCTA weight="extrabold">
-          CREEAZA SABLON
+          CREATE TEMPLATE
         </TextCTA>
       </Button>
     </div>

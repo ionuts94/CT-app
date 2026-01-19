@@ -21,16 +21,16 @@ export const NoTemplatesFound: React.FC<Props> = ({ }) => {
         <Layers className="text-secondary-foreground" size={24} />
       </div>
       <Text size="lg" weight="bold">
-        Nu ai încă niciun șablon de contract
+        You don&apos;t have any contract templates yet
       </Text>
       <Text>
-        Creează primul tău șablon pentru a trimite contracte mai rapid și mai consecvent.
-        Poți porni de la zero sau poți cere ajutorul asistentului virtual.
+        Create your first template to send contracts faster and stay consistent.
+        Start from scratch or let the virtual assistant help you.
       </Text>
       <Button className="cursor-pointer p-3" onClick={goToNewTemplate}>
         <Plus strokeWidth={3} />
         <TextCTA weight="extrabold">
-          CREEAZA SABLON
+          CREATE TEMPLATE
         </TextCTA>
       </Button>
     </Card>

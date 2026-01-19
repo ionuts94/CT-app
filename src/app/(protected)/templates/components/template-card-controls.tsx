@@ -36,8 +36,8 @@ export const TemplateCardControls: React.FC<Props> = ({ template }) => {
 
   const handleDeleteTemplate = async () => {
     const { error } = await CTTemplate.deleteTemplate({ templateId: template.id })
-    if (error) return toast.error("Nu am putut sterge sablonul. Te rugam sa incerci mai tarziu")
-    toast.success("Success")
+    if (error) return toast.error("We couldn’t delete the template. Please try again later.")
+    toast.success("Template deleted successfully")
     router.refresh()
   }
 
@@ -48,7 +48,7 @@ export const TemplateCardControls: React.FC<Props> = ({ template }) => {
           <FileText size={16} />
         </TooltipTrigger>
         <TooltipContent>
-          Creeaza contract din acest template
+          Create contract from this template
         </TooltipContent>
       </Tooltip>
       <Tooltip delayDuration={0}>
@@ -56,7 +56,7 @@ export const TemplateCardControls: React.FC<Props> = ({ template }) => {
           <Pen size={16} />
         </TooltipTrigger>
         <TooltipContent>
-          Modifica acest template
+          Edit this template
         </TooltipContent>
       </Tooltip>
       <AlertDialog>
@@ -67,21 +67,26 @@ export const TemplateCardControls: React.FC<Props> = ({ template }) => {
                 <Trash2 size={16} />
               </TooltipTrigger>
               <TooltipContent>
-                Sterge template
+                Delete template
               </TooltipContent>
             </Tooltip>
           </div>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Sigur vrei să ștergi acest template?</AlertDialogTitle>
+            <AlertDialogTitle>Are you sure you want to delete this template?</AlertDialogTitle>
             <AlertDialogDescription>
-              După confirmare, template-ul va fi șters definitiv și nu va mai putea fi recuperat.
+              Once confirmed, this template will be permanently deleted and cannot be recovered.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Renunță</AlertDialogCancel>
-            <AlertDialogAction onPointerDown={handleDeleteTemplate} className={buttonVariants({ variant: "destructive" })}>Șterge definitiv</AlertDialogAction>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onPointerDown={handleDeleteTemplate}
+              className={buttonVariants({ variant: "destructive" })}
+            >
+              Delete permanently
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -19,7 +19,7 @@ export const TemplateHeader: React.FC<Props> = ({ templateId }) => {
   return (
     <div className="flex items-center justify-between">
       <PageHeader>
-        <PageHeading>Creaza Sablon</PageHeading>
+        <PageHeading>Create template</PageHeading>
         {/* <PageSubHeading>Aici iti poti gestiona si organiza toate sabloanele</PageSubHeading> */}
       </PageHeader>
       <div className="flex items-stretch gap-1">

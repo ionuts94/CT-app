@@ -16,10 +16,14 @@ export const TemplateCard: React.FC<Props> = ({ template, className }) => {
         <Text weight="bold" className="text-ellipsis line-clamp-1">{template.title}</Text>
         <TemplateCardControls template={template} />
       </div>
-      <Text className="text-color-secondary">Actualizat la <span className="font-semibold">{new Date(template.updatedAt).toLocaleDateString()}</span></Text>
+      <Text className="text-color-secondary">
+        Last updated on <span className="font-semibold">{new Date(template.updatedAt).toLocaleDateString()}</span>
+      </Text>
       <div className="w-ful h-[150px] bg-blue-50 shadow-sm my-2 overflow-hidden" dangerouslySetInnerHTML={{ __html: contentHtml as string }} />
-      {/* <Text className="text-color-secondary">Folosit la <span className="font-semibold">{template.lastUsedAt || "niciodata"}</span></Text> */}
-      <Text className="text-color-secondary text-ellipsis line-clamp-1">Categorie: <span className="font-semibold">{template.category}</span></Text>
+      {/* <Text className="text-color-secondary">Used on <span className="font-semibold">{template.lastUsedAt || "never"}</span></Text> */}
+      <Text className="text-color-secondary text-ellipsis line-clamp-1">
+        Category: <span className="font-semibold">{template.category}</span>
+      </Text>
     </Card>
   )
 }

@@ -1,3 +1,4 @@
+"use client"
 
 import { ButtonWithLoading } from "@/components/button-with-loading"
 import { TextCTA } from "@/components/topography/cta"
@@ -33,32 +34,41 @@ export const DeleteTemplateAlertDialog: React.FC<Props> = ({ templateId }) => {
     setLoading(false)
     if (error) return toast.error(error)
     router.replace("/templates")
-    toast.success("Sablonul a fost sters")
+    toast.success("Template deleted successfully")
   }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button className="bg-white border-red-400 border-[2px] text-red-400 hover:bg-red-400 hover:text-white">
           <Trash strokeWidth={3} />
           <TextCTA>
-            Sterge Sablon
+            Delete template
           </TextCTA>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Sigur vrei să ștergi acest template?</AlertDialogTitle>
-          <AlertDialogDescription>După confirmare, template-ul va fi șters definitiv și nu va mai putea fi recuperat.</AlertDialogDescription>
+          <AlertDialogTitle>
+            Are you sure you want to delete this template?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            Once confirmed, this template will be permanently deleted and cannot be recovered.
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
-            <Button className="" variant="none">
-              Renunță
+            <Button variant="none">
+              Cancel
             </Button>
           </AlertDialogCancel>
           <AlertDialogAction asChild>
-            <ButtonWithLoading loading={loading} onClick={handleDeleteTemplate} className="bg-white border-red-400 border-[2px] text-red-400 hover:bg-red-400 hover:text-white">
-              Șterge definitiv
+            <ButtonWithLoading
+              loading={loading}
+              onClick={handleDeleteTemplate}
+              className="bg-white border-red-400 border-[2px] text-red-400 hover:bg-red-400 hover:text-white"
+            >
+              Delete permanently
             </ButtonWithLoading>
           </AlertDialogAction>
         </AlertDialogFooter>

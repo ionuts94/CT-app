@@ -17,7 +17,7 @@ export const ToneSelect: React.FC<Props> = ({ className, disabled, placeholder, 
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Ton</SelectLabel>
+          <SelectLabel>Tone</SelectLabel>
           {TONE_OPTIONS.map((opt) => (
             <SelectItem key={opt.value} value={opt.value}>
               {opt.label}
@@ -34,12 +34,12 @@ type T_SelectOption = {
 }
 
 export const TONE_OPTIONS: T_SelectOption[] = [
-  { value: "professional_clear", label: "Profesional & clar" },
+  { value: "professional_clear", label: "Professional & clear" },
   { value: "formal", label: "Formal" },
-  { value: "friendly", label: "Prietenos" },
-  { value: "concise", label: "Concis" },
-  { value: "persuasive", label: "Persuasiv" },
-  { value: "neutral", label: "Neutru" },
-  { value: "legalese", label: "Juridic (sobru)" },
-  { value: "plain_language", label: "Limbaj simplu" },
+  { value: "friendly", label: "Friendly" },
+  { value: "concise", label: "Concise" },
+  { value: "persuasive", label: "Persuasive" },
+  { value: "neutral", label: "Neutral" },
+  { value: "legalese", label: "Legal (formal language)" },
+  { value: "plain_language", label: "Plain language" },
 ]

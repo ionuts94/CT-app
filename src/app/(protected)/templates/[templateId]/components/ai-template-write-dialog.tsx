@@ -26,17 +26,17 @@ export const AiTemplateWriteDialog: React.FC<Props> = ({ onGenerateTemplate = ()
       <DialogTrigger asChild>
         <Button onClick={openDialog} variant="outline" className="bg-white group">
           <AiSvg className="size-5 group-hover:text-white" />
-          Ajuta-ma sa scriu<span className="font-bold">(AI)</span>
+          Help me write <span className="font-bold">(AI)</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="w-[98vw] md:max-w-[940px]">
         <DialogHeader>
           <DialogTitle className="flex items-center p-2 rounded-md bg-[#eef2ff] text-[#1D4ED8] w-fit px-4">
             <AiSvg className="size-5 group-hover:text-white" />
-            Asistent AI
+            AI Assistant
           </DialogTitle>
           <DialogDescription>
-            Completează câteva detalii. Câmpurile marcate cu steluță sunt obligatorii.
+            Fill in a few details. Fields marked with an asterisk are required.
           </DialogDescription>
         </DialogHeader>
         <div className="">
@@ -95,43 +95,62 @@ const AiTemplateWriterForm: React.FC<AiTemplateWriterFormProps> = ({ onGenerateT
     <form onSubmit={handleSubmit(handleFormSubmit)} className="flex flex-col gap-2">
       <FormRow className="flex-row gap-2">
         <FormRow>
-          <Label><RequiredFieldMark />Tip contract</Label>
-          <Input disabled={aiGenerateLoading} {...register("contractType")} placeholder="ex. Acord servicii / MSA / NDA" />
+          <Label><RequiredFieldMark />Contract type</Label>
+          <Input
+            disabled={aiGenerateLoading}
+            {...register("contractType")}
+            placeholder="e.g. Service Agreement / MSA / NDA"
+          />
           <InvalidInputError>{errors.contractType?.message}</InvalidInputError>
         </FormRow>
         <FormRow>
-          <Label><RequiredFieldMark />Industrie</Label>
-          <IndustrySelect disabled={aiGenerateLoading} onChange={handleIndustryChange} placeholder="Selecreaza industria" />
+          <Label><RequiredFieldMark />Industry</Label>
+          <IndustrySelect
+            disabled={aiGenerateLoading}
+            onChange={handleIndustryChange}
+            placeholder="Select an industry"
+          />
           <InvalidInputError>{errors.industry?.message}</InvalidInputError>
         </FormRow>
       </FormRow>
       <FormRow className="flex-row gap-2">
         <FormRow>
-          <Label>Ton</Label>
-          <ToneSelect disabled={aiGenerateLoading} onChange={handleToneChange} placeholder="Selecteaza tonul contractului" />
+          <Label>Tone</Label>
+          <ToneSelect
+            disabled={aiGenerateLoading}
+            onChange={handleToneChange}
+            placeholder="Select the contract tone"
+          />
           <InvalidInputError>{errors.tone?.message}</InvalidInputError>
         </FormRow>
         <FormRow>
-          <Label>Durata contractului</Label>
-          <Input disabled={aiGenerateLoading} {...register("termPeriod")} placeholder="ex. 12 luni" />
+          <Label>Contract duration</Label>
+          <Input
+            disabled={aiGenerateLoading}
+            {...register("termPeriod")}
+            placeholder="e.g. 12 months"
+          />
           <InvalidInputError>{errors.termPeriod?.message}</InvalidInputError>
         </FormRow>
       </FormRow>
       <FormRow>
-        <Label><RequiredFieldMark />Spune-ne ce ai nevoie</Label>
-        <Textarea {...register("description")} placeholder="ex: Contract de inchiriere apartament; chirie 600 EUR, garantie 1 luna, utilitati pe chirias, stare initiala, mici reparatii pe chirias, reziliere cu 30 zile." />
+        <Label><RequiredFieldMark />Tell us what you need</Label>
+        <Textarea
+          {...register("description")}
+          placeholder="e.g. Residential lease agreement; rent £600/month, one-month deposit, utilities paid by tenant, initial condition report, minor repairs covered by tenant, termination with 30 days’ notice."
+        />
         <InvalidInputError>{errors.description?.message}</InvalidInputError>
       </FormRow>
       {aiGenerateLoading &&
         <Text size="sm" className="text-color-secondary mt-2 text-center">
           <RequiredFieldMark />
-          Generăm șablonul tău cu ajutorul AI.
-          Procesul poate dura câteva minute. Te rugăm să nu închizi fereastra.
+          We’re generating your template using AI.
+          This may take a few minutes. Please do not close this window.
         </Text>
       }
       <DialogFooter className="mt-5">
         <DialogClose asChild>
-          <Button type="button" variant="outline">Anuleaza</Button>
+          <Button type="button" variant="outline">Cancel</Button>
         </DialogClose>
         <ButtonWithLoading
           type="submit"
@@ -139,22 +158,11 @@ const AiTemplateWriterForm: React.FC<AiTemplateWriterFormProps> = ({ onGenerateT
           disabled={aiGenerateLoading}
         >
           {aiGenerateLoading
-            ? "Se proceseaza"
-            : "Genereaza Draftul"
+            ? "Processing…"
+            : "Generate draft"
           }
         </ButtonWithLoading>
       </DialogFooter>
     </form>
   )
 }
-
-// test case:
-
-// Sunt un freelancer si urmeaza sa preiau un proiect. proiectul consta intr-o platforma de loialitate intre distribuitori, magazine si consumatori
-
-// Platforma consta in:
-
-// O aplicatie web: distirubitorii creaza oferte pentru magazine, magazinele isi gestioneaza ofertele
-// O aplicatie mobil: pentru consumatori
-
-// Plata este de 20 de $ pe ora

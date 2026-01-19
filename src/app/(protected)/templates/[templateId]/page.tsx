@@ -17,7 +17,7 @@ export default async function TemplatePage({ params }: Props) {
   if (templateId !== "new") {
     const { data, error } = await withSafeService(() => TemplateService.getTemplateById({ templateId }))
     if (error) {
-      return (<p className="text-center py-4">Nu putem afisa acest sablon. Va rugam incercati mai tarziu</p>)
+      return (<p className="text-center py-4"> We&apos;re unable to display this template. Please try again later.</p>)
     }
     templateData = data || undefined
   }
