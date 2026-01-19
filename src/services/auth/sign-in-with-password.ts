@@ -12,7 +12,7 @@ export async function signInWithPassword({
     password
   })
 
-  if (error) throw Error("Am intampinat o eroare: " + error.message)
+  if (error) throw new Error(`Authentication failed: ${error.message}`)
 
   return data.user
 }

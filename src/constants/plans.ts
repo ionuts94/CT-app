@@ -1,12 +1,12 @@
 import { SubscriptionPlan } from "@prisma/client"
 
 export const FEATURES = {
-  AUDIT_LOG: "Jurnal de audit și istoric complet al contractelor",
-  EMAIL_REMINDERS: "Notificări și remindere automate pe email",
-  AI_ASSISTANT: "Asistent AI pentru înțelegerea contractelor",
-  TEMPLATES: "Șabloane reutilizabile de contracte",
-  UNLIMITED_STORAGE: "Arhivare sigură și acces nelimitat la contracte",
-  PRIORITY_SUPPORT: "Suport prioritar",
+  AUDIT_LOG: "Full audit log and complete contract history",
+  EMAIL_REMINDERS: "Automated email notifications and reminders",
+  AI_ASSISTANT: "AI assistant for understanding contracts",
+  TEMPLATES: "Reusable contract templates",
+  UNLIMITED_STORAGE: "Secure storage with unlimited contract access",
+  PRIORITY_SUPPORT: "Priority customer support",
 } as const
 
 export type FeatureKey = keyof typeof FEATURES

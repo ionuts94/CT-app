@@ -1,90 +1,115 @@
-import { AuditAction, AuditLog, PartyRole } from "@prisma/client";
-import { Eye, FileText, Mail, MessageCircle, PencilLine, ReceiptText, ShieldBan, Signature, Undo, X } from "lucide-react";
+import { AuditAction, AuditLog, PartyRole } from "@prisma/client"
+import {
+  Eye,
+  FileText,
+  Mail,
+  MessageCircle,
+  PencilLine,
+  ReceiptText,
+  ShieldBan,
+  Signature,
+  Undo,
+  X,
+} from "lucide-react"
 
 export const getUserTypeLabel = (userType: PartyRole) => {
   switch (userType) {
     case "SENDER":
-      return "Inițiator"
+      return "Sender"
     case "SIGNER":
-      return "Destinatar"
+      return "Recipient"
     case "SYSTEM":
-      return "SYSTEM"
-    default: "SYSTEM"
+      return "System"
+    default:
+      return "System"
   }
 }
 
 export const AUDIT_ACTIONS = {
   CONTRACT_CREATED: (log: AuditLog) => {
     return {
-      message: "Contractul a fost creat.",
+      message: "The contract was created.",
       icon: ReceiptText,
     }
   },
+
   CONTRACT_SENT: (log: AuditLog) => {
     return {
-      message: "Contractul a fost trimis.",
+      message: "The contract was sent.",
       icon: Mail,
     }
   },
+
   CONTRACT_VIEWED: (log: AuditLog) => {
     return {
-      message: "Contractul a fost deschis.",
+      message: "The contract was opened.",
       icon: Eye,
     }
   },
+
   COMMENT_ADDED: (log: AuditLog) => {
-    const userType = getUserTypeLabel(log.actorType) + "ul"
+    const userType = getUserTypeLabel(log.actorType)
     return {
-      message: userType + " a adaugat un comentariu.",
+      message: `${userType} added a comment.`,
       icon: MessageCircle,
     }
   },
+
   CONTRACT_UPDATED: (log: AuditLog) => {
     return {
-      message: "Contractul a fost modificat.",
+      message: "The contract was updated.",
       icon: PencilLine,
     }
   },
+
   CONTRACT_SIGNED_OWNER: (log: AuditLog) => {
     return {
-      message: "Contractul a fost semnat.",
+      message: "The contract was signed by the sender.",
       icon: Signature,
     }
   },
+
   CONTRACT_SIGNED_SIGNER: (log: AuditLog) => {
     return {
-      message: "Contractul a fost semnat.",
+      message: "The contract was signed by the recipient.",
       icon: Signature,
     }
   },
+
   CONTRACT_DECLINED: (log: AuditLog) => {
     return {
-      message: "Contractul a fost respins.",
+      message: "The contract was declined.",
       icon: X,
     }
   },
+
   CONTRACT_REVOKED: (log: AuditLog) => {
     return {
-      message: "Contractul a fost retras.",
+      message: "The contract was revoked.",
       icon: Undo,
     }
   },
+
   CONTRACT_EXPIRED: (log: AuditLog) => {
     return {
-      message: "Contractul a expirat",
-      icon: ShieldBan
+      message: "The contract has expired.",
+      icon: ShieldBan,
     }
   },
+
   PDF_GENERATED: (log: AuditLog) => {
     return {
-      message: "Versiunea PDF semnata de catre ambele parti a fost generata.",
-      icon: FileText
+      message:
+        "The signed PDF version was generated after both parties completed signing.",
+      icon: FileText,
     }
   },
+
   CONTRACT_SIGNED_NOTIFICATION_SENT: (log: AuditLog) => {
     return {
-      message: "Versiunea PDF semnata a fost trimisa catre ambele parti",
-      icon: Mail
+      message:
+        "The signed PDF was sent to all parties involved.",
+      icon: Mail,
     }
-  }
+  },
 }

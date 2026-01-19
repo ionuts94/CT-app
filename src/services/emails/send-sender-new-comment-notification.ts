@@ -23,7 +23,7 @@ export async function sendSenderNewCommentNotification({
   }
 
   const message = {
-    subject: `Beneficiarul, ${contractData.receiverName}, a adaugat un comentariu la contract. `,
+    subject: `The recipient ${contractData.receiverName} added a comment to the contract`,
     to: [{ email: contractData.owner.email }],
     templateId: templateId,
     params: paramsObject,

@@ -13,7 +13,7 @@ export async function sendSignerNewCommentNotification({
   console.log("Sending  signer notification")
 
   const message = {
-    subject: `${contractData?.company.name} a adaugat un comentariu la contract.`,
+    subject: `${contractData?.company.name} added a comment to the contract`,
     to: [{ email: contractData.receiverEmail }],
     templateId: templateId,
     params: {

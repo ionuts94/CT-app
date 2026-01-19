@@ -27,18 +27,20 @@ export const DownloadContractButton: React.FC<Props> = ({ contract }) => {
 
       window.URL.revokeObjectURL(url)
     } catch (err: any) {
-      toast.error("Nu am putut descarca contractul. Eroare: " + err.message)
+      toast.error(
+        "We couldn't download the contract. Error: " + err.message
+      )
     }
   }
 
   if (contract.status !== "FULLY_SIGNED" || !contract.signedPdfUrl) {
-    return null;
+    return null
   }
 
   return (
     <Button onClick={startDownload}>
       <Download />
-      Descarca PDF
+      Download PDF
     </Button>
   )
 }

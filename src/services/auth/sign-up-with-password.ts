@@ -1,44 +1,43 @@
-import { envs } from "@/constants/envs";
-import { createClient } from "@/lib/supabase/server";
-import { SignUpSchema, T_SignUpSchema } from "@/validators/auth.validator";
+import { envs } from "@/constants/envs"
+import { createClient } from "@/lib/supabase/server"
+import { SignUpSchema, T_SignUpSchema } from "@/validators/auth.validator"
 
 export async function signUpWithPassword({
   email,
   firstName,
   lastName,
   password,
-  cPassword
+  cPassword,
 }: T_SignUpSchema) {
-  const supabase = await createClient();
+  const supabase = await createClient()
 
-  const parsedValues = SignUpSchema.safeParse({
+  const parsed = SignUpSchema.safeParse({
     email,
     firstName,
     lastName,
     password,
-    cPassword
+    cPassword,
   })
 
-  if (parsedValues.error) {
-    throw Error(parsedValues.error.message)
+  if (!parsed.success) {
+    throw new Error("Invalid sign-up payload")
   }
 
   const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
+    email,
+    password,
     options: {
-      emailRedirectTo: envs.NEXT_PUBLIC_URL + "/api/auth/callback",
+      emailRedirectTo: `${envs.NEXT_PUBLIC_URL}/api/auth/callback`,
       data: {
         firstName,
         lastName,
-        onboardingCompleted: false
-      }
+        onboardingCompleted: false,
+      },
     },
   })
 
   if (error) {
-    console.log("Am intampinat o eroare: " + error.message)
-    throw Error("Am intampinat o eroare: " + error.message)
+    throw new Error(`Sign-up failed: ${error.message}`)
   }
 
   return data.user

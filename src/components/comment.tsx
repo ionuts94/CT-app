@@ -11,8 +11,6 @@ type Props = {
 
 export const Comment: React.FC<Props> = ({ comment }) => {
     const { firstName, lastName, user, partyRole, content, createdAt } = comment
-    console.log("comment here")
-    console.log(comment)
 
     return (
         <Card className="p-5">
@@ -29,7 +27,7 @@ export const Comment: React.FC<Props> = ({ comment }) => {
                         <Text weight="semibold">{firstName} {lastName}</Text>
                         <Text size="sm" className="rounded-full border px-2 py-1">{partyRole}</Text>
                     </div>
-                    <Text size="sm" className="text-muted-foreground">Trimis {format(createdAt, "dd.MM.yyyy, HH:mm:ss")}</Text>
+                    <Text size="sm" className="text-muted-foreground">Sent at {format(createdAt, "dd.MM.yyyy, HH:mm:ss")}</Text>
                 </div>
             </div>
             {content &&

@@ -70,17 +70,28 @@ export const TemplateProvider: React.FC<Props> = ({ children, templateData }) =>
 
     const handleCreateTemplate = async (values: T_CreateTemplateSchema) => {
         setIsSavingTemplate(true)
+
         const { error } = await CTTemplate.create(values)
-        if (error) return toast.error(error)
-        toast.success("Sablonul a fost creeat")
+        if (error) {
+            setIsSavingTemplate(false)
+            return toast.error(error)
+        }
+
+        toast.success("Template created successfully")
         router.replace("/templates")
         setIsSavingTemplate(false)
     }
+
     const handleUpdateTemplate = async (values: Template) => {
         setIsSavingTemplate(true)
+
         const { error } = await CTTemplate.update(values)
-        if (error) return toast.error(error)
-        toast.success("Sablonul a fost actualizat cu succes")
+        if (error) {
+            setIsSavingTemplate(false)
+            return toast.error(error)
+        }
+
+        toast.success("Template updated successfully")
         router.replace("/templates")
         setIsSavingTemplate(false)
     }
