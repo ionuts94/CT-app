@@ -5,9 +5,8 @@ export const useDialog = () => {
 
     const openDialog = () => setOpen(true)
     const closeDialog = () => setOpen(false)
-    const toggleDialog = () => {
-        if (!open) return;
-        setOpen(prev => !prev)
+    const toggleDialog = (newValue: boolean) => {
+        setOpen(newValue)
     }
 
     return {

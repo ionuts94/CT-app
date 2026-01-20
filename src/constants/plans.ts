@@ -62,7 +62,7 @@ export const PLANS_AND_DETAILS = {
     billingPeriod: "monthly",
     contracts: {
       count: 5,
-      period: "lună"
+      period: "month"
     },
     stripePriceId: "price_1Sp2X3CvzVco3QENUCGzyQvw",
     features: [
@@ -84,7 +84,7 @@ export const PLANS_AND_DETAILS = {
     billingPeriod: "monthly",
     contracts: {
       count: 20,
-      period: "lună"
+      period: "month"
     },
     stripePriceId: "price_1Sp2XiCvzVco3QEN2u3Wmd5P",
     features: [
@@ -106,7 +106,7 @@ export const PLANS_AND_DETAILS = {
     billingPeriod: "monthly",
     contracts: {
       count: 50,
-      period: "lună"
+      period: "month"
     },
     stripePriceId: "price_1Sp2YVCvzVco3QEN4SAIwF5z",
     features: [

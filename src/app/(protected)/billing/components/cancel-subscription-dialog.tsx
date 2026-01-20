@@ -1,6 +1,8 @@
+"use client"
+
+import { ButtonWithLoading } from "@/components/button-with-loading"
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -10,16 +12,38 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { useDialog } from "@/hooks/use-dialog"
+import CTBilling from "@/sdk/billing"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { toast } from "sonner"
 
 type Props = {
 
 }
 
 export const CancelSubscriptionDialog: React.FC<Props> = () => {
+    const router = useRouter()
+
+    const { isOpen, openDialog, closeDialog, toggleDialog } = useDialog()
+    const [isProcessing, setIsProcessing] = useState(false)
+
+    const handleCancelSubscription = async () => {
+        setIsProcessing(true)
+        const { error } = await CTBilling.cancelSubscription()
+        setIsProcessing(false)
+
+        if (error) return toast.error("Failed to cancel subscription. Please try again in a few minutes.")
+        router.refresh()
+        toast.success("Subscription cancelled sucessfully")
+        closeDialog()
+    }
+
     return (
-        <AlertDialog>
+        <AlertDialog open={isOpen} onOpenChange={toggleDialog}>
             <AlertDialogTrigger asChild>
                 <Button
+                    onClick={openDialog}
                     variant="outline"
                     className="w-fit border-red-400 text-red-400 hover:bg-red-400 hover:text-white"
                 >
@@ -43,9 +67,14 @@ export const CancelSubscriptionDialog: React.FC<Props> = () => {
                     <AlertDialogCancel>
                         Keep subscription
                     </AlertDialogCancel>
-                    <AlertDialogAction>
+                    <ButtonWithLoading
+                        loading={isProcessing}
+                        disabled={isProcessing}
+                        onClick={handleCancelSubscription}
+                        variant="destructive"
+                    >
                         Cancel subscription
-                    </AlertDialogAction>
+                    </ButtonWithLoading>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
