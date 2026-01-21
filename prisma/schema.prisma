@@ -384,6 +384,8 @@ model ContractAllowance {
   expiresAt  DateTime?
   consumedAt DateTime?
   createdAt  DateTime                @default(now())
+  archivedAt DateTime?
+  refillKey  String
 
   @@index([userId])
   @@index([expiresAt])

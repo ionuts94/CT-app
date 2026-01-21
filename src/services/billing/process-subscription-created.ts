@@ -1,9 +1,9 @@
 import Stripe from "stripe"
 import SubscriptionService from "../subscription-service"
-import {
-    mapPriceIdToPlan,
-    mapStripeStatusToSubscriptionStatus,
-} from "./utils"
+import { mapPriceIdToPlan, mapStripeStatusToSubscriptionStatus } from "./utils"
+import { getPlanDetailsByStripePriceId } from "@/constants/plans"
+import ContractAllowanceService from "../contract-allowance"
+import { dateUtils } from "@/lib/date-utils"
 
 export async function processSubscriptionCreated(event: Stripe.Event) {
     console.log("[billing] subscription.created")
@@ -17,6 +17,8 @@ export async function processSubscriptionCreated(event: Stripe.Event) {
         console.log("Returning early from processing subscription created")
         console.log("stripeSubscriptionId: ", stripeSubscriptionId)
         console.log("stripeSubscriptionItemId: ", stripeSubscriptionItemId)
+        return;
+
     }
 
     const stripeCustomerId = subscription.customer as string | null
@@ -67,4 +69,17 @@ export async function processSubscriptionCreated(event: Stripe.Event) {
             : null,
     })
 
+    const planDetails = getPlanDetailsByStripePriceId(stripePriceId)
+
+    if (!planDetails) {
+        throw new Error("Cannot refill allowance: unknown plan")
+    }
+
+    await ContractAllowanceService.refillContractAllowanceForUser({
+        userId,
+        allowanceCount: planDetails.contracts.count,
+        source: "SUBSCRIPTION",
+        expiresAt: dateUtils.toUTC(new Date(item.current_period_end * 1000), dateUtils.getUserTimeZone()),
+        refillKey: item.id + item.current_period_end
+    })
 }

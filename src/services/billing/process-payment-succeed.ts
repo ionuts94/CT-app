@@ -9,9 +9,10 @@ export async function processPaymentSucceeded(event: Stripe.Event) {
         subscription: string | null
     }
 
-    console.log("1")
-    // 1️⃣ Ne interesează doar invoices legate de subscription
-    const stripeSubscriptionId = invoice.subscription
+    const stripeSubscriptionId =
+        typeof invoice.parent?.subscription_details?.subscription === "string"
+            ? invoice.parent?.subscription_details?.subscription
+            : invoice.parent?.subscription_details?.subscription.id
     if (!stripeSubscriptionId) return
 
     // 2️⃣ Sanity check
