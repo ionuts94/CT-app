@@ -28,9 +28,13 @@ export async function consumeContractAllowance({
         .is("consumedAt", null)
 
     if (error) {
-        const errMessage = "We're encountering technical issues. Please try again in a minute."
-        console.error(errMessage)
-        throw new Error(errMessage)
+        if (error?.message.includes("duplicate key")) {
+            // DO NOTHING
+        } else {
+            const errMessage = "We're encountering technical issues. Please try again in a minute."
+            console.error(errMessage + "Error: " + error.message)
+            throw new Error(errMessage)
+        }
     }
 
     return "OK"

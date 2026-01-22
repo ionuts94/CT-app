@@ -32,8 +32,7 @@ export async function POST(req: NextRequest) {
     const templateId = EMAIL_TEMPLATE_IDS.sendContract
 
     const authUser = await AuthService.getAuthUser()
-    const contractData =
-      await ContractService.getContractWithCompanyAndOwner({ contractId })
+    const contractData = await ContractService.getContractWithCompanyAndOwner({ contractId })
 
     await ContractAllowanceService.consumeContractAllowance({
       userId: authUser.id,
