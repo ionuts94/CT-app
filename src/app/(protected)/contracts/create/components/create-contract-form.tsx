@@ -161,12 +161,16 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
         throw new Error("We encountered a technical issue. Please try again in a few minutes.")
       }
 
-      await CTEmail.sendContractToClient({
+      const sendResponse = await CTEmail.sendContractToClient({
         contractId: response.id!,
         receiverEmail: response.receiverEmail,
         optionalMessage: response.optionalMessage,
         signingDeadline: response.signingDeadline || undefined
       })
+
+      if (sendResponse.error) {
+        return toast.error("Contract was saved but could not be sent. Error: " + sendResponse.error)
+      }
 
       setContractSent({
         status: Status.SUCCESS,

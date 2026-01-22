@@ -11,6 +11,8 @@ import { ContractStatus } from "@prisma/client"
 import { format } from "date-fns"
 import { T_SendContractPayload } from "@/validators/contract.validator"
 import { dateUtils } from "@/lib/date-utils"
+import ContractAllowanceService from "@/services/contract-allowance"
+import AuthService from "@/services/auth"
 
 export type T_SendContractEmailBody = T_SendContractPayload & {
   contractId: string
@@ -29,8 +31,14 @@ export async function POST(req: NextRequest) {
 
     const templateId = EMAIL_TEMPLATE_IDS.sendContract
 
+    const authUser = await AuthService.getAuthUser()
     const contractData =
       await ContractService.getContractWithCompanyAndOwner({ contractId })
+
+    await ContractAllowanceService.consumeContractAllowance({
+      userId: authUser.id,
+      contractId
+    })
 
     await ContractService.updateContract({
       ...contractData,
@@ -41,6 +49,17 @@ export async function POST(req: NextRequest) {
         .toISOString(),
       receiverEmail,
       signingDeadline,
+    })
+
+
+    await AuditService.logAudit({
+      contractId: contractData.id,
+      action: "CONTRACT_SENT",
+      actorType: "SENDER",
+      ip,
+      userAgent,
+      metadata: {},
+      contractVersion: 1,
     })
 
     const message = {
@@ -81,15 +100,6 @@ export async function POST(req: NextRequest) {
 
     await brevo.sendTransacEmail(message)
 
-    await AuditService.logAudit({
-      contractId: contractData.id,
-      action: "CONTRACT_SENT",
-      actorType: "SENDER",
-      ip,
-      userAgent,
-      metadata: {},
-      contractVersion: 1,
-    })
 
     return NextResponse.json(
       {

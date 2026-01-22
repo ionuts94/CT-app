@@ -81,7 +81,7 @@ export const ContractControls: React.FC<Props> = ({ contract }) => {
         })
         if (error)
             return toast.error(
-                "We couldn’t send the contract. Please try again. If the issue persists, you can resend it manually from the contract edit page."
+                "We couldn’t send the contract. " + error
             )
         toast.success(
             "Contract sent successfully. The recipient will receive an email with the signing link."
