@@ -130,7 +130,8 @@ model Contract {
   signedPdfUrl String?
 
   createdAt       DateTime  @default(dbgenerated("now()"))
-  updatedAt       DateTime  @default(dbgenerated("now()")) @updatedAt
+  updatedAt       DateTime?  @default(dbgenerated("now()")) @updatedAt
+  signedAt        DateTime?
   lastSentAt      String?
   expiresAt       String?
   signingDeadline String?

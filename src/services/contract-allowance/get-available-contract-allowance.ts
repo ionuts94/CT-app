@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { ContractAllowance } from "@prisma/client"
 
-export async function getAvailableContractAllowances(userId: string): Promise<ContractAllowance[]> {
+export async function getAvailableContractAllowances({ userId }: { userId: string }): Promise<ContractAllowance[]> {
     const supabase = await createClient()
 
     const { data, error } = await supabase

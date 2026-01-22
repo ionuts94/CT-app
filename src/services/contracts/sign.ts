@@ -1,3 +1,4 @@
+import { dateUtils } from "@/lib/date-utils";
 import { createClient } from "@/lib/supabase/server";
 import { T_ContractWithVersion, T_ReceiverSignContractPayload } from "@/types/services/contracts";
 import { ContractStatus } from "@prisma/client";
@@ -9,6 +10,7 @@ export async function receiverSignContract({ contractId, receiverName, receiverS
       receiverName: receiverName,
       receiverSignatureId: receiverSignatureId,
       status: ContractStatus.FULLY_SIGNED,
+      signedAt: dateUtils.toUTC(new Date(), dateUtils.getUserTimeZone()).toISOString()
     })
     .eq("id", contractId)
     .select("*, currentVersion: contract_versions(*)")

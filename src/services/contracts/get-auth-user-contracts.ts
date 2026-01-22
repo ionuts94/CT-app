@@ -2,15 +2,16 @@ import AuthService from "../auth";
 import { createClient } from "@/lib/supabase/server";
 import { Contract } from "@prisma/client";
 
-export async function getAuthUserContracts({
+export async function getUserContracts({
+  userId,
   status
 }: {
+  userId: string
   status?: string
 }): Promise<Contract[]> {
   const supabase = await createClient()
 
-  const authUser = await AuthService.getAuthUser()
-  const query = supabase.from("contracts").select("*").eq("ownerId", authUser.id)
+  const query = supabase.from("contracts").select("*").eq("ownerId", userId)
   if (status) query.eq("status", status)
 
   const { data, error } = await query.order("createdAt", { ascending: false })

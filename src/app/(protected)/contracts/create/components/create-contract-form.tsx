@@ -176,6 +176,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
         status: Status.SUCCESS,
         newContractId: response.id
       })
+      router.refresh()
       closeDialog()
     } catch (error: any) {
       toast.error(error.message)

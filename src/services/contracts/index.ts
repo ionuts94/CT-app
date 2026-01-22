@@ -8,7 +8,7 @@ import { generatePdf } from "./generate-pdf"
 import { updateContractPdfUrl } from "./update-contract-pdf-url"
 import { declineContract } from "./decline"
 import { revokeContract } from "./revoke"
-import { getAuthUserContracts } from "./get-auth-user-contracts"
+import { getUserContracts } from "./get-auth-user-contracts"
 import { updateContract } from "./update"
 import { hashContent } from "./hash-content"
 import { hasContentChanged } from "./has-content-changed"
@@ -25,7 +25,7 @@ const ContractService = {
   updateContractPdfUrl,
   declineContract,
   revokeContract,
-  getAuthUserContracts,
+  getUserContracts,
   hashContent,
   hasContentChanged,
 }

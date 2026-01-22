@@ -49,11 +49,18 @@ export function formatUtcToLocaleString(utcDate: Date | string) {
     )
 }
 
+export function getDateWithDayOffset(days: number) {
+    const now = new Date()
+    const daysInMs = 1000 * 60 * 60 * 24 * days
+    return new Date(now.getTime() + daysInMs)
+}
+
 export const dateUtils = {
     toUTC,
     toUtcEndOfDay,
     toUtcStartOfDay,
     formatUtcToLocalDate,
     getUserTimeZone,
-    formatUtcToLocaleString
+    formatUtcToLocaleString,
+    getDateWithDayOffset
 }
