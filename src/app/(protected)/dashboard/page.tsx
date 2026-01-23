@@ -11,7 +11,7 @@ export default async function DashboardPage() {
     <div className="space-y-6 w-full">
       <PageContainer className="flex flex-col gap-4">
         <DashboardHeader />
-        <KPIStats />
+        {/* <KPIStats /> */}
         <UpcomingNext />
         <div className="flex gap-4">
           <RecentContracts />

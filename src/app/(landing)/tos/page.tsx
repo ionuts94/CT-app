@@ -21,17 +21,17 @@ export default function TermsPage() {
 
           <h2 className="text-2xl font-semibold mt-12">1. Acceptance of terms</h2>
           <p>
-            By using the Contract Transparent platform ("Platform"), you fully agree to these Terms and Conditions.
+            By using the Contract Transparent platform (&quot;Platform&quot;), you fully agree to these Terms and Conditions.
             If you do not agree with any part of them, please do not use the service.
           </p>
 
           <h2 className="text-2xl font-semibold mt-12">2. Account creation and use</h2>
           <p>
-            To access the Platform’s features, users must create an account using a valid email address.
+            To access the Platform&apos;s features, users must create an account using a valid email address.
             Users are responsible for maintaining the confidentiality of their login credentials.
           </p>
           <ul>
-            <li>Using another person’s account is strictly prohibited.</li>
+            <li>Using another person&apos;s account is strictly prohibited.</li>
             <li>You are responsible for all activity carried out under your account.</li>
             <li>We reserve the right to suspend accounts that appear suspicious or abusive.</li>
           </ul>

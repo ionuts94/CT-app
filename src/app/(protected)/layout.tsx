@@ -25,7 +25,7 @@ export default async function ProtectedLayout({ children }: PropsWithChildren) {
                 <SidebarProvider>
                     <AppSidebar />
                     <div className="w-full">
-                        <Header user={userMockData as any} />
+                        <Header />
                         {children}
                     </div>
                 </SidebarProvider>

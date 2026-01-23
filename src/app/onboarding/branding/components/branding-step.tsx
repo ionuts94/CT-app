@@ -103,35 +103,6 @@ export const BrandingStep: React.FC = () => {
         <FormRow className="lg:w-fit">
           <Label>Logo</Label>
 
-          {/* <div
-            className={cn(
-              "w-full size-[210px] lg:aspect-square bg-muted/60 rounded-xl text-color-secondary flex items-center justify-center gap-2 flex-col relative",
-              hoverInput &&
-              "opacity-70 border-[2px] border-dashed border-black/80"
-            )}
-          >
-            <Input
-              type="file"
-              className="absolute inset-0 z-10 opacity-0 cursor-pointer"
-              onMouseEnter={() => setHoverInput(true)}
-              onMouseLeave={() => setHoverInput(false)}
-              onChange={handleImageChange}
-            />
-
-            {imagePreviewUrl || values.logoUrl ? (
-              <Image
-                src={imagePreviewUrl || values.logoUrl}
-                alt="Logo preview"
-                fill
-                style={{ objectFit: "contain" }}
-              />
-            ) : (
-              <>
-                <UploadCloudIcon strokeWidth={3} />
-                <Text weight="semibold">Upload logo</Text>
-              </>
-            )}
-          </div> */}
           <InputImage
             onImageChange={handleImageChange}
             placeholder="Upload logo"

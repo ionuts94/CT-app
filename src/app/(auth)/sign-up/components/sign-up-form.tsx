@@ -57,17 +57,17 @@ export const SignUpForm: React.FC<Props> = ({ }) => {
                 <FormRow className="flex-row justify-between items-center gap-2">
                     <FormRow>
                         <Label className="text-black/70">
-                            <RequiredFieldMark />Last name
-                        </Label>
-                        <Input {...register("lastName")} />
-                        <InvalidInputError>{errors.lastName?.message}</InvalidInputError>
-                    </FormRow>
-                    <FormRow>
-                        <Label className="text-black/70">
                             <RequiredFieldMark />First name
                         </Label>
                         <Input {...register("firstName")} />
                         <InvalidInputError>{errors.firstName?.message}</InvalidInputError>
+                    </FormRow>
+                    <FormRow>
+                        <Label className="text-black/70">
+                            <RequiredFieldMark />Last name
+                        </Label>
+                        <Input {...register("lastName")} />
+                        <InvalidInputError>{errors.lastName?.message}</InvalidInputError>
                     </FormRow>
                 </FormRow>
 

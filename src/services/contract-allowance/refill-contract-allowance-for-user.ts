@@ -10,7 +10,6 @@ export async function refillContractAllowanceForUser({
 }: T_RefillContractAllowancePayload) {
     if (!userId) throw new Error("refillContractAllowanceForUser: userId missing")
     if (!allowanceCount || allowanceCount <= 0) return { inserted: 0, skipped: 0 }
-    if (!expiresAt) throw new Error("refillContractAllowanceForUser: expiresAt missing")
     if (!refillKey) throw new Error("refillContractAllowanceForUser: refillKey missing")
 
     const supabase = await createClient()

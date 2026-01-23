@@ -45,9 +45,9 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
 
   const isLoading = formState.isSubmitting
 
-  const onOpenChange = () => {
-    if (isLoading) return
-    toggleDialog()
+  const onOpenChange = (val: boolean) => {
+    if (isLoading) return;
+    toggleDialog(val)
   }
 
   const onSignatureChange = ({
@@ -143,7 +143,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
             disabled={isLoading}
             variant="secondary"
             className="px-10 py-4"
-            onClick={onOpenChange}
+            onClick={closeDialog}
           >
             Back
           </Button>

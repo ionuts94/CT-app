@@ -392,7 +392,7 @@ export default function SignaturePad({
   return (
     <div className={className}>
       <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-        <button className="cursor-pointer" type="button" onClick={clearAll} style={{ padding: "8px 12px", borderRadius: 10, border: "1px solid #e5e7eb" }}>Stergeti</button>
+        <button className="cursor-pointer" type="button" onClick={clearAll} style={{ padding: "8px 12px", borderRadius: 10, border: "1px solid #e5e7eb" }}>Erase</button>
         {showSaveSvg && <button className="cursor-pointer" type="button" onClick={handleSaveSVG} style={{ padding: "8px 12px", borderRadius: 10, border: "1px solid #111", background: "#111", color: "#fff" }}>Save (SVG)</button>}
         {showSavePng && <button className="cursor-pointer" type="button" onClick={handleSavePNG} style={{ padding: "8px 12px", borderRadius: 10, border: "1px solid #e5e7eb", background: "#e5f0ff" }}>Save (PNG)</button>}
       </div>

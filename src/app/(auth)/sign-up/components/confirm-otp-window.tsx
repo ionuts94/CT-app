@@ -118,7 +118,7 @@ export const ConfirmOTPWindow: React.FC<Props> = ({ email }) => {
         <ButtonWithLoading
           loading={isProcessing}
           disabled={isButtonDisabled}
-          className="py-4 block w-fit px-8"
+          className="py-4 flex w-fit px-8"
           onClick={handleVerify}
         >
           <TextCTA>

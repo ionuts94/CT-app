@@ -17,7 +17,7 @@ export async function revokeContract({
 
   if (!contractData) throw new Error("Contract not found")
 
-  if (contractData.status === "FULLY_SIGNED") throw new Error("Contract was signed. You cannot revoke contract at this stage.")
+  if (contractData.status !== "OUT_FOR_SIGNATURE") throw new Error("There is already an action taken on this contract. You cannot revoke contract at this stage.")
 
   const { data, error } = await supabase.from("contracts")
     .update({

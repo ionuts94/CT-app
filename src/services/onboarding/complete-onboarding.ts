@@ -4,6 +4,7 @@ import OnboardingService from "."
 import { T_OnboardingData } from "@/contexts/onboarding-context"
 import CompanyService from "../companies"
 import SignatureService from "../signatures"
+import ContractAllowanceService from "../contract-allowance"
 
 export async function completeOnboarding() {
   const supabase = await createClient()
@@ -41,6 +42,14 @@ export async function completeOnboarding() {
 
   await supabase.from("onboarding").update({ status: "COMPLETED" }).eq("id", onboardingRecord?.id)
   await supabase.from("users").update({ currentCompanyId: companyData?.id! }).eq("id", authUser.id)
+
+  await ContractAllowanceService.refillContractAllowanceForUser({
+    userId: authUser.id,
+    allowanceCount: 3,
+    expiresAt: null,
+    source: "TRIAL",
+    refillKey: authUser.id
+  })
 
   return "OK"
 }
