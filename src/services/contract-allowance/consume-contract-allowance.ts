@@ -14,7 +14,7 @@ export async function consumeContractAllowance({
     const allowanceToBeConsumed = await ContractAllowanceService.getNextContractAllowance(userId)
 
     if (!allowanceToBeConsumed) {
-        const errMessage = "No more contract allowance for user: " + userId
+        const errMessage = "You ran out of contracts. Please upgrade your subscription or buy contracts."
         console.warn(errMessage)
         throw new Error(errMessage)
     }

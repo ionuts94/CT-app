@@ -111,12 +111,12 @@ const items = [
   //   icon: Gauge,
   // },
   {
-    title: "Contracte",
+    title: "Contracts",
     url: "/contracts",
     icon: Inbox,
   },
   {
-    title: "Sabloane",
+    title: "Templates",
     url: "/templates",
     icon: Calendar,
   },

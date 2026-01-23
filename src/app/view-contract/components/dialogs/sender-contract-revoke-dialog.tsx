@@ -43,7 +43,8 @@ export const SenderContractRevokeDialog: React.FC<Props> = ({ contract }) => {
     })
 
     if (error) {
-      return toast.error("Failed to revoke the contract. Please try again.")
+      router.refresh()
+      return toast.error("Failed to revoke the contract. " + error)
     }
 
     toast.success("The contract has been successfully revoked.")

@@ -169,6 +169,8 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
       })
 
       if (sendResponse.error) {
+        if (!isEditing) router.replace(`/contracts/edit?c=${response.id}`)
+        closeDialog()
         return toast.error("Contract was saved but could not be sent. Error: " + sendResponse.error)
       }
 

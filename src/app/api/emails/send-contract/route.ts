@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
       },
       sender: {
         name: "Contract Transparent",
-        email: "support@contracttransparent.com",
+        email: "support@contracttransparent.ro",
       },
     }
 
