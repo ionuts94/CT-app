@@ -21,6 +21,7 @@ import { v4 as uuid } from "uuid"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import CTStorage from "@/sdk/storage"
+import { InputImage } from "@/components/image-upload-input"
 
 export const BrandingStep: React.FC = () => {
   const {
@@ -75,9 +76,6 @@ export const BrandingStep: React.FC = () => {
     const file = e.target.files?.[0]
     if (!file) return
 
-    const previewUrl = URL.createObjectURL(file)
-    setImagePreviewUrl(previewUrl)
-
     const { data } = await CTStorage.storeFile({
       file,
       bucket: BUCKETS.logos,
@@ -86,6 +84,8 @@ export const BrandingStep: React.FC = () => {
 
     form.setValue("logoUrl", data?.fileUrl || "")
   }
+
+  console.log(values)
 
   return (
     <form
@@ -103,7 +103,7 @@ export const BrandingStep: React.FC = () => {
         <FormRow className="lg:w-fit">
           <Label>Logo</Label>
 
-          <div
+          {/* <div
             className={cn(
               "w-full size-[210px] lg:aspect-square bg-muted/60 rounded-xl text-color-secondary flex items-center justify-center gap-2 flex-col relative",
               hoverInput &&
@@ -131,7 +131,12 @@ export const BrandingStep: React.FC = () => {
                 <Text weight="semibold">Upload logo</Text>
               </>
             )}
-          </div>
+          </div> */}
+          <InputImage
+            onImageChange={handleImageChange}
+            placeholder="Upload logo"
+            defaultPreviewUrl={values.logoUrl}
+          />
 
           <Text size="sm" className="text-color-secondary">
             PNG or SVG, max 8MB.
