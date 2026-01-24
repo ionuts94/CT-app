@@ -249,6 +249,9 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
           <FormRow>
             {signatures?.map(signature => (
               <SignatureItem
+                companyName=""
+                userName=""
+                role=""
                 key={signature.id}
                 signature={signature}
                 isSelected

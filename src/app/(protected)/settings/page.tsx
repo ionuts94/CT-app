@@ -24,14 +24,13 @@ export default async function SettingPage() {
         <PageHeader>
           <PageHeading>Settings</PageHeading>
           <PageSubHeading>
-            Manage your profile information, company branding and signatures.
+            Manage your company branding and signatures.
           </PageSubHeading>
         </PageHeader>
-        <div className="flex gap-4">
-          <ProfileSettingsCard />
+        <div className="flex gap-4 flex-col lg:flex-row">
           <CompanySettingsCard company={company} />
+          <SignatureSettingsCard signatures={signaturesData || []} />
         </div>
-        <SignatureSettingsCard />
       </PageContainer>
     </main>
   )

@@ -6,7 +6,7 @@ export async function storeFile({
   filePath,
   bucket,
   contentType,
-}: T_StoreFileBody) {
+}: T_StoreFileBody): Promise<{ data: { fileUrl: string } }> {
   const formData = new FormData()
 
   formData.append("file", file)

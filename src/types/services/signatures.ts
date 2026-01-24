@@ -4,5 +4,6 @@ export type T_CreateSignaturePayload = {
   userId?: string,
   type: SignatureType,
   title?: string | null,
-  imageUrl: string
+  imageUrl: string,
+  isMainSignature?: boolean
 }

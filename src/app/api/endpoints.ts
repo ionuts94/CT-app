@@ -59,5 +59,8 @@ export const api = {
     changePlan: "/api/billing/change-plan",
     cancelSubscription: "/api/billing/cancel-subscription",
     webhook: "/api/billing/webhook"
+  },
+  signatures: {
+    create: "/api/signatures/create"
   }
 } as const

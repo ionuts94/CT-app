@@ -5,20 +5,28 @@ import { cn } from "@/lib/utils"
 
 type Props = {
   signature: Signature,
-  isSelected?: boolean
+  isSelected?: boolean,
+  companyName: string,
+  userName: string,
+  role?: string
 }
 
-export const SignatureItem: React.FC<Props> = ({ signature, isSelected }) => {
+export const SignatureItem: React.FC<Props> = ({ signature, isSelected, companyName, userName, role }) => {
   return (
     <Card className={cn("p-4 rounded-lg gap-2 relative", isSelected && "border-primary")}>
       <Text className="flex gap-2 items-center" size="lg" weight="semibold">
-        Software Solutions Group
+        {companyName}
       </Text>
       <Text className="flex gap-2 items-center" size="lg" weight="semibold">
-        Ionut Sandu - {" "}
-        <span className="opacity-70 font-semibold">
-          Director
-        </span>
+        {userName}
+        {role &&
+          <>
+            - {" "}
+            <span className="opacity-70 font-semibold">
+              {role}
+            </span>
+          </>
+        }
       </Text>
       {signature.imageUrl &&
         <img src={signature.imageUrl} className="h-10 w-fit" />

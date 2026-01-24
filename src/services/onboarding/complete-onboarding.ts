@@ -37,7 +37,8 @@ export async function completeOnboarding() {
   await SignatureService.create({
     userId: authUser.id,
     imageUrl: onboardingData.signature.url,
-    type: "DRAW"
+    type: "DRAW",
+    isMainSignature: true
   })
 
   await supabase.from("onboarding").update({ status: "COMPLETED" }).eq("id", onboardingRecord?.id)

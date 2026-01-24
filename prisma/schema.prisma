@@ -244,6 +244,7 @@ model Signature {
   title     String?
   imageUrl  String?
   createdAt DateTime      @default(dbgenerated("now()"))
+  isMainSignature Boolean
 
   userId String? @db.Uuid
   user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)

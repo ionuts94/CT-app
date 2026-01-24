@@ -24,8 +24,6 @@ export default async function EditContractPage({ searchParams }: Props) {
     return <p>Errorr</p>
   }
 
-
-  console.log(contract)
   return (
     <main>
       <PageContainer className="flex flex-col gap-4">

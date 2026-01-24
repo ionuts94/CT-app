@@ -14,10 +14,11 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
-import { Calendar, ChevronLeft, Gauge, Home, Inbox, ReceiptText, Search, Settings } from "lucide-react"
+import { Calendar, ChevronLeft, LayoutTemplate, Gauge, Home, Inbox, ReceiptText, Search, Settings, Layers, CreditCard } from "lucide-react"
 import Link from "next/link"
 import { Text } from "./topography"
 import { usePath } from "@/hooks/use-path"
+import { PactlyLogo } from "./logo"
 
 export function AppSidebar() {
   const { isSelectedPath } = usePath()
@@ -34,11 +35,19 @@ export function AppSidebar() {
               isExpanded && " justify-start"
             )}
           >
-            <ReceiptText size={40} />
+            {!isExpanded ? (
+              <div className="size-10 bg-black/85 rounded-lg aspect-square flex items-center justify-center">
+                <Text weight="semibold" size="4xl">
+                  P
+                </Text>
+              </div>
+
+            ) : (
+              <div className="size-[14px]" />
+            )
+            }
             {isExpanded &&
-              <Text size="lg" weight="extrabold" className="uppercase leading-4">
-                Contract <br />Transparent
-              </Text>
+              <PactlyLogo className="h-[36px]" />
             }
           </SidebarMenuItem>
         </SidebarMenu>
@@ -113,17 +122,17 @@ const items = [
   {
     title: "Contracts",
     url: "/contracts",
-    icon: Inbox,
+    icon: Layers,
   },
   {
     title: "Templates",
     url: "/templates",
-    icon: Calendar,
+    icon: LayoutTemplate,
   },
   {
     title: "Billing",
     url: "/billing",
-    icon: Search,
+    icon: CreditCard,
   },
   {
     title: "Settings",
