@@ -10,6 +10,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useCountdown } from "@/hooks/use-countdown"
 import { cn } from "@/lib/utils"
+import { PactlyLogo } from "@/components/logo"
 
 type Props = {
   email: string
@@ -57,10 +58,7 @@ export const ConfirmOTPWindow: React.FC<Props> = ({ email }) => {
   return (
     <Card className="w-full max-w-[800px] p-4">
       <div className="text-primary font-bold flex gap-2 items-center">
-        <ReceiptText size={30} />
-        <Text className="text-black text-md font-semibold">
-          CONTRACT TRANSPARENT
-        </Text>
+        <PactlyLogo className="h-[36px] md:h-[60px] mb-2" />
       </div>
 
       <div className="flex flex-col gap-9">

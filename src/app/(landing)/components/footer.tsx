@@ -1,3 +1,4 @@
+import { PactlyLogo } from "@/components/logo"
 import Link from "next/link"
 
 type Props = {}
@@ -11,7 +12,7 @@ export const Footer: React.FC<Props> = ({ }) => {
 
           {/* Brand */}
           <div className="col-span-1 sm:col-span-2">
-            <img src="./assets/logo/pactly-logo-dark.png" className="h-[40px]" />
+            <PactlyLogo variant="dark" className="h-[40px]" />
             <p className="text-white mt-3 text-md max-w-sm">
               A modern platform for sending and signing contracts
               in a clear, secure, and fully transparent way.

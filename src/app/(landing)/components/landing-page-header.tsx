@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { LandingPageWidth } from "./landing-page-width"
 import { TextCTA } from "@/components/topography/cta"
 import Link from "next/link"
+import { PactlyLogo } from "@/components/logo"
 
 type Props = {}
 
@@ -11,7 +12,7 @@ export const LandingPageHeader: React.FC<Props> = ({ }) => {
     <header className="border-b">
       <LandingPageWidth className="flex flex-row items-center justify-between h-[94px]">
         <Link href="/" className="flex items-center cursor-pointer">
-          <img src="./assets/logo/pactly-logo-light.png" className="h-[40px]" />
+          <PactlyLogo className="h-[40px]" />
         </Link>
 
         <nav>

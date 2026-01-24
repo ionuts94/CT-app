@@ -11,7 +11,7 @@ export const HowItWorks: React.FC<Props> = ({ }) => {
     <div className="py-[100px] bg-[rgb(245,248,255)]" id="howitworks">
       <LandingPageWidth>
         <SectionHeaderContainer>
-          <SectionTitle>How does Contract Transparent work?</SectionTitle>
+          <SectionTitle>How does Pactly work?</SectionTitle>
           <SectionSubtitle className="text-center">
             3 simple steps to send and sign digital contracts
           </SectionSubtitle>

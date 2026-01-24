@@ -48,6 +48,7 @@ export async function POST(req: NextRequest) {
         .toISOString(),
       receiverEmail,
       signingDeadline,
+      updatedAt: new Date()
     })
 
 

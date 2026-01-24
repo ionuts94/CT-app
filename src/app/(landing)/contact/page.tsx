@@ -89,7 +89,7 @@ export default function ContactPage() {
                   Company details
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  Contract Transparent SRL
+                  Pactly
                   <br />VAT ID: RO12345678
                   <br />Trade Register: J00/0000/2025
                 </p>

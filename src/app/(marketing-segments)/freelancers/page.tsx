@@ -1,5 +1,6 @@
 // app/(marketing)/freelanceri/page.tsx
 
+import { PactlyLogo } from "@/components/logo"
 import Link from "next/link"
 
 export default function FreelancersLandingPage() {
@@ -9,10 +10,7 @@ export default function FreelancersLandingPage() {
       <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              CT
-            </span>
-            <span>Contract Transparent</span>
+            <PactlyLogo className="h-[36px] md:h-[60px] mb-2" />
           </Link>
 
           <nav className="flex items-center gap-2">
@@ -59,7 +57,7 @@ export default function FreelancersLandingPage() {
               </h1>
 
               <p className="text-lg leading-relaxed text-slate-600">
-                Contract Transparent helps you create, send, and sign contracts in one
+                Pactly helps you create, send, and sign contracts in one
                 place. You get{" "}
                 <span className="font-medium text-primary">
                   audit logs, an organised archive, and reminders
@@ -212,7 +210,7 @@ export default function FreelancersLandingPage() {
               For freelancers: clarity, control, and trust.
             </h2>
             <p className="max-w-3xl text-slate-600">
-              Contract Transparent organises your entire workflow: from draft, to signing, to archiving
+              Pactly organises your entire workflow: from draft, to signing, to archiving
               and deadlines. Clients see a professional process, and you get a clear record of every step.
             </p>
           </div>
@@ -385,7 +383,7 @@ export default function FreelancersLandingPage() {
           <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
             <p className="text-sm font-semibold">What you get in every plan</p>
             <p className="mt-1 text-sm text-slate-600">
-              Contract Transparent includes audit logs, history, an archive, and a verifiable process —
+              Pactly includes audit logs, history, an archive, and a verifiable process —
               so you and your client have clarity before and after signing.
             </p>
           </div>
@@ -399,7 +397,7 @@ export default function FreelancersLandingPage() {
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {[
               {
-                q: "Can I use Contract Transparent if I already have Word/PDF templates?",
+                q: "Can I use Pactly if I already have Word/PDF templates?",
                 a: "Yes. You can start from an existing template (import) or create one directly in the platform. What matters is the sending, signing, and audit process.",
               },
               {
@@ -464,7 +462,7 @@ export default function FreelancersLandingPage() {
 
           {/* Footer */}
           <footer className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-slate-100 pt-8 text-sm text-slate-500 md:flex-row">
-            <p>© {new Date().getFullYear()} Contract Transparent</p>
+            <p>© {new Date().getFullYear()} Pactly</p>
             <div className="flex gap-4">
               <Link href="/privacy" className="hover:text-primary">
                 Privacy policy

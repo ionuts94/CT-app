@@ -14,14 +14,14 @@ export default function TermsPage() {
         <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-16">
           Last updated: January 2025
           <br />
-          Please read these Terms and Conditions carefully before using the Contract Transparent platform.
+          Please read these Terms and Conditions carefully before using the Pactly platform.
         </p>
 
         <div className="prose prose-gray max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 leading-relaxed">
 
           <h2 className="text-2xl font-semibold mt-12">1. Acceptance of terms</h2>
           <p>
-            By using the Contract Transparent platform (&quot;Platform&quot;), you fully agree to these Terms and Conditions.
+            By using the Pactly platform (&quot;Platform&quot;), you fully agree to these Terms and Conditions.
             If you do not agree with any part of them, please do not use the service.
           </p>
 
@@ -38,7 +38,7 @@ export default function TermsPage() {
 
           <h2 className="text-2xl font-semibold mt-12">3. Service description</h2>
           <p>
-            Contract Transparent provides tools for creating, sending, reviewing, and digitally signing contracts.
+            Pactly provides tools for creating, sending, reviewing, and digitally signing contracts.
             The Platform includes features such as a text editor, contract management, comments, audit logs,
             notifications, and digital signatures in accordance with EU legislation.
           </p>
@@ -80,7 +80,7 @@ export default function TermsPage() {
 
           <h2 className="text-2xl font-semibold mt-12">8. Limitation of liability</h2>
           <p>
-            Contract Transparent shall not be held liable for losses resulting from improper use of the Platform,
+            Pactly shall not be held liable for losses resulting from improper use of the Platform,
             user errors, or technical issues caused by third parties.
           </p>
 

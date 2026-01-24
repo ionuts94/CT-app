@@ -21,17 +21,17 @@ export default function PrivacyPolicyPage() {
 
           <h2 className="text-2xl font-semibold mt-12">1. Introduction</h2>
           <p>
-            Contract Transparent SRL (“we”, “the platform”, “the service”) respects your privacy
+            Pactly (“we”, “the platform”, “the service”) respects your privacy
             and is committed to protecting all personal data in accordance with Regulation (EU)
             2016/679 (GDPR).
           </p>
 
           <h2 className="text-2xl font-semibold mt-12">2. Who we are</h2>
           <p>
-            The data controller is Contract Transparent SRL, based in Romania.
+            The data controller is Pactly, based in Romania.
           </p>
           <p className="mb-0">Data protection contact email:</p>
-          <p className="font-medium text-gray-900">support@contracttransparent.com</p>
+          <p className="font-medium text-gray-900">support@pactly.co.uk</p>
 
           <h2 className="text-2xl font-semibold mt-12">3. What personal data we collect</h2>
           <p>
@@ -97,7 +97,7 @@ export default function PrivacyPolicyPage() {
             Access is strictly limited to:
           </p>
           <ul>
-            <li>the Contract Transparent team (only when required for support)</li>
+            <li>the Pactly team (only when required for support)</li>
             <li>our IT infrastructure providers (under GDPR-compliant agreements)</li>
             <li>partners responsible for payment processing</li>
           </ul>
