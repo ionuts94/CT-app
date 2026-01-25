@@ -1,14 +1,30 @@
 import { createClient } from "@/lib/supabase/server";
-import AuthService from "../auth";
 import { Signature } from "@prisma/client";
 
-export async function getAuthUserSignatures(): Promise<Signature[]> {
+export async function getUserSignatures({ userId }: { userId: string }): Promise<T_GetUserSignaturesReturn> {
   const supabase = await createClient()
-  const authUser = await AuthService.getAuthUser()
 
-  const { data, error } = await supabase.from("signatures").select("*").eq("userId", authUser?.id)
+  if (!userId) throw new Error("Unauthorized. User not signed in.")
+  const { data, error } = await supabase.from("signatures").select("*").eq("userId", userId).order("createdAt", { ascending: false })
 
   if (error) throw new Error(error.message)
 
-  return data
+
+  let mainSignature = data[0];
+  const otherSignatures = data.filter(item => {
+    if (item.isMainSignature) mainSignature = item;
+    return !item.isMainSignature
+  })
+
+  return {
+    mainSignature: mainSignature,
+    signatures: otherSignatures,
+    allSignatures: data
+  }
+}
+
+type T_GetUserSignaturesReturn = {
+  mainSignature: Signature,
+  signatures: Signature[],
+  allSignatures: Signature[]
 }

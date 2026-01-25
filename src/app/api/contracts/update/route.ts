@@ -70,6 +70,7 @@ export async function PATCH(req: NextRequest) {
     const data = await ContractService.updateContract({
       ...contractData,
       ...body,
+      updatedAt: new Date(),
       currentVersionId: hasContentChanged
         ? newContractVersionId
         : contractData.currentVersionId,

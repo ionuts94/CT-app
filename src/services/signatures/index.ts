@@ -1,9 +1,9 @@
 import { createSignature } from "./create"
-import { getAuthUserSignatures } from "./get-auth-user-signatures"
+import { getUserSignatures } from "./get-auth-user-signatures"
 
 const SignatureService = {
   create: createSignature,
-  getAuthUserSignatures,
+  getUserSignatures,
 }
 
 export default SignatureService

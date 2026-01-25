@@ -27,7 +27,8 @@ import CTEmail from "@/sdk/email"
 
 type Props = {
   data: Data,
-  signatures?: Signature[] | null
+  mainSignature: Signature,
+  signatures: Signature[] | null
   isEditing?: boolean
 }
 
@@ -45,7 +46,7 @@ type Data = {
   optionalMessage?: string,
 }
 
-export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) => {
+export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mainSignature }) => {
   const router = useRouter()
   const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
 
@@ -247,7 +248,15 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
         <Card className="p-4">
           <CardTitle>Select signature</CardTitle>
           <FormRow>
-            {signatures?.map(signature => (
+            <SignatureItem
+              companyName=""
+              userName=""
+              role=""
+              key={mainSignature.id}
+              signature={mainSignature}
+              isSelected
+            />
+            {/* {signatures?.map(signature => (
               <SignatureItem
                 companyName=""
                 userName=""
@@ -256,7 +265,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing }) =
                 signature={signature}
                 isSelected
               />
-            ))}
+            ))} */}
           </FormRow>
 
           <FormRow>

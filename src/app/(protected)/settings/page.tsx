@@ -6,14 +6,19 @@ import { SignatureSettingsCard } from "./components/signature-settings-card";
 import { withSafeService } from "@/lib/services-utils/with-safe-service";
 import UserService from "@/services/users";
 import SignatureService from "@/services/signatures";
+import AuthService from "@/services/auth";
+import { redirect } from "next/navigation";
 
 export default async function SettingPage() {
+  const { data: authUser } = await withSafeService(() => AuthService.getAuthUser())
+  if (!authUser) return redirect("/sign-in")
+
   const [
     { data: userWithCompanyData, error: userWithCompanyError },
     { data: signaturesData, error: signaturesError },
   ] = await Promise.all([
     withSafeService(() => UserService.getCurrentUserWithCompany()),
-    withSafeService(() => SignatureService.getAuthUserSignatures())
+    withSafeService(() => SignatureService.getUserSignatures({ userId: authUser.id }))
   ])
 
   const company = userWithCompanyData?.user.company
@@ -29,7 +34,7 @@ export default async function SettingPage() {
         </PageHeader>
         <div className="flex gap-4 flex-col lg:flex-row">
           <CompanySettingsCard company={company} />
-          <SignatureSettingsCard signatures={signaturesData || []} />
+          <SignatureSettingsCard signatures={signaturesData?.signatures || []} />
         </div>
       </PageContainer>
     </main>
