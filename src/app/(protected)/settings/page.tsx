@@ -8,6 +8,9 @@ import UserService from "@/services/users";
 import SignatureService from "@/services/signatures";
 import AuthService from "@/services/auth";
 import { redirect } from "next/navigation";
+import UserPreferenceService from "@/services/user-preferences";
+import { PreferredTheme } from "@prisma/client";
+import { getDefaultUserPreferences } from "@/constants/others";
 
 export default async function SettingPage() {
   const { data: authUser } = await withSafeService(() => AuthService.getAuthUser())
@@ -16,9 +19,11 @@ export default async function SettingPage() {
   const [
     { data: userWithCompanyData, error: userWithCompanyError },
     { data: signaturesData, error: signaturesError },
+    { data: userPreferencesData, error: userPreferencesError }
   ] = await Promise.all([
     withSafeService(() => UserService.getCurrentUserWithCompany()),
-    withSafeService(() => SignatureService.getUserSignatures({ userId: authUser.id }))
+    withSafeService(() => SignatureService.getUserSignatures({ userId: authUser.id })),
+    withSafeService(() => UserPreferenceService.getUserPreferences({ userId: authUser.id }))
   ])
 
   const company = userWithCompanyData?.user.company
@@ -34,7 +39,11 @@ export default async function SettingPage() {
         </PageHeader>
         <div className="flex gap-4 flex-col lg:flex-row">
           <CompanySettingsCard company={company} />
-          <SignatureSettingsCard signatures={signaturesData?.signatures || []} />
+          <SignatureSettingsCard
+            userId={authUser.id}
+            signatures={signaturesData?.signatures || []}
+            preferences={userPreferencesData || getDefaultUserPreferences(authUser.id)}
+          />
         </div>
       </PageContainer>
     </main>

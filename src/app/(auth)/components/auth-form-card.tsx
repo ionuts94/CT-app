@@ -15,10 +15,10 @@ export const AuthFormCard: React.FC<Props> = ({ heading, subHeading, children })
     <div className="w-full max-w-[800px] p-4">
       <div className="text-primary font-bold flex gap-2 items-center">
         <Link href={"/"}>
-          <PactlyLogo className="h-[36px] md:h-[60px] mb-2" />
+          <PactlyLogo className="h-[36px] md:h-[60px] mb-4" />
         </Link>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mb-6">
         <H2>{heading}</H2>
         <Body className="text-color-secondary">{subHeading}</Body>
       </div>

@@ -62,5 +62,8 @@ export const api = {
   },
   signatures: {
     create: "/api/signatures/create"
+  },
+  userPreferences: {
+    update: "/api/user-preferences/update"
   }
 } as const
