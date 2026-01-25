@@ -10,6 +10,6 @@ export const PactlyLogo: React.FC<Props> = ({ variant = "light", className }) =>
     return <img src="./assets/logo/pactly-logo-dark.png" className={cn("", className)} />
   }
   return (
-    <img src="./assets/logo/pactly-logo-light.png" className={cn("", className)} />
+    <img src="/assets/logo/pactly-logo-light.png" className={cn("", className)} />
   )
 }
