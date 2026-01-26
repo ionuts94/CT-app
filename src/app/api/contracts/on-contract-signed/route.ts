@@ -7,7 +7,8 @@ import EmailService from "@/services/emails";
 export async function POST(req: Request) {
   const { contractId } = await req.json();
   try {
-    const { contractPdfUrl } = await ContractService.generatePdf({ contractId })
+    // const { contractPdfUrl } = await ContractService.generatePdf({ contractId })
+    const contractPdfUrl = "plm"
     const contractData = await ContractService.updateContractPdfUrl({ contractId, pdfUrl: contractPdfUrl })
 
     await AuditService.logAudit({

@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useDialog } from "@/hooks/use-dialog"
 import CTEmail from "@/sdk/email"
+import { SelectSignatureDialog } from "./select-signature-dialog"
 
 type Props = {
   data: Data,
@@ -69,7 +70,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
     defaultValues: {
       title: "",
       content: "" as any,
-      ownerSignatureId: signatures?.[0]?.id || "",
+      ownerSignatureId: mainSignature?.id || "",
       receiverName: "",
       receiverEmail: "",
       expiresAt: undefined,
@@ -246,7 +247,13 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
         </Card>
 
         <Card className="p-4">
-          <CardTitle>Select signature</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle>Select signature</CardTitle>
+            <SelectSignatureDialog
+              currentSignatureId={values.ownerSignatureId}
+              signatures={signatures || []}
+            />
+          </div>
           <FormRow>
             <SignatureItem
               companyName=""

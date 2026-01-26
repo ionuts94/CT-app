@@ -42,7 +42,7 @@ export default async function ContractPage({ searchParams }: Props) {
     <main>
       <PageContainer className="flex flex-col gap-4">
         <ContractForm
-          signatures={signatures.signatures}
+          signatures={signatures.allSignatures}
           mainSignature={signatures?.mainSignature}
           data={{
             content: template?.content as string,
