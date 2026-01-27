@@ -18,9 +18,6 @@ export async function getUserTemplates({ category }: { category?: string }): Pro
 
   const { data: templates, error: templatesError } = await query
 
-  console.log("found templates")
-  console.log(templates)
-
   if (templatesError) throw Error(templatesError.message)
 
   return templates
