@@ -3,12 +3,16 @@ import { Status } from "@/types/api-call";
 import ContractService from "@/services/contracts";
 import AuditService from "@/services/audit";
 import EmailService from "@/services/emails";
+import PDFService from "@/services/pdf-service";
 
 export async function POST(req: Request) {
   const { contractId } = await req.json();
   try {
-    // const { contractPdfUrl } = await ContractService.generatePdf({ contractId })
-    const contractPdfUrl = "plm"
+    console.log("Generating pdf")
+    console.time("generate")
+    const { contractPdfUrl } = await PDFService.generateContractPdf({ contractId })
+    console.timeEnd("generate")
+    console.log("Generated pdf: " + contractPdfUrl)
     const contractData = await ContractService.updateContractPdfUrl({ contractId, pdfUrl: contractPdfUrl })
 
     await AuditService.logAudit({

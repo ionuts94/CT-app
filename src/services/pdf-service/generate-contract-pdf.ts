@@ -1,14 +1,9 @@
 import { envs } from "@/constants/envs";
-import { createClient } from "@/lib/supabase/server";
-import { httpPost } from "@/sdk/http";
 import ContractService from "../contracts";
 
-export async function generateContractPdf({ contractId }: { contractId: string }) {
-    const supabase = await createClient()
-    const contract = await ContractService.getContractWithCompanyAndOwner({ contractId })
+export async function generateContractPdf({ contractId }: { contractId: string }): Promise<{ contractPdfUrl: string }> {
 
-    console.log("contract content")
-    console.log(contract.currentVersionContent.content)
+    const contract = await ContractService.getContractWithCompanyAndOwner({ contractId })
 
     const response = await fetch(
         "https://pdf.pactly.co.uk/pdf/generate",
@@ -19,12 +14,15 @@ export async function generateContractPdf({ contractId }: { contractId: string }
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                contractId: "2498c1b9-9578-4870-b81c-eaa2edb86f24",
+                contractId: contractId,
                 html: contract.currentVersionContent.content
             })
         }
     )
 
     const responseJson = await response.json()
-    console.log(responseJson)
+    return {
+        contractPdfUrl: responseJson.contractPdfUrl
+    }
+
 }
