@@ -21,9 +21,18 @@ export default async function GenerateContractPage({ searchParams }: Props) {
   return (
     <>
       {/* 🔑 FIX PDF BACKGROUND */}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      />
       <style>{`
         html, body {
           background: #ffffff !important;
+          font-family: "Inter" !important, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        strong, b {
+          font-weight: 600;
         }
 
         .pdf-force-white,
