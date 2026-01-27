@@ -11,6 +11,14 @@ export async function consumeContractAllowance({
 }) {
     const supabase = await createClient()
 
+    const { data: contractConsumedAllowance } = await supabase.from("contract_allowance").select("*").eq("contractId", contractId).maybeSingle()
+
+    if (contractConsumedAllowance) {
+        // This contract was already counted for consumed allownce
+        // therefore it doesn't need to consume again
+        return "OK"
+    }
+
     const allowanceToBeConsumed = await ContractAllowanceService.getNextContractAllowance(userId)
 
     if (!allowanceToBeConsumed) {
@@ -28,6 +36,8 @@ export async function consumeContractAllowance({
         .is("consumedAt", null)
 
     if (error) {
+        console.log("Error here")
+        console.log(error)
         if (error?.message.includes("duplicate key")) {
             // DO NOTHING
         } else {
