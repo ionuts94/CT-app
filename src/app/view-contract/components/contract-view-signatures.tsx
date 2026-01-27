@@ -15,9 +15,9 @@ export const ContractViewSignatures: React.FC<Props> = ({ contract }) => {
           <Text className="flex gap-2 items-center" size="lg" weight="semibold">
             {contract.company.name}
           </Text>
-          <Text className="flex gap-2 items-center" size="lg" weight="semibold">
+          <Text className="flex gap-2 items-center font-[400]" size="lg" >
             {contract.owner.firstName} {contract.owner.lastName} –{" "}
-            <span className="opacity-60 font-semibold">Director</span>
+            <span className="opacity-60 font-[400]">Director</span>
           </Text>
           {contract?.ownerSignature?.imageUrl && (
             <img
