@@ -1,15 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
-import AuthService from "../auth";
-import { T_AuthUserWithProfileAndCompany } from "@/types/services/users";
+import { T_UserWithCompany } from "@/types/services/users";
 
-export async function getCurrentUserWithCompany(): Promise<T_AuthUserWithProfileAndCompany> {
+export async function getUserWithCompany({ userId }: { userId: string }): Promise<T_UserWithCompany> {
   const supabase = await createClient()
-  const authUser = await AuthService.getAuthUser()
 
   const { data: profile, error } = await supabase
     .from("users")
     .select("*, company: companies(*)")
-    .eq("id", authUser.id)
+    .eq("id", userId)
     .maybeSingle();
 
   if (error) {
@@ -20,8 +18,5 @@ export async function getCurrentUserWithCompany(): Promise<T_AuthUserWithProfile
     throw new Error("Authenticated user not found in database.");
   }
 
-  return {
-    authUser,
-    user: profile
-  }
+  return profile
 }

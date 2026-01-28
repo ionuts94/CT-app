@@ -8,6 +8,7 @@ import { ContractStatus } from "@prisma/client"
 import { v4 as uuid } from "uuid"
 import AuditService from "@/services/audit"
 import { T_UpdateContractBody } from "@/types/api/contracts"
+import AuthService from "@/services/auth"
 
 const LOCKED_UPDATE_STATES: ContractStatus[] = [
   ContractStatus.FULLY_SIGNED,
@@ -19,7 +20,9 @@ const LOCKED_UPDATE_STATES: ContractStatus[] = [
 export async function PATCH(req: NextRequest) {
   try {
     const { ip, userAgent } = extractClientIp(req)
-    const { user } = await UserService.getCurrentUserWithCompany()
+    const authUser = await AuthService.getAuthUser()
+
+    const user = await UserService.getUserWithCompany({ userId: authUser.id })
 
     const body = (await req.json()) as T_UpdateContractBody
     const contractId = body.contractId

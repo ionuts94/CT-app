@@ -9,6 +9,7 @@ import AuditService from "@/services/audit";
 import UserService from "@/services/users";
 import { ContractSchema } from "@/validators/contract.validator";
 import { T_CreateContractBody } from "@/types/api/contracts";
+import AuthService from "@/services/auth";
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,7 +20,9 @@ export async function POST(req: NextRequest) {
     const contractUUID = uuid();
     const contractVersionUUID = uuid();
 
-    const { user } = await UserService.getCurrentUserWithCompany()
+    const authUser = await AuthService.getAuthUser()
+
+    const user = await UserService.getUserWithCompany({ userId: authUser.id })
 
     await ContractService.createContractVersion({
       versionId: contractVersionUUID,

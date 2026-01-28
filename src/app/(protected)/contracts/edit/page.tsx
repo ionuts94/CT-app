@@ -42,7 +42,7 @@ export default async function EditContractPage({ searchParams }: Props) {
         <ContractForm
           isEditing
           mainSignature={signatures?.mainSignature}
-          signatures={signatures?.signatures}
+          signatures={signatures?.allSignatures}
           data={{
             contractId: c,
             title: contract.title,

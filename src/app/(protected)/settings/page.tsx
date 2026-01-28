@@ -1,6 +1,5 @@
 import { PageContainer } from "@/components/layout";
 import { PageHeader, PageHeading, PageSubHeading } from "@/components/page-header";
-import { ProfileSettingsCard } from "./components/profile-settings-card";
 import { CompanySettingsCard } from "./components/company-settings-card";
 import { SignatureSettingsCard } from "./components/signature-settings-card";
 import { withSafeService } from "@/lib/services-utils/with-safe-service";
@@ -9,7 +8,6 @@ import SignatureService from "@/services/signatures";
 import AuthService from "@/services/auth";
 import { redirect } from "next/navigation";
 import UserPreferenceService from "@/services/user-preferences";
-import { PreferredTheme } from "@prisma/client";
 import { getDefaultUserPreferences } from "@/constants/others";
 
 export default async function SettingPage() {
@@ -21,12 +19,12 @@ export default async function SettingPage() {
     { data: signaturesData, error: signaturesError },
     { data: userPreferencesData, error: userPreferencesError }
   ] = await Promise.all([
-    withSafeService(() => UserService.getCurrentUserWithCompany()),
+    withSafeService(() => UserService.getUserWithCompany({ userId: authUser.id })),
     withSafeService(() => SignatureService.getUserSignatures({ userId: authUser.id })),
     withSafeService(() => UserPreferenceService.getUserPreferences({ userId: authUser.id }))
   ])
 
-  const company = userWithCompanyData?.user.company
+  const company = userWithCompanyData?.company
 
   return (
     <main className="min-h-screen" key={"default"}>
@@ -41,7 +39,7 @@ export default async function SettingPage() {
           <CompanySettingsCard company={company} />
           <SignatureSettingsCard
             userId={authUser.id}
-            signatures={signaturesData?.signatures || []}
+            signatures={signaturesData?.allSignatures || []}
             preferences={userPreferencesData || getDefaultUserPreferences(authUser.id)}
           />
         </div>

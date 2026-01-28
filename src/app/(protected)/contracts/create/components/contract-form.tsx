@@ -25,6 +25,8 @@ import { Button } from "@/components/ui/button"
 import { useDialog } from "@/hooks/use-dialog"
 import CTEmail from "@/sdk/email"
 import { SelectSignatureDialog } from "./select-signature-dialog"
+import { T_UserWithCompany } from "@/types/services/users"
+import { useUserContext } from "@/contexts/user-context"
 
 type Props = {
   data: Data,
@@ -49,6 +51,7 @@ type Data = {
 
 export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mainSignature }) => {
   const router = useRouter()
+  const { user } = useUserContext()
   const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
 
   const [contractSent, setContractSent] = useState({
@@ -80,6 +83,8 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
   })
 
   const values = watch()
+  const selectedSignature = signatures?.find(item => item.id === values.ownerSignatureId)
+
   const {
     errors: formErrors,
     isDirty: formHasChanges,
@@ -100,6 +105,10 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
         ? dateUtils.toUtcEndOfDay(newDate, dateUtils.getUserTimeZone()).toISOString()
         : undefined
     )
+  }
+
+  const onSignatureChange = (newSignatureId: string) => {
+    setValue("ownerSignatureId", newSignatureId)
   }
 
   const handleOpenDialog = async () => {
@@ -252,27 +261,18 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
             <SelectSignatureDialog
               currentSignatureId={values.ownerSignatureId}
               signatures={signatures || []}
+              onSignatureSelect={onSignatureChange}
             />
           </div>
           <FormRow>
             <SignatureItem
-              companyName=""
-              userName=""
-              role=""
-              key={mainSignature.id}
-              signature={mainSignature}
+              companyName={user?.company.name || ""}
+              userName={user?.firstName + " " + user?.lastName}
+              role={user?.role}
+              key={(selectedSignature || mainSignature).id}
+              signature={selectedSignature || mainSignature}
               isSelected
             />
-            {/* {signatures?.map(signature => (
-              <SignatureItem
-                companyName=""
-                userName=""
-                role=""
-                key={signature.id}
-                signature={signature}
-                isSelected
-              />
-            ))} */}
           </FormRow>
 
           <FormRow>

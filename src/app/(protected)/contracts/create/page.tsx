@@ -6,6 +6,7 @@ import SignatureService from "@/services/signatures"
 import { withSafeService } from "@/lib/services-utils/with-safe-service"
 import AuthService from "@/services/auth"
 import { SignaturesFetchError } from "../components/signatures-fetch-error"
+import UserService from "@/services/users"
 
 type Props = {
   searchParams: Promise<{ t: string }>
@@ -32,7 +33,7 @@ export default async function ContractPage({ searchParams }: Props) {
     withSafeService(() => SignatureService.getUserSignatures({ userId: authUser.id }))
   ])
 
-  if (signaturesError || !signatures) {
+  if (signaturesError || !signatures?.allSignatures) {
     return (
       <SignaturesFetchError />
     )

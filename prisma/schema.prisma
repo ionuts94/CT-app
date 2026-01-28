@@ -30,6 +30,7 @@ model User {
   profilePictureUrl String?
 
   stripeCustomerId String?
+  role String
 
   // relații
   memberships Membership[]
