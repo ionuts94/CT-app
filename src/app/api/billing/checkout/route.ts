@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
                 }
             ],
             mode: "subscription",
+            allow_promotion_codes: true,
             success_url: envs.NEXT_PUBLIC_URL + "/payment_success",
             cancel_url: envs.NEXT_PUBLIC_URL + "/billing",
             metadata: {
