@@ -57,6 +57,10 @@ export const SignatureSettingsCard: React.FC<Props> = ({ userId, signatures, pre
         )
     }
 
+    const handleChangeMainSignature = async (signatureId: string) => {
+        // TODO: Start here tomorrow
+    }
+
     return (
         <Card className="p-4 w-full">
             <div className="flex justify-between">
