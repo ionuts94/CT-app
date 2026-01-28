@@ -1,52 +1,65 @@
-import { Text } from "@/components/topography"
-import { Button } from "@/components/ui/button"
-import { LandingPageWidth } from "./landing-page-width"
-import { TextCTA } from "@/components/topography/cta"
+"use client"
+
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { PactlyLogo } from "@/components/logo"
+import { LandingPageWidth } from "./landing-page-width"
+import {
+  LandingPageDesktopNavigation,
+  LandingPageMobileNavigation
+} from "./landing-page-navigation"
 
-type Props = {}
+const HEADER_HEIGHT = 94
+const STICKY_HEIGHT = 54
 
-export const LandingPageHeader: React.FC<Props> = ({ }) => {
+export const LandingPageHeader = () => {
+  const [isSticky, setIsSticky] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => {
+      setIsSticky(window.scrollY >= HEADER_HEIGHT)
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
   return (
-    <header className="border-b">
-      <LandingPageWidth className="flex flex-row items-center justify-between h-[94px]">
-        <Link href="/" className="flex items-center cursor-pointer">
-          <PactlyLogo className="h-[40px]" />
-        </Link>
+    <>
+      {/* Spacer – stabilitate layout */}
+      <div style={{ height: HEADER_HEIGHT }} />
 
-        <nav>
-          <ul className="flex gap-8">
-            <li className="font-[600] cursor-pointer text-[18px] hover:text-primary">
-              <Link href="/#pricing">Pricing</Link>
-            </li>
-            <li className="font-[600] cursor-pointer text-[18px] hover:text-primary">
-              <Link href="/#howitworks">Features</Link>
-            </li>
-            <li className="font-[600] cursor-pointer text-[18px] hover:text-primary">
-              <Link href="/contact">Contact</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <div className="hidden md:flex gap-2">
-          <Link href="/sign-in">
-            <Button className="px-6 py-3 bg-white border-1 border-black/10 text-black hover:bg-primary/70 hover:text-white">
-              <TextCTA className="font-bold">
-                Sign in
-              </TextCTA>
-            </Button>
+      {/* Header real */}
+      <header
+        className={[
+          "fixed left-0 right-0 top-0 z-50 bg-white border-b transition-all duration-300 ease-out",
+          isSticky ? "shadow-[0_1px_0_rgba(0,0,0,0.04)]" : ""
+        ].join(" ")}
+      >
+        <LandingPageWidth
+          className={[
+            "flex items-center justify-between transition-all duration-300 ease-out",
+            isSticky ? `h-[${STICKY_HEIGHT}px]` : `h-[${HEADER_HEIGHT}px]`
+          ].join(" ")}
+        >
+          <Link href="/" className="flex items-center justify-center w-full md:w-fit absolute">
+            <PactlyLogo
+              className={[
+                "transition-all duration-300",
+                isSticky ? "h-[28px]" : "h-[40px]"
+              ].join(" ")}
+            />
           </Link>
 
-          <Button asChild>
-            <Link href="/sign-up">
-              <TextCTA className="font-bold">
-                Create free account
-              </TextCTA>
-            </Link>
-          </Button>
-        </div>
-      </LandingPageWidth>
-    </header>
+          <div className="md:hidden absolute right-6">
+            <LandingPageMobileNavigation />
+          </div>
+
+          <div className="hidden md:block w-full">
+            <LandingPageDesktopNavigation />
+          </div>
+        </LandingPageWidth>
+      </header>
+    </>
   )
 }
