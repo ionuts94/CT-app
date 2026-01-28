@@ -37,5 +37,3 @@ export const STRIPE_PRICES = {
 } as const
 
 export const PRICE_IDS_LIST = Object.values(STRIPE_PRICES).map(item => item.type === "one_time" ? item.priceId : item.prices.monthly.priceId)
-
-export const isValidPriceId = (priceId: string) => PRICE_IDS_LIST.includes(priceId as any)

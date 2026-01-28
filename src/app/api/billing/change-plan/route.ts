@@ -1,9 +1,9 @@
 import { envs } from "@/constants/envs"
 import {
     getPlanDetailsByStripePriceId,
+    isValidPriceId,
     PLANS_AND_DETAILS,
 } from "@/constants/plans"
-import { isValidPriceId } from "@/constants/stripe"
 import { stripe } from "@/lib/stripe"
 import UserService from "@/services/users"
 import { Status } from "@/types/api-call"

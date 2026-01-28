@@ -16,8 +16,8 @@ type Props = {
 }
 
 export const ChangePlanDialog: React.FC<Props> = ({ currentUserPlanId }) => {
-    const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
     const router = useRouter()
+    const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
     const availablePlans = Object.values(PLANS_AND_DETAILS).filter(item => item.type === "subscription")
 
     const handleChangePlan = async (priceId: string) => {

@@ -1,7 +1,6 @@
 import { envs } from "@/constants/envs"
-import { isValidPriceId } from "@/constants/stripe"
+import { isValidPriceId } from "@/constants/plans"
 import { stripe } from "@/lib/stripe"
-import AuthService from "@/services/auth"
 import UserService from "@/services/users"
 import { Status } from "@/types/api-call"
 import { NextRequest, NextResponse } from "next/server"

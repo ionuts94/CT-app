@@ -14,6 +14,7 @@ export type FeatureKey = keyof typeof FEATURES
 
 export type T_PlanDetails = (typeof PLANS_AND_DETAILS)[keyof typeof PLANS_AND_DETAILS]
 
+
 export const getPlanDetailsByPlanId = (planId?: keyof typeof PLANS_AND_DETAILS) => {
   if (!planId) return PLANS_AND_DETAILS.FREE;
   return PLANS_AND_DETAILS[planId]
@@ -24,6 +25,8 @@ export const getPlanDetailsByStripePriceId = (priceId: string) => {
   const plan = items.find(item => item.stripePriceId === priceId)
   return plan
 }
+
+export const isValidPriceId = (priceId: string) => Boolean(getPlanDetailsByStripePriceId(priceId))
 
 const LIVE_PLANS = {
   FREE: {
@@ -243,4 +246,4 @@ const TEST_PLANS = {
   },
 } as const
 
-export const PLANS_AND_DETAILS = envs.ENVIRONMENT === "TEST" ? TEST_PLANS : LIVE_PLANS;
+export const PLANS_AND_DETAILS = envs.NEXT_PUBLIC_ENVIRONMENT === "TEST" ? TEST_PLANS : LIVE_PLANS;
