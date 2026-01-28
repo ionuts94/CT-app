@@ -6,7 +6,7 @@ import { Status } from "@/types/api-call"
 import { NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
 
-const webhookSecret = envs.STRIPE_TEST_WEBHOOK_SECRET!
+const webhookSecret = envs.STRIPE_WEBHOOK_SECRET!
 
 export async function POST(req: NextRequest) {
     console.log("Stripe called webhook")
