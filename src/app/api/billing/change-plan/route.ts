@@ -81,6 +81,7 @@ export async function POST(req: NextRequest) {
                     line_items: [{ price: priceId, quantity: 1 }],
                     success_url: envs.NEXT_PUBLIC_URL + "/payment_success",
                     cancel_url: envs.NEXT_PUBLIC_URL + "/billing",
+                    allow_promotion_codes: true,
                     metadata: {
                         userId: authUser.id,
                         action: "upgrade",
@@ -103,6 +104,7 @@ export async function POST(req: NextRequest) {
                 line_items: [{ price: priceId, quantity: 1 }],
                 success_url: envs.NEXT_PUBLIC_URL + "/payment_success",
                 cancel_url: envs.NEXT_PUBLIC_URL + "/billing",
+                allow_promotion_codes: true,
                 metadata: {
                     userId: authUser.id,
                     action: "new",
