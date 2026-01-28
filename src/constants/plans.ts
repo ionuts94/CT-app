@@ -132,7 +132,7 @@ const LIVE_PLANS = {
       "PRIORITY_SUPPORT",
     ] satisfies FeatureKey[],
   },
-}
+} as const
 
 const TEST_PLANS = {
   FREE: {
@@ -241,6 +241,6 @@ const TEST_PLANS = {
       "PRIORITY_SUPPORT",
     ] satisfies FeatureKey[],
   },
-}
+} as const
 
 export const PLANS_AND_DETAILS = envs.ENVIRONMENT === "TEST" ? TEST_PLANS : LIVE_PLANS;

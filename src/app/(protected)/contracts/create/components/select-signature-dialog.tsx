@@ -38,10 +38,11 @@ export const SelectSignatureDialog: React.FC<Props> = ({ currentSignatureId, sig
             Change signature
           </DialogTitle>
           <DialogDescription>
-            Click on the signature you'd like to use for this contract
+            Click on the signature you&apos;d like to use for this contract
           </DialogDescription>
           {signatures.map(item => (
             <div
+              key={item.id}
               onClick={() => handleSignatureClick(item.id)}
             >
               <SignatureItem
