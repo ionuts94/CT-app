@@ -7,3 +7,7 @@ export type T_CreateSignaturePayload = {
   imageUrl: string,
   isMainSignature?: boolean
 }
+
+export type T_ChangeMainSignaturePayload = {
+  newMainSignatureId: string
+}

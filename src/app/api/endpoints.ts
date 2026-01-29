@@ -61,7 +61,8 @@ export const api = {
     webhook: "/api/billing/webhook"
   },
   signatures: {
-    create: "/api/signatures/create"
+    create: "/api/signatures/create",
+    changeMainSignature: "/api/signatures/change-main-signature"
   },
   userPreferences: {
     update: "/api/user-preferences/update"

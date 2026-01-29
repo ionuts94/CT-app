@@ -1,7 +1,9 @@
+import { changeMainSignature } from "./change-main-signature";
 import { create } from "./create";
 
 const CTSignatures = {
-  create
+  create,
+  changeMainSignature
 }
 
 export default CTSignatures

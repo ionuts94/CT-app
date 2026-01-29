@@ -1,5 +1,6 @@
 import { PageContainer } from "@/components/layout";
 import { PageHeader, PageHeading, PageSubHeading } from "@/components/page-header";
+import { ProfileSettingsCard } from "../settings/components/profile-settings-card";
 
 export default async function ProfilePage() {
   return (
@@ -11,8 +12,7 @@ export default async function ProfilePage() {
             Manage your basic information and how you appear in the application.
           </PageSubHeading>
         </PageHeader>
-
-        Profile page
+        <ProfileSettingsCard />
       </PageContainer>
     </main>
   )

@@ -1,9 +1,7 @@
 import { PactlyLogo } from "@/components/logo"
-import { LeftChevronSvg } from "@/components/svgs/chevrons"
 import { Body, H2, Text } from "@/components/topography"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { ChevronLeft, ReceiptText } from "lucide-react"
+import { ChevronLeft } from "lucide-react"
 import Link from "next/link"
 
 type Props = {
