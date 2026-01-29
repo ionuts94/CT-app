@@ -66,7 +66,7 @@ export const Header: React.FC<Props> = ({ }) => {
               </DropdownMenuItem>
 
               <DropdownMenuItem className="py-3 cursor-pointer">
-                Account settings
+                <Link href="/settings">Settings</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
 

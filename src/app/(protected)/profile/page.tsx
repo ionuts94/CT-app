@@ -1,6 +1,6 @@
 import { PageContainer } from "@/components/layout";
 import { PageHeader, PageHeading, PageSubHeading } from "@/components/page-header";
-import { ProfileSettingsCard } from "../settings/components/profile-settings-card";
+import { ProfileSettingsCard } from "./components/profile-settings-card";
 
 export default async function ProfilePage() {
   return (
