@@ -36,7 +36,7 @@ export const Header: React.FC<Props> = ({ }) => {
   }
 
   return (
-    <header className="h-18 border-b border-border sticky top-0 left-0 bg-app z-50">
+    <header className="h-18 border-b border-border sticky top-0 left-0 bg-app z-5">
       <PageWidth className="flex items-center justify-between h-full">
         <div className="flex items-center gap-2">
           <div className="hidden md:block">

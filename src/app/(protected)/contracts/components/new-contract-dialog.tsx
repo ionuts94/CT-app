@@ -27,7 +27,7 @@ export const NewContractDialog: React.FC<Props> = ({ }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer p-3">
+        <Button className="cursor-pointer p-3 w-full md:w-fit">
           <Plus strokeWidth={3} />
           <TextCTA weight="extrabold">
             CREATE CONTRACT
@@ -35,19 +35,19 @@ export const NewContractDialog: React.FC<Props> = ({ }) => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="!max-w-[1200px] flex-col gap-10">
+      <DialogContent className="lg:!max-w-[1200px] flex-col gap-10">
         <DialogTitle className="text-center">
           Choose a template to start your contract
         </DialogTitle>
 
         {userHasTemplates ? (
           <>
-            <div className="flex w-full max-w-[1200px]">
+            <div className="flex w-full lg:max-w-[1200px] overflow-auto pb-4">
               {templates?.map(template => (
                 <div
                   key={template.id}
                   className={cn(
-                    "p-4 rounded-lg w-full max-w-[350px] border-[2px] border-transparent",
+                    "!p-2 rounded-lg w-full lg:max-w-[350px] border-[2px] border-transparent flex items-center justify-center",
                     selectedTemplateId === template.id && "border-primary"
                   )}
                   onClick={() => setSelectedTemplateId(template.id)}

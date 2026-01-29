@@ -10,12 +10,19 @@ import { useForm } from "react-hook-form"
 import Image from "next/image"
 import { InputImage } from "@/components/image-upload-input"
 import { ChangeEvent } from "react"
+import CTStorage from "@/sdk/storage"
+import { BUCKETS } from "@/constants/buckets"
+import { v4 as uuid } from "uuid"
+import { toast } from "sonner"
+import CTUser from "@/sdk/user"
+import { useRouter } from "next/navigation"
 
 type Props = {
 
 }
 
 export const ProfileSettingsCard: React.FC<Props> = ({ }) => {
+    const router = useRouter()
     const { user } = useUserContext()
 
     const form = useForm({
@@ -29,23 +36,46 @@ export const ProfileSettingsCard: React.FC<Props> = ({ }) => {
         }
     })
 
-    const { watch, register } = form
+    const { watch, register, setValue, handleSubmit, formState } = form
 
     const values = watch()
 
-    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => { }
+    const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        const { data } = await CTStorage.storeFile({
+            file,
+            bucket: BUCKETS.profilePictures,
+            filePath: `${file.name}-${uuid()}`,
+        })
+
+        if (!data) {
+            return toast.error("Failed to upload picture")
+        }
+
+        setValue("profilePictureUrl", data.fileUrl)
+    }
+
+    const handleFormSubmit = handleSubmit(async () => {
+        const { error } = await CTUser.updateUser(user?.id!, values)
+        if (error) return toast.error(error)
+        toast.success("Changes saved successfully")
+        router.refresh()
+    })
 
     return (
         <Card className="p-4 w-full">
-            <div>
+            {/* <div>
                 <Text size="lg" weight="semibold">Profile</Text>
                 <Text size="sm" className="text-muted-foreground">Personal information and contact details.</Text>
-            </div>
-            <form className="flex flex-col gap-4">
+            </div> */}
+            <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
                 <div className="flex flex-col gap-4 items-center justify-center lg:items-start">
                     <Text className="font-semibold">Profile picture</Text>
                     <div className="size-40">
                         <InputImage
+                            defaultPreviewUrl={user?.profilePictureUrl || undefined}
                             className="rounded-full overflow-hidden"
                             onImageChange={handleImageChange}
                             placeholder="Upload image"
@@ -80,7 +110,11 @@ export const ProfileSettingsCard: React.FC<Props> = ({ }) => {
                     </FormRow>
                     <FormRow />
                 </FormRow>
-                <ButtonWithLoading className="w-full lg:w-fit ml-auto !px-8 py-3">
+                <ButtonWithLoading
+                    disabled={formState.isSubmitting}
+                    loading={formState.isSubmitting}
+                    className="w-full lg:w-fit ml-auto !px-8 py-3"
+                >
                     <Save />
                     Save changes
                 </ButtonWithLoading>

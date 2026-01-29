@@ -58,7 +58,7 @@ export const SenderContractRevokeDialog: React.FC<Props> = ({ contract }) => {
         <Button
           onClick={openDialog}
           variant="destructive"
-          className="px-10 py-4"
+          className="py-2 px-10 lg:py-4"
         >
           Revoke contract
         </Button>

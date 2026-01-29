@@ -57,7 +57,7 @@ export const UserContractDeclineDialog: React.FC<Props> = ({ contract }) => {
         <Button
           onClick={openDialog}
           variant="secondary"
-          className="px-10 py-4"
+          className="py-2 px-10 lg:py-4"
         >
           Decline contract
         </Button>

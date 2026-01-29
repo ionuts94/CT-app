@@ -29,30 +29,37 @@ export const ContractsFilterBar: React.FC<Props> = ({ status }) => {
 const FILTERS = [
   {
     label: "All",
-    value: null
+    value: null,
+    hideOnMobile: false,
   },
   {
     label: "Draft",
-    value: "DRAFT"
+    value: "DRAFT",
+    hideOnMobile: false,
   },
   {
     label: "Pending",
-    value: "OUT_FOR_SIGNATURE"
+    value: "OUT_FOR_SIGNATURE",
+    hideOnMobile: false,
   },
   {
     label: "Signed",
-    value: "FULLY_SIGNED"
+    value: "FULLY_SIGNED",
+    hideOnMobile: false,
   },
   {
     label: "Declined",
-    value: "DECLINED"
+    value: "DECLINED",
+    hideOnMobile: true,
   },
   {
     label: "Revoked",
-    value: "REVOKED"
+    value: "REVOKED",
+    hideOnMobile: true,
   },
   {
     label: "Expired",
-    value: "EXPIRED"
+    value: "EXPIRED",
+    hideOnMobile: true,
   },
 ]

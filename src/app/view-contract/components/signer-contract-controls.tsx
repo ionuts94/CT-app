@@ -4,6 +4,7 @@ import { getContractStatusOptions } from "@/components/status-badge"
 import { cn } from "@/lib/utils"
 import { UserContractDeclineDialog } from "./dialogs/user-contract-decline-dialog"
 import { T_ViewContract } from "@/types/services/contracts"
+import { Fragment } from "react/jsx-runtime"
 
 type Props = {
   contract: T_ViewContract
@@ -46,9 +47,9 @@ export const SignerContractControls: React.FC<Props> = ({ contract }) => {
   }
 
   return (
-    <>
+    <div className="flex w-full flex-col gap-2 lg:flex-row lg:justify-end">
       <UserContractDeclineDialog contract={contract} />
       <UserSignatureDialog contract={contract} />
-    </>
+    </div>
   )
 }

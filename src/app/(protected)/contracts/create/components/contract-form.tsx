@@ -227,7 +227,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
 
   return (
     <form onSubmit={handleSubmit(handleSaveDraft)} className="w-full flex gap-4">
-      <div className="w-2/3 flex flex-col gap-4">
+      <div className="w-3/3 flex lg:w-2/3 flex-col gap-4">
         <Card className="p-4">
           {data.templateTitle &&
             <Label htmlFor="template-title">
@@ -250,7 +250,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
             <RichTextEditor
               content={data.content as string || ""}
               onChange={(htmlString) => debouncedSetContent(htmlString)}
-              showAiHelper={false}
+              showAiHelper={true}
             />
           </FormRow>
         </Card>
@@ -299,7 +299,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
 
         <Card className="p-4">
           <CardTitle>Recipient details</CardTitle>
-          <FormRow className="flex-row">
+          <FormRow className="flex-col lg:flex-row">
             <FormRow>
               <Label>Recipient name <RequiredFieldMark /></Label>
               <Input {...register("receiverName")} placeholder="John Smith" />
@@ -312,7 +312,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
             </FormRow>
           </FormRow>
 
-          <FormRow className="flex flex-row justify-end gap-2">
+          <FormRow className="flex flex-row justify-center lg:justify-end gap-2">
             <ButtonWithLoading disabled={!formHasChanges} type="submit" variant="outline" className="p-4">
               <Save />
               Save as draft
@@ -333,10 +333,6 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
             </div>
           </FormRow>
         </Card>
-      </div>
-
-      <div className="w-1/3">
-        {/* right column */}
       </div>
     </form>
   )

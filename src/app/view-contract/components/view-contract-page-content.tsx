@@ -19,15 +19,15 @@ export const ViewContractContentPage: React.FC<Props> = ({ contractData, comment
   return (
     <main className="bg-app flex flex-col min-h-screen">
       <PageHeader contract={contractData} auditLog={auditLogData} />
-      <PageWidth className="px-[70px] flex flex-1 gap-4 justify-between py-4 shadow-sm">
+      <PageWidth className="lg:px-[70px] flex flex-1 gap-4 justify-between py-4 shadow-sm">
         <div className="w-full lg:w-3/5">
           <ContractContentView contract={contractData} />
         </div>
-        <div className="lg:w-2/5 flex-1">
+        <div className="hidden lg:block lg:w-2/5 flex-1">
           <ReceiverContractAssistant contractContent={contractData.currentVersion.content as string} />
         </div>
       </PageWidth>
-      <PageWidth className="px-[70px] py-4 w-full">
+      <PageWidth className="px-4 lg:px-[70px] py-4 w-full">
         <CommentsSection
           comments={commentsData}
           contract={contractData}

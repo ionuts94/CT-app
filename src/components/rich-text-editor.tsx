@@ -98,35 +98,37 @@ function MenuBar({ editor, showAiHelper }: { editor: Editor, showAiHelper: boole
 
   return (
     <div className="flex flex-wrap items-center gap-1 p-2 border rounded-md bg-muted/40 justify-between">
-      <div className="flex items-center gap-1">
-        <MenuBarItem
-          label="Bold"
-          active={editorState.isBold}
-          disabled={!editorState.canBold}
-          onClick={() => editor.chain().focus().toggleBold().run()}
-        >
-          <Bold />
-        </MenuBarItem>
+      <div className="flex flex-col items-start gap-2 lg:flex-row">
+        <div className="flex items-center gap-1">
+          <MenuBarItem
+            label="Bold"
+            active={editorState.isBold}
+            disabled={!editorState.canBold}
+            onClick={() => editor.chain().focus().toggleBold().run()}
+          >
+            <Bold />
+          </MenuBarItem>
 
-        <MenuBarItem
-          label="Italic"
-          active={editorState.isItalic}
-          disabled={!editorState.canItalic}
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-        >
-          <Italic />
-        </MenuBarItem>
+          <MenuBarItem
+            label="Italic"
+            active={editorState.isItalic}
+            disabled={!editorState.canItalic}
+            onClick={() => editor.chain().focus().toggleItalic().run()}
+          >
+            <Italic />
+          </MenuBarItem>
 
-        <MenuBarItem
-          label="Strike Through"
-          active={editorState.isStrike}
-          disabled={!editorState.canStrike}
-          onClick={() => editor.chain().focus().toggleStrike().run()}
-        >
-          <Strikethrough />
-        </MenuBarItem>
+          <MenuBarItem
+            label="Strike Through"
+            active={editorState.isStrike}
+            disabled={!editorState.canStrike}
+            onClick={() => editor.chain().focus().toggleStrike().run()}
+          >
+            <Strikethrough />
+          </MenuBarItem>
 
-        <Sep />
+          <Sep />
+        </div>
 
         <div className='flex items-center gap-2 px-2'>
           <Text size='sm'>Font size:</Text>
@@ -135,55 +137,57 @@ function MenuBar({ editor, showAiHelper }: { editor: Editor, showAiHelper: boole
             value={editorState.fontSize}
           />
         </div>
-
         <Sep />
 
-        <MenuBarItem
-          label="Unordered List"
-          active={editorState.isBulletList}
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-        >
-          <List />
-        </MenuBarItem>
 
-        <MenuBarItem
-          label="Ordered List"
-          active={editorState.isOrderedList}
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        >
-          <ListOrdered />
-        </MenuBarItem>
+        <div className="flex items-center gap-2">
+          <MenuBarItem
+            label="Unordered List"
+            active={editorState.isBulletList}
+            onClick={() => editor.chain().focus().toggleBulletList().run()}
+          >
+            <List />
+          </MenuBarItem>
 
-        <MenuBarItem
-          label="Block Quote"
-          active={editorState.isBlockquote}
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        >
-          <Quote />
-        </MenuBarItem>
+          <MenuBarItem
+            label="Ordered List"
+            active={editorState.isOrderedList}
+            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          >
+            <ListOrdered />
+          </MenuBarItem>
 
-        <MenuBarItem
-          label="Horizontal Line"
-          onClick={() => editor.chain().focus().setHorizontalRule().run()}
-        >
-          <Minus />
-        </MenuBarItem>
+          <MenuBarItem
+            label="Block Quote"
+            active={editorState.isBlockquote}
+            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          >
+            <Quote />
+          </MenuBarItem>
 
-        <Sep />
+          <MenuBarItem
+            label="Horizontal Line"
+            onClick={() => editor.chain().focus().setHorizontalRule().run()}
+          >
+            <Minus />
+          </MenuBarItem>
 
-        <MenuBarItem
-          label="Undo"
-          onClick={() => editor.chain().focus().undo().run()}
-        >
-          <Undo />
-        </MenuBarItem>
+          <Sep />
 
-        <MenuBarItem
-          label="Redo"
-          onClick={() => editor.chain().focus().redo().run()}
-        >
-          <Redo />
-        </MenuBarItem>
+          <MenuBarItem
+            label="Undo"
+            onClick={() => editor.chain().focus().undo().run()}
+          >
+            <Undo />
+          </MenuBarItem>
+
+          <MenuBarItem
+            label="Redo"
+            onClick={() => editor.chain().focus().redo().run()}
+          >
+            <Redo />
+          </MenuBarItem>
+        </div>
       </div>
       {showAiHelper &&
         <AiTemplateWriteDialog
@@ -264,5 +268,5 @@ export const FontSizeSelect: React.FC<FontSizeSelectProps> = ({ onValueChange = 
 }
 
 function Sep() {
-  return <div className="mx-1 h-8 w-[2px] bg-border" />
+  return <div className="mx-1 h-8 w-[2px] bg-border hidden lg:block" />
 }

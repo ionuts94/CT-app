@@ -16,14 +16,14 @@ export const TemplatesHeader: React.FC<Props> = ({ }) => {
   const goToNewTemplate = () => router.push("/templates/new")
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col items-start gap-2 justify-between md:flex-row">
       <PageHeader>
         <PageHeading>Templates</PageHeading>
         <PageSubHeading>
           Manage and organise all your contract templates in one place
         </PageSubHeading>
       </PageHeader>
-      <Button className="cursor-pointer p-3" variant={"outline"} onClick={goToNewTemplate}>
+      <Button className="cursor-pointer p-3 w-full md:w-fit" variant={"outline"} onClick={goToNewTemplate}>
         <Plus strokeWidth={3} />
         <TextCTA weight="extrabold">
           CREATE TEMPLATE

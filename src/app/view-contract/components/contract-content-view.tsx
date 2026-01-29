@@ -19,7 +19,7 @@ export const ContractContentView: React.FC<Props> = ({ contract, isSender }) => 
   return (
     <Card className="p-0 gap-0 max-h-[85vh] overflow-auto w-full">
       {/* Top bar */}
-      <div className="flex flex-row items-center py-3 px-10 bg-input border-b border-black/10">
+      <div className="px-4 flex flex-row items-center py-3 lg:px-10 bg-input border-b border-black/10">
         <Text size="sm" className="text-color-secondary">
           Securely shared via link
         </Text>
@@ -33,7 +33,7 @@ export const ContractContentView: React.FC<Props> = ({ contract, isSender }) => 
       </div>
 
       {/* Info banner */}
-      <div className="bg-background py-5 px-10 flex items-start justify-between gap-2 border-b-[2px]">
+      <div className="hidden lg:flex bg-background py-5 px-10 items-start justify-between gap-2 border-b-[2px]">
         <div className="flex items-start gap-2">
           <MessageSquare className="size-4 text-primary" />
           <Text size="sm">
@@ -45,7 +45,7 @@ export const ContractContentView: React.FC<Props> = ({ contract, isSender }) => 
       </div>
 
       {/* Contract content */}
-      <div className="py-3 px-10 overflow-y-auto border-b-[2px]">
+      <div className="px-4 py-3 lg:px-10 overflow-y-auto border-b-[2px]">
         <div
           className="break-words whitespace-pre-wrap"
           dangerouslySetInnerHTML={{ __html: contentHtml as any }}
@@ -54,7 +54,7 @@ export const ContractContentView: React.FC<Props> = ({ contract, isSender }) => 
       </div>
 
       {/* Actions */}
-      <div className="px-10 py-4 flex justify-end gap-2">
+      <div className="px-4 lg:px-10 py-4 flex justify-end gap-2">
         {isSender ? (
           <SenderContractControls contract={contract} />
         ) : (

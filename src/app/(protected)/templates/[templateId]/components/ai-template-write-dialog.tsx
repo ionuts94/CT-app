@@ -24,7 +24,7 @@ export const AiTemplateWriteDialog: React.FC<Props> = ({ onGenerateTemplate = ()
   return (
     <Dialog open={isOpen} onOpenChange={toggleDialog}>
       <DialogTrigger asChild>
-        <Button onClick={openDialog} variant="outline" className="bg-white group">
+        <Button onClick={openDialog} variant="outline" className="bg-white group w-full lg:w-fit">
           <AiSvg className="size-5 group-hover:text-white" />
           Help me write <span className="font-bold">(AI)</span>
         </Button>

@@ -33,7 +33,7 @@ export const TemplateForm: React.FC = ({ }) => {
 
   return (
     <form className="w-full flex gap-4">
-      <div className="w-2/3 flex flex-col gap-4">
+      <div className="w-full lg:w-2/3 flex flex-col gap-4">
         <Card className="p-4">
           <FormRow>
             <Label htmlFor="template-title">
@@ -65,7 +65,7 @@ export const TemplateForm: React.FC = ({ }) => {
         </Card>
         <ButtonWithLoading
           variant="default"
-          className="cursor-pointer p-3 w-fit"
+          className="cursor-pointer p-3 w-full md:w-fit"
           onClick={handleSaveTemplate}
           loading={isSavingTemplate}
           disabled={isSavingTemplate || !formState.isDirty}
@@ -76,7 +76,7 @@ export const TemplateForm: React.FC = ({ }) => {
           </TextCTA>
         </ButtonWithLoading>
       </div>
-      <div className="w-1/3">
+      <div className="hidden w-1/3 lg:block">
         <AiTemplateReview />
       </div>
     </form>

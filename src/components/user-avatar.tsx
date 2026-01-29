@@ -31,7 +31,7 @@ export const UserAvatar: React.FC<Props> = ({
         className
       )}
     >
-      <AvatarImage src={profilePictureUrl || undefined} />
+      <AvatarImage src={profilePictureUrl || undefined} className="object-cover" />
       <AvatarFallback
         className={cn(
           size === "sm" && "",

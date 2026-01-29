@@ -66,5 +66,8 @@ export const api = {
   },
   userPreferences: {
     update: "/api/user-preferences/update"
+  },
+  users: {
+    updateUser: "/api/users/update-user"
   }
 } as const

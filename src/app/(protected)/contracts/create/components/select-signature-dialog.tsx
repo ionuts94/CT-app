@@ -32,7 +32,7 @@ export const SelectSignatureDialog: React.FC<Props> = ({ currentSignatureId, sig
           <Text>Change signature</Text>
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="flex flex-col gap-4">
         <DialogHeader>
           <DialogTitle>
             Change signature
@@ -40,6 +40,8 @@ export const SelectSignatureDialog: React.FC<Props> = ({ currentSignatureId, sig
           <DialogDescription>
             Click on the signature you&apos;d like to use for this contract
           </DialogDescription>
+        </DialogHeader>
+        <div className="max-h-[50vh] lg:max-h-[80vh] overflow-auto py-2 flex flex-col gap-2">
           {signatures.map(item => (
             <div
               key={item.id}
@@ -54,7 +56,7 @@ export const SelectSignatureDialog: React.FC<Props> = ({ currentSignatureId, sig
               />
             </div>
           ))}
-        </DialogHeader>
+        </div>
         <Button className="px-6 py-3">Cancel</Button>
       </DialogContent>
     </Dialog>

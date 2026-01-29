@@ -74,7 +74,7 @@ export const CommentsSection: React.FC<Props> = ({
       </div>
 
       {/* Input */}
-      <div className={cn("w-full pb-4 px-[10px] lg:px-0 mt-4")}>
+      <div className={cn("w-full pb-4 lg:px-0 mt-4")}>
         <ResizableTextInput
           value={input}
           disabled={false}
@@ -87,7 +87,7 @@ export const CommentsSection: React.FC<Props> = ({
       </div>
 
       {/* Comments list */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 pb-10">
         {comments?.length === 0 && (
           <Text className="text-center py-4 text-black/40">
             No comments have been posted yet

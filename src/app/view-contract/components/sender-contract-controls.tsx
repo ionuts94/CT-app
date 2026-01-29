@@ -43,8 +43,8 @@ export const SenderContractControls: React.FC<Props> = ({ contract }) => {
   }
 
   return (
-    <>
+    <div className="w-full flex flex-col lg:flex-row lg:justify-end">
       <SenderContractRevokeDialog contract={contract} />
-    </>
+    </div>
   )
 }

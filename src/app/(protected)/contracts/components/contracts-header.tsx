@@ -7,7 +7,7 @@ type Props = {
 
 export const ContractsHeader: React.FC<Props> = ({ }) => {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col items-start gap-2 justify-between md:flex-row">
       <PageHeader>
         <PageHeading>Contracts</PageHeading>
         <PageSubHeading>

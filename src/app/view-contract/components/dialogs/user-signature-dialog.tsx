@@ -103,7 +103,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button onClick={openDialog} className="px-10 py-4">
+        <Button onClick={openDialog} className="py-2 px-10 lg:py-4">
           Sign and submit
         </Button>
       </DialogTrigger>
@@ -149,6 +149,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
           </Button>
 
           <ButtonWithLoading
+            className="w-full px-10 py-4"
             loading={isLoading}
             onClick={handleFormSubmit}
           >

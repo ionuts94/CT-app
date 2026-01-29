@@ -21,8 +21,8 @@ export const SubscriptionPlanCard: React.FC<Props> = ({ subscription, user }) =>
   const userHasActivePaidPlan = subscription?.status === "ACTIVE" && userPlanId !== SubscriptionPlan.FREE
 
   return (
-    <Card className="p-4 flex-row items-start">
-      <div className="flex flex-col gap-4 w-1/2">
+    <Card className="p-4 flex-col lg:flex-row items-start">
+      <div className="flex flex-col gap-4 w-full lg:w-1/2">
         <div className="flex flex-col gap-2">
           <Text weight="semibold">
             Your current subscription
@@ -66,7 +66,7 @@ export const SubscriptionPlanCard: React.FC<Props> = ({ subscription, user }) =>
         }
       </div>
 
-      <div className="w-1/2 flex flex-col gap-2 justify-end">
+      <div className="w-full lg:w-1/2 flex flex-col gap-2 justify-end">
         <ChangePlanSection userPlanId={userPlanId} />
         {(subscription && !subscription.cancelAtPeriodEnd) &&
           <CancelSubscriptionSection subscription={subscription} />
