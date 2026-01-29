@@ -9,7 +9,7 @@ export type T_Filter = {
   label: string,
   value: string | null,
   defaultActiveFilterValue?: string | null | undefined,
-  hideOnMobile: boolean
+  hideOnMobile?: boolean
 }
 
 type StatusFilterProps = {
