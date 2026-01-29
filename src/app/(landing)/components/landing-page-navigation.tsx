@@ -15,12 +15,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { useDialog } from "@/hooks/use-dialog"
+import { cn } from "@/lib/utils"
 import { Menu } from "lucide-react"
 import Link from "next/link"
+import { Fragment } from "react/jsx-runtime"
 
 export const LandingPageMobileNavigation: React.FC = () => {
+  const { isOpen, toggleDialog, closeDialog } = useDialog()
+
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={toggleDialog}>
       <SheetTrigger className="">
         <Menu size={32} className="text-color-secondary" />
       </SheetTrigger>
@@ -33,14 +38,16 @@ export const LandingPageMobileNavigation: React.FC = () => {
 
           </SheetDescription>
         </SheetHeader>
-        <div className="px-4 flex flex-col">
-          {LINKS.map((item, index) => (
-            <Link key={index} href={item.href}>
-              {item.label}
-            </Link>
+        <div className="px-4 flex flex-col gap-4">
+          {MOBILE_LINKS.map((item, index) => (
+            <Fragment key={index}>
+              <Link onClick={closeDialog} key={index} href={item.href} className="text-color-secondary font-semibold">
+                {item.label}
+              </Link>
+              {index < MOBILE_LINKS.length - 1 && <div className="h-[2px] w-full bg-sidebar-primary/50 rounded-lg" />}
+            </Fragment>
           ))}
         </div>
-
         <SheetFooter>
           <NavSignInButton />
           <NavSignUpButton />
@@ -50,12 +57,12 @@ export const LandingPageMobileNavigation: React.FC = () => {
   )
 }
 
-export const LandingPageDesktopNavigation: React.FC = () => {
+export const LandingPageDesktopNavigation: React.FC<{ isSticky: boolean }> = ({ isSticky }) => {
   return (
     <div className="flex items-center w-full justify-center relative">
       <nav className="">
         <ul className="flex gap-8">
-          {LINKS.map((item, index) => (
+          {DESKTOP_LINKS.map((item, index) => (
             <li key={index} className="font-[600] cursor-pointer text-[18px] hover:text-primary">
               <Link href={item.href}>{item.label}</Link>
             </li>
@@ -64,20 +71,25 @@ export const LandingPageDesktopNavigation: React.FC = () => {
       </nav>
 
       <div className="flex gap-2 absolute right-0">
-        <NavSignInButton />
-        <NavSignUpButton />
+        <NavSignInButton className={isSticky ? "py-2" : ""} />
+        <NavSignUpButton className={isSticky ? "py-2" : ""} />
       </div>
     </div >
   )
 }
 
 type Props = {
-
+  className?: string
 }
 
-export const NavSignInButton: React.FC<Props> = ({ }) => {
+export const NavSignInButton: React.FC<Props> = ({ className }) => {
   return (
-    <Button asChild className="shadow-sm px-6 py-3 bg-white border-1 border-black/10 text-black hover:bg-primary/70 hover:text-white">
+    <Button
+      asChild
+      className={cn(
+        "shadow-sm px-6 py-3 bg-white border-1 border-black/10 text-black hover:bg-primary/70 hover:text-white",
+        className
+      )}>
       <Link href="/sign-in">
         <TextCTA className="font-bold">
           Sign in
@@ -87,9 +99,9 @@ export const NavSignInButton: React.FC<Props> = ({ }) => {
   )
 }
 
-export const NavSignUpButton: React.FC<Props> = () => {
+export const NavSignUpButton: React.FC<Props> = ({ className }) => {
   return (
-    <Button asChild className="px-6 py-3">
+    <Button asChild className={cn("px-6 py-3", className)}>
       <Link href="/sign-up">
         <TextCTA className="font-bold">
           Create free account
@@ -100,17 +112,36 @@ export const NavSignUpButton: React.FC<Props> = () => {
 }
 
 
-const LINKS = [
+const MOBILE_LINKS = [
+  {
+    label: "Home page",
+    href: "/",
+  },
   {
     label: "Pricing",
     href: "/#pricing",
   },
   {
-    label: "Features",
-    href: "/#features",
+    label: "How it works",
+    href: "/#howitworks",
   },
   {
     label: "Contact",
-    href: "/#contact"
+    href: "/contact"
+  }
+]
+
+const DESKTOP_LINKS = [
+  {
+    label: "Pricing",
+    href: "/#pricing",
+  },
+  {
+    label: "How it works",
+    href: "/#howitworks",
+  },
+  {
+    label: "Contact",
+    href: "/contact"
   }
 ]

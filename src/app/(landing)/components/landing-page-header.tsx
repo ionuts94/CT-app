@@ -24,6 +24,9 @@ export const LandingPageHeader = () => {
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
+  const stickyHeightClass = "h-[54px]"
+  const unstickyHeightClass = "h-[94px]"
+
   return (
     <>
       {/* Spacer – stabilitate layout */}
@@ -39,7 +42,7 @@ export const LandingPageHeader = () => {
         <LandingPageWidth
           className={[
             "flex items-center justify-between transition-all duration-300 ease-out",
-            isSticky ? `h-[${STICKY_HEIGHT}px]` : `h-[${HEADER_HEIGHT}px]`
+            isSticky ? stickyHeightClass : unstickyHeightClass
           ].join(" ")}
         >
           <Link href="/" className="flex items-center justify-center w-full md:w-fit absolute">
@@ -56,7 +59,7 @@ export const LandingPageHeader = () => {
           </div>
 
           <div className="hidden md:block w-full">
-            <LandingPageDesktopNavigation />
+            <LandingPageDesktopNavigation isSticky={isSticky} />
           </div>
         </LandingPageWidth>
       </header>

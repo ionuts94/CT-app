@@ -79,7 +79,7 @@ export const SignInForm: React.FC<Props> = ({ }) => {
         </FormRow>
 
         <FormRow className="w-full flex-row justify-end">
-          <ButtonWithLoading className="py-4 px-12" loading={isSubmitting}>
+          <ButtonWithLoading className="py-4 px-12 w-full md:w-fit" loading={isSubmitting}>
             <TextCTA>Continue</TextCTA>
           </ButtonWithLoading>
         </FormRow>
