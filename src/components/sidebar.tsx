@@ -57,12 +57,12 @@ export function AppSidebar() {
           {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu className="gap-1">
-              {items.map((item, index) => {
-                const isSelected = isSelectedPath(item.url);
+              {PROTECTED_LINKS.map((item, index) => {
+                const isSelected = isSelectedPath(item.href);
 
                 return (
                   <SidebarMenuItem
-                    key={item.title}
+                    key={item.label}
                     className={cn(
                       "p-1 rounded-lg hover:bg-sidebar-primary cursor-pointer",
                       isSelected && "bg-sidebar-primary"
@@ -70,15 +70,15 @@ export function AppSidebar() {
                   >
                     <SidebarMenuButton
                       asChild
-                      tooltip={item.title}
+                      tooltip={item.label}
                       className={cn(
                         "hover:bg-sidebar-primary",
                         isSelected ? "text-sidebar-primary-foreground" : "text-sidebar-foreground"
                       )}
                     >
-                      <Link href={item.url}>
+                      <Link href={item.href}>
                         <item.icon />
-                        <span>{item.title}</span>
+                        <span>{item.label}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -113,30 +113,30 @@ export function AppSidebar() {
   )
 }
 
-const items = [
+export const PROTECTED_LINKS = [
   // {
-  //   title: "Dashboard",
-  //   url: "/dashboard",
+  //   label: "Dashboard",
+  //   href: "/dashboard",
   //   icon: Gauge,
   // },
   {
-    title: "Contracts",
-    url: "/contracts",
+    label: "Contracts",
+    href: "/contracts",
     icon: Layers,
   },
   {
-    title: "Templates",
-    url: "/templates",
+    label: "Templates",
+    href: "/templates",
     icon: LayoutTemplate,
   },
   {
-    title: "Billing",
-    url: "/billing",
+    label: "Billing",
+    href: "/billing",
     icon: CreditCard,
   },
   {
-    title: "Settings",
-    url: "/settings",
+    label: "Settings",
+    href: "/settings",
     icon: Settings,
   },
 ]

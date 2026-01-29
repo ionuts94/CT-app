@@ -11,14 +11,16 @@ type Props = {
     onImageChange: (e: ChangeEvent<HTMLInputElement>) => any,
     placeholder?: string,
     defaultPreviewUrl?: string,
-    className?: string
+    className?: string,
+    fillMode?: "cover" | "contain"
 }
 
 export const InputImage: React.FC<Props> = ({
     onImageChange = () => null,
     defaultPreviewUrl = "",
     placeholder = "Upload image",
-    className
+    className,
+    fillMode = "contain"
 }) => {
     const [hoverInput, setHoverInput] = useState(false)
     const [imagePreviewUrl, setImagePreviewUrl] = useState("")
@@ -54,7 +56,7 @@ export const InputImage: React.FC<Props> = ({
                     src={imagePreviewUrl || defaultPreviewUrl}
                     alt="Logo preview"
                     fill
-                    style={{ objectFit: "contain" }}
+                    style={{ objectFit: fillMode }}
                 />
             ) : (
                 <>

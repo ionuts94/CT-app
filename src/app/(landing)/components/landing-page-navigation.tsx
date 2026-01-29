@@ -27,9 +27,9 @@ export const LandingPageMobileNavigation: React.FC = () => {
   return (
     <Sheet open={isOpen} onOpenChange={toggleDialog}>
       <SheetTrigger className="">
-        <Menu size={32} className="text-color-secondary" />
+        <Menu size={24} className="text-color-secondary" />
       </SheetTrigger>
-      <SheetContent className="bg-background">
+      <SheetContent className="bg-background !w-[90vw]">
         <SheetHeader>
           <SheetTitle>
             <PactlyLogo className="h-[40px]" />
@@ -41,7 +41,7 @@ export const LandingPageMobileNavigation: React.FC = () => {
         <div className="px-4 flex flex-col gap-4">
           {MOBILE_LINKS.map((item, index) => (
             <Fragment key={index}>
-              <Link onClick={closeDialog} key={index} href={item.href} className="text-color-secondary font-semibold">
+              <Link onClick={closeDialog} key={index} href={item.href} className="text-color-secondary">
                 {item.label}
               </Link>
               {index < MOBILE_LINKS.length - 1 && <div className="h-[2px] w-full bg-sidebar-primary/50 rounded-lg" />}

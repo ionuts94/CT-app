@@ -45,7 +45,7 @@ export const LandingPageHeader = () => {
             isSticky ? stickyHeightClass : unstickyHeightClass
           ].join(" ")}
         >
-          <Link href="/" className="flex items-center justify-center w-full md:w-fit absolute">
+          <Link href="/" className="flex md:w-fit">
             <PactlyLogo
               className={[
                 "transition-all duration-300",
@@ -54,7 +54,7 @@ export const LandingPageHeader = () => {
             />
           </Link>
 
-          <div className="md:hidden absolute right-6">
+          <div className="md:hidden">
             <LandingPageMobileNavigation />
           </div>
 

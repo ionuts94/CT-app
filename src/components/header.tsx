@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation"
 import { useUserContext } from "@/contexts/user-context"
 import Link from "next/link"
 import { UserAvatar } from "./user-avatar"
+import { ProtectedMobileNavigation } from "@/app/(protected)/components/protected-mobile-navigation"
 
 type Props = {}
 
@@ -38,7 +39,12 @@ export const Header: React.FC<Props> = ({ }) => {
     <header className="h-18 border-b border-border sticky top-0 left-0 bg-app z-50">
       <PageWidth className="flex items-center justify-between h-full">
         <div className="flex items-center gap-2">
-          <Searchbar />
+          <div className="hidden md:block">
+            <Searchbar />
+          </div>
+          <div className="md:hidden">
+            <ProtectedMobileNavigation />
+          </div>
         </div>
 
         <DropdownMenu>
@@ -49,7 +55,7 @@ export const Header: React.FC<Props> = ({ }) => {
               profilePictureUrl={user?.profilePictureUrl}
               partyRole="SENDER"
             />
-            <Text size="sm">
+            <Text size="sm" className="hidden lg:block">
               {user?.firstName} {user?.lastName}
             </Text>
             <ChevronDown />
