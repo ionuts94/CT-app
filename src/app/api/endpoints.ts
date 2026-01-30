@@ -1,11 +1,6 @@
 import { envs } from "@/constants/envs";
 
 export const api = {
-  contract: {
-    userSign: envs.NEXT_PUBLIC_URL + "/api/contract/user-sign",
-    generateContractPdf: envs.NEXT_PUBLIC_URL + "/api/contract/generate",
-    onContractSigned: envs.NEXT_PUBLIC_URL + "/api/contract/on-contract-signed"
-  },
   auth: {
     signInWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-in-with-password",
     signUpWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-up-with-password",
@@ -30,6 +25,9 @@ export const api = {
   },
   comments: {
     postNewComment: envs.NEXT_PUBLIC_URL + "/api/comments/post-new-comment"
+  },
+  companies: {
+    update: "/api/companies/update"
   },
   templates: {
     create: "/api/templates/create",
