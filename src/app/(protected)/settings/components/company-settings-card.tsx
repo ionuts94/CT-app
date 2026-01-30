@@ -28,12 +28,12 @@ export const CompanySettingsCard: React.FC<Props> = ({ company }) => {
         defaultValues: {
             name: company?.name || "",
             cui: company?.cui || "",
-            domain: company?.emailDomain || "",
+            emailDomain: company?.emailDomain || "",
             regNumber: company?.regNumber || "",
             logoUrl: company?.logoUrl || "",
-            primaryColor: company?.colorPrimary || "#000",
-            secondaryColor: company?.colorSecondary || "#000",
-            accentColor: company?.colorAccent || "#000",
+            colorPrimary: company?.colorPrimary || "#000",
+            colorSecondary: company?.colorSecondary || "#000",
+            colorAccent: company?.colorAccent || "#000",
         },
     })
 
@@ -44,7 +44,7 @@ export const CompanySettingsCard: React.FC<Props> = ({ company }) => {
     const values = watch()
 
     const onColorChange = (
-        name: "primaryColor" | "secondaryColor" | "accentColor",
+        name: "colorPrimary" | "colorSecondary" | "colorAccent",
         value: string
     ) => {
         setValue(name, value)
@@ -64,6 +64,8 @@ export const CompanySettingsCard: React.FC<Props> = ({ company }) => {
     }
 
     const handleFormSubmit = async () => {
+        console.log(company)
+
         if (!company) return toast.error("Tehnical error. Please contact support")
         const { error } = await CTCompany.update(company.id, values)
         if (error) return toast.error(error)
@@ -92,8 +94,8 @@ export const CompanySettingsCard: React.FC<Props> = ({ company }) => {
 
                 <FormRow>
                     <Label>Domain</Label>
-                    <Input {...register("domain")} />
-                    <InvalidInputError>{errors.domain?.message}</InvalidInputError>
+                    <Input {...register("emailDomain")} />
+                    <InvalidInputError>{errors.emailDomain?.message}</InvalidInputError>
                 </FormRow>
 
                 <FormRow className="lg:flex-row gap-6">
@@ -117,30 +119,30 @@ export const CompanySettingsCard: React.FC<Props> = ({ company }) => {
                             <Label>Primary color</Label>
                             <ColorPicker
                                 className="bg-muted/40"
-                                value={values.primaryColor}
-                                onChange={(val) => onColorChange("primaryColor", val)}
+                                value={values.colorPrimary}
+                                onChange={(val) => onColorChange("colorPrimary", val)}
                             />
-                            <InvalidInputError>{errors.primaryColor?.message}</InvalidInputError>
+                            <InvalidInputError>{errors.colorPrimary?.message}</InvalidInputError>
                         </FormRow>
 
                         <FormRow>
                             <Label>Secondary color</Label>
                             <ColorPicker
                                 className="bg-muted/40"
-                                value={values.secondaryColor}
-                                onChange={(val) => onColorChange("secondaryColor", val)}
+                                value={values.colorSecondary}
+                                onChange={(val) => onColorChange("colorSecondary", val)}
                             />
-                            <InvalidInputError>{errors.secondaryColor?.message}</InvalidInputError>
+                            <InvalidInputError>{errors.colorSecondary?.message}</InvalidInputError>
                         </FormRow>
 
                         <FormRow>
                             <Label>Accent color</Label>
                             <ColorPicker
                                 className="bg-muted/40"
-                                value={values.accentColor}
-                                onChange={(val) => onColorChange("accentColor", val)}
+                                value={values.colorAccent}
+                                onChange={(val) => onColorChange("colorAccent", val)}
                             />
-                            <InvalidInputError>{errors.accentColor?.message}</InvalidInputError>
+                            <InvalidInputError>{errors.colorAccent?.message}</InvalidInputError>
                         </FormRow>
 
                     </FormRow>

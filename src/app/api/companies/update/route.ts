@@ -8,6 +8,9 @@ export async function POST(req: NextRequest) {
     try {
         const { companyId, payload } = await req.json()
 
+        console.log("CompanyId in route")
+        console.log(companyId)
+
         const updatedCompany = await CompanyService.updateCompany(companyId, payload)
 
         return NextResponse.json({
