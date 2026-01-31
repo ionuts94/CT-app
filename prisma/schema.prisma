@@ -451,7 +451,22 @@ model UserPreferences {
   @@map("user_preferences")
 }
 
+model EventLog {
+  id         String   @id @default(uuid())
+  event      String
+  userId     String?  
+  sessionId  String
+  path       String
+  source     String?
+  createdAt  DateTime @default(now())
 
+  @@map("event_logs")
+  @@index([event])
+  @@index([userId])
+  @@index([sessionId])
+  @@index([path])
+  @@index([createdAt])
+}
 
 /**
  * ====================
