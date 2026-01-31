@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
                     customer: customerId,
                     mode: "subscription",
                     line_items: [{ price: priceId, quantity: 1 }],
-                    success_url: envs.NEXT_PUBLIC_URL + "/payment_success",
+                    success_url: envs.NEXT_PUBLIC_URL + "/billing",
                     cancel_url: envs.NEXT_PUBLIC_URL + "/billing",
                     allow_promotion_codes: true,
                     metadata: {
@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
                 customer: customerId,
                 mode: "subscription",
                 line_items: [{ price: priceId, quantity: 1 }],
-                success_url: envs.NEXT_PUBLIC_URL + "/payment_success",
+                success_url: envs.NEXT_PUBLIC_URL + "/billing",
                 cancel_url: envs.NEXT_PUBLIC_URL + "/billing",
                 allow_promotion_codes: true,
                 metadata: {
