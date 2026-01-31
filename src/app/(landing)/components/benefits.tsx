@@ -83,7 +83,7 @@ export const Benefits: React.FC<Props> = ({ }) => {
       </LandingPageWidth>
 
       <LandingPageWidth>
-        <div className="p-8 pb-0 rounded-t-[24px] bg-blue-500/20 shadow-md lg:mt-10">
+        <div className="p-2 lg:p-8 pb-0 rounded-t-[24px] shadow-md bg-blue-500/20 lg:mt-10">
           <div className="rounded-t-[16px] overflow-hidden">
             <img
               className="w-full object-contain max-w-[1200px]"
