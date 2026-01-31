@@ -30,7 +30,7 @@ export default function AgenciesLandingPage() {
               href="/sign-up"
               className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
             >
-              Send your first contract
+              Send a contract
             </Link>
           </nav>
         </div>
@@ -52,7 +52,7 @@ export default function AgenciesLandingPage() {
             </h1>
 
             <p className="mt-4 text-lg text-slate-600">
-              Pactly helps digital agencies send contracts clients actually understand —{" "}
+              Pactly helps agencies send contracts clients actually understand —{" "}
               <span className="font-semibold text-slate-900">before they sign</span>.
             </p>
 
@@ -61,13 +61,13 @@ export default function AgenciesLandingPage() {
                 href="/sign-up"
                 className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
               >
-                Send your first contract
+                Send a contract
               </Link>
               <Link
                 href="#how"
                 className="inline-flex items-center justify-center rounded-md border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50"
               >
-                How it works
+                See how it works
               </Link>
             </div>
 
@@ -76,9 +76,9 @@ export default function AgenciesLandingPage() {
             </p>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
-              <FeatureCard title="Clarify scope" desc="Make expectations explicit before work begins." />
+              <FeatureCard title="Clarify scope early" desc="Make expectations explicit before work begins." />
               <FeatureCard title="One shared version" desc="No email chaos. No “final_v7.pdf”." />
-              <FeatureCard title="Confidence to sign" desc="A clear moment of agreement for both sides." />
+              <FeatureCard title="Confidence to proceed" desc="A clear moment of agreement for both sides." />
             </div>
           </div>
 
@@ -86,8 +86,8 @@ export default function AgenciesLandingPage() {
             <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold text-slate-500">A typical moment</p>
-                  <h2 className="mt-1 text-lg font-semibold">You know this conversation.</h2>
+                  <p className="text-xs font-semibold text-slate-500">A familiar moment</p>
+                  <h2 className="mt-1 text-lg font-semibold">You’ve had this conversation.</h2>
                 </div>
                 <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                   Scope creep
@@ -106,7 +106,7 @@ export default function AgenciesLandingPage() {
               </p>
 
               <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-4">
-                <p className="text-sm font-semibold">Pactly fixes the gap:</p>
+                <p className="text-sm font-semibold">Pactly closes the gap:</p>
                 <ul className="mt-3 space-y-2 text-sm text-slate-700">
                   <li className="flex gap-2">
                     <span className="mt-1 h-2 w-2 rounded-full bg-primary" />
@@ -114,11 +114,11 @@ export default function AgenciesLandingPage() {
                   </li>
                   <li className="flex gap-2">
                     <span className="mt-1 h-2 w-2 rounded-full bg-primary" />
-                    Clear accept / reject before signing
+                    Explicit accept or reject before signing
                   </li>
                   <li className="flex gap-2">
                     <span className="mt-1 h-2 w-2 rounded-full bg-primary" />
-                    One place for decisions
+                    One place for decisions and context
                   </li>
                 </ul>
               </div>
@@ -128,10 +128,10 @@ export default function AgenciesLandingPage() {
                   href="/sign-up"
                   className="inline-flex w-full items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
                 >
-                  Send your first contract
+                  Try it with a real contract
                 </Link>
                 <p className="mt-3 text-center text-xs text-slate-500">
-                  Start with 3 free contracts · Then £25/month (up to 10)
+                  Start with 3 free contracts · Then £25/month for up to 10 contracts
                 </p>
               </div>
             </div>
