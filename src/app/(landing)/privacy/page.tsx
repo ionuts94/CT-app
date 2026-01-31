@@ -124,7 +124,7 @@ export default function PrivacyPolicyPage() {
 
           <p>
             To exercise these rights, you can contact us at{" "}
-            <span className="font-medium text-gray-900">support@contracttransparent.com</span>.
+            <span className="font-medium text-gray-900">support@pactly.co.uk</span>.
           </p>
 
           <h2 className="text-2xl font-semibold mt-12">10. International transfers</h2>
@@ -150,7 +150,7 @@ export default function PrivacyPolicyPage() {
             For questions regarding data protection, you can contact us at:
           </p>
           <p className="font-medium text-gray-900">
-            support@contracttransparent.com
+            support@pactly.co.uk
           </p>
 
         </div>

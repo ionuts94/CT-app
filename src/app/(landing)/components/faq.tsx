@@ -206,10 +206,10 @@ export const FaQ: React.FC<Props> = ({ }) => {
           <p className="text-gray-600 text-lg leading-relaxed">
             Contact us and we&apos;ll reply quickly at{" "}
             <a
-              href="mailto:support@contracttransparent.com"
+              href="mailto:support@pactly.co.uk"
               className="text-primary font-medium hover:underline"
             >
-              support@contracttransparent.com
+              support@pactly.co.uk
             </a>
           </p>
         </div>

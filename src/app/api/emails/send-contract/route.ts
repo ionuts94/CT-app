@@ -93,8 +93,8 @@ export async function POST(req: NextRequest) {
         accept: "application/json",
       },
       sender: {
-        name: "Contract Transparent",
-        email: "support@contracttransparent.ro",
+        name: "Pactly",
+        email: "contracts@pactly.co.uk",
       },
     }
 

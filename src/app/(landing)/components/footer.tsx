@@ -57,10 +57,10 @@ export const Footer: React.FC<Props> = ({ }) => {
               </li>
               <li>
                 <Link
-                  href="mailto:support@contracttransparent.com"
+                  href="mailto:support@pactly.co.uk"
                   className="text-white hover:text-white"
                 >
-                  support@contracttransparent.com
+                  support@pactly.co.uk
                 </Link>
               </li>
               <li>

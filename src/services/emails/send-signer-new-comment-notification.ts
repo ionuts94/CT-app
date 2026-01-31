@@ -32,8 +32,8 @@ export async function sendSignerNewCommentNotification({
       'accept': 'application/json'
     },
     sender: {
-      name: "Contract Transparent",
-      email: "support@contracttransparent.ro"
+      name: "Pactly",
+      email: "contracts@pactly.co.uk"
     }
   };
 

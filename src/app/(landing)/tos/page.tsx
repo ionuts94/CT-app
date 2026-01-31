@@ -106,7 +106,7 @@ export default function TermsPage() {
           </p>
 
           <p className="font-medium text-gray-900">
-            support@contracttransparent.com
+            support@pactly.co.uk
           </p>
 
         </div>

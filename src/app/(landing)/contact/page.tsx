@@ -41,10 +41,10 @@ export default function ContactPage() {
                   Technical support or account-related questions.
                 </p>
                 <a
-                  href="mailto:support@contracttransparent.com"
+                  href="mailto:support@pactly.co.uk"
                   className="text-primary font-medium hover:underline text-sm"
                 >
-                  support@contracttransparent.com
+                  support@pactly.co.uk
                 </a>
               </div>
             </div>
@@ -60,10 +60,10 @@ export default function ContactPage() {
                   Need information about plans or partnerships?
                 </p>
                 <a
-                  href="mailto:sales@contracttransparent.com"
+                  href="mailto:sales@pactly.co.uk"
                   className="text-primary font-medium hover:underline text-sm"
                 >
-                  sales@contracttransparent.com
+                  sales@pactly.co.uk
                 </a>
               </div>
             </div> */}
