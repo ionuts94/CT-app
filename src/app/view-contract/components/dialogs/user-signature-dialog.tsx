@@ -149,7 +149,7 @@ export const UserSignatureDialog: React.FC<Props> = ({ contract }) => {
           </Button>
 
           <ButtonWithLoading
-            className="w-full px-10 py-4"
+            className="w-full lg:w-fit px-10 py-4"
             loading={isLoading}
             onClick={handleFormSubmit}
           >
