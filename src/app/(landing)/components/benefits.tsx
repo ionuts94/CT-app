@@ -1,4 +1,4 @@
-import { H1, Text } from "@/components/topography"
+import { Text } from "@/components/topography"
 import { TextCTA } from "@/components/topography/cta"
 import { Bot, Clock, MessageCircleMore, ShieldEllipsis, Signature } from "lucide-react"
 import { LandingPageWidth } from "./landing-page-width"
@@ -12,7 +12,7 @@ export const Benefits: React.FC<Props> = ({ }) => {
       <LandingPageWidth className="flex flex-col">
         <SectionHeaderContainer>
           <SectionLabel>Benefits</SectionLabel>
-          <SectionTitle>Everything you need to close contracts without stress</SectionTitle>
+          <SectionTitle>Everything you need to close contracts with confidence</SectionTitle>
         </SectionHeaderContainer>
       </LandingPageWidth>
 
@@ -27,7 +27,7 @@ export const Benefits: React.FC<Props> = ({ }) => {
               Work faster
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569] text-center">
-              Professional templates and an intuitive editor help you create and send complete contracts in just minutes.
+              Create and send complete contracts in minutes using professional templates and a simple, intuitive editor.
             </Text>
           </div>
 
@@ -39,7 +39,7 @@ export const Benefits: React.FC<Props> = ({ }) => {
               Digital signatures
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569] text-center">
-              No printing or heavy PDFs. The entire signing process is digital, fast, and legally recognised across the EU.
+              Skip printing and PDFs. Contracts are signed digitally, quickly, and legally recognised across the EU.
             </Text>
           </div>
 
@@ -51,7 +51,7 @@ export const Benefits: React.FC<Props> = ({ }) => {
               AI-powered assistance
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569] text-center">
-              Get automatic checks and clear explanations for clauses, so your client understands everything instantly.
+              Automatic checks and clear explanations help clients understand clauses instantly and with confidence.
             </Text>
           </div>
 
@@ -63,7 +63,7 @@ export const Benefits: React.FC<Props> = ({ }) => {
               Comments & collaboration
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569] text-center">
-              Discuss and negotiate contract terms directly in the document, without emails, with a clear, shared history.
+              Discuss and negotiate terms directly in the contract, with a clear history and no email back-and-forth.
             </Text>
           </div>
 
@@ -75,7 +75,7 @@ export const Benefits: React.FC<Props> = ({ }) => {
               Security & transparency
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569] text-center">
-              Every change is logged, visible, and protected, giving both parties complete confidence in the document.
+              Every action is logged, visible, and protected, giving both sides full trust in the document.
             </Text>
           </div>
 

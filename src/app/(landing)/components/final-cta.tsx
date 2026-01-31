@@ -11,11 +11,11 @@ export const FinalCta: React.FC<Props> = ({ }) => {
       <LandingPageWidth>
         <SectionHeaderContainer>
           <SectionTitle className="max-w-[700px] text-center">
-            Start signing contracts faster and more securely today
+            Sign contracts faster, with confidence
           </SectionTitle>
           <SectionSubtitle className="text-center max-w-[700px]">
-            Create your free account and use your 3 included contracts.
-            No card required. No commitments. Just clarity and trust.
+            Create a free account and start with 3 included contracts.
+            No card required. No commitments. Just clarity and control.
           </SectionSubtitle>
         </SectionHeaderContainer>
 

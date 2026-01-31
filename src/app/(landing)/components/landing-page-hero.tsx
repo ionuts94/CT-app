@@ -12,13 +12,13 @@ export const LandingPageHero: React.FC<Props> = ({ }) => {
       <LandingPageWidth className="flex flex-col gap-6 items-center lg:flex-row">
 
         <div className="w-full flex flex-col gap-4 justify-center items-center lg:items-start">
-          <Text className="text-[48px] leading-[60px] lg:text-[64px] lg:leading-[80px] font-bold -tracking-[2px] text-center lg:text-left">
-            Sign contracts faster, more securely, and with full transparency
+          <Text as="h1" className="text-[48px] leading-[60px] lg:text-[64px] lg:leading-[80px] font-bold -tracking-[2px] text-center lg:text-left">
+            A simpler, safer way to sign contracts
           </Text>
 
-          <Text className="text-[16px] leading-[26px] lg:text-[20px] lg:leading-[32px] text-center lg:text-left">
-            Transform the way you manage contracts — create, send, and sign digitally,
-            with AI assistance and complete clarity for all parties.
+          <Text as="h2" className="text-[16px] leading-[26px] lg:text-[20px] lg:leading-[32px] text-center lg:text-left">
+            Create, send, and sign contracts digitally — with built-in AI assistance
+            and complete clarity for everyone involved.
           </Text>
 
           <Button className="w-fit py-5 px-8 lg:mt-10" asChild>

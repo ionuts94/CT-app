@@ -55,10 +55,10 @@ export default function TermsPage() {
             additional contracts or activate a monthly subscription plan.
           </p>
           <ul>
-            <li>Pay as You Go – €5 per contract</li>
-            <li>Starter – €15 per month</li>
-            <li>Team – €30 per month</li>
-            <li>Business – €50 per month</li>
+            <li>Pay as You Go – £5 per contract</li>
+            <li>Starter – £25 per month</li>
+            <li>Team – £50 per month</li>
+            <li>Business – £80 per month</li>
           </ul>
 
           <p>

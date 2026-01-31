@@ -11,9 +11,9 @@ export const HowItWorks: React.FC<Props> = ({ }) => {
     <div className="py-[100px] bg-[rgb(245,248,255)]" id="howitworks">
       <LandingPageWidth>
         <SectionHeaderContainer>
-          <SectionTitle>How does Pactly work?</SectionTitle>
+          <SectionTitle>How Pactly works</SectionTitle>
           <SectionSubtitle className="text-center">
-            3 simple steps to send and sign digital contracts
+            Three simple steps to send and sign contracts digitally
           </SectionSubtitle>
         </SectionHeaderContainer>
       </LandingPageWidth>
@@ -27,21 +27,21 @@ export const HowItWorks: React.FC<Props> = ({ }) => {
         <HowItWorksElement
           icon={<ReceiptText size={54} />}
           title="Create the contract"
-          body="Start from a template or upload your own document. Edit it quickly in rich text and define the signing parties."
+          body="Start from a template or upload your own document. Edit it easily and define the signing parties in seconds."
           step="1"
         />
 
         <HowItWorksElement
           icon={<Send size={54} />}
           title="Send for signature"
-          body="Enter the recipient’s email and the platform automatically sends a secure signing link. The entire process takes just seconds."
+          body="Add the recipient’s email and Pactly sends a secure signing link automatically. No setup, no delays."
           step="2"
         />
 
         <HowItWorksElement
           icon={<Signature size={54} />}
           title="Sign and finalise"
-          body="Both parties sign digitally, after which the contract is locked and saved. You can access the complete document anytime, with its full history."
+          body="Both parties sign digitally. The contract is then locked, saved, and always accessible with a complete activity history."
           step="3"
         />
       </div>

@@ -10,11 +10,11 @@ export const FeatureHighlight: React.FC<Props> = ({ }) => {
         <SectionHeaderContainer>
           <SectionLabel>Transparent & Simple</SectionLabel>
           <SectionTitle className="max-w-fit text-center">
-            A modern and secure way to manage contracts
+            A clear, secure way to manage contracts
           </SectionTitle>
           <SectionSubtitle className="text-center">
-            Centralise all your contracts, discussions, and signatures in a single platform.
-            Complete clarity for you and your clients.
+            Keep contracts, conversations, and signatures in one place.
+            Full visibility and clarity for both you and your clients.
           </SectionSubtitle>
         </SectionHeaderContainer>
       </LandingPageWidth>
