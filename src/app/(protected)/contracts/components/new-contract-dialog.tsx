@@ -2,7 +2,7 @@
 
 import { TextCTA } from "@/components/topography/cta"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogFooter, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Plus } from "lucide-react"
 import { TemplateCard } from "../../templates/components/template-card"
 import { useQuery } from "@tanstack/react-query"
@@ -35,21 +35,27 @@ export const NewContractDialog: React.FC<Props> = ({ }) => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="lg:!max-w-[1200px] flex-col gap-10">
-        <DialogTitle className="text-center">
-          Choose a template to start your contract
-        </DialogTitle>
+      <DialogContent className="lg:w-fit lg:!max-w-[1200px] flex-col gap-10">
+        <div className="flex flex-col gap-2">
+          <DialogTitle className="text-center">
+            Choose how to start your contract
+          </DialogTitle>
+          <DialogDescription className="text-center">
+            Templates help you save time and avoid mistakes.
+          </DialogDescription>
+        </div>
 
         {userHasTemplates ? (
           <>
-            <div className="flex w-full lg:max-w-[1200px] overflow-auto pb-4">
+            <div className="flex w-full overflow-auto pb-4">
               {templates?.map(template => (
                 <div
                   key={template.id}
                   className={cn(
-                    "!p-2 rounded-lg w-full lg:max-w-[350px] border-[2px] border-transparent flex items-center justify-center",
+                    "p-2 rounded-lg w-[250px] lg:w-[350px] border-2 border-transparent flex items-center justify-center shrink-0",
                     selectedTemplateId === template.id && "border-primary"
                   )}
+
                   onClick={() => setSelectedTemplateId(template.id)}
                 >
                   <TemplateCard template={template} />
@@ -57,11 +63,19 @@ export const NewContractDialog: React.FC<Props> = ({ }) => {
               ))}
             </div>
 
-            <DialogFooter className="flex items-center !justify-center">
-              <Button className="px-4 py-4" asChild>
+            <DialogFooter className="flex !flex-col items-center !justify-center">
+              <Button disabled={!selectedTemplateId} className="px-4 py-4">
                 <Link href={`/contracts/create?t=${selectedTemplateId || 'new'}`}>
                   <TextCTA>
-                    Create contract
+                    Use selected template
+                  </TextCTA>
+                </Link>
+              </Button>
+              <Text>or</Text>
+              <Button variant="link" asChild>
+                <Link href={`/contracts/create?t=new`}>
+                  <TextCTA>
+                    Start from scratch
                   </TextCTA>
                 </Link>
               </Button>
@@ -74,7 +88,7 @@ export const NewContractDialog: React.FC<Props> = ({ }) => {
             <Button variant="link" asChild>
               <Link href={`/contracts/create?t=new`}>
                 <TextCTA>
-                  Create contract without a template
+                  Start with a blank contract
                 </TextCTA>
               </Link>
             </Button>

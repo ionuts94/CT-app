@@ -21,7 +21,7 @@ export const TemplatesList: React.FC<Props> = async ({ templates }) => {
     <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full">
       {templates?.map((template, index) => (
         // <Link className="block" key={index} href={`${envs.NEXT_PUBLIC_URL}/templates/${template.id}`}>
-        <TemplateCard key={index} template={template} />
+        <TemplateCard showControls key={index} template={template} />
         // </Link>
       ))}
     </div>
