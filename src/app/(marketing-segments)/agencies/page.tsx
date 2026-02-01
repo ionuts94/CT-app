@@ -1,5 +1,8 @@
 // app/(marketing)/agencies/page.tsx
+import { PageViewTracker } from "@/components/analytics/page-view-tracker";
 import { PactlyLogo } from "@/components/logo";
+import CTEventLog from "@/sdk/event-log";
+import EventLogService from "@/services/event-log-service";
 import type { Metadata } from "next"
 import Link from "next/link"
 
@@ -9,7 +12,7 @@ export const metadata: Metadata = {
     "Pactly helps digital agencies send contracts clients actually understand — before they sign. Clarify scope, avoid awkward disputes, and sign with confidence."
 }
 
-export default function AgenciesLandingPage() {
+export default async function AgenciesLandingPage() {
   return (
     <main className="min-h-screen bg-white text-slate-900">
       {/* Top bar */}
@@ -299,6 +302,10 @@ export default function AgenciesLandingPage() {
           </div>
         </div>
       </footer>
+      <PageViewTracker
+        path="/agencies"
+        source="linkedin_dm_v1"
+      />
     </main>
   )
 }

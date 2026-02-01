@@ -1,9 +1,9 @@
-import { getSessionId } from "./get-session-id"
+import { getOrCreateSessionId } from "./get-or-create-session-id"
 import { logEvent } from "./log-event"
 
 const EventLogService = {
   logEvent,
-  getSessionId
+  getOrCreateSessionId
 }
 
 export default EventLogService

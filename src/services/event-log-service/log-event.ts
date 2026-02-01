@@ -1,25 +1,29 @@
+"use server"
+
 import { createClient } from "@/lib/supabase/server"
 import { LogEventInput } from "./types"
+import AuthService from "../auth"
+import { withSafeService } from "@/lib/services-utils/with-safe-service"
 
 export async function logEvent({
   event,
   path,
   source,
   sessionId,
-  userId = null,
 }: LogEventInput) {
   const supabase = await createClient()
+  const { data: authUser } = await withSafeService(() => AuthService.getAuthUser())
 
   const { error } = await supabase.from("event_logs").insert({
     event,
     path,
     source,
     sessionId,
-    userId,
+    userId: authUser?.id,
   })
 
   if (error) {
-    // log silent – analytics should never break UX
+    // analytics must never break UX
     console.error("[logEvent]", error.message)
   }
 }

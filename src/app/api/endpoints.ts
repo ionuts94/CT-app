@@ -4,12 +4,15 @@ export const api = {
   auth: {
     signInWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-in-with-password",
     signUpWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-up-with-password",
-    signOut: "/api/auth/sign-out",
-    verifyOTP: "/api/auth/verify-otp",
-    resendOTP: "/api/auth/resend-otp"
+    signOut: envs.NEXT_PUBLIC_URL + "/api/auth/sign-out",
+    verifyOTP: envs.NEXT_PUBLIC_URL + "/api/auth/verify-otp",
+    resendOTP: envs.NEXT_PUBLIC_URL + "/api/auth/resend-otp"
   },
   emails: {
     sendContract: envs.NEXT_PUBLIC_URL + "/api/emails/send-contract"
+  },
+  eventLog: {
+    log: envs.NEXT_PUBLIC_URL + "/api/event-log/log"
   },
   contracts: {
     create: envs.NEXT_PUBLIC_URL + "/api/contracts/create",
@@ -27,13 +30,13 @@ export const api = {
     postNewComment: envs.NEXT_PUBLIC_URL + "/api/comments/post-new-comment"
   },
   companies: {
-    update: "/api/companies/update"
+    update: envs.NEXT_PUBLIC_URL + "/api/companies/update"
   },
   templates: {
-    create: "/api/templates/create",
-    update: "/api/templates/update",
-    delete: "/api/templates/delete",
-    getAuthUserTemplates: "/api/templates/get-auth-user-templates"
+    create: envs.NEXT_PUBLIC_URL + "/api/templates/create",
+    update: envs.NEXT_PUBLIC_URL + "/api/templates/update",
+    delete: envs.NEXT_PUBLIC_URL + "/api/templates/delete",
+    getAuthUserTemplates: envs.NEXT_PUBLIC_URL + "/api/templates/get-auth-user-templates"
   },
   audit: {
     contractViewed: `${envs.NEXT_PUBLIC_URL}/api/audit/contract-viewed`,
@@ -44,28 +47,28 @@ export const api = {
   },
   ai: {
     templates: {
-      fixTemplate: "/api/ai/templates/fix-template",
-      generateTemplate: "/api/ai/templates/generate-template",
-      reviewTemplate: "/api/ai/templates/review-template",
+      fixTemplate: envs.NEXT_PUBLIC_URL + "/api/ai/templates/fix-template",
+      generateTemplate: envs.NEXT_PUBLIC_URL + "/api/ai/templates/generate-template",
+      reviewTemplate: envs.NEXT_PUBLIC_URL + "/api/ai/templates/review-template",
     }
   },
   storage: {
-    storeFile: "/api/storage/store-file"
+    storeFile: envs.NEXT_PUBLIC_URL + "/api/storage/store-file"
   },
   billing: {
-    checkout: "/api/billing/checkout",
-    changePlan: "/api/billing/change-plan",
-    cancelSubscription: "/api/billing/cancel-subscription",
-    webhook: "/api/billing/webhook"
+    checkout: envs.NEXT_PUBLIC_URL + "/api/billing/checkout",
+    changePlan: envs.NEXT_PUBLIC_URL + "/api/billing/change-plan",
+    cancelSubscription: envs.NEXT_PUBLIC_URL + "/api/billing/cancel-subscription",
+    webhook: envs.NEXT_PUBLIC_URL + "/api/billing/webhook"
   },
   signatures: {
-    create: "/api/signatures/create",
-    changeMainSignature: "/api/signatures/change-main-signature"
+    create: envs.NEXT_PUBLIC_URL + "/api/signatures/create",
+    changeMainSignature: envs.NEXT_PUBLIC_URL + "/api/signatures/change-main-signature"
   },
   userPreferences: {
-    update: "/api/user-preferences/update"
+    update: envs.NEXT_PUBLIC_URL + "/api/user-preferences/update"
   },
   users: {
-    updateUser: "/api/users/update-user"
+    updateUser: envs.NEXT_PUBLIC_URL + "/api/users/update-user"
   }
 } as const
