@@ -16,7 +16,7 @@ export async function generateTemplate(data: T_AiTemplateWriteSchema): Promise<s
 
 const getPromptForAI = (variables: T_AiTemplateWriteSchema) => {
   return `
-YOU ARE: an AI-assisted legal drafter that generates professional, editable contract templates in Romanian for entrepreneurs and SMEs.
+YOU ARE: an AI-assisted legal drafter that generates professional, editable contract templates in the language the user provided description for entrepreneurs and SMEs.
 You do NOT provide legal advice.
 You deliver a complete, clear, production-ready contract draft.
 
@@ -25,7 +25,7 @@ Generate ONE complete contract (not a guide, not explanations), based strictly o
 If conflicts exist, resolve them using this priority:
 DESCRIPTION > contractType > industry.
 
-Write exclusively in Romanian, using correct diacritics.
+Write exclusively in language the user provided description, using correct diacritics.
 
 INPUT (JSON):
 {
