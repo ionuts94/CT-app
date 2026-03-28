@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button"
 type Props = {
     userId: string,
     signatures: Signature[],
-    preferences: UserPreferences
+    preferences: Partial<UserPreferences>
 }
 
 export const SignatureSettingsCard: React.FC<Props> = ({ userId, signatures, preferences }) => {
