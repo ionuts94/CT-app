@@ -1,10 +1,12 @@
-import { Company, Contract, ContractStatus, ContractVersion, Signature, User } from "@prisma/client"
+import { Company, Contract, ContractStatus, ContractVersion, Signature, User, UserPreferences } from "@prisma/client"
 
 export type T_ViewContract = Contract & {
   company: Company,
   ownerSignature: Signature,
   receiverSignature: Signature,
-  owner: User,
+  owner: User & {
+    preferences: UserPreferences
+  },
   currentVersion: ContractVersion
 }
 

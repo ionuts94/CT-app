@@ -11,7 +11,7 @@ export async function getSenderContract({ contractId }: { contractId: string }):
         company: companies(*),
         ownerSignature: contracts_ownerSignatureId_fkey(*),
         receiverSignature: contracts_receiverSignatureId_fkey(*),
-        owner: users(*),
+        owner: users(*, preferences: user_preferences(*)),
         currentVersion: contract_versions(*)
       `)
     .eq("id", contractId)

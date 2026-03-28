@@ -1,7 +1,9 @@
 import { updateUserPreferences } from "./update-user-preferences";
+import { upsertUserPreferences } from "./upsert-user-preferences";
 
 const CTUserPreferences = {
-  updateUserPreferences
+  updateUserPreferences,
+  upsertUserPreferences
 }
 
 export default CTUserPreferences

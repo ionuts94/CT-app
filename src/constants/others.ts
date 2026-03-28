@@ -5,7 +5,7 @@ export const DEFAULT_REDIRECT_NOT_AUTH_ROUTE = "/sign-in"
 
 
 export const DEFAULT_USER_PREFERENCES = {
-  showRoleOnSignature: true,
+  showRoleOnSignature: false,
   preferredTheme: "LIGHT" as PreferredTheme,
   emailNotifications: true,
   twoFactorEnabled: false,
@@ -17,6 +17,5 @@ export const getDefaultUserPreferences = (userId: string) => {
   return ({
     ...DEFAULT_USER_PREFERENCES,
     userId,
-    id: ""
   })
 }

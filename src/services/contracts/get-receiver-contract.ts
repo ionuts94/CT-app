@@ -10,7 +10,7 @@ export async function getReceiverContract({ receiverToken }: { receiverToken: st
           company: companies(*),
           ownerSignature: contracts_ownerSignatureId_fkey(*),
           receiverSignature: contracts_receiverSignatureId_fkey(*),
-          owner: users(*),
+          owner: users(*, preferences: user_preferences(*)),
           currentVersion: contract_versions(*)
         `)
     .eq("receiverToken", receiverToken)

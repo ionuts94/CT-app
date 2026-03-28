@@ -29,7 +29,8 @@ export const SignatureSettingsCard: React.FC<Props> = ({ userId, signatures, pre
     const [showRoleOnSignature, setShowRoleOnSignature] = useState(preferences.showRoleOnSignature)
     // const [processing, setProcessing] = useState(false)
 
-    console.log(signatures)
+    console.log("Preferences")
+    console.log(preferences)
 
     const processing = useRef(false)
 
@@ -40,7 +41,8 @@ export const SignatureSettingsCard: React.FC<Props> = ({ userId, signatures, pre
         setShowRoleOnSignature(newValue)
         toast.promise(
             async () => {
-                const { data, error } = await CTUserPreferences.updateUserPreferences({
+                console.log(newValue)
+                const { data, error } = await CTUserPreferences.upsertUserPreferences({
                     userId,
                     payload: {
                         showRoleOnSignature: newValue

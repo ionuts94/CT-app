@@ -66,7 +66,8 @@ export const api = {
     changeMainSignature: envs.NEXT_PUBLIC_URL + "/api/signatures/change-main-signature"
   },
   userPreferences: {
-    update: envs.NEXT_PUBLIC_URL + "/api/user-preferences/update"
+    update: envs.NEXT_PUBLIC_URL + "/api/user-preferences/update",
+    upsert: envs.NEXT_PUBLIC_URL + "/api/user-preferences/upsert"
   },
   users: {
     updateUser: envs.NEXT_PUBLIC_URL + "/api/users/update-user"
