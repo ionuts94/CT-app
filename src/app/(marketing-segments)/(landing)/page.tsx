@@ -77,10 +77,10 @@ export default function PactlyLandingPage() {
                   <div className="w-20 h-20 rounded-full bg-white/10 border border-white/20 flex items-center justify-center mb-5">
                     <PlayCircle size={42} className="text-white" />
                   </div>
-                  <h3 className="text-white text-2xl md:text-3xl font-bold mb-3">Your demo video goes here</h3>
-                  <p className="text-slate-300 max-w-2xl text-base md:text-lg leading-relaxed">
+                  <h3 className="text-white text-2xl md:text-3xl font-bold mb-3">Coming soon...</h3>
+                  {/* <p className="text-slate-300 max-w-2xl text-base md:text-lg leading-relaxed">
                     Show the full flow: create contract, send link, client opens branded page, asks questions, signs.
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
