@@ -51,7 +51,7 @@ export function AiQuickActions({ sendAiMessage }: Props) {
             key={label}
             type="button"
             onClick={() => sendAiMessage(label)}
-            className="cursor-pointer flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-100 px-3 py-3 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+            className="cursor-pointer flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-100 px-3 py-2 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-100"
           >
             <Icon size={16} className={iconClassName} />
             <span>{label}</span>

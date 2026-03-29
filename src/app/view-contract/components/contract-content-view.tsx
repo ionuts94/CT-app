@@ -17,19 +17,20 @@ export const ContractContentView: React.FC<Props> = ({ contract, isSender }) => 
     .replace(/<p>(<br\s*\/?>)?<\/p>/g, "<p>&nbsp;</p>")
 
   return (
-    <Card className="p-0 gap-0 max-h-[85vh] overflow-auto w-full">
+    <Card className="p-0 gap-0 max-h-[85vh] overflow-auto w-full rounded-md">
       {/* Top bar */}
       <div className="px-4 flex flex-row items-center py-3 lg:px-10 bg-input border-b border-black/10">
         <Text size="sm" className="text-color-secondary">
           Securely shared via link
         </Text>
-        <Dot />
-        <Text size="sm" className="text-color-secondary">
-          Expires on{" "}
-          {contract.expiresAt
-            ? new Date(contract.expiresAt).toISOString().split("T")[0]
-            : "—"}
-        </Text>
+        {contract.expiresAt && (
+          <>
+            <Dot />
+            <Text size="sm" className="text-color-secondary">
+              Expires on{" " + new Date(contract.expiresAt).toISOString().split("T")[0]}
+            </Text>
+          </>
+        )}
       </div>
 
       {/* Info banner */}

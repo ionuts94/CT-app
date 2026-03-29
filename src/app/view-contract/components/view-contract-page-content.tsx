@@ -26,7 +26,7 @@ export const ViewContractContentPage: React.FC<Props> = ({ contractData, comment
           <ContractContentView contract={contractData} />
         </div>
 
-        <div className="lg:w-35/100 self-start h-[calc(100vh-140px)] min-h-0">
+        <div className="lg:w-35/100 self-start h-[calc(100vh-132px)] min-h-0">
           <Tabs
             contractData={contractData}
             commentsData={commentsData}
