@@ -52,7 +52,7 @@ export default function PactlyLandingPage() {
         </header>
 
         {/* Demo Section */}
-        <section id="demo" className="max-w-6xl mx-auto px-6 pb-24">
+        {/* <section id="demo" className="max-w-6xl mx-auto px-6 pb-24">
           <div className="rounded-[2rem] border border-slate-200 bg-slate-50 overflow-hidden shadow-sm">
             <div className="px-8 py-6 border-b border-slate-200 flex items-center justify-between gap-4 flex-wrap">
               <div>
@@ -67,25 +67,25 @@ export default function PactlyLandingPage() {
 
             <div className="p-6 md:p-8">
               <div className="aspect-video w-full rounded-2xl bg-slate-900 relative overflow-hidden border border-slate-800">
-                {/* Replace this wrapper with your real video embed.
+                Replace this wrapper with your real video embed.
                     Example:
                     <video controls className="h-full w-full object-cover" poster="/demo-poster.jpg">
                       <source src="/pactly-demo.mp4" type="video/mp4" />
                     </video>
-                */}
+               
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
                   <div className="w-20 h-20 rounded-full bg-white/10 border border-white/20 flex items-center justify-center mb-5">
                     <PlayCircle size={42} className="text-white" />
                   </div>
                   <h3 className="text-white text-2xl md:text-3xl font-bold mb-3">Coming soon...</h3>
-                  {/* <p className="text-slate-300 max-w-2xl text-base md:text-lg leading-relaxed">
+                  <p className="text-slate-300 max-w-2xl text-base md:text-lg leading-relaxed">
                     Show the full flow: create contract, send link, client opens branded page, asks questions, signs.
-                  </p> */}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Outcome Strip */}
         <section className="max-w-6xl mx-auto px-6 pb-24">

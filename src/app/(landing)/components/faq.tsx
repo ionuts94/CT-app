@@ -198,7 +198,7 @@ export const FaQ: React.FC<Props> = ({ }) => {
         </Accordion>
       </LandingPageWidth>
 
-      <section className="w-full pt-[100px] border-t border-gray-200 mt-4">
+      <section className="w-full pt-8 border-t border-gray-200 mt-4">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h3 className="text-2xl font-semibold text-gray-900 mb-3">
             Didn&apos;t find what you were looking for?

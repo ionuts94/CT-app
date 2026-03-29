@@ -33,9 +33,14 @@ export const ChatAssistantSection: React.FC<Props> = ({ contractContent }) => {
     setInput("")
   }
 
+  const sendAiMessage = (message: string) => {
+    sendMessage({ text: message })
+    setInput("")
+  }
+
   return (
-    <div className="flex flex-col h-full justify-between p-4 pb-0 gap-4 max-h-[8">
-      <ConversationContainer messages={messages} />
+    <div className="flex flex-col h-full justify-between  pb-0 gap-4">
+      <ConversationContainer messages={messages} sendAiMessage={sendAiMessage} />
       <UserInput
         handleSubmit={handleSubmit}
         status="ready"
@@ -43,7 +48,7 @@ export const ChatAssistantSection: React.FC<Props> = ({ contractContent }) => {
         setInput={setInput}
         scrollContainerToBottom={scrollContainerToBottom}
         user={{}}
-        containerClassName="sticky bottom-0 left-0"
+        containerClassName="sticky pb-0 w-full px-0 left-0"
       />
     </div>
   )

@@ -8,6 +8,8 @@ import { CommentsSection } from "./comments-section"
 import { AuditLog } from "@prisma/client"
 import { T_ViewContract } from "@/types/services/contracts"
 import { CommentWithUser } from "@/types/services/comments"
+import { Card } from "@/components/ui/card"
+import { Tabs } from "./tabs"
 
 type Props = {
   contractData: T_ViewContract,
@@ -17,22 +19,19 @@ type Props = {
 
 export const ViewContractContentPage: React.FC<Props> = ({ contractData, commentsData, auditLogData }) => {
   return (
-    <main className="bg-app flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen bg-slate-100">
       <PageHeader contract={contractData} auditLog={auditLogData} />
-      <PageWidth className="lg:px-[70px] flex flex-1 gap-4 justify-between py-4 shadow-sm">
-        <div className="w-full lg:w-3/5">
+      <PageWidth className="flex flex-1 gap-4 justify-between py-4 shadow-sm">
+        <div className="w-full lg:w-65/100">
           <ContractContentView contract={contractData} />
         </div>
-        <div className="hidden lg:block lg:w-2/5 flex-1">
-          <ReceiverContractAssistant contractContent={contractData.currentVersion.content as string} />
+
+        <div className="lg:w-35/100 self-start h-[calc(100vh-140px)] min-h-0">
+          <Tabs
+            contractData={contractData}
+            commentsData={commentsData}
+          />
         </div>
-      </PageWidth>
-      <PageWidth className="px-4 lg:px-[70px] py-4 w-full">
-        <CommentsSection
-          comments={commentsData}
-          contract={contractData}
-          isSender={false}
-        />
       </PageWidth>
     </main>
   )

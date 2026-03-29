@@ -8,11 +8,11 @@ type Props = {}
 
 export const Benefits: React.FC<Props> = ({ }) => {
   return (
-    <div className="flex flex-col gap-[80px] items-center justify-center bg-white py-[110px]">
+    <div className="flex flex-col gap-[80px] items-center justify-center py-[110px] bg-slate-100">
       <LandingPageWidth className="flex flex-col">
         <SectionHeaderContainer>
-          <SectionLabel>Benefits</SectionLabel>
-          <SectionTitle>Everything you need to close contracts with confidence</SectionTitle>
+          <SectionLabel>Why Pactly</SectionLabel>
+          <SectionTitle>Everything you need to get contracts signed without the usual chaos</SectionTitle>
         </SectionHeaderContainer>
       </LandingPageWidth>
 
@@ -24,10 +24,10 @@ export const Benefits: React.FC<Props> = ({ }) => {
               <Clock size={38} />
             </div>
             <TextCTA className="text-[18px] leading-[24px] font-[600] text-center text-[#0f172a] mb-[8px]">
-              Work faster
+              Create contracts faster
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569] text-center">
-              Create and send complete contracts in minutes using professional templates and a simple, intuitive editor.
+              Start from a template or create from scratch and prepare contracts in minutes, not hours.
             </Text>
           </div>
 
@@ -36,10 +36,10 @@ export const Benefits: React.FC<Props> = ({ }) => {
               <Signature size={38} />
             </div>
             <TextCTA className="text-[18px] leading-[24px] font-[600] text-center text-[#0f172a] mb-[8px]">
-              Digital signatures
+              Sign online
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569] text-center">
-              Skip printing and PDFs. Contracts are signed digitally, quickly, and legally recognised across the EU.
+              Send a secure link and let recipients sign directly in the browser, without printing, scanning, or extra friction.
             </Text>
           </div>
 
@@ -48,10 +48,10 @@ export const Benefits: React.FC<Props> = ({ }) => {
               <Bot size={38} />
             </div>
             <TextCTA className="text-[18px] leading-[24px] font-[600] text-center text-[#0f172a] mb-[8px]">
-              AI-powered assistance
+              AI clause explanations
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569] text-center">
-              Automatic checks and clear explanations help clients understand clauses instantly and with confidence.
+              Help recipients understand tricky clauses, ask questions, and get answers before they sign.
             </Text>
           </div>
 
@@ -60,10 +60,10 @@ export const Benefits: React.FC<Props> = ({ }) => {
               <MessageCircleMore size={38} />
             </div>
             <TextCTA className="text-[18px] leading-[24px] font-[600] text-center text-[#0f172a] mb-[8px]">
-              Comments & collaboration
+              Negotiate in one place
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569] text-center">
-              Discuss and negotiate terms directly in the contract, with a clear history and no email back-and-forth.
+              Comment directly on clauses, request changes, and keep discussions out of messy email threads.
             </Text>
           </div>
 
@@ -72,24 +72,13 @@ export const Benefits: React.FC<Props> = ({ }) => {
               <ShieldEllipsis size={38} />
             </div>
             <TextCTA className="text-[18px] leading-[24px] font-[600] text-center text-[#0f172a] mb-[8px]">
-              Security & transparency
+              Track every step
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569] text-center">
-              Every action is logged, visible, and protected, giving both sides full trust in the document.
+              See what was sent, viewed, signed, declined, or changed with a clear history for every contract.
             </Text>
           </div>
 
-        </div>
-      </LandingPageWidth>
-
-      <LandingPageWidth>
-        <div className="p-2 lg:p-8 pb-0 rounded-t-[24px] shadow-md bg-blue-500/20 lg:mt-10">
-          <div className="rounded-t-[16px] overflow-hidden">
-            <img
-              className="w-full object-contain max-w-[1200px]"
-              src="./assets/landing-images/dash_1.png"
-            />
-          </div>
         </div>
       </LandingPageWidth>
     </div>

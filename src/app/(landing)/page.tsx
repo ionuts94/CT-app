@@ -1,6 +1,6 @@
 import { Benefits } from "./components/benefits";
 import { FaQ } from "./components/faq";
-import { FeatureHighlight } from "./components/feature-highlight";
+import { ProductDemo } from "./components/product-demo";
 import { FinalCta } from "./components/final-cta";
 import { HowItWorks } from "./components/how-it-works";
 import { LandingPageHeader } from "./components/landing-page-header";
@@ -15,8 +15,8 @@ export default async function LandingPage() {
     <>
       <LandingPageHero />
       <Benefits />
-      <HowItWorks />
-      <FeatureHighlight />
+      {/* <HowItWorks /> */}
+      <ProductDemo />
       <PricingPlans />
       <Testimonials />
       <FaQ />

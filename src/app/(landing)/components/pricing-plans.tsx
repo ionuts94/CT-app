@@ -5,47 +5,52 @@ import { Button } from "@/components/ui/button"
 
 export const PricingPlans: React.FC = ({ }) => {
   return (
-    <div className="py-[110px]" id="pricing">
+    <div className="py-[110px] bg-slate-100" id="pricing">
       <LandingPageWidth className="flex flex-col gap-[40px]">
+
         <SectionHeaderContainer>
-          <SectionLabel>Simple & transparent pricing</SectionLabel>
+          <SectionLabel>Pricing</SectionLabel>
+
           <SectionTitle className="hidden md:block">
-            You only pay for the number of contracts you send.
+            Simple pricing based on how many contracts you send
           </SectionTitle>
-          <SectionSubtitle className="text-center">
-            All features are included in every plan.
+
+          <SectionSubtitle className="text-center max-w-[720px]">
+            Every plan includes the full Pactly experience: create contracts,
+            discuss clauses, get AI explanations, and sign online.
           </SectionSubtitle>
         </SectionHeaderContainer>
 
         <div className="mx-auto w-full max-w-[680px] flex flex-col gap-4 items-center justify-center">
+
           <PricingCard
             pricingTitle="Trial"
-            pricingDetails="3 free contracts. No card required. No commitments."
+            pricingDetails="Try Pactly with 3 free contracts. No card required."
             price={<p className="text-xl font-bold text-primary">€0</p>}
           />
 
           <PricingCard
             pricingTitle="Pay as you go"
-            pricingDetails="No subscription. Pay only when you need it."
+            pricingDetails="Perfect if you only send contracts occasionally."
             price={<p className="text-xl font-bold text-gray-900 whitespace-nowrap">£5 / contract</p>}
           />
 
           <PricingCard
             pricingTitle="Starter"
-            pricingDetails="10 contracts per month — ideal for freelancers."
+            pricingDetails="Up to 10 contracts per month. Ideal for freelancers and small businesses."
             price={<p className="text-xl font-bold text-gray-900 whitespace-nowrap">£25 / month</p>}
           />
 
           <PricingCard
             isMostPopular
             pricingTitle="Team"
-            pricingDetails="30 contracts per month — perfect for small teams."
+            pricingDetails="Up to 30 contracts per month for growing teams that send contracts regularly."
             price={<p className="text-xl font-bold text-gray-900 whitespace-nowrap">£50 / month</p>}
           />
 
           <PricingCard
             pricingTitle="Business"
-            pricingDetails="80 contracts per month — best value for growing companies."
+            pricingDetails="Up to 80 contracts per month for companies with higher contract volume."
             price={<p className="text-xl font-bold text-gray-900 whitespace-nowrap">£80 / month</p>}
           />
 
@@ -56,6 +61,7 @@ export const PricingPlans: React.FC = ({ }) => {
               </Link>
             </Button>
           </div>
+
         </div>
       </LandingPageWidth>
     </div>
@@ -78,6 +84,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
   return (
     <div className="w-full flex justify-between items-center border border-gray-200 rounded-xl p-5 hover:shadow-sm transition">
       <div>
+
         {isMostPopular && (
           <span className="h-fit px-2 py-1 text-xs bg-primary/10 text-primary rounded-full">
             Most popular
@@ -95,6 +102,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
         <p className="text-gray-600 text-[16px]">
           {pricingDetails}
         </p>
+
       </div>
 
       <div className="hidden md:block">

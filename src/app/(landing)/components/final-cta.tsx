@@ -7,15 +7,16 @@ type Props = {}
 
 export const FinalCta: React.FC<Props> = ({ }) => {
   return (
-    <div className="py-[110px]">
+    <div className="py-[110px] bg-slate-100">
       <LandingPageWidth>
         <SectionHeaderContainer>
           <SectionTitle className="max-w-[700px] text-center">
-            Sign contracts faster, with confidence
+            Stop sending contracts like it&apos;s still 2012
           </SectionTitle>
+
           <SectionSubtitle className="text-center max-w-[700px]">
-            Create a free account and start with 3 included contracts.
-            No card required. No commitments. Just clarity and control.
+            Create, discuss, and sign contracts in one place. Start free with 3 included
+            contracts. No card required.
           </SectionSubtitle>
         </SectionHeaderContainer>
 

@@ -24,40 +24,6 @@ export const ReceiverContractAssistant: React.FC<Props> = ({ contractContent }) 
   }
 
   return (
-    <Card className="flex flex-col h-full p-0 gap-0 w-full overflow-auto max max-h-[85vh]">
-      <div className="flex flex-row items-center h-[50px] px-4 gap-2 bg-input border-b border-black/10">
-        <AiSvg className="size-5 group-hover:text-white" />
-        <Text size="lg" weight="bold" className="text-g">AI Assistant</Text>
-      </div>
-
-      {/* <div className="bg-card-secondary flex gap-2 p-1 border border-sidebar-primary shadow-sm px-4">
-        <Button
-          variant="none"
-          className={cn(
-            "w-1/2 text-color-secondary rounded-lg hover:bg-sidebar-primary",
-            viewTab === "predefined" && "bg-background !border-[2px] !border-primary shadow-sm shadow-primary hover:bg-background"
-          )}
-          onClick={() => setViewTab("predefined")}
-        >
-          Predefinit
-        </Button>
-        <Button
-          variant="none"
-          className={cn(
-            "w-1/2 text-color-secondary rounded-lg hover:bg-sidebar-primary border-[2px] border-transparent",
-            viewTab === "chat" && "bg-background !border-[2px] !border-primary shadow-sm shadow-primary hover:bg-background"
-          )}
-          onClick={() => setViewTab("chat")}
-        >
-          Chat
-        </Button>
-      </div> */}
-
-      <div className="flex-1">
-
-        {/* {renderTabContent()} */}
-        <ChatAssistantSection contractContent={contractContent} />
-      </div>
-    </Card>
+    <ChatAssistantSection contractContent={contractContent} />
   )
 }

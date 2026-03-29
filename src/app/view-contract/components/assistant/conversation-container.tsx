@@ -1,11 +1,15 @@
 import { UIMessage } from "ai"
 import { AssistantMessage, MessageComponent } from "./message"
+import { AiQuickActions } from "./ai-quick-actions"
 
 type Props = {
-  messages: any[]
+  messages: any[],
+  sendAiMessage: (message: string) => void
 }
 
-export const ConversationContainer: React.FC<Props> = ({ messages }) => {
+export const ConversationContainer: React.FC<Props> = ({ messages, sendAiMessage }) => {
+  const hasExchangedMessages = messages.length > 0
+
   const INITIAL_ASSISTANT_MESSAGE = {
     role: "assistant",
     parts: [
@@ -24,7 +28,8 @@ You can ask questions like:
   }
   return (
     <div className="flex-1 overflow-auto flex flex-col gap-2">
-      <AssistantMessage message={INITIAL_ASSISTANT_MESSAGE as UIMessage} />
+      {/* <AssistantMessage message={INITIAL_ASSISTANT_MESSAGE as UIMessage} /> */}
+      {!hasExchangedMessages && <AiQuickActions sendAiMessage={sendAiMessage} />}
       {messages.map(message => (
         <MessageComponent key={message.id} message={message} />
       ))}

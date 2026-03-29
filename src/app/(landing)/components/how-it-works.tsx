@@ -13,7 +13,7 @@ export const HowItWorks: React.FC<Props> = ({ }) => {
         <SectionHeaderContainer>
           <SectionTitle>How Pactly works</SectionTitle>
           <SectionSubtitle className="text-center">
-            Three simple steps to send and sign contracts digitally
+            Create, review, and sign a contract in three simple steps
           </SectionSubtitle>
         </SectionHeaderContainer>
       </LandingPageWidth>
@@ -26,22 +26,22 @@ export const HowItWorks: React.FC<Props> = ({ }) => {
 
         <HowItWorksElement
           icon={<ReceiptText size={54} />}
-          title="Create the contract"
-          body="Start from a template or upload your own document. Edit it easily and define the signing parties in seconds."
+          title="Create your contract"
+          body="Start from a template or write your contract from scratch. Add the people who need to review and sign it."
           step="1"
         />
 
         <HowItWorksElement
           icon={<Send size={54} />}
-          title="Send for signature"
-          body="Add the recipient’s email and Pactly sends a secure signing link automatically. No setup, no delays."
+          title="Review and discuss"
+          body="Share a secure link so the other side can read the contract, comment on clauses, ask questions, and request changes."
           step="2"
         />
 
         <HowItWorksElement
           icon={<Signature size={54} />}
-          title="Sign and finalise"
-          body="Both parties sign digitally. The contract is then locked, saved, and always accessible with a complete activity history."
+          title="Sign when ready"
+          body="Once everyone agrees, sign online and keep the final contract, activity log, and signed version in one place."
           step="3"
         />
       </div>

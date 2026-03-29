@@ -55,7 +55,7 @@ export const FilterBar: React.FC<StatusFilterProps> = ({ filters, onFilterChange
           </SelectContent>
         </Select>
       </div>
-      <div className="hidden lg:flex bg-card-secondary rounded-lg gap-2 h-full p-1 border border-sidebar-primary shadow-sm">
+      <div className="hidden lg:flex bg-card-secondary rounded-lg gap-2 h-full p-1 border border-sidebar-primary shadow-sm max-w-full">
         {filters.map(item => (
           <Button
             key={item.value}
@@ -65,6 +65,7 @@ export const FilterBar: React.FC<StatusFilterProps> = ({ filters, onFilterChange
               "text-color-secondary rounded-lg hover:bg-sidebar-primary border-[2px] border-transparent",
               activeFilter?.value === item.value && "bg-background !border-primary shadow-sm shadow-primary hover:bg-background",
             )}
+            style={{ width: `${100 / filters.length}%` }}
           >
             {item.label}
           </Button>
