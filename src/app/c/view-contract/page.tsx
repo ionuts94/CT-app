@@ -53,7 +53,7 @@ export default async function CompnayViewContract({ searchParams }: Props) {
         </div>
 
         <div className="lg:w-35/100 self-start h-[85vh] rounded-lg min-h-0 overflow-y-auto">
-          <Card className="flex-1 min-h-0 rounded-md px-4 py-0 overflow-y-auto">
+          <Card className="flex-1 min-h-0 h-full rounded-md px-4 py-0 overflow-y-auto">
             <div className="h-full min-h-0">
               <CommentsSection
                 user={contractData.owner}
