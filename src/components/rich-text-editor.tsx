@@ -20,13 +20,19 @@ type EditorProps = {
   showAiHelper?: boolean
 }
 
-export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, content, onChange = () => null, showAiHelper = true }) => {
+export const RichTextEditor: React.FC<EditorProps> = ({
+  disabled,
+  className,
+  content,
+  onChange = () => null,
+  showAiHelper = true,
+}) => {
   const editor = useEditor({
     immediatelyRender: false,
     shouldRerenderOnTransaction: true,
     editable: !disabled,
     extensions: [StarterKit, TextStyle, FontSize],
-    content: content,
+    content: "",
     editorProps: {
       attributes: {
         class: cn(
@@ -42,19 +48,18 @@ export const RichTextEditor: React.FC<EditorProps> = ({ disabled, className, con
       },
     },
     onUpdate: ({ editor }) => {
-      if (disabled) return;
+      if (disabled) return
       onChange(editor.getHTML())
     },
   })
 
   useEffect(() => {
-    if (!content) return;
-    // editor?.commands.setContent(content, { emitUpdate: true })
-  }, [content])
+    if (!editor) return
+    if (typeof content !== "string") return
+    editor.commands.setContent(content || "<p></p>", { emitUpdate: false })
+  }, [editor, content])
 
-  if (!editor) {
-    return null
-  }
+  if (!editor) return null
 
   return (
     <>

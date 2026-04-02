@@ -27,6 +27,7 @@ import CTEmail from "@/sdk/email"
 import { SelectSignatureDialog } from "./select-signature-dialog"
 import { T_UserWithCompany } from "@/types/services/users"
 import { useUserContext } from "@/contexts/user-context"
+import { useTemplateVariables } from "@/hooks/use-template-variables"
 
 type Props = {
   data: Data,
@@ -53,6 +54,12 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
   const router = useRouter()
   const { user } = useUserContext()
   const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
+  const { annotateTemplateVariables } = useTemplateVariables()
+  const annotatedContent = annotateTemplateVariables(data.content as string)
+
+
+  console.log("Anotated content")
+  console.log(annotatedContent)
 
   const [contractSent, setContractSent] = useState({
     status: "",
@@ -82,8 +89,12 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
     }
   })
 
+
   const values = watch()
   const selectedSignature = signatures?.find(item => item.id === values.ownerSignatureId)
+
+  console.log("Contract content")
+  console.log(values.content)
 
   const {
     errors: formErrors,
@@ -197,9 +208,11 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
   }
 
   useEffect(() => {
+    const initialContent = annotateTemplateVariables(data?.content || "")
+
     reset({
       title: data.title,
-      content: data?.content || "" as any,
+      content: initialContent as any,
       ownerSignatureId: signatures?.[0]?.id || "",
       receiverName: data.receiverName,
       receiverEmail: data.receiverEmail,
@@ -248,9 +261,9 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
             <CardTitle>Contract editor</CardTitle>
             <InvalidInputError>{ }</InvalidInputError>
             <RichTextEditor
-              content={data.content as string || ""}
+              content={annotatedContent || ""}
               onChange={(htmlString) => debouncedSetContent(htmlString)}
-              showAiHelper={true}
+              showAiHelper={false}
             />
           </FormRow>
         </Card>
