@@ -38,8 +38,32 @@ export function useTemplateVariables(content?: string) {
     })
   }
 
+  function extractTemplateVariables(content: string) {
+    const regex = /{{\s*([a-zA-Z0-9_.-]+)\s*}}/g
+    const counts = new Map<string, number>()
+
+    for (const match of content.matchAll(regex)) {
+      const key = match[1].trim()
+      counts.set(key, (counts.get(key) || 0) + 1)
+    }
+
+    return Array.from(counts.entries()).map(([key, occurrences]) => ({
+      key,
+      label: toLabel(key),
+      occurrences,
+    }))
+  }
+
+
+  function toLabel(key: string) {
+    return key
+      .replace(/[._-]+/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase())
+  }
+
   return {
-    annotateTemplateVariables
+    annotateTemplateVariables,
+    extractTemplateVariables
   }
   // function extractTemplateVariables(content: string) {
   //   const regex = /{{\s*([a-zA-Z0-9_.-]+)\s*}}/g

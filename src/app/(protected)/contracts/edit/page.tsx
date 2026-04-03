@@ -1,11 +1,11 @@
 import { PageContainer } from "@/components/layout"
 import { withSafeService } from "@/lib/services-utils/with-safe-service"
 import ContractService from "@/services/contracts"
-import { ContractForm } from "../create/components/contract-form"
 import SignatureService from "@/services/signatures"
 import AuthService from "@/services/auth"
 import { redirect } from "next/navigation"
 import { SignaturesFetchError } from "../components/signatures-fetch-error"
+import { PageContent } from "../create/components/page-content"
 
 
 type Props = {
@@ -39,22 +39,11 @@ export default async function EditContractPage({ searchParams }: Props) {
   return (
     <main>
       <PageContainer className="flex flex-col gap-4">
-        <ContractForm
+        <PageContent
           isEditing
           mainSignature={signatures?.mainSignature}
           signatures={signatures?.allSignatures}
-          data={{
-            contractId: c,
-            title: contract.title,
-            content: contract.currentVersionContent.content,
-            contractStatus: contract.status,
-            expiresAt: contract.expiresAt || undefined,
-            ownerSignatureId: contract.ownerSignatureId,
-            receiverEmail: contract.receiverEmail,
-            receiverName: contract.receiverName,
-            signingDeadline: contract.signingDeadline || undefined,
-            optionalMessage: contract.optionalMessage,
-          }}
+          contract={contract}
         />
       </PageContainer>
     </main>

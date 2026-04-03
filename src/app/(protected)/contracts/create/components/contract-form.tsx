@@ -8,7 +8,7 @@ import { Text } from "@/components/topography"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { ContractStatus, Signature } from "@prisma/client"
 import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, UseFormReturn } from "react-hook-form"
 import { useDebouncedCallback } from "use-debounce"
 import { ContractSentSuccessfully } from "./contract-sent-successfully"
 import { Status } from "@/types/api-call"
@@ -33,7 +33,8 @@ type Props = {
   data: Data,
   mainSignature: Signature,
   signatures: Signature[] | null
-  isEditing?: boolean
+  isEditing?: boolean,
+  form: UseFormReturn<T_ContractPayload>
 }
 
 type Data = {
@@ -50,16 +51,11 @@ type Data = {
   optionalMessage?: string,
 }
 
-export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mainSignature }) => {
+export const ContractForm: React.FC<Props> = ({ form, signatures, data, isEditing, mainSignature }) => {
   const router = useRouter()
   const { user } = useUserContext()
   const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
   const { annotateTemplateVariables } = useTemplateVariables()
-  const annotatedContent = annotateTemplateVariables(data.content as string)
-
-
-  console.log("Anotated content")
-  console.log(annotatedContent)
 
   const [contractSent, setContractSent] = useState({
     status: "",
@@ -75,26 +71,11 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
     getValues,
     reset,
     trigger: runFieldsCheck
-  } = useForm<T_ContractPayload>({
-    resolver: zodResolver(ContractSchema),
-    defaultValues: {
-      title: "",
-      content: "" as any,
-      ownerSignatureId: mainSignature?.id || "",
-      receiverName: "",
-      receiverEmail: "",
-      expiresAt: undefined,
-      signingDeadline: undefined,
-      optionalMessage: ""
-    }
-  })
+  } = form;
 
 
   const values = watch()
   const selectedSignature = signatures?.find(item => item.id === values.ownerSignatureId)
-
-  console.log("Contract content")
-  console.log(values.content)
 
   const {
     errors: formErrors,
@@ -208,11 +189,9 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
   }
 
   useEffect(() => {
-    const initialContent = annotateTemplateVariables(data?.content || "")
-
     reset({
       title: data.title,
-      content: initialContent as any,
+      content: annotateTemplateVariables(data?.content || ''),
       ownerSignatureId: signatures?.[0]?.id || "",
       receiverName: data.receiverName,
       receiverEmail: data.receiverEmail,
@@ -228,6 +207,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
         : undefined
     })
   }, [data])
+
 
   if (contractSent.status === Status.SUCCESS) {
     return (
@@ -261,7 +241,7 @@ export const ContractForm: React.FC<Props> = ({ signatures, data, isEditing, mai
             <CardTitle>Contract editor</CardTitle>
             <InvalidInputError>{ }</InvalidInputError>
             <RichTextEditor
-              content={annotatedContent || ""}
+              content={values.content}
               onChange={(htmlString) => debouncedSetContent(htmlString)}
               showAiHelper={false}
             />

@@ -7,6 +7,7 @@ import { withSafeService } from "@/lib/services-utils/with-safe-service"
 import AuthService from "@/services/auth"
 import { SignaturesFetchError } from "../components/signatures-fetch-error"
 import UserService from "@/services/users"
+import { PageContent } from "./components/page-content"
 
 type Props = {
   searchParams: Promise<{ t: string }>
@@ -42,13 +43,10 @@ export default async function ContractPage({ searchParams }: Props) {
   return (
     <main>
       <PageContainer className="flex flex-col gap-4">
-        <ContractForm
+        <PageContent
+          template={template}
           signatures={signatures.allSignatures}
-          mainSignature={signatures?.mainSignature}
-          data={{
-            content: template?.content as string,
-            templateTitle: template?.title,
-          }}
+          mainSignature={signatures.mainSignature}
         />
       </PageContainer>
     </main>
