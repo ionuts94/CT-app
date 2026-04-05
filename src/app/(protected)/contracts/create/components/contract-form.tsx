@@ -18,16 +18,13 @@ import { Save, Send } from "lucide-react"
 import { SendContractDialog } from "./send-contract-dialog"
 import { ExpiryDate } from "./expiry-date"
 import { dateUtils } from "@/lib/date-utils"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { ContractSchema, T_ContractPayload, T_SendContractPayload } from "@/validators/contract.validator"
+import { T_ContractPayload, T_SendContractPayload } from "@/validators/contract.validator"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useDialog } from "@/hooks/use-dialog"
 import CTEmail from "@/sdk/email"
 import { SelectSignatureDialog } from "./select-signature-dialog"
-import { T_UserWithCompany } from "@/types/services/users"
 import { useUserContext } from "@/contexts/user-context"
-import { useTemplateVariables } from "@/hooks/use-template-variables"
 
 type Props = {
   data: Data,
@@ -55,7 +52,6 @@ export const ContractForm: React.FC<Props> = ({ form, signatures, data, isEditin
   const router = useRouter()
   const { user } = useUserContext()
   const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
-  const { annotateTemplateVariables } = useTemplateVariables()
 
   const [contractSent, setContractSent] = useState({
     status: "",
@@ -189,25 +185,26 @@ export const ContractForm: React.FC<Props> = ({ form, signatures, data, isEditin
   }
 
   useEffect(() => {
-    reset({
-      title: data.title,
-      content: annotateTemplateVariables(data?.content || ''),
-      ownerSignatureId: signatures?.[0]?.id || "",
-      receiverName: data.receiverName,
-      receiverEmail: data.receiverEmail,
-      optionalMessage: data.optionalMessage || "",
-      signingDeadline: data.signingDeadline,
-      expiresAt: data.expiresAt
-        ? dateUtils
-          .toUtcEndOfDay(
-            new Date(data.expiresAt),
-            dateUtils.getUserTimeZone()
-          )
-          .toISOString()
-        : undefined
-    })
-  }, [data])
-
+    if (form && data) {
+      reset({
+        title: data.title,
+        content: data.content || "",
+        ownerSignatureId: signatures?.[0]?.id || "",
+        receiverName: data.receiverName,
+        receiverEmail: data.receiverEmail,
+        optionalMessage: data.optionalMessage || "",
+        signingDeadline: data.signingDeadline,
+        expiresAt: data.expiresAt
+          ? dateUtils
+            .toUtcEndOfDay(
+              new Date(data.expiresAt),
+              dateUtils.getUserTimeZone()
+            )
+            .toISOString()
+          : undefined
+      })
+    }
+  }, [])
 
   if (contractSent.status === Status.SUCCESS) {
     return (
@@ -220,7 +217,7 @@ export const ContractForm: React.FC<Props> = ({ form, signatures, data, isEditin
 
   return (
     <form onSubmit={handleSubmit(handleSaveDraft)} className="w-full flex gap-4">
-      <div className="w-3/3 flex lg:w-2/3 flex-col gap-4">
+      <div className="flex w-full flex-col gap-4">
         <Card className="p-4">
           {data.templateTitle &&
             <Label htmlFor="template-title">

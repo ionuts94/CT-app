@@ -30,7 +30,7 @@ export function useTemplateVariables(content?: string) {
         ` data-template-variable="${escapeHtmlAttribute(key)}"`,
         ` data-template-original="${escapeHtmlAttribute(originalPlaceholder)}"`,
         ` data-template-empty="true"`,
-        ` class="pactly-template-variable bg-blue-200"`,
+        ` class="pactly-template-variable bg-yellow-200 rounded-md"`,
         `>`,
         `${escapeHtml(originalPlaceholder)}`,
         `</span>`,
@@ -54,6 +54,20 @@ export function useTemplateVariables(content?: string) {
     }))
   }
 
+  function replaceTemplateVariables(
+    content: string,
+    values: Record<string, string>
+  ) {
+    let result = content
+
+    for (const [key, value] of Object.entries(values)) {
+      const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      const regex = new RegExp(`{{\\s*${escapedKey}\\s*}}`, "g")
+      result = result.replace(regex, () => value)
+    }
+
+    return result
+  }
 
   function toLabel(key: string) {
     return key
@@ -63,7 +77,8 @@ export function useTemplateVariables(content?: string) {
 
   return {
     annotateTemplateVariables,
-    extractTemplateVariables
+    extractTemplateVariables,
+    replaceTemplateVariables
   }
   // function extractTemplateVariables(content: string) {
   //   const regex = /{{\s*([a-zA-Z0-9_.-]+)\s*}}/g
