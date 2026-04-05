@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form"
 import { ContractSchema, T_ContractPayload } from "@/validators/contract.validator"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ContractControlsSidebar } from "./contract-controls-sidebar"
+import { useState } from "react"
+import { ContractSentSuccessfully } from "./contract-sent-successfully"
 
 type PropsTwo = {
     isEditing?: boolean,
@@ -18,6 +20,7 @@ type PropsTwo = {
 }
 
 export const PageContent: React.FC<PropsTwo> = ({ contract, mainSignature, signatures, isEditing, template, }) => {
+    const [mostRecentContractSent, setMostRecentContractSent] = useState<null | string>(null)
     const form = useForm<T_ContractPayload>({
         resolver: zodResolver(ContractSchema),
         defaultValues: {
@@ -31,6 +34,10 @@ export const PageContent: React.FC<PropsTwo> = ({ contract, mainSignature, signa
             optionalMessage: ""
         }
     })
+
+    const onContractSent = (contractId: string) => {
+        setMostRecentContractSent(contractId)
+    }
 
     const renderContract = () => {
         if (contract) {
@@ -51,6 +58,7 @@ export const PageContent: React.FC<PropsTwo> = ({ contract, mainSignature, signa
                     signingDeadline: contract.signingDeadline || undefined,
                     optionalMessage: contract.optionalMessage,
                 }}
+                onContractSent={onContractSent}
             />
         }
 
@@ -62,8 +70,18 @@ export const PageContent: React.FC<PropsTwo> = ({ contract, mainSignature, signa
                 content: template?.content as string,
                 templateTitle: template?.title,
             }}
+            onContractSent={onContractSent}
         />
 
+    }
+
+    if (mostRecentContractSent) {
+        return (
+            <ContractSentSuccessfully
+                receiverEmail={form.getValues().receiverEmail}
+                newContractId={mostRecentContractSent}
+            />
+        )
     }
 
     return (

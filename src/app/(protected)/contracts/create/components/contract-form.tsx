@@ -7,11 +7,9 @@ import { SignatureItem } from "@/components/signature-item"
 import { Text } from "@/components/topography"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { ContractStatus, Signature } from "@prisma/client"
-import { useEffect, useState } from "react"
-import { useForm, UseFormReturn } from "react-hook-form"
+import { useEffect } from "react"
+import { UseFormReturn } from "react-hook-form"
 import { useDebouncedCallback } from "use-debounce"
-import { ContractSentSuccessfully } from "./contract-sent-successfully"
-import { Status } from "@/types/api-call"
 import { toast } from "sonner"
 import CTContract from "@/sdk/contracts"
 import { Save, Send } from "lucide-react"
@@ -31,7 +29,8 @@ type Props = {
   mainSignature: Signature,
   signatures: Signature[] | null
   isEditing?: boolean,
-  form: UseFormReturn<T_ContractPayload>
+  form: UseFormReturn<T_ContractPayload>,
+  onContractSent?: (contractId: string) => void,
 }
 
 type Data = {
@@ -48,15 +47,10 @@ type Data = {
   optionalMessage?: string,
 }
 
-export const ContractForm: React.FC<Props> = ({ form, signatures, data, isEditing, mainSignature }) => {
+export const ContractForm: React.FC<Props> = ({ form, signatures, data, isEditing, mainSignature, onContractSent = () => { } }) => {
   const router = useRouter()
   const { user } = useUserContext()
   const { isOpen, closeDialog, openDialog, toggleDialog } = useDialog()
-
-  const [contractSent, setContractSent] = useState({
-    status: "",
-    newContractId: ""
-  })
 
   const {
     formState,
@@ -173,10 +167,7 @@ export const ContractForm: React.FC<Props> = ({ form, signatures, data, isEditin
         return toast.error("Contract was saved but could not be sent. Error: " + sendResponse.error)
       }
 
-      setContractSent({
-        status: Status.SUCCESS,
-        newContractId: response.id
-      })
+      onContractSent(response.id!)
       router.refresh()
       closeDialog()
     } catch (error: any) {
@@ -205,15 +196,6 @@ export const ContractForm: React.FC<Props> = ({ form, signatures, data, isEditin
       })
     }
   }, [])
-
-  if (contractSent.status === Status.SUCCESS) {
-    return (
-      <ContractSentSuccessfully
-        receiverEmail={values.receiverEmail}
-        newContractId={contractSent.newContractId}
-      />
-    )
-  }
 
   return (
     <form onSubmit={handleSubmit(handleSaveDraft)} className="w-full flex gap-4">

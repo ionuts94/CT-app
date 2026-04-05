@@ -31,7 +31,6 @@ export function DatePicker({
     setDate(newDate)
     onSelectDate(newDate)
 
-    // 🔥 AICI e magia
     setOpen(false)
   }
 
@@ -47,7 +46,7 @@ export function DatePicker({
           {date ? (
             format(date, "PPP")
           ) : (
-            <span>{placeholder || "Selectează data"}</span>
+            <span>{placeholder || "Select date"}</span>
           )}
         </Button>
       </PopoverTrigger>
