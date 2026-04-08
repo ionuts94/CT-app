@@ -62,10 +62,9 @@ export const FilterBar: React.FC<StatusFilterProps> = ({ filters, onFilterChange
             variant="none"
             onClick={() => handleSelectFilter(item)}
             className={cn(
-              "text-color-secondary rounded-lg hover:bg-sidebar-primary border-[2px] border-transparent",
-              activeFilter?.value === item.value && "bg-background !border-primary shadow-sm shadow-primary hover:bg-background",
+              "text-color-secondary rounded-lg hover:bg-sidebar-primary border-2 border-transparent flex-1",
+              activeFilter?.value === item.value && "bg-background border-primary! shadow-sm shadow-primary hover:bg-background",
             )}
-            style={{ width: `${100 / filters.length}%` }}
           >
             {item.label}
           </Button>

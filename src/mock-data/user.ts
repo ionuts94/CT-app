@@ -47,7 +47,7 @@ export const userMockData = {
   contracts: [
     {
       id: "ctr_01",
-      title: "Contract Servicii Foto",
+      title: "Photography Services Agreement",
       content: { body: "Lorem ipsum..." },
       status: "PENDING",
       ownerId: "usr_ck2l9x8yz001",

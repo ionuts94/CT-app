@@ -26,9 +26,9 @@ export const RecentContracts: React.FC<Props> = () => {
   return (
     <Card className="px-4 py-3 overflow-hidden w-full">
       <div className="flex items-center justify-between">
-        <Text size="lg" weight="semibold">Contracte Recente</Text>
+        <Text size="lg" weight="semibold">Recent Contracts</Text>
         <Button className="cursor-pointer">
-          <TextCTA variant="secondary">Vezi toate contractele</TextCTA>
+          <TextCTA variant="secondary">View all contracts</TextCTA>
         </Button>
       </div>
 
@@ -40,16 +40,16 @@ export const RecentContracts: React.FC<Props> = () => {
                 <Text weight="semibold" className="py-4">Client</Text>
               </TableHead>
               <TableHead>
-                <Text weight="semibold">Titlu Contract</Text>
+                <Text weight="semibold">Contract Title</Text>
               </TableHead>
               <TableHead>
                 <Text weight="semibold">Status</Text>
               </TableHead>
               <TableHead>
-                <Text weight="semibold">Trimis</Text>
+                <Text weight="semibold">Sent</Text>
               </TableHead>
               <TableHead className="text-right">
-                <Text weight="semibold">Actiuni</Text>
+                <Text weight="semibold">Actions</Text>
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -86,7 +86,7 @@ function Header() {
 }
 
 const RECENTS = [
-  { id: "ctr_01", title: "Contract Servicii Foto", client: "Studio Lumi", status: "PENDING", updated: "2h ago" },
-  { id: "ctr_02", title: "Contract Mentenanță", client: "ACME SRL", status: "SIGNED", updated: "Yesterday" },
-  { id: "ctr_03", title: "Contract Consultanță", client: "BlueLine", status: "DRAFT", updated: "2 days ago" },
+  { id: "ctr_01", title: "Photography Services Agreement", client: "Studio Lumi", status: "PENDING", updated: "2h ago" },
+  { id: "ctr_02", title: "Maintenance Agreement", client: "ACME SRL", status: "SIGNED", updated: "Yesterday" },
+  { id: "ctr_03", title: "Consulting Agreement", client: "BlueLine", status: "DRAFT", updated: "2 days ago" },
 ] as const

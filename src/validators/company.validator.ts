@@ -1,8 +1,8 @@
 import z from "zod"
 
 export const CompanySchema = z.object({
-    name: z.string().min(1, "Numele companiei este obligatoriu"),
-    cui: z.string().min(1, "CUI-ul companiei este obligatoriu"),
+    name: z.string().min(1, "Company name is mandatory"),
+    cui: z.string().optional(),
     regNumber: z.string().optional(),
     emailDomain: z.string().optional(),
 

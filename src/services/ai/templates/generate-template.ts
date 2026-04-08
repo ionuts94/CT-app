@@ -25,7 +25,7 @@ Generate ONE complete contract (not a guide, not explanations), based strictly o
 If conflicts exist, resolve them using this priority:
 DESCRIPTION > contractType > industry.
 
-Write exclusively in language the user provided description, using correct diacritics.
+Write exclusively in the language used in the user's description, using correct diacritics.
 
 INPUT (JSON):
 {
@@ -75,14 +75,14 @@ LENGTH & QUALITY (MANDATORY):
 MANDATORY STRUCTURE (NO <h#> TAGS):
 
 1) Document Title (28–32px)
-   Example: “Contract de Închiriere Apartament”
+   Example: “Apartment Rental Agreement”
 
 2) Preamble and Parties
    - Parties, legal form, representatives, registered offices
    - {{DATA_INCHEIERII}}, {{LOCUL_INCHEIERII}}
 
 3) Definitions (only if useful)
-   - 3–6 practical definitions (e.g. Imobil, Utilități, Proces-Verbal)
+   - 3–6 practical definitions (e.g. Property, Utilities, Handover Report)
 
 4) Object of the Contract / Purpose
    - Clear description of the subject
@@ -180,5 +180,5 @@ Return ONLY the HTML contract, respecting ALL rules above.
 }
 
 
-// ceva
-// Am o firma care se ocupa cu dezvoltarea software. Acest contract o sa fie pentru o companie pentru care o sa dezvoltam o aplicatie web in mod gratuit dar beneficiarul se comite sa plateasca gazduirea pentru minim 12 luni. Daca acestea nu mai plateste in aceasta perioada de 12 luni, avem dreptul sa mergem in instanta si sa incercam o executare silita a beneficiarului. Codul sursa apartine exclusiv prestatorului dar beneficiarul are dreptul sa il cumpere in orice moment la un pret stabilit de comun acrod.
+// Example brief:
+// I run a software development company. This agreement is for a client for whom we will build a web app free of charge, but the client commits to paying the hosting costs for at least 12 months. If they stop paying during that 12-month period, we reserve the right to pursue legal enforcement. The source code remains the exclusive property of the service provider, but the client may purchase it at any time for a mutually agreed price.

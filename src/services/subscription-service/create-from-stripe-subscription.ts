@@ -36,7 +36,7 @@ export async function createFromStripeSubscription(
             stripeSubscriptionItemId: input.stripeSubscriptionItemId
         })
 
-    // 🔁 idempotency: dacă a fost deja creată, ignorăm
+    // 🔁 idempotency: ignore it if it was already created
     if (error?.code === "23505") {
         // duplicate key (stripeSubscriptionId)
         return

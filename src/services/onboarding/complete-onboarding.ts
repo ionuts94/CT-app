@@ -27,7 +27,7 @@ export async function completeOnboarding() {
     companyCui: onboardingData.company.companyCui,
     companyName: onboardingData.company.companyName,
     companyRegNumber: onboardingData.company.companyRegNumber,
-    compnayEmailDomain: onboardingData.company.compnayEmailDomain,
+    companyEmailDomanin: onboardingData.company.companyEmailDomanin,
     logoUrl: onboardingData.branding.logoUrl,
     primaryColor: onboardingData.branding.primaryColor,
     secondaryColor: onboardingData.branding.secondaryColor,

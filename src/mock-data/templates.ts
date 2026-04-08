@@ -8,74 +8,74 @@ export type Template = {
 
 export const MOCK_TEMPLATES: Template[] = [
   {
-    title: "Contract Prestări Servicii IT",
+    title: "IT Services Agreement",
     updatedAt: "2025-08-01",
     lastUsedAt: "2025-08-15",
     usedCount: 12,
-    content: "<h1>Contract Prestări Servicii IT</h1><p>Acest contract reglementează serviciile IT...</p>"
+    content: "<h1>IT Services Agreement</h1><p>This agreement governs the provision of IT services...</p>"
   },
   {
-    title: "Contract Design Grafic",
+    title: "Graphic Design Agreement",
     updatedAt: "2025-07-20",
     lastUsedAt: "2025-08-10",
     usedCount: 8,
-    content: "<h1>Contract Design Grafic</h1><p>Definiții, termeni, livrabile...</p>"
+    content: "<h1>Graphic Design Agreement</h1><p>Definitions, terms, and deliverables...</p>"
   },
   {
-    title: "Contract Consultanță Financiară",
+    title: "Financial Consulting Agreement",
     updatedAt: "2025-07-10",
     lastUsedAt: "2025-08-05",
     usedCount: 6,
-    content: "<h1>Contract Consultanță Financiară</h1><p>Prevederi legate de onorarii și confidențialitate...</p>"
+    content: "<h1>Financial Consulting Agreement</h1><p>Provisions related to fees and confidentiality...</p>"
   },
   {
-    title: "Contract Fotografie Evenimente",
+    title: "Event Photography Agreement",
     updatedAt: "2025-07-01",
     lastUsedAt: "2025-07-29",
     usedCount: 14,
-    content: "<h1>Contract Fotografie Evenimente</h1><p>Detalii privind ședințele foto, livrarea materialelor...</p>"
+    content: "<h1>Event Photography Agreement</h1><p>Details about photo sessions and delivery of materials...</p>"
   },
   {
-    title: "Contract Traduceri Documente",
+    title: "Document Translation Agreement",
     updatedAt: "2025-06-28",
     lastUsedAt: "2025-07-20",
     usedCount: 9,
-    content: "<h1>Contract Traduceri Documente</h1><p>Clauze referitoare la termenii de livrare și calitate...</p>"
+    content: "<h1>Document Translation Agreement</h1><p>Clauses regarding delivery terms and quality...</p>"
   },
   {
-    title: "Contract Avocatură",
+    title: "Legal Services Agreement",
     updatedAt: "2025-06-15",
     lastUsedAt: "2025-07-12",
     usedCount: 11,
-    content: "<h1>Contract Avocatură</h1><p>Detalii despre reprezentare legală și taxe...</p>"
+    content: "<h1>Legal Services Agreement</h1><p>Details about legal representation and fees...</p>"
   },
   {
-    title: "Contract Social Media Management",
+    title: "Social Media Management Agreement",
     updatedAt: "2025-06-01",
     lastUsedAt: "2025-07-01",
     usedCount: 7,
-    content: "<h1>Contract Social Media Management</h1><p>Prevederi pentru conținut, programare postări...</p>"
+    content: "<h1>Social Media Management Agreement</h1><p>Provisions for content creation and post scheduling...</p>"
   },
   {
-    title: "Contract Organizare Evenimente",
+    title: "Event Planning Agreement",
     updatedAt: "2025-05-25",
     lastUsedAt: "2025-06-30",
     usedCount: 10,
-    content: "<h1>Contract Organizare Evenimente</h1><p>Servicii incluse: logistică, personal, locație...</p>"
+    content: "<h1>Event Planning Agreement</h1><p>Included services: logistics, staffing, venue...</p>"
   },
   {
-    title: "Contract Consultanță Juridică",
+    title: "Legal Consulting Agreement",
     updatedAt: "2025-05-10",
     lastUsedAt: "2025-06-20",
     usedCount: 5,
-    content: "<h1>Contract Consultanță Juridică</h1><p>Clauze referitoare la protejarea intereselor clientului...</p>"
+    content: "<h1>Legal Consulting Agreement</h1><p>Clauses related to protecting the client’s interests...</p>"
   },
   {
-    title: "Contract Mentenanță Software",
+    title: "Software Maintenance Agreement",
     updatedAt: "2025-05-01",
     lastUsedAt: "2025-06-15",
     usedCount: 13,
-    content: "<h1>Contract Mentenanță Software</h1><p>Servicii de update, patch-uri, suport tehnic...</p>"
+    content: "<h1>Software Maintenance Agreement</h1><p>Update services, patches, and technical support...</p>"
   },
 
 ]

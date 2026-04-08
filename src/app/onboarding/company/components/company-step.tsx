@@ -40,8 +40,8 @@ export const CompanyStep: React.FC<Props> = ({ }) => {
       companyName: onboardingData?.company?.companyName || "",
       companyCui: onboardingData?.company?.companyCui || "",
       companyRegNumber: onboardingData?.company?.companyRegNumber || "",
-      compnayEmailDomain:
-        onboardingData?.company?.compnayEmailDomain || "",
+      companyEmailDomanin:
+        onboardingData?.company?.companyEmailDomanin || "",
     },
   })
 
@@ -82,7 +82,7 @@ export const CompanyStep: React.FC<Props> = ({ }) => {
           </InvalidInputError>
         </FormRow>
 
-        <FormRow>
+        {/* <FormRow>
           <Label>
             Company registration ID (CUI / CIF)
             <RequiredFieldMark />
@@ -91,17 +91,17 @@ export const CompanyStep: React.FC<Props> = ({ }) => {
           <InvalidInputError>
             {errors.companyCui?.message}
           </InvalidInputError>
-        </FormRow>
+        </FormRow> */}
 
         <FormRow className="lg:flex-row gap-6">
           <FormRow>
-            <Label>Registration number</Label>
+            <Label>Company registration number</Label>
             <Input {...register("companyRegNumber")} />
           </FormRow>
 
           <FormRow>
             <Label>Company email domain</Label>
-            <Input {...register("compnayEmailDomain")} />
+            <Input {...register("companyEmailDomanin")} />
           </FormRow>
         </FormRow>
       </div>

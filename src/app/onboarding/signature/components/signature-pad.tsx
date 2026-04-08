@@ -11,18 +11,18 @@ type PointsPayload = number[][][];
 export type SignaturePadProps = {
   className?: string;
   height?: number;
-  background?: string;      // "transparent" pentru PNG cu alpha
+  background?: string;      // "transparent" for PNG export with alpha
   strokeColor?: string;
-  strokeSize?: number;      // implicit 4 (din codul tău)
-  padding?: number;         // padding pentru trim
+  strokeSize?: number;      // defaults to 4
+  padding?: number;         // padding used for trimming
   onSaveSVG?: (svg: string) => void;
   onSavePNG?: (dataUrl: string) => void;
 
-  // 🔥 onChange trimite obiect {svg, png?, points}
+  // 🔥 onChange sends {svg, png?, points}
   onChange?: (payload: { svg: string; png: string; points: PointsPayload }) => void;
-  onChangeMode?: "trimmed" | "raw";            // ce SVG/PNG trimitem în onChange (default: trimmed)
-  onChangeDebounceMs?: number;                 // pauză după stop desen (default: 120ms)
-  onChangeIncludePngLive?: boolean;            // dacă vrei PNG și în timpul desenului (default: false)
+  onChangeMode?: "trimmed" | "raw";            // which SVG/PNG to send in onChange (default: trimmed)
+  onChangeDebounceMs?: number;                 // delay after drawing stops (default: 120ms)
+  onChangeIncludePngLive?: boolean;            // include PNG during live drawing as well (default: false)
 
   showSaveSvg?: boolean,
   showSavePng?: boolean
@@ -32,7 +32,7 @@ const DEFAULTS = {
   height: 220,
   background: "#ffffff",
   strokeColor: "#111111",
-  strokeSize: 4,     // păstrat din codul tău
+  strokeSize: 4,     // kept from the existing behavior
   padding: 6,
   onChangeMode: "trimmed" as const,
   onChangeDebounceMs: 120,
@@ -41,7 +41,7 @@ const DEFAULTS = {
   showSavePng: false,
 };
 
-/* ----------------------- Utils (identice cu logica ta) ----------------------- */
+/* ----------------------- Utils (same core logic) ----------------------- */
 
 function strokeOptions(size: number) {
   return { size, thinning: 0.5, smoothing: 0.85, streamline: 0.65, simulatePressure: true } as const;
@@ -73,7 +73,7 @@ function getSvgPathFromStroke(points: number[][]) {
   return `${d} Z`;
 }
 
-// default la 4 ca în restul codului
+// default to 4 to match the rest of the code
 function getBoundsFromStrokes(strokes: Point[][], padding = 6, strokeSize = 4) {
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
   for (const s of strokes) for (const [x, y] of s) { if (x < minX) minX = x; if (y < minY) minY = y; if (x > maxX) maxX = x; if (y > maxY) maxY = y; }
@@ -83,15 +83,15 @@ function getBoundsFromStrokes(strokes: Point[][], padding = 6, strokeSize = 4) {
   return { minX, minY, width: maxX - minX, height: maxY - minY };
 }
 
-/* ----------------------- 🔁 Exporturi reutilizabile ----------------------- */
+/* ----------------------- 🔁 Reusable exports ----------------------- */
 
-/** Export SVG (raw/trimmed) direct din strokes — refolosibil în orice componentă */
+/** Export an SVG (raw/trimmed) directly from strokes — reusable in any component */
 export function exportSignatureSVGFromStrokes(
   strokes: Point[][],
   opts: {
     mode?: "trimmed" | "raw";
-    width?: number;   // necesar pentru "raw"
-    height?: number;  // necesar pentru "raw"
+    width?: number;   // required for "raw"
+    height?: number;  // required for "raw"
     strokeSize?: number;
     strokeColor?: string;
     padding?: number;
@@ -119,7 +119,7 @@ export function exportSignatureSVGFromStrokes(
 
   if (mode === "raw") {
     if (typeof width !== "number" || typeof height !== "number") {
-      throw new Error("exportSignatureSVGFromStrokes(mode='raw') necesită width și height.");
+      throw new Error("exportSignatureSVGFromStrokes(mode='raw') requires width and height.");
     }
     return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">\n${paths}\n</svg>`;
   }
@@ -130,17 +130,17 @@ export function exportSignatureSVGFromStrokes(
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${Math.ceil(w)}" height="${Math.ceil(h)}" viewBox="0 0 ${Math.ceil(w)} ${Math.ceil(h)}">\n  <g transform="translate(${-minX}, ${-minY})">\n${paths}\n  </g>\n</svg>`;
 }
 
-/** Export PNG (raw/trimmed) din strokes — refolosibil; poți pasa un canvas existent */
+/** Export a PNG (raw/trimmed) from strokes — reusable; you can pass an existing canvas */
 export function exportSignaturePNGFromStrokes(
   strokes: Point[][],
   opts: {
     mode?: "trimmed" | "raw";
-    width?: number; height?: number;           // pt "raw"
+    width?: number; height?: number;           // for "raw"
     strokeSize?: number; strokeColor?: string;
-    padding?: number; background?: string;     // "transparent" pt alpha
+    padding?: number; background?: string;     // "transparent" for alpha
     smoothingResolution?: number;
     dpr?: number;
-    canvas?: HTMLCanvasElement;                // opțional: randăm în acest canvas
+    canvas?: HTMLCanvasElement;                // optional: render into this canvas
   } = {}
 ): string {
   const {
@@ -158,16 +158,16 @@ export function exportSignaturePNGFromStrokes(
 
   let off = canvas;
   if (!off) {
-    if (typeof document === "undefined") throw new Error("exportSignaturePNGFromStrokes fără canvas disponibil necesită DOM (document).");
+    if (typeof document === "undefined") throw new Error("exportSignaturePNGFromStrokes requires the DOM (document) when no canvas is provided.");
     off = document.createElement("canvas");
   }
   const ctx = off.getContext("2d")!;
 
-  // calc dimensiuni & offset
+  // calculate dimensions and offset
   let drawW: number, drawH: number, ox = 0, oy = 0;
   if (mode === "raw") {
     if (typeof width !== "number" || typeof height !== "number") {
-      throw new Error("exportSignaturePNGFromStrokes(mode='raw') necesită width și height.");
+      throw new Error("exportSignaturePNGFromStrokes(mode='raw') requires width and height.");
     }
     drawW = width; drawH = height;
   } else {
@@ -206,7 +206,7 @@ export function exportSignaturePNGFromStrokes(
   return off.toDataURL("image/png");
 }
 
-/* ----------------------- Componenta (randare neschimbată) ----------------------- */
+/* ----------------------- Component (rendering unchanged) ----------------------- */
 
 export default function SignaturePad({
   className,
@@ -235,7 +235,7 @@ export default function SignaturePad({
   const rafRef = useRef<number | null>(null);
   const changeRafRef = useRef<number | null>(null);
   const changeDebounceRef = useRef<number | null>(null);
-  const lastEmittedSvgRef = useRef<string>(""); // comparăm SVG ca să nu spamăm
+  const lastEmittedSvgRef = useRef<string>(""); // compare SVG values to avoid noisy updates
 
   function resizeCanvasToDPR() {
     const c = canvasRef.current; if (!c) return;
@@ -253,7 +253,7 @@ export default function SignaturePad({
       rafRef.current = null;
       resizeCanvasToDPR();
       renderOnce();
-      emitChangeThrottled(false); // live (fără PNG implicit)
+      emitChangeThrottled(false); // live update (without PNG by default)
     });
   }
 
@@ -296,7 +296,7 @@ export default function SignaturePad({
     const [x, y] = getPos(e);
     strokesRef.current = [...strokesRef.current, [[x, y, performance.now()]]];
     scheduleRender();
-    // anulăm debounce-ul final dacă userul reîncepe să deseneze
+    // cancel the final debounce if the user starts drawing again
     if (changeDebounceRef.current) { window.clearTimeout(changeDebounceRef.current); changeDebounceRef.current = null; }
   }
 
@@ -313,7 +313,7 @@ export default function SignaturePad({
     isDrawingRef.current = false;
     bump(); // finalize stroke
 
-    // debounce final — mai emit o dată + cu PNG inclus
+    // final debounce — emit once more and include PNG
     if (onChange) {
       if (changeDebounceRef.current) window.clearTimeout(changeDebounceRef.current);
       changeDebounceRef.current = window.setTimeout(() => {
@@ -329,7 +329,7 @@ export default function SignaturePad({
     onChange?.({ svg: "", png: "", points: [] });
   }
 
-  // --- payload + emit (folosește util-urile exportate) ---
+  // --- payload + emit (uses the exported utilities) ---
   function buildPayload(includePng: boolean) {
     const svg = exportSignatureSVGFromStrokes(strokesRef.current, {
       mode: onChangeMode,
@@ -371,7 +371,7 @@ export default function SignaturePad({
     });
   }
 
-  // butoane Save — folosesc util-urile exportate
+  // Save buttons — use the exported utilities
   function handleSaveSVG() {
     const svg = exportSignatureSVGFromStrokes(strokesRef.current, {
       mode: "trimmed",

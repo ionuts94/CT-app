@@ -19,7 +19,7 @@ export async function processPaymentSucceeded(event: Stripe.Event) {
     console.log("2")
     if (invoice.status !== "paid") return
 
-    // 3️⃣ Găsim subscription-ul nostru
+    // 3️⃣ Find the matching subscription in our system
     const existing =
         await SubscriptionService.getByStripeSubscriptionId(stripeSubscriptionId)
     console.log("3: " + existing)
@@ -32,7 +32,7 @@ export async function processPaymentSucceeded(event: Stripe.Event) {
         return
     }
 
-    // 4️⃣ Status → ACTIVE (dacă era pending / past_due)
+    // 4️⃣ Move status to ACTIVE (if it was pending / past_due)
     let shouldUpdate = false
     const updatePayload: Record<string, any> = {}
 
@@ -51,7 +51,7 @@ export async function processPaymentSucceeded(event: Stripe.Event) {
 
     console.log("5")
 
-    // 5️⃣ 🔑 PERIODS (fallback garantat)
+    // 5️⃣ 🔑 PERIODS (safe fallback)
     const line = invoice.lines.data[0]
     if (line?.period?.start && line?.period?.end) {
         updatePayload.currentPeriodStart = new Date(
@@ -63,7 +63,7 @@ export async function processPaymentSucceeded(event: Stripe.Event) {
         shouldUpdate = true
     }
 
-    // 6️⃣ Update doar dacă e ceva de făcut
+    // 6️⃣ Update only if something actually changed
 
     console.log("6")
     console.log(updatePayload)

@@ -36,7 +36,7 @@ export const AiSvg: React.FC<T_SvgProps> = ({ className }) => {
 //     <svg
 //       className={cn(
 //         "transition-colors duration-200",
-//         "text-[var(--ai-svg-color)] hover:text-white", // 👈 bază din prop, hover = alb
+//         "text-[var(--ai-svg-color)] hover:text-white", // 👈 base color comes from the prop; hover = white
 //         className
 //       )}
 //       style={style}

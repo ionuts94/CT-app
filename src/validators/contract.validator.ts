@@ -4,23 +4,23 @@ import z from "zod";
 export const ContractSchema = z.object({
     title: z
         .string()
-        .min(5, "Titlul contractului trebuie să conțină cel puțin 5 caractere."),
+        .min(5, "Contract title must be at least 5 characters long."),
 
     content: z
         .string()
-        .min(50, "Conținutul contractului trebuie să fie suficient de detaliat (minim 50 de caractere)."),
+        .min(50, "Contract content must be sufficiently detailed (minimum 50 characters)."),
 
     ownerSignatureId: z
         .string()
-        .uuid("A apărut o problemă tehnică. Dacă eroarea persistă, te rugăm să ne contactezi."),
+        .uuid("A technical issue occurred. If the error persists, please contact us."),
 
     receiverName: z
         .string()
-        .min(2, "Numele destinatarului trebuie să conțină cel puțin 2 caractere."),
+        .min(2, "Receiver name must be at least 2 characters long."),
 
     receiverEmail: z
         .string()
-        .email("Adresa de email a destinatarului nu este validă."),
+        .email("Receiver email address is not valid."),
 
     expiresAt: z
         .string()
@@ -41,7 +41,7 @@ export type T_ContractPayload = z.infer<typeof ContractSchema>
 export const SendContractSchema = z.object({
     receiverEmail: z
         .string()
-        .email("Adresa de email a destinatarului nu este validă."),
+        .email("Receiver email address is not valid."),
     optionalMessage: z
         .string()
         .optional()

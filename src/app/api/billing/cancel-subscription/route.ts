@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
             throw new Error("No active subscription")
         }
 
-        // 1️⃣ Stripe: cancel la final de perioadă
+        // 1️⃣ Stripe: cancel at the end of the billing period
         await stripe.subscriptions.update(
             subscription.stripeSubscriptionId!,
             {
