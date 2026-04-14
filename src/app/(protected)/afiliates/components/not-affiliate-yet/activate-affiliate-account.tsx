@@ -1,42 +1,41 @@
 "use client"
 
+import { Input } from "@/components/form-elements"
 import { ArrowRight, Check } from "lucide-react"
+import { ChangeEvent, useState } from "react"
 
 type Props = {
-  onActivate?: () => void
-  onMaybeLater?: () => void
-  isLoading?: boolean
-  agreed?: boolean
-  onAgreedChange?: (value: boolean) => void
+
 }
 
-export const ActivateAffiliateAccount: React.FC<Props> = ({
-  onActivate,
-  onMaybeLater,
-  isLoading = false,
-  agreed = true,
-  onAgreedChange,
-}) => {
-  const items = [
-    {
-      label: "Eligibility",
-      value: null,
-      description:
-        "You can invite new users to Pactly through your personal referral flow once your account is activated.",
-    },
-    {
-      label: "Payouts",
-      value: null,
-      description:
-        "You receive 30% from every successful payment completed by users attributed to your referrals.",
-    },
-    {
-      label: "Simple example",
-      value: "150 lei commission",
-      description:
-        "If one of your referrals makes a 500 lei payment, your estimated commission is 150 lei.",
-    },
-  ]
+const items = [
+  {
+    label: "Eligibility",
+    value: null,
+    description:
+      "You can invite new users to Pactly through your personal referral flow once your account is activated.",
+  },
+  {
+    label: "Payouts",
+    value: null,
+    description:
+      "You receive 30% from every successful payment completed by users attributed to your referrals.",
+  },
+  {
+    label: "Simple example",
+    value: "£15 commission",
+    description:
+      "If one of your referrals makes a £50 payment, your estimated commission is £15.",
+  },
+]
+
+export const ActivateAffiliateAccount: React.FC<Props> = () => {
+  const [agreeToTerms, setAgreeToTerms] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const onAgreedChange = (e: ChangeEvent<HTMLInputElement>) => setAgreeToTerms(e.target.checked)
+
+  const onActivate = () => null
 
   return (
     <section className="w-full rounded-2xl border border-slate-200 bg-[#fcfcfd] p-4 shadow-sm sm:p-5">
@@ -73,11 +72,11 @@ export const ActivateAffiliateAccount: React.FC<Props> = ({
           ))}
         </div>
 
-        <div className="mt-5 rounded-2xl border border-slate-200 bg-app p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
-          <label className="flex items-start gap-3">
-            <button
+        <div className="mt-5 rounded-2xl border border-slate-200 bg-app p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] cursor-pointer">
+          <label className="flex items-start gap-3 cursor-pointer">
+            {/* <button
               type="button"
-              onClick={() => onAgreedChange?.(!agreed)}
+              onClick={onAgreedChange}
               className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition ${agreed
                 ? "border-[#335CFF] bg-[#335CFF] text-white"
                 : "border-slate-300 bg-white text-transparent"
@@ -86,7 +85,13 @@ export const ActivateAffiliateAccount: React.FC<Props> = ({
               aria-label="Agree to affiliate terms"
             >
               <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
-            </button>
+            </button> */}
+            <Input
+              type="checkbox"
+              className="size-4 mt-0.5"
+              checked={agreeToTerms}
+              onChange={onAgreedChange}
+            />
 
             <div className="min-w-0">
               <p className="text-sm font-semibold text-[#0f172a] sm:text-[15px]">
@@ -107,19 +112,12 @@ export const ActivateAffiliateAccount: React.FC<Props> = ({
         </p>
 
         <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-          <button
-            type="button"
-            onClick={onMaybeLater}
-            className="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
-          >
-            Maybe later
-          </button>
 
           <button
             type="button"
             onClick={onActivate}
-            disabled={isLoading || !agreed}
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#335CFF] px-4 text-sm font-medium text-white transition hover:bg-[#2b4fe6] disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={isLoading || !agreeToTerms}
+            className="cursor-pointer inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#335CFF] px-4 text-sm font-medium text-white transition hover:bg-[#2b4fe6] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <ArrowRight className="h-4 w-4" strokeWidth={2.2} />
             {isLoading ? "Activating..." : "Activate and continue"}

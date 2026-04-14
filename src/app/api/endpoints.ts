@@ -1,6 +1,9 @@
 import { envs } from "@/constants/envs";
 
 export const api = {
+  affiliate: {
+    createAffiliateAccount: envs.NEXT_PUBLIC_URL + "/api/affiliate/create-affiliate-account"
+  },
   auth: {
     signInWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-in-with-password",
     signUpWithPassword: envs.NEXT_PUBLIC_URL + "/api/auth/sign-up-with-password",

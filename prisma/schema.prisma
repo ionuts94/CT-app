@@ -48,6 +48,8 @@ model User {
   @@index([currentCompanyId])
   // table mapping
   @@map("users")
+  affiliateAccounts AffiliateAccount[]
+  affiliateReferrals AffiliateReferral[] @relation("AffiliateReferralReferredUser")
 }
 
 model Company {
@@ -468,6 +470,100 @@ model EventLog {
   @@index([createdAt])
 }
 
+model AffiliateAccount {
+  id                String                     @id @default(cuid())
+  userId            String                     @unique
+  referralCode      String                     @unique @db.VarChar(32)
+  status            AffiliateAccountStatus     @default(ACTIVE)
+  commissionRate    Decimal                    @default(0.30) @db.Decimal(5, 4)
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+
+  user              User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  referrals         AffiliateReferral[]
+  commissions       AffiliateCommission[]
+  payouts           AffiliatePayout[]
+
+  @@index([referralCode])
+  @@index([status])
+}
+
+model AffiliateReferral {
+  id                         String                    @id @default(cuid())
+  affiliateAccountId         String
+  referredUserId             String                    @unique
+  referredWorkspaceId        String?
+  affiliateTokenSnapshot     String?                   @db.VarChar(32)
+  attributionMethod          String?                   @db.VarChar(32) // ex: "link", "manual_code", "admin"
+  status                     AffiliateReferralStatus   @default(PENDING)
+  createdAt                  DateTime                  @default(now())
+  qualifiedAt                DateTime?
+  rejectedAt                 DateTime?
+
+  affiliateAccount           AffiliateAccount          @relation(fields: [affiliateAccountId], references: [id], onDelete: Cascade)
+  referredUser               User                      @relation("AffiliateReferralReferredUser", fields: [referredUserId], references: [id], onDelete: Cascade)
+  commissions                AffiliateCommission[]
+
+  @@index([affiliateAccountId])
+  @@index([referredWorkspaceId])
+  @@index([status])
+  @@index([createdAt])
+}
+ 
+model AffiliateCommission {
+  id                         String                    @id @default(cuid())
+  affiliateAccountId         String
+  referralId                 String
+  sourcePaymentId            String?                   @unique
+  sourceWorkspaceId          String?
+  commissionRate             Decimal                   @db.Decimal(5, 4)
+  baseAmount                 Decimal                   @db.Decimal(12, 2)
+  commissionAmount           Decimal                   @db.Decimal(12, 2)
+  currency                   String                    @db.VarChar(3)
+  status                     AffiliateCommissionStatus @default(PENDING)
+  periodStart                DateTime?
+  periodEnd                  DateTime?
+  approvedAt                 DateTime?
+  paidAt                     DateTime?
+  reversedAt                 DateTime?
+  payoutId                   String?
+  createdAt                  DateTime                  @default(now())
+  updatedAt                  DateTime                  @updatedAt
+
+  affiliateAccount           AffiliateAccount          @relation(fields: [affiliateAccountId], references: [id], onDelete: Cascade)
+  referral                   AffiliateReferral         @relation(fields: [referralId], references: [id], onDelete: Cascade)
+  payout                     AffiliatePayout?          @relation(fields: [payoutId], references: [id], onDelete: SetNull)
+
+  @@index([affiliateAccountId])
+  @@index([referralId])
+  @@index([payoutId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([sourceWorkspaceId])
+}
+
+model AffiliatePayout {
+  id                         String                 @id @default(cuid())
+  affiliateAccountId         String
+  amount                     Decimal                @db.Decimal(12, 2)
+  currency                   String                 @db.VarChar(3)
+  status                     AffiliatePayoutStatus  @default(PENDING)
+  provider                   String?                @db.VarChar(32) // ex: "wise", "paypal", "bank_transfer"
+  providerReference          String?                @db.VarChar(191)
+  note                       String?                @db.Text
+  scheduledAt                DateTime?
+  paidAt                     DateTime?
+  createdAt                  DateTime               @default(now())
+  updatedAt                  DateTime               @updatedAt
+
+  affiliateAccount           AffiliateAccount       @relation(fields: [affiliateAccountId], references: [id], onDelete: Cascade)
+  commissions                AffiliateCommission[]
+
+  @@index([affiliateAccountId])
+  @@index([status])
+  @@index([createdAt])
+}
+
 /**
  * ====================
  * ENUMS
@@ -566,4 +662,30 @@ enum SubscriptionPlan {
   STARTER
   TEAM
   BUSINESS
+}
+
+enum AffiliateAccountStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum AffiliateReferralStatus {
+  PENDING
+  QUALIFIED
+  REJECTED
+}
+
+enum AffiliateCommissionStatus {
+  PENDING
+  APPROVED
+  PAID
+  REVERSED
+}
+
+enum AffiliatePayoutStatus {
+  PENDING
+  PROCESSING
+  PAID
+  FAILED
+  CANCELED
 }

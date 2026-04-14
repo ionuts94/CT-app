@@ -8,7 +8,7 @@ type Props = {
 
 }
 
-export const NotAfiliateYet: React.FC<Props> = ({ }) => {
+export const NotAffiliateYet: React.FC<Props> = ({ }) => {
 
 
   return (

@@ -1,10 +1,10 @@
 import { PageContainer } from "@/components/layout";
 import { PageHeader, PageHeading, PageSubHeading } from "@/components/page-header";
-import { NotAfiliateYet } from "./components/not-afiliate-yet";
+import { NotAffiliateYet } from "./components/not-affiliate-yet/not-afiliate-yet";
 
 export default async function AfiliatesPage() {
   if (true) {
-    return <NotAfiliateYet />
+    return <NotAffiliateYet />
   }
 
   return (
