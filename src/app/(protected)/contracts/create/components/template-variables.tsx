@@ -70,7 +70,7 @@ export const TemplateVariables: React.FC<Props> = ({ form }) => {
           <span className="text-[#1d4ed8] font-bold text-[18px]">{'{ }'}</span>
           <Text weight="medium" size="lg" className="mt-1">Template variables</Text>
         </div>
-        <Text weight="medium" size="sm" className="text-[#1d4ed8] bg-[#eef2ff] w-fit px-3 py-1 rounded-full">{variables.length} detected</Text>
+        <Text weight="medium" size="sm" className="text-[#1d4ed8] bg-main-foreground w-fit px-3 py-1 rounded-full">{variables.length} detected</Text>
       </div>
       <div className="px-4 flex pt-2 flex-col gap-2">
         <Text size="sm" className="text-muted-foreground italic">No template variables detected</Text>
@@ -86,7 +86,7 @@ export const TemplateVariables: React.FC<Props> = ({ form }) => {
           <span className="text-[#1d4ed8] font-bold text-[18px]">{'{ }'}</span>
           <Text weight="medium" size="lg" className="mt-1">Template variables</Text>
         </div>
-        <Text weight="medium" size="sm" className="text-[#1d4ed8] bg-[#eef2ff] w-fit px-3 py-1 rounded-full">{variables.length} detected</Text>
+        <Text weight="medium" size="sm" className="text-[#1d4ed8] bg-main-foreground w-fit px-3 py-1 rounded-full">{variables.length} detected</Text>
       </div>
       <div className="px-4 flex pt-2 flex-col gap-2">
         <Text size="sm" weight="medium">Detected variables in this template</Text>

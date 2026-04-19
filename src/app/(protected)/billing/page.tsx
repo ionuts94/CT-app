@@ -7,8 +7,6 @@ import UserService from "@/services/users";
 export default async function BillingPage() {
   const { data, error } = await withSafeService(() => UserService.getCurrentUserWithSubscription())
 
-  console.log(data)
-
   return (
     <main className="min-h-screen">
       <PageContainer className="flex flex-col gap-4">

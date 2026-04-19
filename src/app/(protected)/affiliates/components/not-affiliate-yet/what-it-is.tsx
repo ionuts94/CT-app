@@ -24,7 +24,7 @@ export const WhatItIs: React.FC<Props> = ({ }) => {
   return (
     <section className="w-full rounded-2xl border border-slate-200 bg-[#fcfcfd] p-4 shadow-sm sm:p-5">
       <div className="mx-auto ">
-        <span className="inline-flex rounded-full bg-[#eef2ff] px-3 py-1 text-xs font-semibold text-[#335CFF]">
+        <span className="inline-flex rounded-full bg-main-foreground px-3 py-1 text-xs font-semibold text-[#335CFF]">
           Affiliate opt-in
         </span>
 

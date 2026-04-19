@@ -1,7 +1,9 @@
 import { createAffiliateAccount } from "./create-affiliate-account"
+import { getAffiliateAccountByUserId } from "./get-affiliate-account-by-user-id"
 
 const AffiliateService = {
-    createAffiliateAccount
+    createAffiliateAccount,
+    getAffiliateAccountByUserId,
 }
 
 export default AffiliateService

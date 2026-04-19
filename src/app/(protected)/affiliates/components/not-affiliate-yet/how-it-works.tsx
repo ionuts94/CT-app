@@ -42,7 +42,7 @@ export const HowItWorks: React.FC<Props> = ({ }) => {
           return (
             <div key={item.step}>
               <div className="flex items-start gap-3 py-4">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#eef2ff] text-[#2f5bff]">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-main-foreground text-main">
                   <Icon className="h-4 w-4" strokeWidth={1.9} />
                 </div>
 

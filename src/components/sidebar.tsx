@@ -14,7 +14,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
-import { Calendar, ChevronLeft, LayoutTemplate, Gauge, Home, Inbox, ReceiptText, Search, Settings, Layers, CreditCard } from "lucide-react"
+import { Calendar, ChevronLeft, LayoutTemplate, Gauge, Home, Inbox, ReceiptText, Search, Settings, Layers, CreditCard, BadgePercent } from "lucide-react"
 import Link from "next/link"
 import { Text } from "./topography"
 import { usePath } from "@/hooks/use-path"
@@ -138,5 +138,10 @@ export const PROTECTED_LINKS = [
     label: "Settings",
     href: "/settings",
     icon: Settings,
+  },
+  {
+    label: "Affiliates",
+    href: "/affiliates",
+    icon: BadgePercent,
   },
 ]

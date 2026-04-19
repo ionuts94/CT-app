@@ -81,5 +81,7 @@ const colors = {
   "sidebar": "#ffffff",
   "sidebar-foreground": "#374151",
   "sidebar-primary": "#e5e7eb",
-  "sidebar-primary-foreground": "#0f172a"
+  "sidebar-primary-foreground": "#0f172a",
+  "main": "#2f5bff",
+  "main-foreground": "#eef2ff",
 }

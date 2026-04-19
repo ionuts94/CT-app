@@ -1,8 +1,14 @@
 "use client"
 
+import { ButtonWithLoading } from "@/components/button-with-loading"
 import { Input } from "@/components/form-elements"
+import { Button } from "@/components/ui/button"
+import { useUserContext } from "@/contexts/user-context"
+import { sleep } from "@/lib/utils"
+import CTAffiliate from "@/sdk/affiliate"
 import { ArrowRight, Check } from "lucide-react"
 import { ChangeEvent, useState } from "react"
+import { toast } from "sonner"
 
 type Props = {
 
@@ -30,12 +36,19 @@ const items = [
 ]
 
 export const ActivateAffiliateAccount: React.FC<Props> = () => {
+  const { user } = useUserContext()
   const [agreeToTerms, setAgreeToTerms] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const onAgreedChange = (e: ChangeEvent<HTMLInputElement>) => setAgreeToTerms(e.target.checked)
 
-  const onActivate = () => null
+  const onActivate = async () => {
+    setIsLoading(true)
+    const { data, error } = await CTAffiliate.createAffiliateAccount({ userId: user?.id! })
+    setIsLoading(false)
+    if (error) return toast.error("Failed to create affiliate account. Error: " + error)
+    return toast.success("Affiliate account created successfully")
+  }
 
   return (
     <section className="w-full rounded-2xl border border-slate-200 bg-[#fcfcfd] p-4 shadow-sm sm:p-5">
@@ -113,15 +126,16 @@ export const ActivateAffiliateAccount: React.FC<Props> = () => {
 
         <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
 
-          <button
+          <ButtonWithLoading
             type="button"
             onClick={onActivate}
             disabled={isLoading || !agreeToTerms}
-            className="cursor-pointer inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#335CFF] px-4 text-sm font-medium text-white transition hover:bg-[#2b4fe6] disabled:cursor-not-allowed disabled:opacity-60"
+            loading={isLoading}
+            className="cursor-pointer inline-flex h-11 items-center justify-center gap-2 rounded-xl px-4 text-sm font-medium text-white transition disabled:cursor-not-allowed disabled:opacity-60"
           >
             <ArrowRight className="h-4 w-4" strokeWidth={2.2} />
             {isLoading ? "Activating..." : "Activate and continue"}
-          </button>
+          </ButtonWithLoading>
         </div>
       </div>
     </section>

@@ -31,7 +31,7 @@ export const AiTemplateWriteDialog: React.FC<Props> = ({ onGenerateTemplate = ()
       </DialogTrigger>
       <DialogContent className="w-[98vw] md:max-w-[940px]">
         <DialogHeader>
-          <DialogTitle className="flex items-center p-2 rounded-md bg-[#eef2ff] text-[#1D4ED8] w-fit px-4">
+          <DialogTitle className="flex items-center p-2 rounded-md bg-main-foreground text-[#1D4ED8] w-fit px-4">
             <AiSvg className="size-5 group-hover:text-white" />
             AI Assistant
           </DialogTitle>

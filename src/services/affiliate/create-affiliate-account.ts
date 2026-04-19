@@ -5,6 +5,9 @@ import { AffiliateAccountStatus } from "@prisma/client";
 export async function createAffiliateAccount(payload: { userId: string }) {
     const supabase = await createClient()
 
+    console.log("Creating affiliate. Payload")
+    console.log(payload)
+
     const { data, error } = await supabase.from("affiliate_accounts").insert({
         userId: payload.userId,
         referralCode: generateReferralCode(),
