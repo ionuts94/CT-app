@@ -1,15 +1,10 @@
 "use client"
 
-import { PageWidth } from "@/components/layout"
-import { PageHeader } from "./page-header"
-import { ContractContentView } from "./contract-content-view"
-import { ReceiverContractAssistant } from "./assistant/receiver-contract-assistant"
-import { CommentsSection } from "./comments-section"
 import { AuditLog } from "@prisma/client"
 import { T_ViewContract } from "@/types/services/contracts"
 import { CommentWithUser } from "@/types/services/comments"
-import { Card } from "@/components/ui/card"
-import { Tabs } from "./tabs"
+import { DesktopViewContract } from "./desktop-view/desktop-view-contract"
+import { MobileViewContract } from "./mobile-view/mobile-view-contract"
 
 type Props = {
   contractData: T_ViewContract,
@@ -18,21 +13,38 @@ type Props = {
 }
 
 export const ViewContractContentPage: React.FC<Props> = ({ contractData, commentsData, auditLogData }) => {
+  // return (
+  //   <main className="flex min-h-screen flex-col bg-slate-100">
+  //     <div className="min-h-full bg-pink-500"></div>
+
+  //     {/* HEADER */}
+  //     <div className="h-20 shrink-0 bg-red-400" />
+
+  //     {/* CONTENT (IA TOT SPAȚIUL RĂMAS + SCROLL) */}
+  //     <div className="flex-1 min-h-0 overflow-y-auto bg-green-400" />
+
+  //     {/* FOOTER */}
+  //     <div className="h-16 shrink-0 bg-blue-400" />
+
+  //   </main>
+  // )
   return (
     <main className="flex flex-col min-h-screen bg-slate-100">
-      <PageHeader contract={contractData} auditLog={auditLogData} />
-      <PageWidth className="flex flex-1 gap-4 justify-between py-4 shadow-sm">
-        <div className="w-full lg:w-65/100">
-          <ContractContentView contract={contractData} />
-        </div>
+      <div className="lg:hidden flex flex-col h-screen gap-2">
+        <MobileViewContract
+          contractData={contractData}
+          auditLogData={auditLogData}
+          commentsData={commentsData}
+        />
+      </div>
 
-        <div className="lg:w-35/100 self-start h-[85vh] min-h-0">
-          <Tabs
-            contractData={contractData}
-            commentsData={commentsData}
-          />
-        </div>
-      </PageWidth>
+      <div className="hidden lg:block">
+        <DesktopViewContract
+          contractData={contractData}
+          auditLogData={auditLogData}
+          commentsData={commentsData}
+        />
+      </div>
     </main>
   )
 }

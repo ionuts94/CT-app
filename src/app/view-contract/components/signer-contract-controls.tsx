@@ -47,7 +47,7 @@ export const SignerContractControls: React.FC<Props> = ({ contract }) => {
   }
 
   return (
-    <div className="flex w-full flex-col gap-2 lg:flex-row lg:justify-end">
+    <div className="flex w-full gap-2 flex-row lg:justify-end">
       <UserContractDeclineDialog contract={contract} />
       <UserSignatureDialog contract={contract} />
     </div>

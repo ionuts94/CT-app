@@ -22,7 +22,7 @@ const ContractStatusOptions: Record<ContractStatus, T_ContractStatusOptions> = {
   OUT_FOR_SIGNATURE: {
     colors: "bg-warning text-white",
     icon: Clock,
-    label: "PENDING"
+    label: "PENDING SIGNATURE"
   },
   FULLY_SIGNED: {
     colors: "bg-success text-white",
