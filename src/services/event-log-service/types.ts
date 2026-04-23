@@ -11,5 +11,6 @@ export type LogEventInput = {
   path: string
   source?: string
   sessionId: string
-  userId?: string | null
+  userId?: string | null,
+  ip?: string
 }

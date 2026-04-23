@@ -460,6 +460,7 @@ model EventLog {
   sessionId  String
   path       String
   source     String?
+  ip         String?
   createdAt  DateTime @default(now())
 
   @@map("event_logs")

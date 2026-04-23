@@ -10,9 +10,21 @@ export async function logEvent({
   path,
   source,
   sessionId,
+  ip,
 }: LogEventInput) {
   const supabase = await createClient()
-  const { data: authUser } = await withSafeService(() => AuthService.getAuthUser())
+
+  const [
+    { data: authUser },
+    ipLocationResponse
+  ] = await Promise.all([
+    withSafeService(() => AuthService.getAuthUser()),
+    fetch(`https://ipapi.co/${ip}/json/`, {
+      cache: "no-store",
+    })
+  ])
+
+  const ipLocationData = await ipLocationResponse.json()
 
   const { error } = await supabase.from("event_logs").insert({
     event,
@@ -20,6 +32,8 @@ export async function logEvent({
     source,
     sessionId,
     userId: authUser?.id,
+    ip,
+    country: ipLocationData?.country_code ?? "unknown",
   })
 
   if (error) {
