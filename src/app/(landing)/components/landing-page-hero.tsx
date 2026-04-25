@@ -13,30 +13,30 @@ export const LandingPageHero: React.FC<Props> = ({ }) => {
 
         <div className="w-full flex flex-col gap-5 justify-center items-center lg:items-start">
           <div className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-            Interactive contracts for modern teams
+            Close deals faster
           </div>
 
           <Text
             as="h1"
             className="text-[44px] leading-[54px] lg:text-[64px] lg:leading-[76px] font-bold -tracking-[2px] text-center lg:text-left"
           >
-            Contracts that work like web pages, not PDFs
+            Stop chasing clients to sign your contracts
           </Text>
 
           <Text
             as="h2"
             className="text-[16px] leading-[26px] lg:text-[20px] lg:leading-[32px] text-center lg:text-left text-slate-600 max-w-[720px]"
           >
-            Create, send, discuss, and sign contracts in one place. Let both sides
-            comment on clauses, ask questions, and move faster without email
-            back-and-forth or final_final_v7.docx.
+            You already closed the deal. <br />
+            Don&apos;t lose it because signing takes too long. <br /><br />
+            Send a simple link. Get it signed faster.
           </Text>
 
           <div className="flex flex-col items-center lg:items-start gap-3 lg:mt-6">
             <Button className="w-fit py-5 px-8" asChild>
               <Link href="/sign-up">
                 <TextCTA>
-                  Start free
+                  Get your next contract signed
                 </TextCTA>
               </Link>
             </Button>

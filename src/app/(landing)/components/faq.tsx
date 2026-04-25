@@ -17,8 +17,8 @@ export const FaQ: React.FC<Props> = ({ }) => {
       <LandingPageWidth className="flex flex-col gap-[40px]">
         <SectionHeaderContainer>
           <SectionLabel>FAQ</SectionLabel>
-          <SectionTitle>Helpful information</SectionTitle>
-          <SectionSubtitle>Quick answers to the most common questions.</SectionSubtitle>
+          <SectionTitle>Still wondering if this will work for you?</SectionTitle>
+          <SectionSubtitle>Quick answers before you send your next contract.</SectionSubtitle>
         </SectionHeaderContainer>
 
         <Accordion

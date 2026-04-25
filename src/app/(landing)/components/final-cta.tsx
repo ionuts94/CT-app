@@ -11,18 +11,17 @@ export const FinalCta: React.FC<Props> = ({ }) => {
       <LandingPageWidth>
         <SectionHeaderContainer>
           <SectionTitle className="max-w-[700px] text-center">
-            Stop sending contracts like it&apos;s still 2012
+            Stop chasing signatures. Start closing deals.
           </SectionTitle>
 
           <SectionSubtitle className="text-center max-w-[700px]">
-            Create, discuss, and sign contracts in one place. Start free with 3 included
-            contracts. No card required.
+            You already did the hard part — don&apos;t lose deals at the last step.
           </SectionSubtitle>
         </SectionHeaderContainer>
 
         <Button className="px-8 py-4 font-medium shadow text-lg mt-12 mx-auto block" asChild>
           <Link href="/sign-up" className="block w-fit">
-            Create a free account
+            Get your next contract signed
           </Link>
         </Button>
       </LandingPageWidth>

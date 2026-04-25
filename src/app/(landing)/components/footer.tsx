@@ -14,8 +14,7 @@ export const Footer: React.FC<Props> = ({ }) => {
           <div className="col-span-1 sm:col-span-2">
             <PactlyLogo variant="dark" className="h-[40px]" />
             <p className="text-white mt-3 text-md max-w-sm">
-              A modern platform for creating, sending, and signing contracts
-              with clarity, security, and full transparency.
+              Stop chasing signatures. Close the deal.
             </p>
           </div>
 

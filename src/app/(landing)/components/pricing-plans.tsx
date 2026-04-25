@@ -12,12 +12,11 @@ export const PricingPlans: React.FC = ({ }) => {
           <SectionLabel>Pricing</SectionLabel>
 
           <SectionTitle className="hidden md:block">
-            Simple pricing based on how many contracts you send
+            One signed deal pays for months of Pactly
           </SectionTitle>
 
           <SectionSubtitle className="text-center max-w-[720px]">
-            Every plan includes the full Pactly experience: create contracts,
-            discuss clauses, get AI explanations, and sign online.
+            Simple pricing based on how many contracts you send.
           </SectionSubtitle>
         </SectionHeaderContainer>
 

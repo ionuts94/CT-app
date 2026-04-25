@@ -24,7 +24,10 @@ export async function logEvent({
     })
   ])
 
-  const ipLocationData = await ipLocationResponse.json()
+  // const ipLocationData = await ipLocationResponse.json()
+  const ipLocationData = {
+    country_code: "RO"
+  }
 
   const { error } = await supabase.from("event_logs").insert({
     event,

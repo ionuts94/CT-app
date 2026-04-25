@@ -9,14 +9,15 @@ export const ProductDemo: React.FC<Props> = ({ }) => {
     <div className="py-[110px] bg-white">
       <LandingPageWidth className="flex flex-col gap-[60px]">
         <SectionHeaderContainer>
-          <SectionLabel>Product demo</SectionLabel>
+          <SectionLabel>THE FIX</SectionLabel>
 
           <SectionTitle className="text-center max-w-[800px]">
-            Contracts. Without the chaos.
+            Send a link. Get it signed.
           </SectionTitle>
 
           <SectionSubtitle className="text-center max-w-[700px]">
-            Create, send, and sign contracts in one clean workflow.
+            No PDFs. No accounts. No chasing.
+            Just a simple link your client can open and sign instantly.
           </SectionSubtitle>
         </SectionHeaderContainer>
 
@@ -25,7 +26,7 @@ export const ProductDemo: React.FC<Props> = ({ }) => {
             <div className="w-full">
               <div className="aspect-video w-full rounded-lg bg-slate-900 relative overflow-hidden border border-slate-800">
 
-                <video controls className="h-full w-full object-contain" poster="/demo-poster.jpg" autoPlay muted playsInline>
+                <video controls className="h-full w-full object-contain" autoPlay muted playsInline>
                   <source src="/assets/pactly-demo-video.mp4" type="video/mp4" />
                 </video>
 
