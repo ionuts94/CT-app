@@ -1,3 +1,5 @@
+"use client"
+
 import { PageWidth } from "@/components/layout"
 import { T_ViewContract } from "@/types/services/contracts"
 import { AuditLog } from "@prisma/client"

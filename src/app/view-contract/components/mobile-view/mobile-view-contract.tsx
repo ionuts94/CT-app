@@ -5,6 +5,8 @@ import { MobileViewContractPageHeader } from "./mobile-view-contract-page-header
 import { MobileContractContentView } from "./mobile-contract-content-view"
 import { SenderContractControls } from "../sender-contract-controls"
 import { SignerContractControls } from "../signer-contract-controls"
+import { MobileAsistantDrawer } from "./mobile-ai-asistant-drawer"
+import { MobileCommentsDrawer } from "./mobile-comments-drawer"
 
 type Props = {
   contractData: T_ViewContract,
@@ -25,7 +27,12 @@ export const MobileViewContract: React.FC<Props> = ({
         <MobileViewContractPageHeader
           contract={contractData}
           auditLog={auditLogData}
-        />
+        >
+          <div className="pt-4 border-t flex flex-col gap-2">
+            <MobileAsistantDrawer contractData={contractData} />
+            <MobileCommentsDrawer contractData={contractData} commentsData={commentsData} isSender={false} />
+          </div>
+        </MobileViewContractPageHeader>
       </div>
 
       <div className="flex-1 min-h-0 overflow-y-auto" >
@@ -46,22 +53,3 @@ export const MobileViewContract: React.FC<Props> = ({
     </>
   )
 }
-
-// export const MobileViewContract: React.FC<Props> = ({ contractData, commentsData, auditLogData }) => {
-//   return (
-//     <div className="h-full flex flex-col bg-red-200">
-//       <MobileViewContractPageHeader
-//         contract={contractData}
-//         auditLog={auditLogData}
-//       />
-//       <div className="flex-1 min-h-0 overflow-hidden">
-//         <MobileContractContentView
-//           contract={contractData}
-//         />
-//       </div>
-//       <div className="h-[40px] w-full bg-blue-500">
-
-//       </div>
-//     </div>
-//   )
-// }
