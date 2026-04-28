@@ -10,7 +10,13 @@ import { Testimonials } from "./components/testimonials";
 import { Footer } from "./components/footer";
 import { PageViewTracker } from "@/components/analytics/page-view-tracker";
 
-export default async function LandingPage() {
+type Props = {
+  searchParams: Promise<{ ref?: string }>
+}
+
+export default async function LandingPage({ searchParams }: Props) {
+  const { ref } = await searchParams
+
   return (
     <>
       <LandingPageHero />
@@ -23,7 +29,7 @@ export default async function LandingPage() {
       <FinalCta />
       <PageViewTracker
         path="/"
-        source="linkedin_dm_v1"
+        source={ref || "linkedin_dm_v1"}
       />
     </>
   )
