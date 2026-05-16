@@ -11,17 +11,17 @@ export const FinalCta: React.FC<Props> = ({ }) => {
       <LandingPageWidth>
         <SectionHeaderContainer>
           <SectionTitle className="max-w-[700px] text-center">
-            Stop chasing signatures. Start closing deals.
+            Make onboarding easier for everyone.
           </SectionTitle>
 
           <SectionSubtitle className="text-center max-w-[700px]">
-            You already did the hard part — don&apos;t lose deals at the last step.
+            Mobile-first onboarding and signing without PDFs, downloads or apps.
           </SectionSubtitle>
         </SectionHeaderContainer>
 
         <Button className="px-8 py-4 font-medium shadow text-lg mt-12 mx-auto block" asChild>
           <Link href="/sign-up" className="block w-fit">
-            Get your next contract signed
+            Create your first onboarding flow
           </Link>
         </Button>
       </LandingPageWidth>

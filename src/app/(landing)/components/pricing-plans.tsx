@@ -11,12 +11,12 @@ export const PricingPlans: React.FC = ({ }) => {
         <SectionHeaderContainer>
           <SectionLabel>Pricing</SectionLabel>
 
-          <SectionTitle className="hidden md:block">
+          <SectionTitle className="hidden md:block max-w-[720px] text-center">
             One signed deal pays for months of Pactly
           </SectionTitle>
 
           <SectionSubtitle className="text-center max-w-[720px]">
-            Simple pricing based on how many contracts you send.
+            Simple pricing based on how many documents you send.
           </SectionSubtitle>
         </SectionHeaderContainer>
 
@@ -24,32 +24,32 @@ export const PricingPlans: React.FC = ({ }) => {
 
           <PricingCard
             pricingTitle="Trial"
-            pricingDetails="Try Pactly with 3 free contracts. No card required."
+            pricingDetails="Try Pactly with 3 free documents. No card required."
             price={<p className="text-xl font-bold text-primary">€0</p>}
           />
 
           <PricingCard
             pricingTitle="Pay as you go"
-            pricingDetails="Perfect if you only send contracts occasionally."
+            pricingDetails="Perfect if you only send documents occasionally."
             price={<p className="text-xl font-bold text-gray-900 whitespace-nowrap">£5 / contract</p>}
           />
 
           <PricingCard
             pricingTitle="Starter"
-            pricingDetails="Up to 10 contracts per month. Ideal for freelancers and small businesses."
+            pricingDetails="Up to 10 documents per month. Ideal for freelancers and small businesses."
             price={<p className="text-xl font-bold text-gray-900 whitespace-nowrap">£25 / month</p>}
           />
 
           <PricingCard
             isMostPopular
             pricingTitle="Team"
-            pricingDetails="Up to 30 contracts per month for growing teams that send contracts regularly."
+            pricingDetails="Up to 30 documents per month for growing teams that send documents regularly."
             price={<p className="text-xl font-bold text-gray-900 whitespace-nowrap">£50 / month</p>}
           />
 
           <PricingCard
             pricingTitle="Business"
-            pricingDetails="Up to 80 contracts per month for companies with higher contract volume."
+            pricingDetails="Up to 80 documents per month for companies with higher contract volume."
             price={<p className="text-xl font-bold text-gray-900 whitespace-nowrap">£80 / month</p>}
           />
 

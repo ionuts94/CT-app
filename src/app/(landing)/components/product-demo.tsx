@@ -12,12 +12,12 @@ export const ProductDemo: React.FC<Props> = ({ }) => {
           <SectionLabel>THE FIX</SectionLabel>
 
           <SectionTitle className="text-center max-w-[800px]">
-            Send a link. Get it signed.
+            Send a link. Let them complete and sign.
           </SectionTitle>
 
-          <SectionSubtitle className="text-center max-w-[700px]">
+          <SectionSubtitle className="text-center max-w-[750px]">
             No PDFs. No accounts. No chasing.
-            Just a simple link your client can open and sign instantly.
+            Just a simple link your client can open and sign <span className="font-bold text-primary italic">instantly</span>.
           </SectionSubtitle>
         </SectionHeaderContainer>
 

@@ -13,36 +13,34 @@ export const LandingPageHero: React.FC<Props> = ({ }) => {
 
         <div className="w-full flex flex-col gap-5 justify-center items-center lg:items-start">
           <div className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-            Close deals faster
+            Mobile-first workflows
           </div>
 
           <Text
             as="h1"
             className="text-[44px] leading-[54px] lg:text-[64px] lg:leading-[76px] font-bold -tracking-[2px] text-center lg:text-left"
           >
-            Stop chasing clients to sign your contracts
+            Mobile-first onboarding and document signing.
           </Text>
 
           <Text
             as="h2"
             className="text-[16px] leading-[26px] lg:text-[20px] lg:leading-[32px] text-center lg:text-left text-slate-600 max-w-[720px]"
           >
-            You already closed the deal. <br />
-            Don&apos;t lose it because signing takes too long. <br /><br />
-            Send a simple link. Get it signed faster.
+            Replace confusing PDF workflows with simple links people can open, complete and sign instantly.
           </Text>
 
           <div className="flex flex-col items-center lg:items-start gap-3 lg:mt-6">
             <Button className="w-fit py-5 px-8" asChild>
               <Link href="/sign-up">
                 <TextCTA>
-                  Get your next contract signed
+                  Create your first onboarding flow
                 </TextCTA>
               </Link>
             </Button>
 
             <Text className="text-sm text-slate-500 text-center lg:text-left">
-              3 free contracts included. No card required.
+              3 free documents included. No card required.
             </Text>
           </div>
         </div>

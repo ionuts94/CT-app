@@ -13,7 +13,7 @@ export const Benefits: React.FC<Props> = ({ }) => {
       <LandingPageWidth className="flex flex-col">
         <SectionHeaderContainer>
           <SectionLabel>THE PROBLEM</SectionLabel>
-          <SectionTitle>Why clients delay signing</SectionTitle>
+          <SectionTitle>Onboarding breaks down on mobile</SectionTitle>
         </SectionHeaderContainer>
       </LandingPageWidth>
 
@@ -25,10 +25,10 @@ export const Benefits: React.FC<Props> = ({ }) => {
               <Clock size={38} />
             </div>
             <TextCTA className="text-[18px] leading-[24px] font-[600] text-[#0f172a]">
-              Clients say “looks good”… then disappear
+              Candidates get stuck with PDFs
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569]">
-              They intend to sign, but friction, delays, and inbox clutter kill the momentum.
+              Downloading, editing and re-uploading files from a phone is still surprisingly confusing for many users.
             </Text>
           </Card>
 
@@ -49,10 +49,10 @@ export const Benefits: React.FC<Props> = ({ }) => {
               <Bot size={38} />
             </div>
             <TextCTA className="text-[18px] leading-[24px] font-[600] text-[#0f172a] mb-[8px]">
-              Endless back-and-forth kills deals
+              Incomplete documents create follow-up chaos
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569]">
-              Questions, edits, and clarifications get lost in messy email threads.
+              Missing fields and signing mistakes slow down onboarding and create extra support work.
             </Text>
           </Card>
 
@@ -61,10 +61,10 @@ export const Benefits: React.FC<Props> = ({ }) => {
               <MessageCircleMore size={38} />
             </div>
             <TextCTA className="text-[18px] leading-[24px] font-[600] text-[#0f172a] mb-[8px]">
-              If they don&apos;t sign now, they won&apos;t sign later
+              Small friction kills completion rates
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569]">
-              Without a clear push, signing gets delayed… or forgotten entirely.
+              Even small UX problems lead to delays, incomplete submissions and abandoned onboarding flows.
             </Text>
           </Card>
 
@@ -73,10 +73,10 @@ export const Benefits: React.FC<Props> = ({ }) => {
               <ShieldEllipsis size={38} />
             </div>
             <TextCTA className="text-[18px] leading-[24px] font-[600] text-[#0f172a] mb-[8px]">
-              You don&apos;t know what&apos;s happening
+              You don&apos;t know where people got stuck
             </TextCTA>
             <Text className="text-[16px] leading-[24px] font-[400] text-[#475569]">
-              Did they open it? Read it? Ignore it? You're left guessing.
+              See when documents are opened, reviewed, commented or signed in real time.
             </Text>
           </Card>
 
