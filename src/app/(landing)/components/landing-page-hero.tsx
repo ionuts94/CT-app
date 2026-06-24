@@ -13,30 +13,39 @@ export const LandingPageHero: React.FC<Props> = ({ }) => {
 
         <div className="w-full flex flex-col gap-5 justify-center items-center lg:items-start">
           <div className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-            Close deals faster
+            Fewer follow-ups. Faster signatures.
           </div>
 
           <Text
             as="h1"
-            className="text-[44px] leading-[54px] lg:text-[64px] lg:leading-[76px] font-bold -tracking-[2px] text-center lg:text-left"
+            className="text-[44px] leading-[54px] lg:text-[64px] lg:leading-[76px] font-bold tracking-normal text-center lg:text-left"
           >
-            Stop chasing clients to sign your contracts
+            Get signed contracts back without chasing clients.
           </Text>
 
           <Text
             as="h2"
             className="text-[16px] leading-[26px] lg:text-[20px] lg:leading-[32px] text-center lg:text-left text-slate-600 max-w-[720px]"
           >
-            You already closed the deal. <br />
-            Don&apos;t lose it because signing takes too long. <br /><br />
-            Send a simple link. Get it signed faster.
+            Stop sending PDFs back and forth. Send one simple link clients can review and sign from any device.
           </Text>
+
+          <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+            {["Less chasing", "Faster turnaround", "Easier for clients"].map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-primary/20 bg-white px-3 py-1 text-sm font-medium text-slate-700 shadow-sm"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
 
           <div className="flex flex-col items-center lg:items-start gap-3 lg:mt-6">
             <Button className="w-fit py-5 px-8" asChild>
               <Link href="/sign-up">
                 <TextCTA>
-                  Get your next contract signed
+                  Try 3 contracts free
                 </TextCTA>
               </Link>
             </Button>
