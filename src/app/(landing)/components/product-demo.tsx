@@ -1,4 +1,3 @@
-import { PlayCircle } from "lucide-react"
 import { LandingPageWidth } from "./landing-page-width"
 import { SectionHeaderContainer, SectionLabel, SectionSubtitle, SectionTitle } from "./shared"
 
@@ -12,12 +11,11 @@ export const ProductDemo: React.FC<Props> = ({ }) => {
           <SectionLabel>THE FIX</SectionLabel>
 
           <SectionTitle className="text-center max-w-[800px]">
-            Send a link. Let them complete and sign.
+            Make signing easy enough to do right away.
           </SectionTitle>
 
-          <SectionSubtitle className="text-center max-w-[750px]">
-            No PDFs. No accounts. No chasing.
-            Just a simple link your client can open and sign <span className="font-bold text-primary italic">instantly</span>.
+          <SectionSubtitle className="text-center max-w-[700px]">
+            Send one link by email or SMS. Your client opens it, reviews the contract and signs on any device, without downloads, accounts or confusion.
           </SectionSubtitle>
         </SectionHeaderContainer>
 

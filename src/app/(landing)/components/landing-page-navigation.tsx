@@ -104,7 +104,7 @@ export const NavSignUpButton: React.FC<Props> = ({ className }) => {
     <Button asChild className={cn("px-6 py-3", className)}>
       <Link href="/sign-up">
         <TextCTA className="font-bold">
-          Create free account
+          Try 3 contracts free
         </TextCTA>
       </Link>
     </Button>

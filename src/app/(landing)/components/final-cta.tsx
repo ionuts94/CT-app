@@ -21,7 +21,7 @@ export const FinalCta: React.FC<Props> = ({ }) => {
 
         <Button className="px-8 py-4 font-medium shadow text-lg mt-12 mx-auto block" asChild>
           <Link href="/sign-up" className="block w-fit">
-            Create your first onboarding flow
+            Try 3 contracts free
           </Link>
         </Button>
       </LandingPageWidth>
